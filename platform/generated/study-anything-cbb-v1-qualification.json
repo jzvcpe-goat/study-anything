@@ -1,0 +1,167 @@
+{
+  "checks": {
+    "active_human_profile_with_counter_evidence_rejected": true,
+    "challenged_model_narrows_policy": true,
+    "global_human_label_rejected": true,
+    "missing_mru_needs_evidence": true,
+    "missing_scoped_reviewer_role_needs_evidence": true,
+    "mru_boundary_mismatch_blocks": true,
+    "passive_attention_cannot_qualify": true,
+    "permanent_human_label_rejected": true,
+    "scenario_mismatch_blocks": true,
+    "stale_human_profile_needs_evidence": true,
+    "vendor_claims_cannot_authorize_model_scope": true
+  },
+  "claim_boundary": "This verifies deterministic local qualification contracts and negative cases. It does not certify a real reviewer, model, organization, customer outcome, production deployment, or independent audit completion.",
+  "invariants": [
+    "qualification is project, scenario, boundary, role, scope, and time bound",
+    "passive attention is never qualified reconstruction",
+    "counter-evidence, expiry, missing MRUs, and missing roles narrow trust",
+    "vendor model claims do not authorize delivery scope",
+    "qualification is not a permanent global label"
+  ],
+  "privacy": {
+    "attention_streams_included": false,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "network_calls_performed": false,
+    "personal_identity_included": false,
+    "production_mutation_performed": false,
+    "raw_reconstruction_answers_included": false
+  },
+  "reviewer_qualification_matrix": [
+    {
+      "boundary_types": [
+        "intent_and_non_goals",
+        "critical_failure_path",
+        "affected_parties_and_recipient",
+        "rollback_trigger",
+        "evidence_weakness_and_limitations",
+        "residual_risk"
+      ],
+      "case_id": "limited-beta",
+      "maximum_scope": "limited_beta",
+      "permanent_global_label": false,
+      "project_ref": "project:vibe-coded-app",
+      "qualified_roles": [
+        "qualified_reviewer",
+        "technical_reviewer",
+        "operational_reviewer"
+      ],
+      "scenario_refs": [
+        "scenario:vibe-coded-app:limited-beta"
+      ],
+      "valid_until": "2026-09-26T00:00:00Z"
+    },
+    {
+      "boundary_types": [
+        "intent_and_non_goals",
+        "critical_failure_path",
+        "affected_parties_and_recipient",
+        "rollback_trigger",
+        "evidence_weakness_and_limitations",
+        "residual_risk"
+      ],
+      "case_id": "paid-customer-candidate",
+      "maximum_scope": "controlled_customer_handoff",
+      "permanent_global_label": false,
+      "project_ref": "project:vibe-coded-app",
+      "qualified_roles": [
+        "qualified_reviewer",
+        "technical_reviewer",
+        "operational_reviewer"
+      ],
+      "scenario_refs": [
+        "scenario:vibe-coded-app:paid-customer-candidate"
+      ],
+      "valid_until": "2026-09-26T00:00:00Z"
+    },
+    {
+      "boundary_types": [
+        "intent_and_non_goals",
+        "critical_failure_path",
+        "rollback_trigger"
+      ],
+      "case_id": "personal-local-prototype",
+      "maximum_scope": "personal_local",
+      "permanent_global_label": false,
+      "project_ref": "project:vibe-coded-app",
+      "qualified_roles": [
+        "qualified_reviewer"
+      ],
+      "scenario_refs": [
+        "scenario:vibe-coded-app:personal-local-prototype"
+      ],
+      "valid_until": "2026-09-26T00:00:00Z"
+    },
+    {
+      "boundary_types": [
+        "intent_and_non_goals",
+        "critical_failure_path",
+        "affected_parties_and_recipient",
+        "rollback_trigger",
+        "evidence_weakness_and_limitations",
+        "residual_risk"
+      ],
+      "case_id": "production-candidate-blocked",
+      "maximum_scope": "production_candidate",
+      "permanent_global_label": false,
+      "project_ref": "project:vibe-coded-app",
+      "qualified_roles": [
+        "qualified_reviewer",
+        "technical_reviewer",
+        "operational_reviewer",
+        "domain_reviewer",
+        "security_reviewer",
+        "deployment_operator"
+      ],
+      "scenario_refs": [
+        "scenario:vibe-coded-app:production-candidate-blocked"
+      ],
+      "valid_until": "2026-09-26T00:00:00Z"
+    },
+    {
+      "boundary_types": [
+        "intent_and_non_goals",
+        "critical_failure_path",
+        "affected_parties_and_recipient",
+        "rollback_trigger"
+      ],
+      "case_id": "public-fake-data-demo",
+      "maximum_scope": "public_demo",
+      "permanent_global_label": false,
+      "project_ref": "project:vibe-coded-app",
+      "qualified_roles": [
+        "qualified_reviewer"
+      ],
+      "scenario_refs": [
+        "scenario:vibe-coded-app:public-fake-data-demo"
+      ],
+      "valid_until": "2026-09-26T00:00:00Z"
+    },
+    {
+      "boundary_types": [
+        "intent_and_non_goals",
+        "critical_failure_path",
+        "affected_parties_and_recipient",
+        "rollback_trigger",
+        "evidence_weakness_and_limitations",
+        "residual_risk"
+      ],
+      "case_id": "regulated-or-irreversible-blocked",
+      "maximum_scope": "sandbox_only",
+      "permanent_global_label": false,
+      "project_ref": "project:vibe-coded-app",
+      "qualified_roles": [
+        "qualified_reviewer",
+        "domain_reviewer"
+      ],
+      "scenario_refs": [
+        "scenario:vibe-coded-app:regulated-or-irreversible-blocked"
+      ],
+      "valid_until": "2026-09-26T00:00:00Z"
+    }
+  ],
+  "schema_version": "cbb-v1-qualification-verification-v1",
+  "status": "pass"
+}

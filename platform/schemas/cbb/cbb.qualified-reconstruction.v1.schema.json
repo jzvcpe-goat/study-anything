@@ -35,6 +35,7 @@
         "blocked",
         "personal_local",
         "sandbox_only",
+        "public_demo",
         "internal_handoff",
         "controlled_customer_handoff",
         "limited_beta",
@@ -42,6 +43,155 @@
       ],
       "title": "DeliveryScope",
       "type": "string"
+    },
+    "HumanCapabilityProfileV1": {
+      "additionalProperties": false,
+      "properties": {
+        "boundary_types": {
+          "items": {
+            "$ref": "#/$defs/ReconstructionBoundaryType"
+          },
+          "minItems": 1,
+          "title": "Boundary Types",
+          "type": "array"
+        },
+        "counter_evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Counter Evidence Refs",
+          "type": "array"
+        },
+        "evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Refs",
+          "type": "array"
+        },
+        "human_ref": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Human Ref",
+          "type": "string"
+        },
+        "maximum_scope": {
+          "$ref": "#/$defs/DeliveryScope"
+        },
+        "observed_at": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$",
+          "title": "Observed At",
+          "type": "string"
+        },
+        "permanent_global_label": {
+          "const": false,
+          "title": "Permanent Global Label",
+          "type": "boolean"
+        },
+        "profile_id": {
+          "maxLength": 160,
+          "minLength": 1,
+          "title": "Profile Id",
+          "type": "string"
+        },
+        "project_ref": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Project Ref",
+          "type": "string"
+        },
+        "qualified_roles": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Qualified Roles",
+          "type": "array"
+        },
+        "scenario_refs": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Scenario Refs",
+          "type": "array"
+        },
+        "status": {
+          "enum": [
+            "active",
+            "challenged",
+            "stale",
+            "insufficient"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "valid_until": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$",
+          "title": "Valid Until",
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile_id",
+        "human_ref",
+        "project_ref",
+        "scenario_refs",
+        "qualified_roles",
+        "boundary_types",
+        "status",
+        "maximum_scope",
+        "evidence_refs",
+        "counter_evidence_refs",
+        "observed_at",
+        "valid_until",
+        "permanent_global_label"
+      ],
+      "title": "HumanCapabilityProfileV1",
+      "type": "object"
+    },
+    "MruResultV1": {
+      "additionalProperties": false,
+      "properties": {
+        "boundary_type": {
+          "$ref": "#/$defs/ReconstructionBoundaryType"
+        },
+        "evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Refs",
+          "type": "array"
+        },
+        "mru_ref": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Mru Ref",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "passed",
+            "failed",
+            "missing",
+            "stale"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "mru_ref",
+        "boundary_type",
+        "status",
+        "evidence_refs"
+      ],
+      "title": "MruResultV1",
+      "type": "object"
     },
     "PrivacyBoundaryV1": {
       "additionalProperties": false,
@@ -117,6 +267,18 @@
       ],
       "title": "PrivacyBoundaryV1",
       "type": "object"
+    },
+    "ReconstructionBoundaryType": {
+      "enum": [
+        "intent_and_non_goals",
+        "critical_failure_path",
+        "affected_parties_and_recipient",
+        "rollback_trigger",
+        "evidence_weakness_and_limitations",
+        "residual_risk"
+      ],
+      "title": "ReconstructionBoundaryType",
+      "type": "string"
     }
   },
   "$id": "cbb.qualified-reconstruction.v1",
@@ -137,11 +299,22 @@
       "title": "Evidence Refs",
       "type": "array"
     },
+    "human_capability_profile": {
+      "$ref": "#/$defs/HumanCapabilityProfileV1"
+    },
     "missing_mru_refs": {
       "items": {
         "type": "string"
       },
       "title": "Missing Mru Refs",
+      "type": "array"
+    },
+    "mru_results": {
+      "items": {
+        "$ref": "#/$defs/MruResultV1"
+      },
+      "minItems": 1,
+      "title": "Mru Results",
       "type": "array"
     },
     "observed_at": {
@@ -164,6 +337,12 @@
     },
     "privacy": {
       "$ref": "#/$defs/PrivacyBoundaryV1"
+    },
+    "project_ref": {
+      "maxLength": 500,
+      "minLength": 1,
+      "title": "Project Ref",
+      "type": "string"
     },
     "qualified_scope": {
       "$ref": "#/$defs/DeliveryScope"
@@ -188,6 +367,20 @@
       "maxLength": 500,
       "minLength": 1,
       "title": "Reviewer Ref",
+      "type": "string"
+    },
+    "reviewer_roles": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Reviewer Roles",
+      "type": "array"
+    },
+    "scenario_ref": {
+      "maxLength": 500,
+      "minLength": 1,
+      "title": "Scenario Ref",
       "type": "string"
     },
     "schema_version": {
@@ -218,6 +411,9 @@
     "reconstruction_id",
     "policy_ref",
     "reviewer_ref",
+    "scenario_ref",
+    "project_ref",
+    "reviewer_roles",
     "status",
     "qualified_scope",
     "active_reconstruction",
@@ -225,6 +421,8 @@
     "required_mrus_total",
     "required_mrus_passed",
     "missing_mru_refs",
+    "mru_results",
+    "human_capability_profile",
     "evidence_refs",
     "observed_at",
     "valid_until",

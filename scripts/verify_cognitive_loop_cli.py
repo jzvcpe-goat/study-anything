@@ -88,7 +88,7 @@ def build_report() -> dict[str, Any]:
             "artifact_json_schema": artifact_json["schema_version"],
             "html_artifact": {
                 "created": html_path.is_file(),
-                "contains_brand": "Cognitive Black Box Protocol" in html,
+                "contains_brand": "Delivery Clearance" in html,
                 "contains_decision_card": "Decision Card" in html,
                 "contains_contract_table": "Contract Files" in html,
                 "contains_redacted_json": "Redacted JSON" in html,

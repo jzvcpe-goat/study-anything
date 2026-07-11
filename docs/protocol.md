@@ -1,9 +1,22 @@
-# Cognitive Black Box Protocol
+# AI Delivery Clearance Protocol
 
-Cognitive Black Box Protocol, or CBB Protocol, is an open receipt protocol for
-scoped AI delivery trust. It defines how a specific AI-generated candidate may move
+Delivery Clearance is an open receipt protocol for scoped AI delivery clearance.
+It defines how a specific AI-generated candidate may move
 from private experimentation into a controlled handoff without treating model
 confidence, AI self-review, or generic human approval as the final trust root.
+
+**未经放行，不得交付。**
+
+**Delivery Clearance does not prove that AI is always correct. It proves why this
+delivery may move forward, to whom, for what purpose, within what limits, and under
+whose responsibility.**
+
+**AI 交付放行协议不证明 AI 永远正确；它证明这次交付为什么可以继续向前、可以交给谁、
+可以用于什么、受到哪些限制，以及由谁承担责任。**
+
+The existing `cbb.*` Protocol v1 schemas and CBB code namespace remain stable
+compatibility identifiers for this reference implementation. They are not the public
+product name.
 
 The protocol governs release, not every thought. Low-impact drafting can remain
 lightweight. Evidence requirements increase when a result reaches a new recipient,
@@ -126,21 +139,24 @@ correctness. Independent human security review remains external to repository CI
 
 ## Canonical V1 Contract Layer
 
-The first Protocol v1 convergence layer now defines six strict canonical objects,
+Protocol v1 defines six strict canonical objects,
 deterministic `cbb-json-c14n-v1` bytes, and scope-narrowing adapters from the shipped
 Dual Loop and Delivery Trust v0 artifacts. Existing script, schema, package, and
 artifact names remain supported.
 
-The canonical contracts now feed the first deterministic Trust Kernel evaluator.
+The canonical contracts feed a deterministic Trust Kernel evaluator.
 The evaluator enforces hard denies, blocking evidence, reviewer reconstruction,
 reference integrity, and monotonic scope ceilings without model, RAG, network, or
-tool authority. The next layer binds those objects with local Ed25519 signatures,
-expiry, optional replay consumption, and supplied-registry revocation checks.
-Outcome degradation and isolated Agentic evidence discovery remain separate
-milestones. See
-[CBB Protocol v1 Canonical Contracts](cbb-protocol-v1-contracts.md) and
-[CBB Protocol v1 Deterministic Trust Kernel](cbb-protocol-v1-kernel.md), and
-[CBB Protocol v1 Local Provenance](cbb-protocol-v1-provenance.md).
+tool authority. Local Ed25519 provenance binds those objects with expiry, optional
+replay consumption, supplied-registry revocation, and tamper checks. Scenario policy
+adds scoped recipients, risk owners, affected parties, safeguards, MRUs, and
+challengeable human/model capability profiles without adding another core receipt.
+Outcome degradation and isolated Agentic evidence discovery remain later milestones.
+See
+[Protocol v1 Canonical Contracts](cbb-protocol-v1-contracts.md) and
+[Protocol v1 Deterministic Trust Kernel](cbb-protocol-v1-kernel.md), and
+[Protocol v1 Local Provenance](cbb-protocol-v1-provenance.md), and
+[Protocol v1 Scenarios And Qualification](cbb-protocol-v1-scenarios-and-qualification.md).
 
 ## Current Verifier Commands
 
@@ -152,6 +168,8 @@ python3 scripts/verify_cbb_v1_kernel.py --check
 python3 scripts/verify_cbb_runtime_isolation.py --check
 python3 scripts/verify_cbb_v1_provenance.py --check
 python3 scripts/verify_cbb_v1_tamper_cases.py --check
+python3 scripts/verify_cbb_v1_scenarios.py --check
+python3 scripts/verify_cbb_v1_qualification.py --check
 python3 scripts/verify_cbb_protocol_contracts.py --check
 python3 scripts/verify_cbb_gate.py --check
 python3 scripts/verify_cbb_receipt_chain.py --check
@@ -164,4 +182,4 @@ python3 scripts/verify_cbb_delivery_harness.py --check
 release validation.
 
 The ordered work needed to converge the existing receipt family into Protocol v1 is
-defined in [CBB Protocol v1 Development Plan](cbb-protocol-v1-development-plan.md).
+defined in [Protocol v1 Development Plan](cbb-protocol-v1-development-plan.md).

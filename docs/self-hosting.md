@@ -1,6 +1,6 @@
 # Self-Hosting
 
-The Cognitive Black Box reference harness and its Study Anything adapter are designed to be self-hosted first.
+The Delivery Clearance reference harness and its Study Anything adapter are designed to be self-hosted first.
 
 ## Requirements
 

@@ -1363,7 +1363,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("docs/release-cleanroom-bootstrap.md", "operator_doc", "Release-only cleanroom bootloader guide for repo-free external adoption."),
     ("docs/release-checklist.md", "operator_doc", "Release gate checklist for platform adoption evidence."),
     ("docs/roadmap.md", "operator_doc", "Roadmap and release track for platform adoption goals."),
-    ("docs/product-positioning.md", "operator_doc", "Canonical Cognitive Black Box Protocol positioning and claim boundary."),
+    ("docs/product-positioning.md", "operator_doc", "Canonical Delivery Clearance positioning and claim boundary."),
     ("docs/architecture.md", "operator_doc", "Protocol-first reference harness architecture and isolation boundary."),
     ("docs/naming-and-compatibility.md", "operator_doc", "Canonical naming, historical identifiers, and migration rules."),
     ("docs/cbb-protocol-v1-development-plan.md", "operator_doc", "CBB Protocol v1 implementation sequence and acceptance matrix."),
@@ -1435,6 +1435,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("docs/cbb-protocol-v1-contracts.md", "operator_doc", "Canonical Protocol v1 schemas, serialization, fixtures, and compatibility guide."),
     ("docs/cbb-protocol-v1-kernel.md", "operator_doc", "Canonical deterministic Trust Kernel and runtime-isolation guide."),
     ("docs/cbb-protocol-v1-provenance.md", "operator_doc", "Canonical local signing, offline verification, and claim-boundary guide."),
+    ("docs/cbb-protocol-v1-scenarios-and-qualification.md", "operator_doc", "Scenario, affected-party, MRU, and scoped capability policy guide."),
     ("docs/receipt-protocol.md", "operator_doc", "Cognitive Black Box metadata-only receipt protocol guide."),
     ("docs/adapters/study-anything.md", "operator_doc", "Study Anything adapter boundary for the Cognitive Black Box protocol."),
     (".cognitive-loop/loops.yaml", "cognitive_loop_contract", "Machine-readable three-loop operating model contract."),
@@ -1627,6 +1628,8 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("platform/generated/study-anything-cbb-runtime-isolation.json", "submission_report", "Static canonical Trust Kernel runtime-isolation report."),
     ("platform/generated/study-anything-cbb-v1-provenance.json", "submission_report", "Local Ed25519 provenance and offline verification report."),
     ("platform/generated/study-anything-cbb-v1-tamper-cases.json", "submission_report", "Canonical object and signature tamper rejection report."),
+    ("platform/generated/study-anything-cbb-v1-scenarios.json", "submission_report", "Deterministic CBB Protocol v1 scenario decision report."),
+    ("platform/generated/study-anything-cbb-v1-qualification.json", "submission_report", "Scoped MRU and human/model qualification verification report."),
     ("platform/generated/study-anything-cbb-protocol-contracts.json", "submission_report", "Cognitive Black Box protocol contract and privacy verification report."),
     ("platform/generated/study-anything-cbb-gate.json", "submission_report", "Cognitive Black Box deterministic delivery gate verification report."),
     ("platform/generated/study-anything-cbb-receipt-chain.json", "submission_report", "Cognitive Black Box tamper-evident receipt-chain verification report for PR 285."),
@@ -2786,6 +2789,12 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("fixtures/cbb-v1-provenance/tampered-receipt.json", "fixture", "Delivery receipt envelope tamper rejection fixture."),
     ("fixtures/cbb-v1-provenance/tampered-signature.json", "fixture", "Signature tamper rejection fixture."),
     ("fixtures/cbb-v1-provenance/wrong-public-key.json", "fixture", "Wrong public key rejection fixture."),
+    ("fixtures/cbb-v1-scenarios/personal-local-prototype.json", "fixture", "Personal-local scenario allow fixture."),
+    ("fixtures/cbb-v1-scenarios/public-fake-data-demo.json", "fixture", "Public fake-data demo allow fixture."),
+    ("fixtures/cbb-v1-scenarios/limited-beta.json", "fixture", "Limited-beta candidate fixture."),
+    ("fixtures/cbb-v1-scenarios/paid-customer-candidate.json", "fixture", "Controlled paid-customer candidate fixture."),
+    ("fixtures/cbb-v1-scenarios/production-candidate-blocked.json", "fixture", "Production candidate missing-evidence fixture."),
+    ("fixtures/cbb-v1-scenarios/regulated-or-irreversible-blocked.json", "fixture", "Regulated or irreversible hard-deny fixture."),
     ("scripts/generate_cbb_v1_contract_assets.py", "generator", "Generate canonical CBB Protocol v1 schemas and deterministic fixtures."),
     ("scripts/generate_cbb_v1_provenance_assets.py", "generator", "Generate deterministic public-only CBB Protocol v1 provenance fixtures."),
     ("scripts/verify_cbb_v1_contracts.py", "verification", "Verify canonical CBB Protocol v1 contracts and deterministic serialization."),
@@ -2795,6 +2804,9 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("scripts/cbb_provenance.py", "cli", "Generate local keys, sign canonical receipt sets, and verify packages offline."),
     ("scripts/verify_cbb_v1_provenance.py", "verification", "Verify local signing, expiry, revocation, replay, and scope boundaries."),
     ("scripts/verify_cbb_v1_tamper_cases.py", "verification", "Verify canonical object, signature, and public-key tamper rejection."),
+    ("scripts/generate_cbb_v1_scenario_assets.py", "generator", "Generate deterministic CBB Protocol v1 scenario fixtures."),
+    ("scripts/verify_cbb_v1_scenarios.py", "verification", "Verify scenario scope, actor, safeguard, and hard-deny decisions."),
+    ("scripts/verify_cbb_v1_qualification.py", "verification", "Verify MRU and scoped human/model capability boundaries."),
     ("scripts/verify_cbb_protocol_contracts.py", "verification", "Cognitive Black Box protocol contract and metadata-only privacy verifier."),
     ("scripts/verify_cbb_positioning.py", "verification", "Verify protocol-first positioning, compatibility boundaries, and obsolete-brand removal."),
     ("scripts/verify_cbb_gate.py", "verification", "Cognitive Black Box delivery gate pass/fail fixture verifier."),
@@ -3176,11 +3188,16 @@ def validate_source_contract() -> None:
 
 
 def pack_readme() -> str:
-    return """# CBB Reference Harness Platform Adoption Pack
+    return """# Delivery Clearance Platform Adoption Pack
 
 This archive is the copy-ready integration bundle for Kimi Work, Codex,
 WorkBuddy-style HTTP tool workspaces, and other platform Agents. It carries the
-historical Study Anything adapter interfaces; it is not the CBB Protocol itself.
+historical Study Anything adapter and `cbb.*` compatibility interfaces; it is not
+the AI Delivery Clearance Protocol itself.
+
+Delivery Clearance does not prove that AI is always correct. It proves why this
+delivery may move forward, to whom, for what purpose, within what limits, and under
+whose responsibility. No clearance, no delivery.
 
 Use it when the platform Agent owns browsing, files, video slicing, outside
 tools, real model credentials, and conversation. The Study Anything adapter owns

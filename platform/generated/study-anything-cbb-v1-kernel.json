@@ -65,8 +65,13 @@
       "case_id": "stale-reconstruction",
       "hard_denies_triggered": [],
       "missing_evidence_types": [
+        "mru:affected-party-boundary",
+        "mru:critical-failure-path",
+        "mru:rollback-trigger",
         "qualified_reconstruction",
-        "role:qualified_reviewer"
+        "role:operational_reviewer",
+        "role:qualified_reviewer",
+        "role:technical_reviewer"
       ],
       "reasons": [
         "required_evidence_unavailable"

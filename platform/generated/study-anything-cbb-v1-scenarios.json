@@ -1,0 +1,171 @@
+{
+  "claim_boundary": "This verifies deterministic local scenario contracts and rerun sensitivity. It does not prove production delivery, legal or security certification, real affected-party consent, customer outcomes, or independent audit completion.",
+  "privacy": {
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "network_calls_performed": false,
+    "personal_identity_included": false,
+    "production_mutation_performed": false,
+    "raw_customer_payloads_included": false
+  },
+  "required_scenario_classes": [
+    "personal_local_prototype",
+    "public_fake_data_demo",
+    "limited_beta",
+    "paid_customer_candidate",
+    "production_candidate",
+    "regulated_or_irreversible"
+  ],
+  "scenario_count": 6,
+  "scenarios": [
+    {
+      "affected_party_count": 1,
+      "approved_scope": "limited_beta",
+      "case_id": "limited-beta",
+      "checks": {
+        "approved_scope_matches": true,
+        "decision_status_matches": true,
+        "model_ref_bound": true,
+        "no_global_human_label": true,
+        "policy_digest_matches": true,
+        "recipient_has_no_automatic_authority": true,
+        "scenario_ref_bound": true
+      },
+      "decision_status": "allow",
+      "maximum_scope": "limited_beta",
+      "omitted_evidence": [],
+      "recipient_external": true,
+      "required_mru_count": 6,
+      "required_role_count": 4,
+      "risk_owner_required": true,
+      "scenario_class": "limited_beta"
+    },
+    {
+      "affected_party_count": 1,
+      "approved_scope": "controlled_customer_handoff",
+      "case_id": "paid-customer-candidate",
+      "checks": {
+        "approved_scope_matches": true,
+        "decision_status_matches": true,
+        "model_ref_bound": true,
+        "no_global_human_label": true,
+        "policy_digest_matches": true,
+        "recipient_has_no_automatic_authority": true,
+        "scenario_ref_bound": true
+      },
+      "decision_status": "allow",
+      "maximum_scope": "controlled_customer_handoff",
+      "omitted_evidence": [],
+      "recipient_external": true,
+      "required_mru_count": 6,
+      "required_role_count": 4,
+      "risk_owner_required": true,
+      "scenario_class": "paid_customer_candidate"
+    },
+    {
+      "affected_party_count": 0,
+      "approved_scope": "personal_local",
+      "case_id": "personal-local-prototype",
+      "checks": {
+        "approved_scope_matches": true,
+        "decision_status_matches": true,
+        "model_ref_bound": true,
+        "no_global_human_label": true,
+        "policy_digest_matches": true,
+        "recipient_has_no_automatic_authority": true,
+        "scenario_ref_bound": true
+      },
+      "decision_status": "allow",
+      "maximum_scope": "personal_local",
+      "omitted_evidence": [],
+      "recipient_external": false,
+      "required_mru_count": 3,
+      "required_role_count": 1,
+      "risk_owner_required": false,
+      "scenario_class": "personal_local_prototype"
+    },
+    {
+      "affected_party_count": 1,
+      "approved_scope": "blocked",
+      "case_id": "production-candidate-blocked",
+      "checks": {
+        "approved_scope_matches": true,
+        "decision_status_matches": true,
+        "model_ref_bound": true,
+        "no_global_human_label": true,
+        "policy_digest_matches": true,
+        "recipient_has_no_automatic_authority": true,
+        "scenario_ref_bound": true
+      },
+      "decision_status": "needs_evidence",
+      "maximum_scope": "production_candidate",
+      "omitted_evidence": [
+        "domain_review",
+        "security_review",
+        "deployment_approval",
+        "affected_party_protection"
+      ],
+      "recipient_external": true,
+      "required_mru_count": 6,
+      "required_role_count": 7,
+      "risk_owner_required": true,
+      "scenario_class": "production_candidate"
+    },
+    {
+      "affected_party_count": 0,
+      "approved_scope": "public_demo",
+      "case_id": "public-fake-data-demo",
+      "checks": {
+        "approved_scope_matches": true,
+        "decision_status_matches": true,
+        "model_ref_bound": true,
+        "no_global_human_label": true,
+        "policy_digest_matches": true,
+        "recipient_has_no_automatic_authority": true,
+        "scenario_ref_bound": true
+      },
+      "decision_status": "allow",
+      "maximum_scope": "public_demo",
+      "omitted_evidence": [],
+      "recipient_external": true,
+      "required_mru_count": 4,
+      "required_role_count": 1,
+      "risk_owner_required": false,
+      "scenario_class": "public_fake_data_demo"
+    },
+    {
+      "affected_party_count": 1,
+      "approved_scope": "blocked",
+      "case_id": "regulated-or-irreversible-blocked",
+      "checks": {
+        "approved_scope_matches": true,
+        "decision_status_matches": true,
+        "model_ref_bound": true,
+        "no_global_human_label": true,
+        "policy_digest_matches": true,
+        "recipient_has_no_automatic_authority": true,
+        "scenario_ref_bound": true
+      },
+      "decision_status": "block",
+      "maximum_scope": "blocked",
+      "omitted_evidence": [],
+      "recipient_external": true,
+      "required_mru_count": 6,
+      "required_role_count": 2,
+      "risk_owner_required": false,
+      "scenario_class": "regulated_or_irreversible"
+    }
+  ],
+  "schema_version": "cbb-v1-scenario-verification-v1",
+  "scope_sensitive_reruns": {
+    "affected_party_change_changes_decision_id": true,
+    "affected_party_change_changes_policy_digest": true,
+    "impact_change_changes_decision_id": true,
+    "impact_change_changes_policy_digest": true,
+    "model_change_changes_decision_id": true,
+    "model_change_changes_policy_digest": true,
+    "recipient_change_changes_decision_id": true,
+    "recipient_change_changes_policy_digest": true
+  },
+  "status": "pass"
+}

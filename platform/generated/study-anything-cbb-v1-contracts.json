@@ -13,8 +13,8 @@
   ],
   "canonicalization": {
     "algorithm": "cbb-json-c14n-v1",
-    "byte_count": 1655,
-    "sha256": "1b3994554184f32f9e5372d0c4c5ad6506a2898da82255c05829b5fb8cd0c550",
+    "byte_count": 3610,
+    "sha256": "0ae390f48af496bcd300f762f0356b263f45ea1aa4ebc0698848ff215a7851b4",
     "stable_across_key_order": true
   },
   "claim_boundary": "This verifies local deterministic Protocol v1 contracts, schemas, fixtures, and canonical JSON bytes. It does not prove production delivery, portable cryptographic signing, customer outcomes, safe Agentic evolution, or independent audit completion.",
@@ -79,32 +79,32 @@
     {
       "path": "platform/schemas/cbb/cbb.trust-policy.v1.schema.json",
       "schema_version": "cbb.trust-policy.v1",
-      "sha256": "029c88a8cc1010a9f519ee300c7bb2d67cecab32db16f9ae8cce272acf90f728"
+      "sha256": "0664c9ddebb8e706a73a923a8bbd472177e2c448b803e2215673db1dcfbfdaad"
     },
     {
       "path": "platform/schemas/cbb/cbb.evidence-bundle.v1.schema.json",
       "schema_version": "cbb.evidence-bundle.v1",
-      "sha256": "a5a7862ad6f89c577895c9471143e8ce9d25f799568675dd603208ac543d9e24"
+      "sha256": "4a934ce29ec11f71c0e3d9862bc8c40af1a6f6f1587a25fa54542a81d0ab2853"
     },
     {
       "path": "platform/schemas/cbb/cbb.qualified-reconstruction.v1.schema.json",
       "schema_version": "cbb.qualified-reconstruction.v1",
-      "sha256": "369f0c449ce6856974a4dd8cbcd9325a085b469807709c10cd6db4b7e2473cf3"
+      "sha256": "8436a79633740962087148212fe26769fb83f3ac520d8632b13cda1bb5420777"
     },
     {
       "path": "platform/schemas/cbb/cbb.gate-decision.v1.schema.json",
       "schema_version": "cbb.gate-decision.v1",
-      "sha256": "9e52c3c088c501c90bf04dd467614c75a7de4033e97bdb3a66098c2250b8bbd6"
+      "sha256": "298cc1e6993a4989e4fc0de03a3e4085c630f45b3184b4cd0813a4bd060207b7"
     },
     {
       "path": "platform/schemas/cbb/cbb.delivery-trust-receipt.v1.schema.json",
       "schema_version": "cbb.delivery-trust-receipt.v1",
-      "sha256": "bf4b2f3e56951425b403113254281c442c9efe76a9ea811cd03efefc084ef05a"
+      "sha256": "50e8a1b10459b2c6998528a6f76b00b56155d4ed6509b9b3acf80f04612ed2dc"
     },
     {
       "path": "platform/schemas/cbb/cbb.receipt-provenance.v1.schema.json",
       "schema_version": "cbb.receipt-provenance.v1",
-      "sha256": "2fa5a4be60f0f622f3b4f529c46432a816765260ea0aff1fd382ecca0b32e2e5"
+      "sha256": "77e369177cb7d06bdb720218785c6d0eebb8d98fb0f6f60d5ed58a8a6dd2188f"
     }
   ],
   "states": {

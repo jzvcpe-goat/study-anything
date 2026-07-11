@@ -14,12 +14,17 @@
       ]
     },
     "decided_at": "2026-06-28T00:00:00Z",
-    "decision_id": "cbb-decision:4c44476813d581cc6a87dca49c4f08f2",
+    "decision_id": "cbb-decision:84c716775a52f500de77b97a0206369d",
     "evidence_bundle_ref": "cbb-evidence:kernel-demo-001",
     "hard_denies_triggered": [],
     "missing_evidence_types": [
+      "mru:affected-party-boundary",
+      "mru:critical-failure-path",
+      "mru:rollback-trigger",
       "qualified_reconstruction",
-      "role:qualified_reviewer"
+      "role:operational_reviewer",
+      "role:qualified_reviewer",
+      "role:technical_reviewer"
     ],
     "policy_ref": "cbb-policy:kernel-demo-001",
     "privacy": {
@@ -41,10 +46,14 @@
     "reconstruction_ref": "cbb-reconstruction:kernel-demo-001",
     "schema_version": "cbb.gate-decision.v1",
     "source_decision_refs": [
+      "appeal-path.json",
       "attention-reconstruction-summary.json",
+      "disclosure-notice.json",
       "dual-loop-gate-receipt.json",
       "failure-contract.json",
       "policy:cbb-policy:kernel-demo-001",
+      "redress-path.json",
+      "risk-owner-scope.json",
       "sandbox-receipt.json"
     ],
     "status": "needs_evidence",
@@ -97,6 +106,50 @@
           "source_schema_version": "dual-loop-gate-receipt-v1",
           "status": "passed",
           "supported_scope": "controlled_customer_handoff"
+        },
+        {
+          "evidence_id": "evidence:risk-owner-001",
+          "evidence_type": "risk_owner_acceptance",
+          "metadata": {
+            "scoped_acceptance": true
+          },
+          "source_ref": "risk-owner-scope.json",
+          "source_schema_version": "risk-owner-scope-v1",
+          "status": "passed",
+          "supported_scope": "controlled_customer_handoff"
+        },
+        {
+          "evidence_id": "evidence:disclosure-001",
+          "evidence_type": "disclosure_notice",
+          "metadata": {
+            "recipient_scope_bound": true
+          },
+          "source_ref": "disclosure-notice.json",
+          "source_schema_version": "cbb.safeguard-evidence.v1",
+          "status": "passed",
+          "supported_scope": "controlled_customer_handoff"
+        },
+        {
+          "evidence_id": "evidence:appeal-001",
+          "evidence_type": "appeal_path",
+          "metadata": {
+            "human_fallback": true
+          },
+          "source_ref": "appeal-path.json",
+          "source_schema_version": "cbb.safeguard-evidence.v1",
+          "status": "passed",
+          "supported_scope": "controlled_customer_handoff"
+        },
+        {
+          "evidence_id": "evidence:redress-001",
+          "evidence_type": "redress_path",
+          "metadata": {
+            "bounded_redress": true
+          },
+          "source_ref": "redress-path.json",
+          "source_schema_version": "cbb.safeguard-evidence.v1",
+          "status": "passed",
+          "supported_scope": "controlled_customer_handoff"
         }
       ],
       "maximum_supported_scope": "controlled_customer_handoff",
@@ -135,6 +188,28 @@
         "unbounded_real_user_exposure"
       ],
       "maximum_scope": "controlled_customer_handoff",
+      "model_capability_profile": {
+        "counter_evidence_refs": [],
+        "evidence_refs": [
+          "model-replay-evidence.json"
+        ],
+        "known_failure_modes": [
+          "cross_file_effects_may_be_missed"
+        ],
+        "maximum_autonomy_scope": "controlled_customer_handoff",
+        "model_ref": "model:kernel-fixture",
+        "observed_at": "2026-06-28T00:00:00Z",
+        "profile_id": "model-capability:kernel-fixture",
+        "scenario_refs": [
+          "scenario:controlled-customer-handoff"
+        ],
+        "status": "observed",
+        "task_types": [
+          "metadata_only_customer_handoff"
+        ],
+        "valid_until": "2026-09-26T00:00:00Z",
+        "vendor_claims_sufficient": false
+      },
       "policy_id": "cbb-policy:kernel-demo-001",
       "privacy": {
         "attention_stream_included": false,
@@ -169,16 +244,115 @@
           "blocking": true,
           "evidence_type": "dual_loop_gate",
           "required_for_scope": "controlled_customer_handoff"
+        },
+        {
+          "blocking": true,
+          "evidence_type": "risk_owner_acceptance",
+          "required_for_scope": "controlled_customer_handoff"
+        },
+        {
+          "blocking": true,
+          "evidence_type": "disclosure_notice",
+          "required_for_scope": "controlled_customer_handoff"
+        },
+        {
+          "blocking": true,
+          "evidence_type": "appeal_path",
+          "required_for_scope": "controlled_customer_handoff"
+        },
+        {
+          "blocking": true,
+          "evidence_type": "redress_path",
+          "required_for_scope": "controlled_customer_handoff"
+        }
+      ],
+      "required_mrus": [
+        {
+          "blocks_promotion": true,
+          "boundary_type": "critical_failure_path",
+          "evidence_kind": "active_reconstruction",
+          "mru_ref": "mru:critical-failure-path",
+          "required_for_scope": "controlled_customer_handoff"
+        },
+        {
+          "blocks_promotion": true,
+          "boundary_type": "rollback_trigger",
+          "evidence_kind": "active_reconstruction",
+          "mru_ref": "mru:rollback-trigger",
+          "required_for_scope": "controlled_customer_handoff"
+        },
+        {
+          "blocks_promotion": true,
+          "boundary_type": "affected_parties_and_recipient",
+          "evidence_kind": "active_reconstruction",
+          "mru_ref": "mru:affected-party-boundary",
+          "required_for_scope": "controlled_customer_handoff"
         }
       ],
       "required_roles": [
-        "qualified_reviewer"
+        "qualified_reviewer",
+        "technical_reviewer",
+        "operational_reviewer",
+        "risk_owner"
       ],
       "risk_budget": {
         "irreversible_external_effects_allowed": false,
         "level": "medium",
         "production_mutation_allowed": false,
         "real_user_exposure_allowed": false
+      },
+      "scenario": {
+        "affected_parties": [
+          {
+            "appeal_required": true,
+            "disclosure_required": true,
+            "impact_classes": [
+              "service_behavior"
+            ],
+            "party_kind": "customer_user",
+            "party_ref": "affected-party:customer-user",
+            "redress_required": true
+          }
+        ],
+        "appeal": {
+          "evidence_type": "appeal_path",
+          "human_fallback_required": true,
+          "mechanism_ref": "mechanism:human-appeal",
+          "required": true
+        },
+        "disclosure": {
+          "evidence_type": "disclosure_notice",
+          "human_fallback_required": false,
+          "mechanism_ref": "mechanism:customer-disclosure",
+          "required": true
+        },
+        "impact_classes": [
+          "customer_visible_candidate"
+        ],
+        "maximum_scope": "controlled_customer_handoff",
+        "model_ref": "model:kernel-fixture",
+        "project_ref": "project:kernel-demo",
+        "recipient": {
+          "automatic_execution_authority": false,
+          "external": true,
+          "recipient_kind": "paid_customer_operator",
+          "recipient_ref": "recipient:customer-operator"
+        },
+        "redress": {
+          "evidence_type": "redress_path",
+          "human_fallback_required": true,
+          "mechanism_ref": "mechanism:customer-redress",
+          "required": true
+        },
+        "regulated_or_irreversible": false,
+        "risk_owner": {
+          "acceptance_evidence_type": "risk_owner_acceptance",
+          "accepted_scope_ceiling": "controlled_customer_handoff",
+          "required": true,
+          "risk_owner_ref": "risk-owner:kernel-fixture"
+        },
+        "scenario_class": "paid_customer_candidate",
+        "scenario_ref": "scenario:controlled-customer-handoff"
       },
       "scenario_ref": "scenario:controlled-customer-handoff",
       "schema_version": "cbb.trust-policy.v1",
@@ -198,8 +372,57 @@
       "evidence_refs": [
         "attention-reconstruction-summary.json"
       ],
+      "human_capability_profile": {
+        "boundary_types": [
+          "critical_failure_path",
+          "rollback_trigger",
+          "affected_parties_and_recipient"
+        ],
+        "counter_evidence_refs": [],
+        "evidence_refs": [
+          "attention-reconstruction-summary.json"
+        ],
+        "human_ref": "reviewer:kernel-fixture",
+        "maximum_scope": "blocked",
+        "observed_at": "2026-06-28T00:00:00Z",
+        "permanent_global_label": false,
+        "profile_id": "human-capability:kernel-fixture",
+        "project_ref": "project:kernel-demo",
+        "qualified_roles": [
+          "qualified_reviewer",
+          "technical_reviewer",
+          "operational_reviewer"
+        ],
+        "scenario_refs": [
+          "scenario:controlled-customer-handoff"
+        ],
+        "status": "stale",
+        "valid_until": "2026-06-27T00:00:00Z"
+      },
       "missing_mru_refs": [
-        "mru:rollback-boundary"
+        "mru:affected-party-boundary",
+        "mru:critical-failure-path",
+        "mru:rollback-trigger"
+      ],
+      "mru_results": [
+        {
+          "boundary_type": "critical_failure_path",
+          "evidence_refs": [],
+          "mru_ref": "mru:critical-failure-path",
+          "status": "stale"
+        },
+        {
+          "boundary_type": "rollback_trigger",
+          "evidence_refs": [],
+          "mru_ref": "mru:rollback-trigger",
+          "status": "stale"
+        },
+        {
+          "boundary_type": "affected_parties_and_recipient",
+          "evidence_refs": [],
+          "mru_ref": "mru:affected-party-boundary",
+          "status": "stale"
+        }
       ],
       "observed_at": "2026-06-28T00:00:00Z",
       "passive_attention_only": false,
@@ -217,11 +440,18 @@
         "raw_source_text_included": false,
         "signed_urls_included": false
       },
+      "project_ref": "project:kernel-demo",
       "qualified_scope": "blocked",
       "reconstruction_id": "cbb-reconstruction:kernel-demo-001",
       "required_mrus_passed": 0,
-      "required_mrus_total": 2,
+      "required_mrus_total": 3,
       "reviewer_ref": "reviewer:kernel-fixture",
+      "reviewer_roles": [
+        "qualified_reviewer",
+        "technical_reviewer",
+        "operational_reviewer"
+      ],
+      "scenario_ref": "scenario:controlled-customer-handoff",
       "schema_version": "cbb.qualified-reconstruction.v1",
       "status": "stale",
       "valid_until": "2026-06-27T00:00:00Z"

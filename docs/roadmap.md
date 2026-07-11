@@ -2,12 +2,16 @@
 
 ## North Star
 
-CBB Protocol should become a vendor-neutral way to answer one question:
+AI Delivery Clearance Protocol is the final open protocol before an AI delivery crosses a real-world
+responsibility boundary. It must turn unbounded AI review into bounded human
+decisions without weakening evidence or hiding residual risk.
+
+Delivery Clearance should become a vendor-neutral way to answer one question:
 
 > Given this candidate, policy, evidence, human capability, model capability,
 > recipient, affected parties, and history, how far may the result propagate now?
 
-认知黑箱协议要成为一个厂商中立的回答方式：在当前候选物、策略、证据、人类能力、
+AI 交付放行协议要成为一个厂商中立的回答方式：在当前候选物、策略、证据、人类能力、
 模型能力、接收者、受影响者和历史条件下，这个结果现在可以传播到哪一层现实？
 
 The protocol succeeds when implementations can reduce repeated review friction
@@ -19,14 +23,15 @@ The repository already contains a broad deterministic alpha:
 
 - Dual-Loop contracts and negative fixtures;
 - Delivery Trust Receipt and Customer Handoff Package;
-- CBB claim-boundary, trust-root, reviewer, risk-owner, decision, receipt-chain,
+- Protocol v1 claim-boundary, trust-root, reviewer, risk-owner, decision, receipt-chain,
   self-intake, and delivery-scenario receipts;
 - local API, Skill, platform-Agent, Docker, and static artifact adapters;
 - release, adoption, security, and external-audit preparation evidence.
 
-This breadth is useful, but Protocol v1 requires convergence. The next phase reduces
-parallel terminology, defines canonical schemas, adds provenance and outcome
-semantics, and isolates intelligent evidence discovery from deterministic authority.
+This breadth is useful, but Protocol v1 requires convergence. Canonical schemas, the
+deterministic Trust Kernel, local provenance, and scenario/qualification policy are
+implemented. Outcome semantics and isolation of intelligent evidence discovery from
+deterministic authority remain next.
 
 The public tagged binary/image line remains `v0.3.31-alpha` until another tag is cut.
 Current `main` is later development, not a published-image claim.
@@ -46,7 +51,7 @@ but they do not define the Protocol v1 roadmap:
 
 ## Priority Rule
 
-Until Protocol v1 core gates exist, pause expansion of:
+Until Protocol v1 completion and adoption gates exist, pause expansion of:
 
 - standalone frontend or realtime console productization;
 - new platform plugin families;
@@ -67,8 +72,8 @@ Deliver:
 - naming and compatibility registry;
 - Study Anything documented only as Human Reconstruction / Learning Adapter;
 - Cognitive Loop documented only as an internal evidence/evolution workflow;
-- generated HTML branding updated to CBB Protocol;
-- `verify_cbb_positioning.py --check` in the CBB release gate;
+- generated HTML branding updated to Delivery Clearance;
+- `verify_cbb_positioning.py --check` in the Delivery Clearance release gate;
 - GitHub description and topics aligned after merge.
 
 Exit criteria:
@@ -109,6 +114,9 @@ Progress:
   static runtime-isolation gate, and v0 gate routing are implemented in PR 2;
 - the protocol CLI and independent conformance consumer remain later milestones.
 
+**Status:** implemented for the local deterministic reference harness; independent
+conformance remains M6.
+
 Exit criteria:
 
 - policy plus evidence deterministically reproduces a gate decision;
@@ -136,6 +144,10 @@ Exit criteria:
 - replayed or expired receipts are rejected outside policy;
 - key material and private payloads never enter public receipts.
 
+**Status:** implemented for local Ed25519 identity, offline verification, supplied
+revocation registries, optional nonce consumption, and tamper fixtures. It does not
+prove external signer identity or independent audit completion.
+
 ## M3: Scenario, Qualification, And Affected-Party Policy
 
 **Goal:** replace static roles with scoped, evidence-backed capability and delivery
@@ -156,6 +168,10 @@ Exit criteria:
 - qualification is local, evidence-backed, challengeable, and expiring;
 - new recipient, model, affected party, or impact forces policy reevaluation;
 - high-scope delivery blocks without the required independent roles.
+
+**Status:** implemented for deterministic metadata-only scenarios and scoped
+capability evidence. It does not certify real professional credentials, affected-party
+consent, production readiness, or customer outcomes.
 
 ## M4: Outcome Receipts And Trust Degradation
 
@@ -191,7 +207,7 @@ Deliver:
 - provenance, expiry, and source-trust levels for memory;
 - boundary-update and Trust Recipe proposals;
 - bounded replay, canary, and rollback;
-- `cbb.evolution-gate-receipt.v1` for CBB-on-CBB changes.
+- `cbb.evolution-gate-receipt.v1` for protocol self-changes.
 
 Exit criteria:
 
@@ -263,8 +279,8 @@ phase, including clean clone and dependency installation, to complete.
 ## Detailed Plan
 
 The PR-level implementation sequence, acceptance matrix, risk register, and next
-Codex goal are in [CBB Protocol v1 Development Plan](cbb-protocol-v1-development-plan.md).
+Codex goal are in [Protocol v1 Development Plan](cbb-protocol-v1-development-plan.md).
 
-Canonical contracts, the deterministic Trust Kernel, and local provenance/signing
-are implemented. The next ordered milestone is scenario and qualification policy;
-outcome-driven trust degradation and isolated Agentic evolution follow it.
+Canonical contracts, the deterministic Trust Kernel, local provenance/signing, and
+scenario/qualification policy are implemented. The next ordered milestone is
+outcome-driven trust degradation, followed by isolated Agentic evolution.

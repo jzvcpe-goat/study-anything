@@ -40,7 +40,7 @@ class CBBV1ProvenanceTests(unittest.TestCase):
     def test_signed_package_verifies_offline(self) -> None:
         result = verify_offline_package(signed_package(), now=FIXTURE_NOW)
         self.assertTrue(result.passed, result.reasons)
-        self.assertEqual(result.approved_scope, "controlled_customer_handoff")
+        self.assertEqual(result.approved_scope, "internal_handoff")
 
     def test_unsigned_expired_revoked_and_replayed_packages_fail(self) -> None:
         unsigned = verify_offline_package(unsigned_package(), now=FIXTURE_NOW)
@@ -135,7 +135,7 @@ class CBBV1ProvenanceTests(unittest.TestCase):
                 load_private_key(key_path),
                 signer_id="fixture",
                 key_id="fixture",
-                maximum_scope=DeliveryScope.INTERNAL_HANDOFF,
+                maximum_scope=DeliveryScope.PUBLIC_DEMO,
             )
         narrowed = build_offline_package(
             package.trust_policy,
@@ -147,9 +147,9 @@ class CBBV1ProvenanceTests(unittest.TestCase):
         )
         result = verify_offline_package(narrowed, now=FIXTURE_NOW)
         self.assertTrue(result.passed, result.reasons)
-        self.assertEqual(result.approved_scope, "internal_handoff")
+        self.assertEqual(result.approved_scope, "public_demo")
         payload = narrowed.model_dump(mode="json")
-        payload["claim_boundary"]["maximum_scope"] = "controlled_customer_handoff"
+        payload["claim_boundary"]["maximum_scope"] = "internal_handoff"
         with self.assertRaisesRegex(ValueError, "expands signer scope"):
             OfflineProvenancePackageV1.model_validate(payload)
 

@@ -88,7 +88,7 @@ def sha256_file(path: Path) -> str:
 
 
 OWNER = {
-    "name": "Cognitive Black Box Protocol Maintainers",
+    "name": "Delivery Clearance Maintainers",
     "url": "https://github.com/jzvcpe-goat/study-anything",
 }
 
@@ -108,7 +108,7 @@ def marketplace_payload() -> dict[str, Any]:
     return {
         "name": "study-anything",
         "description": (
-            "Cognitive Black Box Protocol adapter for source-bound human reconstruction "
+            "Delivery Clearance adapter for source-bound human reconstruction "
             "in CodeBuddy/WorkBuddy."
         ),
         "version": VERSION,

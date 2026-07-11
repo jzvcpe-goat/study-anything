@@ -22,8 +22,9 @@ def test_cbb_positioning_report_matches_protocol_first_contract() -> None:
     report = module.build_report()
 
     assert report["status"] == "pass"
-    assert report["canonical_name"] == "Cognitive Black Box Protocol"
-    assert report["reference_implementation"] == "CBB Reference Harness"
+    assert report["canonical_name"] == "Delivery Clearance"
+    assert report["canonical_protocol_name"] == "AI Delivery Clearance Protocol"
+    assert report["reference_implementation"] == "Delivery Clearance Reference Harness"
     assert report["study_anything_role"] == "Human Reconstruction / Learning Adapter"
     assert report["legacy_leakage"]["findings"] == []
     assert report["package_metadata"]["distribution_name"] == "study-anything"

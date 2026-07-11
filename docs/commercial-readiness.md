@@ -1,6 +1,6 @@
 # Commercial Readiness
 
-This repository is the public local-first reference harness for Cognitive Black Box Protocol, with a
+This repository is the public local-first reference harness for AI Delivery Clearance Protocol, with a
 machine-readable readiness contract for its historical `study-anything` distribution. The current
 path is GitHub OSS, protocol conformance, and platform-Agent adoption, not a paid standalone app.
 

@@ -13,9 +13,10 @@ packages, routes, schemas, receipts, fixtures, or downstream adopters.
 
 | Name | Meaning | Public status |
 |---|---|---|
-| Cognitive Black Box Protocol | Open protocol for scoped AI delivery trust | Primary name |
-| CBB Protocol | Short form | Primary short name |
-| CBB Reference Harness | This repository's local deterministic implementation | Primary implementation name |
+| Delivery Clearance | Public product identity | Primary name |
+| AI Delivery Clearance Protocol | Open protocol for scoped AI delivery clearance | Primary protocol name |
+| AI 交付放行协议 | Canonical Chinese protocol name | Primary Chinese name |
+| Delivery Clearance Reference Harness | This repository's local deterministic implementation | Primary implementation name |
 | Dual Loop | Controlled Failure plus Qualified Human Reconstruction | Core mechanism |
 | Trust Kernel | Deterministic, model-free authority layer | Core architecture term |
 | Evolution Layer | Agentic/RAG/tool-assisted proposal and evidence layer | Adaptive architecture term |
@@ -23,12 +24,14 @@ packages, routes, schemas, receipts, fixtures, or downstream adopters.
 | Customer Handoff Package | Portable package above an allowed receipt | Package, not trust source |
 | Study Anything Adapter | Human Reconstruction / Learning Adapter | Adapter name |
 | Cognitive Loop | Internal evidence and evolution workflow | Internal subsystem |
+| CBB / `cbb.*` | Existing Protocol v1 schema and implementation namespace | Compatibility only |
 
 ## Compatibility-Only Identifiers
 
 The following identifiers remain because existing code and adopters depend on them:
 
 - GitHub repository name `study-anything`;
+- Protocol v1 `cbb.*` schema identifiers and `apps/api/study_anything/cbb/` modules;
 - Python distribution `study-anything`;
 - Python package `study_anything`;
 - `/v1/...` API routes and existing `study-anything-*` schema versions;
@@ -47,6 +50,7 @@ The following wording must not appear in current primary positioning, repository
 metadata, API title, or generated artifact branding:
 
 - `Cognitive Loop System` as the project name;
+- Cognitive Black Box Protocol or CBB Protocol as the current public product name;
 - Study Anything as the main product or protocol;
 - “learning system” as the repository's primary category;
 - Personal Plugin Mode or Professional HTML Artifact Mode as top-level product
@@ -94,20 +98,21 @@ The GitHub repository name is historical. Until a deliberate repository migratio
 approved, the public description and topics must carry the current identity:
 
 ```text
-Cognitive Black Box Protocol: an open, local-first receipt protocol and reference
-harness for scoped AI delivery trust.
+Delivery Clearance: AI Delivery Clearance Protocol. No clearance, no delivery.
+AI 交付放行协议：未经放行，不得交付。
 ```
 
 Recommended topics:
 
 ```text
-cognitive-black-box
+delivery-clearance
+ai-delivery-clearance
 ai-delivery-trust
 trust-receipts
 dual-loop
 local-first
 ai-agents
-human-in-the-loop
+human-reconstruction
 ```
 
 ## Enforcement
@@ -119,5 +124,5 @@ python3 scripts/verify_cbb_positioning.py --check
 ```
 
 The verifier checks canonical terms, banned current framing, compatibility notes,
-package metadata, API title, generated artifact branding, and CBB release-gate
+package metadata, API title, generated artifact branding, and Delivery Clearance release-gate
 wiring. It intentionally excludes historical release notes and quality-audit records.

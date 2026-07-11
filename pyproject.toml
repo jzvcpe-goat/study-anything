@@ -1,11 +1,11 @@
 [project]
 name = "study-anything"
 version = "0.3.31-alpha"
-description = "Open, local-first protocol and reference harness for scoped AI delivery trust."
+description = "Delivery Clearance: open, local-first AI Delivery Clearance Protocol and reference harness."
 readme = "README.md"
 requires-python = ">=3.11,<3.13"
 license = "Apache-2.0"
-authors = [{ name = "Cognitive Black Box Protocol contributors" }]
+authors = [{ name = "Delivery Clearance contributors" }]
 dependencies = [
   "fastapi>=0.115.0",
   "uvicorn>=0.30.0",
