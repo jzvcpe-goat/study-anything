@@ -37,6 +37,8 @@ EXPECTED_CBB_V1_PACK_ASSETS = {
     "docs/cbb-protocol-v1-outcomes.md",
     "docs/cbb-protocol-v1-agentic-evolution.md",
     "docs/cbb-protocol-v1-conformance.md",
+    "docs/cbb-controlled-adoption.md",
+    "docs/cbb-external-audit-intake.md",
     "docs/protocol-governance.md",
     "docs/extensions-and-versioning.md",
     "docs/compatibility-and-trademark.md",
@@ -57,6 +59,8 @@ EXPECTED_CBB_V1_PACK_ASSETS = {
     "platform/generated/study-anything-cbb-v1-conformance-pack.zip",
     "platform/generated/study-anything-cbb-v1-conformance-pack.sha256",
     "platform/generated/study-anything-cbb-v1-external-consumer.json",
+    "platform/generated/study-anything-cbb-controlled-adoption-outcomes.json",
+    "platform/generated/study-anything-cbb-external-audit-intake.json",
     "conformance/python/cbb_v1_consumer.py",
     "scripts/generate_cbb_v1_conformance_pack.py",
     "scripts/verify_cbb_v1_external_consumer.py",
@@ -68,6 +72,10 @@ EXPECTED_CBB_V1_PACK_ASSETS = {
     "platform/schemas/cbb/cbb.receipt-provenance.v1.schema.json",
     "platform/schemas/cbb/cbb.delivery-outcome-receipt.v1.schema.json",
     "platform/schemas/cbb/cbb.evolution-gate-receipt.v1.schema.json",
+    "platform/schemas/cbb/cbb.controlled-adoption-case.v1.schema.json",
+    "platform/schemas/cbb/cbb.controlled-adoption-receipt.v1.schema.json",
+    "platform/schemas/security/external-security-audit-intake-envelope-v1.schema.json",
+    "platform/schemas/security/external-security-audit-intake-receipt-v1.schema.json",
     "fixtures/cbb-v1-contracts/pass.json",
     "fixtures/cbb-v1-contracts/missing-evidence.json",
     "fixtures/cbb-v1-contracts/hard-deny.json",
@@ -113,6 +121,32 @@ EXPECTED_CBB_V1_PACK_ASSETS = {
     "fixtures/cbb-v1-agentic-evolution/poisoned-memory-needs-evidence.json",
     "fixtures/cbb-v1-agentic-evolution/self-authorization-blocked.json",
     "fixtures/cbb-v1-agentic-evolution/tool-authority-expansion-blocked.json",
+    "fixtures/cbb-controlled-adoption/shadow-pass.json",
+    "fixtures/cbb-controlled-adoption/dogfood-pass.json",
+    "fixtures/cbb-controlled-adoption/canary-scope-expansion-blocked.json",
+    "fixtures/cbb-controlled-adoption/incident-freezes.json",
+    "fixtures/cbb-controlled-adoption/rollback-narrows.json",
+    "fixtures/cbb-controlled-adoption/claim-violation-revokes.json",
+    "fixtures/cbb-controlled-adoption/reopen-requires-fresh-clearance.json",
+    "fixtures/cbb-external-audit-intake/audit-ready.json",
+    "fixtures/cbb-external-audit-intake/synthetic-valid.json",
+    "fixtures/cbb-external-audit-intake/wrong-commit.json",
+    "fixtures/cbb-external-audit-intake/incomplete-scope.json",
+    "fixtures/cbb-external-audit-intake/self-certified.json",
+    "fixtures/cbb-external-audit-intake/open-high.json",
+    "fixtures/cbb-external-audit-intake/invalid-signature.json",
+    "apps/api/study_anything/cbb/adoption/models.py",
+    "apps/api/study_anything/cbb/adoption/evaluator.py",
+    "apps/api/study_anything/cbb/adoption/fixtures.py",
+    "apps/api/study_anything/cbb/audit/models.py",
+    "apps/api/study_anything/cbb/audit/intake.py",
+    "apps/api/study_anything/cbb/audit/fixtures.py",
+    "apps/api/tests/test_cbb_controlled_adoption_audit_intake.py",
+    "scripts/generate_cbb_adoption_audit_assets.py",
+    "scripts/cbb_controlled_adoption.py",
+    "scripts/cbb_external_audit_intake.py",
+    "scripts/verify_cbb_controlled_adoption_outcomes.py",
+    "scripts/verify_cbb_external_audit_intake.py",
 }
 EXPECTED_CBB_V1_PLAN_ASSETS = EXPECTED_CBB_V1_PACK_ASSETS | {
     "docs/quality-audits/phase-31-cbb-protocol-v1-contracts.md",
@@ -122,6 +156,12 @@ EXPECTED_CBB_V1_PLAN_ASSETS = EXPECTED_CBB_V1_PACK_ASSETS | {
     "docs/quality-audits/phase-36-delivery-clearance-outcomes.md",
     "docs/quality-audits/phase-37-agentic-evolution-isolation.md",
     "docs/quality-audits/phase-38-protocol-conformance.md",
+    "docs/quality-audits/phase-39-controlled-adoption-audit-intake.md",
+}
+EXPECTED_ADOPTION_AUDIT_COMMANDS = {
+    "python3 scripts/generate_cbb_adoption_audit_assets.py --check",
+    "python3 scripts/verify_cbb_controlled_adoption_outcomes.py --check",
+    "python3 scripts/verify_cbb_external_audit_intake.py --check",
 }
 LOCAL_PATH_PATTERN = re.compile(r"(?:/Users/|/home/|[A-Za-z]:\\\\Users\\\\)")
 SECRET_PATTERN = re.compile(
@@ -191,6 +231,11 @@ def validate_manifest(manifest: Mapping[str, Any]) -> None:
         EXPECTED_CBB_V1_PACK_ASSETS <= packaged_paths,
         "canonical CBB v1 audit assets are incomplete",
     )
+    require(
+        EXPECTED_ADOPTION_AUDIT_COMMANDS
+        <= set(manifest.get("verification_commands") or []),
+        "controlled-adoption and audit-intake verifier commands are incomplete",
+    )
 
 
 def validate_plan(plan: Mapping[str, Any]) -> None:
@@ -227,6 +272,7 @@ def validate_plan(plan: Mapping[str, Any]) -> None:
             "python3 scripts/verify_cbb_agentic_tool_boundary.py --check",
             "python3 scripts/verify_cbb_memory_quarantine.py --check",
             "python3 scripts/verify_cbb_evolution_gate.py --check",
+            *EXPECTED_ADOPTION_AUDIT_COMMANDS,
         }
         <= set(trust_scope.get("evidence_commands") or []),
         "canonical CBB v1 verifier commands are missing from the audit plan",

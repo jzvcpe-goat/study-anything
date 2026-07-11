@@ -1,0 +1,745 @@
+{
+  "$defs": {
+    "AuditAffectedSurfaceV1": {
+      "additionalProperties": false,
+      "properties": {
+        "component": {
+          "maxLength": 120,
+          "minLength": 2,
+          "title": "Component",
+          "type": "string"
+        },
+        "public_reference": {
+          "maxLength": 240,
+          "minLength": 2,
+          "title": "Public Reference",
+          "type": "string"
+        }
+      },
+      "required": [
+        "component",
+        "public_reference"
+      ],
+      "title": "AuditAffectedSurfaceV1",
+      "type": "object"
+    },
+    "AuditDetachedSignatureV1": {
+      "additionalProperties": false,
+      "properties": {
+        "algorithm": {
+          "const": "ed25519",
+          "title": "Algorithm",
+          "type": "string"
+        },
+        "public_key": {
+          "pattern": "^[A-Za-z0-9_-]{43}$",
+          "title": "Public Key",
+          "type": "string"
+        },
+        "public_key_encoding": {
+          "const": "ed25519-raw-base64url",
+          "title": "Public Key Encoding",
+          "type": "string"
+        },
+        "public_key_fingerprint_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Public Key Fingerprint Sha256",
+          "type": "string"
+        },
+        "signature": {
+          "pattern": "^[A-Za-z0-9_-]{86}$",
+          "title": "Signature",
+          "type": "string"
+        },
+        "signed_payload_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Signed Payload Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "algorithm",
+        "public_key_encoding",
+        "public_key",
+        "public_key_fingerprint_sha256",
+        "signed_payload_sha256",
+        "signature"
+      ],
+      "title": "AuditDetachedSignatureV1",
+      "type": "object"
+    },
+    "AuditEvidenceBindingV1": {
+      "additionalProperties": false,
+      "properties": {
+        "audit_pack_ref": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Audit Pack Ref",
+          "type": "string"
+        },
+        "audit_pack_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Audit Pack Sha256",
+          "type": "string"
+        },
+        "audit_plan_ref": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Audit Plan Ref",
+          "type": "string"
+        },
+        "audit_plan_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Audit Plan Sha256",
+          "type": "string"
+        },
+        "conformance_pack_ref": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Conformance Pack Ref",
+          "type": "string"
+        },
+        "conformance_pack_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Conformance Pack Sha256",
+          "type": "string"
+        },
+        "protocol_version": {
+          "const": "1.0.0",
+          "title": "Protocol Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "protocol_version",
+        "audit_pack_ref",
+        "audit_pack_sha256",
+        "conformance_pack_ref",
+        "conformance_pack_sha256",
+        "audit_plan_ref",
+        "audit_plan_sha256"
+      ],
+      "title": "AuditEvidenceBindingV1",
+      "type": "object"
+    },
+    "AuditFindingCountsV1": {
+      "additionalProperties": false,
+      "properties": {
+        "critical": {
+          "minimum": 0,
+          "title": "Critical",
+          "type": "integer"
+        },
+        "high": {
+          "minimum": 0,
+          "title": "High",
+          "type": "integer"
+        },
+        "informational": {
+          "minimum": 0,
+          "title": "Informational",
+          "type": "integer"
+        },
+        "low": {
+          "minimum": 0,
+          "title": "Low",
+          "type": "integer"
+        },
+        "medium": {
+          "minimum": 0,
+          "title": "Medium",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "critical",
+        "high",
+        "medium",
+        "low",
+        "informational"
+      ],
+      "title": "AuditFindingCountsV1",
+      "type": "object"
+    },
+    "AuditFindingEvidenceV1": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_ref": {
+          "maxLength": 240,
+          "minLength": 2,
+          "title": "Artifact Ref",
+          "type": "string"
+        },
+        "observation": {
+          "maxLength": 500,
+          "minLength": 3,
+          "title": "Observation",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "artifact_ref",
+        "sha256",
+        "observation"
+      ],
+      "title": "AuditFindingEvidenceV1",
+      "type": "object"
+    },
+    "AuditFindingPrivacyV1": {
+      "additionalProperties": false,
+      "properties": {
+        "customer_payloads_included": {
+          "const": false,
+          "title": "Customer Payloads Included",
+          "type": "boolean"
+        },
+        "metadata_only_public_record": {
+          "const": true,
+          "title": "Metadata Only Public Record",
+          "type": "boolean"
+        },
+        "private_exploit_details_included": {
+          "const": false,
+          "title": "Private Exploit Details Included",
+          "type": "boolean"
+        },
+        "real_secrets_included": {
+          "const": false,
+          "title": "Real Secrets Included",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "metadata_only_public_record",
+        "real_secrets_included",
+        "customer_payloads_included",
+        "private_exploit_details_included"
+      ],
+      "title": "AuditFindingPrivacyV1",
+      "type": "object"
+    },
+    "AuditRemediationV1": {
+      "additionalProperties": false,
+      "properties": {
+        "commit_ref": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{40}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Commit Ref"
+        },
+        "owner": {
+          "maxLength": 120,
+          "minLength": 2,
+          "title": "Owner",
+          "type": "string"
+        },
+        "target_date": {
+          "title": "Target Date",
+          "type": "string"
+        }
+      },
+      "required": [
+        "owner",
+        "target_date"
+      ],
+      "title": "AuditRemediationV1",
+      "type": "object"
+    },
+    "AuditReportClaimBoundaryV1": {
+      "additionalProperties": false,
+      "properties": {
+        "audit_completed": {
+          "const": true,
+          "title": "Audit Completed",
+          "type": "boolean"
+        },
+        "general_model_correctness": {
+          "const": false,
+          "title": "General Model Correctness",
+          "type": "boolean"
+        },
+        "legal_certification": {
+          "const": false,
+          "title": "Legal Certification",
+          "type": "boolean"
+        },
+        "production_certification": {
+          "const": false,
+          "title": "Production Certification",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "audit_completed",
+        "production_certification",
+        "legal_certification",
+        "general_model_correctness"
+      ],
+      "title": "AuditReportClaimBoundaryV1",
+      "type": "object"
+    },
+    "AuditReportSignatureMetadataV1": {
+      "additionalProperties": false,
+      "properties": {
+        "method": {
+          "enum": [
+            "gpg",
+            "minisign",
+            "sigstore",
+            "other"
+          ],
+          "title": "Method",
+          "type": "string"
+        },
+        "report_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Report Sha256",
+          "type": "string"
+        },
+        "signature_ref": {
+          "maxLength": 240,
+          "minLength": 3,
+          "title": "Signature Ref",
+          "type": "string"
+        }
+      },
+      "required": [
+        "method",
+        "report_sha256",
+        "signature_ref"
+      ],
+      "title": "AuditReportSignatureMetadataV1",
+      "type": "object"
+    },
+    "AuditRetestV1": {
+      "additionalProperties": false,
+      "properties": {
+        "required": {
+          "title": "Required",
+          "type": "boolean"
+        },
+        "status": {
+          "enum": [
+            "not_started",
+            "passed",
+            "failed",
+            "not_required"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "required",
+        "status"
+      ],
+      "title": "AuditRetestV1",
+      "type": "object"
+    },
+    "AuditSourceClass": {
+      "enum": [
+        "synthetic_fixture",
+        "external_shape_fixture",
+        "external_report"
+      ],
+      "title": "AuditSourceClass",
+      "type": "string"
+    },
+    "AuditorTrustRecordV1": {
+      "additionalProperties": false,
+      "properties": {
+        "fixture_only": {
+          "title": "Fixture Only",
+          "type": "boolean"
+        },
+        "identity_status": {
+          "enum": [
+            "synthetic_fixture",
+            "externally_attested"
+          ],
+          "title": "Identity Status",
+          "type": "string"
+        },
+        "independence_attestation_ref": {
+          "maxLength": 500,
+          "minLength": 3,
+          "title": "Independence Attestation Ref",
+          "type": "string"
+        },
+        "independent_from_repository": {
+          "title": "Independent From Repository",
+          "type": "boolean"
+        },
+        "lead_human_reviewer": {
+          "maxLength": 160,
+          "minLength": 2,
+          "title": "Lead Human Reviewer",
+          "type": "string"
+        },
+        "organization": {
+          "maxLength": 160,
+          "minLength": 2,
+          "title": "Organization",
+          "type": "string"
+        },
+        "public_key_fingerprint_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Public Key Fingerprint Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "organization",
+        "lead_human_reviewer",
+        "public_key_fingerprint_sha256",
+        "identity_status",
+        "independence_attestation_ref",
+        "independent_from_repository",
+        "fixture_only"
+      ],
+      "title": "AuditorTrustRecordV1",
+      "type": "object"
+    },
+    "ExternalSecurityAuditFindingV1": {
+      "$id": "external-security-audit-finding-v1",
+      "additionalProperties": false,
+      "properties": {
+        "affected_surface": {
+          "$ref": "#/$defs/AuditAffectedSurfaceV1"
+        },
+        "category": {
+          "maxLength": 80,
+          "minLength": 3,
+          "title": "Category",
+          "type": "string"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/AuditFindingEvidenceV1"
+          },
+          "minItems": 1,
+          "title": "Evidence",
+          "type": "array"
+        },
+        "finding_id": {
+          "pattern": "^AUD-[0-9]{4}$",
+          "title": "Finding Id",
+          "type": "string"
+        },
+        "impact_summary": {
+          "maxLength": 1000,
+          "minLength": 3,
+          "title": "Impact Summary",
+          "type": "string"
+        },
+        "privacy": {
+          "$ref": "#/$defs/AuditFindingPrivacyV1"
+        },
+        "remediation": {
+          "$ref": "#/$defs/AuditRemediationV1"
+        },
+        "retest": {
+          "$ref": "#/$defs/AuditRetestV1"
+        },
+        "schema_version": {
+          "const": "external-security-audit-finding-v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope_commit": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Scope Commit",
+          "type": "string"
+        },
+        "severity": {
+          "enum": [
+            "critical",
+            "high",
+            "medium",
+            "low",
+            "informational"
+          ],
+          "title": "Severity",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "open",
+            "remediated",
+            "verified",
+            "risk_accepted"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 160,
+          "minLength": 5,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "finding_id",
+        "status",
+        "severity",
+        "title",
+        "category",
+        "scope_commit",
+        "affected_surface",
+        "evidence",
+        "impact_summary",
+        "remediation",
+        "retest",
+        "privacy"
+      ],
+      "title": "ExternalSecurityAuditFindingV1",
+      "type": "object"
+    },
+    "ExternalSecurityAuditReportV1": {
+      "$id": "external-security-audit-report-v1",
+      "additionalProperties": false,
+      "properties": {
+        "audit_status": {
+          "const": "completed_by_independent_auditor",
+          "title": "Audit Status",
+          "type": "string"
+        },
+        "auditor": {
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "boolean"
+              }
+            ]
+          },
+          "title": "Auditor",
+          "type": "object"
+        },
+        "claim_boundary": {
+          "$ref": "#/$defs/AuditReportClaimBoundaryV1"
+        },
+        "decision": {
+          "enum": [
+            "pass",
+            "conditional_pass",
+            "fail"
+          ],
+          "title": "Decision",
+          "type": "string"
+        },
+        "evidence_bindings": {
+          "$ref": "#/$defs/AuditEvidenceBindingV1"
+        },
+        "finding_counts": {
+          "$ref": "#/$defs/AuditFindingCountsV1"
+        },
+        "finding_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Finding Refs",
+          "type": "array"
+        },
+        "repository": {
+          "const": "jzvcpe-goat/study-anything",
+          "title": "Repository",
+          "type": "string"
+        },
+        "review_period": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Review Period",
+          "type": "object"
+        },
+        "schema_version": {
+          "const": "external-security-audit-report-v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope_areas": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Scope Areas",
+          "type": "array"
+        },
+        "scope_commit": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Scope Commit",
+          "type": "string"
+        },
+        "signature": {
+          "$ref": "#/$defs/AuditReportSignatureMetadataV1"
+        }
+      },
+      "required": [
+        "schema_version",
+        "audit_status",
+        "decision",
+        "repository",
+        "scope_commit",
+        "auditor",
+        "review_period",
+        "scope_areas",
+        "evidence_bindings",
+        "finding_refs",
+        "finding_counts",
+        "signature",
+        "claim_boundary"
+      ],
+      "title": "ExternalSecurityAuditReportV1",
+      "type": "object"
+    },
+    "PrivacyBoundaryV1": {
+      "additionalProperties": false,
+      "properties": {
+        "attention_stream_included": {
+          "const": false,
+          "title": "Attention Stream Included",
+          "type": "boolean"
+        },
+        "automatic_customer_send_performed": {
+          "const": false,
+          "title": "Automatic Customer Send Performed",
+          "type": "boolean"
+        },
+        "cookies_or_bearer_tokens_included": {
+          "const": false,
+          "title": "Cookies Or Bearer Tokens Included",
+          "type": "boolean"
+        },
+        "metadata_only": {
+          "const": true,
+          "title": "Metadata Only",
+          "type": "boolean"
+        },
+        "model_credentials_included": {
+          "const": false,
+          "title": "Model Credentials Included",
+          "type": "boolean"
+        },
+        "model_prompts_included": {
+          "const": false,
+          "title": "Model Prompts Included",
+          "type": "boolean"
+        },
+        "production_mutation_performed": {
+          "const": false,
+          "title": "Production Mutation Performed",
+          "type": "boolean"
+        },
+        "raw_customer_payload_included": {
+          "const": false,
+          "title": "Raw Customer Payload Included",
+          "type": "boolean"
+        },
+        "raw_report_text_included": {
+          "const": false,
+          "title": "Raw Report Text Included",
+          "type": "boolean"
+        },
+        "raw_source_text_included": {
+          "const": false,
+          "title": "Raw Source Text Included",
+          "type": "boolean"
+        },
+        "signed_urls_included": {
+          "const": false,
+          "title": "Signed Urls Included",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "metadata_only",
+        "raw_source_text_included",
+        "raw_report_text_included",
+        "raw_customer_payload_included",
+        "attention_stream_included",
+        "model_prompts_included",
+        "model_credentials_included",
+        "cookies_or_bearer_tokens_included",
+        "signed_urls_included",
+        "production_mutation_performed",
+        "automatic_customer_send_performed"
+      ],
+      "title": "PrivacyBoundaryV1",
+      "type": "object"
+    }
+  },
+  "$id": "external-security-audit-intake-envelope-v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "auditor_trust": {
+      "$ref": "#/$defs/AuditorTrustRecordV1"
+    },
+    "detached_signature": {
+      "$ref": "#/$defs/AuditDetachedSignatureV1"
+    },
+    "envelope_id": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Envelope Id",
+      "type": "string"
+    },
+    "findings": {
+      "items": {
+        "$ref": "#/$defs/ExternalSecurityAuditFindingV1"
+      },
+      "title": "Findings",
+      "type": "array"
+    },
+    "privacy": {
+      "$ref": "#/$defs/PrivacyBoundaryV1"
+    },
+    "report": {
+      "$ref": "#/$defs/ExternalSecurityAuditReportV1"
+    },
+    "schema_version": {
+      "const": "external-security-audit-intake-envelope-v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_class": {
+      "$ref": "#/$defs/AuditSourceClass"
+    },
+    "submitted_at": {
+      "maxLength": 64,
+      "minLength": 1,
+      "title": "Submitted At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "envelope_id",
+    "source_class",
+    "report",
+    "findings",
+    "detached_signature",
+    "auditor_trust",
+    "submitted_at",
+    "privacy"
+  ],
+  "title": "ExternalAuditIntakeEnvelopeV1",
+  "type": "object"
+}

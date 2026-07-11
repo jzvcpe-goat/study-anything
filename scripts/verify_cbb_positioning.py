@@ -64,6 +64,7 @@ REQUIRED_TEXT: dict[str, tuple[str, ...]] = {
         "Trust Growth And Degradation",
         "Cross-Implementation Conformance",
         "This is package-independent code, not an independent organization.",
+        "Controlled Adoption And External Audit Intake",
     ),
     "docs/architecture.md": (
         "Delivery Clearance is protocol-first.",
@@ -77,6 +78,7 @@ REQUIRED_TEXT: dict[str, tuple[str, ...]] = {
         "M1: Canonical Protocol v1 Core",
         "M4: Outcome Receipts And Trust Degradation",
         "M6: Conformance And Open Governance",
+        "M7: Controlled Real-World Adoption",
     ),
     "docs/naming-and-compatibility.md": (
         "Delivery Clearance | Public product identity",
@@ -135,6 +137,17 @@ REQUIRED_TEXT: dict[str, tuple[str, ...]] = {
         "without implying endorsement",
         "independent certification program",
     ),
+    "docs/cbb-controlled-adoption.md": (
+        "real_adopter_evidence_count: 0",
+        "No state may expand the source scope.",
+        "do not prove external adoption",
+    ),
+    "docs/cbb-external-audit-intake.md": (
+        "The repository can prepare and verify the channel; it cannot manufacture the auditor",
+        "No repository fixture has `audit_closed`",
+        "Signature And Identity",
+        "issue #414",
+    ),
     "docs/adapters/study-anything.md": (
         "Human Reconstruction / Learning Adapter",
         "not the protocol, the Trust Kernel, or the top-level product identity.",
@@ -152,6 +165,9 @@ REQUIRED_TEXT: dict[str, tuple[str, ...]] = {
         "scripts/verify_cbb_evolution_gate.py --check",
         "scripts/generate_cbb_v1_conformance_pack.py --check",
         "scripts/verify_cbb_v1_external_consumer.py --check",
+        "scripts/generate_cbb_adoption_audit_assets.py --check",
+        "scripts/verify_cbb_controlled_adoption_outcomes.py --check",
+        "scripts/verify_cbb_external_audit_intake.py --check",
     ),
 }
 

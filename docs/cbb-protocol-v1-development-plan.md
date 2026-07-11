@@ -343,6 +343,15 @@ python3 scripts/verify_cbb_external_audit_intake.py --check
 python3 scripts/verify_cbb_controlled_adoption_outcomes.py --check
 ```
 
+**Status:** implemented as a metadata-only intake and workflow skeleton. Seven
+controlled-adoption fixtures cover pass, block, incident, rollback, revocation, and
+reopen behavior without claiming a real adopter. Seven audit-intake fixtures prove
+state separation and reject wrong commits, invalid signatures, incomplete scope, and
+self-certification. The evaluator receives the expected release commit separately;
+external-adopter claims remain blocked pending an attestation contract. Audit identity
+also requires an actual-key fingerprint match and a fingerprint pre-pinned outside the
+submitted envelope. No fixture closes the external audit; issue #414 remains open.
+
 ## 7. Acceptance Matrix
 
 | Area | Minimum passing condition | Evidence |

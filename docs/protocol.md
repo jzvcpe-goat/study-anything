@@ -159,7 +159,12 @@ allowlist, quarantined metadata memory, actor separation, deterministic replay, 
 signed evolution receipt that grants neither automatic apply nor delivery scope. A
 deterministic conformance pack now publishes all eight schemas and bounded vectors. A
 second consumer under `conformance/` independently replays the fixture contract without
-importing the reference package.
+importing the reference package. Controlled-adoption receipts then record bounded
+shadow/dogfood/canary outcomes without expanding that source clearance, while the
+external-audit intake verifies separately supplied report signatures, identity
+attestation, pre-pinned signer fingerprints, exact scope, findings, and remediation
+state without self-certification. External-adopter evidence remains fail-closed until a
+separate independently verifiable adoption-attestation contract exists.
 See
 [Protocol v1 Canonical Contracts](cbb-protocol-v1-contracts.md) and
 [Protocol v1 Deterministic Trust Kernel](cbb-protocol-v1-kernel.md), and
@@ -167,7 +172,9 @@ See
 [Protocol v1 Scenarios And Qualification](cbb-protocol-v1-scenarios-and-qualification.md), and
 [Protocol v1 Outcomes And Trust Degradation](cbb-protocol-v1-outcomes.md), and
 [Protocol v1 Agentic Evidence And Evolution Gate](cbb-protocol-v1-agentic-evolution.md),
-and [Protocol v1 Conformance](cbb-protocol-v1-conformance.md).
+[Protocol v1 Conformance](cbb-protocol-v1-conformance.md),
+[Controlled Adoption Evidence](cbb-controlled-adoption.md), and
+[External Audit Report Intake](cbb-external-audit-intake.md).
 
 ## Current Verifier Commands
 
@@ -187,6 +194,8 @@ python3 scripts/verify_cbb_memory_quarantine.py --check
 python3 scripts/verify_cbb_evolution_gate.py --check
 python3 scripts/generate_cbb_v1_conformance_pack.py --check
 python3 scripts/verify_cbb_v1_external_consumer.py --check
+python3 scripts/verify_cbb_controlled_adoption_outcomes.py --check
+python3 scripts/verify_cbb_external_audit_intake.py --check
 python3 scripts/verify_cbb_protocol_contracts.py --check
 python3 scripts/verify_cbb_gate.py --check
 python3 scripts/verify_cbb_receipt_chain.py --check

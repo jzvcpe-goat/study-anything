@@ -12,10 +12,10 @@
     "open_high_findings_allowed": 0
   },
   "archive": {
-    "bytes": 459021,
+    "bytes": 557585,
     "path": "platform/generated/study-anything-external-security-audit-pack.zip",
     "root": "study-anything-external-security-audit-pack",
-    "sha256": "a511697dd3cdec593b71dfdc8968b39ae8ff3a373bb348337733374fac4bc0f5"
+    "sha256": "5b459c605d1da30c83d9d69cfeaecc626e227163137c9c8748d9a48531e8c112"
   },
   "claim_boundary": {
     "current_claim": "The repository is packaged and ready for an independent security audit at a pinned commit.",
@@ -39,19 +39,19 @@
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/security/audit/README.md",
-      "bytes": 1662,
+      "bytes": 2491,
       "path": "security/audit/README.md",
       "purpose": "Independent auditor start and claim boundary.",
       "role": "auditor_guide",
-      "sha256": "5e050ac71d8c0a823324953a39ab972fdfe88258345c5c2a6d03387e8f2f8699"
+      "sha256": "b4a523002ae0ec7e1c870776747abf2c3bfc2accab9743403f20e8ff57a67a1a"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/security/audit/audit-plan.json",
-      "bytes": 13063,
+      "bytes": 15852,
       "path": "security/audit/audit-plan.json",
       "purpose": "Machine-readable scope, methods, acceptance, and independence rules.",
       "role": "audit_plan",
-      "sha256": "f6b7c3f8be9e69f3c76ddeb669a72767748b4ca9f59559a00489652ddc80bb33"
+      "sha256": "9fe349acd7409db8ad64132fb1cccffdb13ed2f13ccf2413ee1635ba228355f0"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/security/audit/threat-model.md",
@@ -79,11 +79,11 @@
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/security/audit/report-template.md",
-      "bytes": 1517,
+      "bytes": 2094,
       "path": "security/audit/report-template.md",
       "purpose": "Human-readable signed audit report template.",
       "role": "report_template",
-      "sha256": "9cc9e8c6803e5b09934bc914d41f6f378aad44c0c87c02735db57d07b177c362"
+      "sha256": "2f3e2f5b2263e65d1eb78e3ea02335da19e9c11ed47085015b651aefb4e4c74d"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/.github/ISSUE_TEMPLATE/external-security-audit.yml",
@@ -103,19 +103,19 @@
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/platform/schemas/security/external-security-audit-report-v1.schema.json",
-      "bytes": 4047,
+      "bytes": 5193,
       "path": "platform/schemas/security/external-security-audit-report-v1.schema.json",
       "purpose": "Signed independent audit report schema.",
       "role": "schema",
-      "sha256": "08537d450500c32cf819a841fb1074fc4575d9f526efedee7031be4551d7a152"
+      "sha256": "213819a10a45984afcfd22a3ddc0d2c70ce3477ab08339747d68fde3c8344d27"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/security.md",
-      "bytes": 12285,
+      "bytes": 13544,
       "path": "docs/security.md",
       "purpose": "Local-first security and privacy boundary.",
       "role": "security_doc",
-      "sha256": "ea1502a24ad9e50e5c49d3f7958a0cffe493d00747ae9b272c7812155d19bce3"
+      "sha256": "b5a0bee8dbeb48449d3ea37fd2acabc71893b87c499ebd6b997c81f1e7bb2f08"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/security-baseline.md",
@@ -159,19 +159,19 @@
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/trust-model.md",
-      "bytes": 10824,
+      "bytes": 12172,
       "path": "docs/trust-model.md",
       "purpose": "Delivery trust and AI-only review rejection model.",
       "role": "trust_doc",
-      "sha256": "6443492d162631a7a9a6ce03a9c4cc400e7884a91e540e29be7dc60b0c136250"
+      "sha256": "1e5bced615d8af67c6d83b7a23775b6d3e163737ee1bc77f59145fba10115979"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/protocol.md",
-      "bytes": 9066,
+      "bytes": 9769,
       "path": "docs/protocol.md",
       "purpose": "AI Delivery Clearance Protocol boundary, verifier surface, and non-claims.",
       "role": "protocol_doc",
-      "sha256": "b33932a80a191e8ca348763feb491d0fa2d5a8db918c449e85137af5c3361f41"
+      "sha256": "6975075e1c178de9f16dd98092ae1cad134e4122150b1bfadd79ff7e1f9a1041"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/cbb-protocol-v1-contracts.md",
@@ -228,6 +228,22 @@
       "purpose": "Protocol v1 offline fixture-conformance and second-consumer boundary.",
       "role": "protocol_doc",
       "sha256": "51ead08931574eeccf85bc4f7043a99286b26ad9c88f86a00a07586118e191b2"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/docs/cbb-controlled-adoption.md",
+      "bytes": 2594,
+      "path": "docs/cbb-controlled-adoption.md",
+      "purpose": "Controlled shadow, dogfood, canary, incident, rollback, revocation, and reopen boundary.",
+      "role": "protocol_doc",
+      "sha256": "55b9606451b340dacd9fa144ef7ada74ed12c90d7e79713c0422497b63535b55"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/docs/cbb-external-audit-intake.md",
+      "bytes": 3199,
+      "path": "docs/cbb-external-audit-intake.md",
+      "purpose": "Signed external audit intake, identity, remediation, and closure state boundary.",
+      "role": "protocol_doc",
+      "sha256": "35402bad5519c865ede0cf55a46effa7bfd4399209e2cfe87c4a170ae7356292"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/protocol-governance.md",
@@ -324,6 +340,14 @@
       "purpose": "Protocol v1 conformance and open-governance Contract-First audit.",
       "role": "quality_audit",
       "sha256": "1576d3be0ec8ce29e071b3b10882509e6c2e2e4e5d4a1ca6b81074d0fb22dc00"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/docs/quality-audits/phase-39-controlled-adoption-audit-intake.md",
+      "bytes": 9846,
+      "path": "docs/quality-audits/phase-39-controlled-adoption-audit-intake.md",
+      "purpose": "Controlled adoption and signed external-audit intake Contract-First audit.",
+      "role": "quality_audit",
+      "sha256": "4ece60aa02789e67d1322d33eb3c3245e0e30910b6b29d565eaa9d4bc8a6dca4"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/platform/generated/study-anything-python-supply-chain.json",
@@ -502,6 +526,22 @@
       "sha256": "b21fe5bafa9bc8563c9b79f1d59e16581b444cd49e5a7ab8f63196c8da511664"
     },
     {
+      "archive_path": "study-anything-external-security-audit-pack/platform/generated/study-anything-cbb-controlled-adoption-outcomes.json",
+      "bytes": 2966,
+      "path": "platform/generated/study-anything-cbb-controlled-adoption-outcomes.json",
+      "purpose": "Controlled adoption state, scope, and outcome verification report.",
+      "role": "generated_evidence",
+      "sha256": "45b01f0f87958682776e7e9d003322f3ab8c02e3c2f65a5143db549972a95e41"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/platform/generated/study-anything-cbb-external-audit-intake.json",
+      "bytes": 3044,
+      "path": "platform/generated/study-anything-cbb-external-audit-intake.json",
+      "purpose": "Signed external-audit intake and closure-boundary verification report.",
+      "role": "generated_evidence",
+      "sha256": "21016217d71698f61df554c82b26760b99afa03c751a0a8e5e5224dce46803d1"
+    },
+    {
       "archive_path": "study-anything-external-security-audit-pack/platform/schemas/cbb/cbb.trust-policy.v1.schema.json",
       "bytes": 18115,
       "path": "platform/schemas/cbb/cbb.trust-policy.v1.schema.json",
@@ -564,6 +604,38 @@
       "purpose": "Canonical Agentic evidence and proposal-only evolution-gate schema.",
       "role": "protocol_schema",
       "sha256": "39e948946d4bf3eca5f986dd94b9782c2cda323f7a6029eb77124ee458c1b709"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/platform/schemas/cbb/cbb.controlled-adoption-case.v1.schema.json",
+      "bytes": 27498,
+      "path": "platform/schemas/cbb/cbb.controlled-adoption-case.v1.schema.json",
+      "purpose": "Controlled adoption case and exact-release binding schema.",
+      "role": "protocol_schema",
+      "sha256": "18cf3cd2309cfec97dc02300adadc435cd3ee7e9f0abf71524034419da3bee89"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/platform/schemas/cbb/cbb.controlled-adoption-receipt.v1.schema.json",
+      "bytes": 9597,
+      "path": "platform/schemas/cbb/cbb.controlled-adoption-receipt.v1.schema.json",
+      "purpose": "Controlled adoption outcome and non-expanding authority schema.",
+      "role": "protocol_schema",
+      "sha256": "74d13fefb5ffbba4c77e4bee4ac584d8cec3c7dc8ec4c122c29ee30b117f3cd3"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/platform/schemas/security/external-security-audit-intake-envelope-v1.schema.json",
+      "bytes": 19139,
+      "path": "platform/schemas/security/external-security-audit-intake-envelope-v1.schema.json",
+      "purpose": "Signed external audit intake envelope schema.",
+      "role": "schema",
+      "sha256": "581237ce64008d17320a67d3b30cddf3a53a4d706dda528da8a13c6122fe631c"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/platform/schemas/security/external-security-audit-intake-receipt-v1.schema.json",
+      "bytes": 8255,
+      "path": "platform/schemas/security/external-security-audit-intake-receipt-v1.schema.json",
+      "purpose": "External audit intake state and closure-boundary receipt schema.",
+      "role": "schema",
+      "sha256": "3cfef72e1e2e850c34017c5340e6f697813cb668085d03fd45c0914425b7bc07"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-contracts/pass.json",
@@ -926,6 +998,174 @@
       "sha256": "08e8b9201867ed0869730c5fa9ae04a45137c70680ab72a1d8e2537cf4772437"
     },
     {
+      "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-controlled-adoption/shadow-pass.json",
+      "bytes": 12460,
+      "path": "fixtures/cbb-controlled-adoption/shadow-pass.json",
+      "purpose": "Synthetic shadow observation without new delivery authority.",
+      "role": "adoption_fixture",
+      "sha256": "81495c693dc3e3b403e91fc07617cc375ebe8bbd4fc9702a64f190a257359073"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-controlled-adoption/dogfood-pass.json",
+      "bytes": 12485,
+      "path": "fixtures/cbb-controlled-adoption/dogfood-pass.json",
+      "purpose": "Synthetic local dogfood observation without customer authority.",
+      "role": "adoption_fixture",
+      "sha256": "cba59acc753adcb310fc731bb2d9377328b09a4994ce438c2c28d2699fb5f11b"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-controlled-adoption/canary-scope-expansion-blocked.json",
+      "bytes": 12545,
+      "path": "fixtures/cbb-controlled-adoption/canary-scope-expansion-blocked.json",
+      "purpose": "Canary scope-expansion rejection fixture.",
+      "role": "adoption_fixture",
+      "sha256": "b13fb82bf07de8f070fd640f4db1d6bb208d7372d78045232a1bcfa60d3390da"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-controlled-adoption/incident-freezes.json",
+      "bytes": 12826,
+      "path": "fixtures/cbb-controlled-adoption/incident-freezes.json",
+      "purpose": "Incident freezes the source clearance fixture.",
+      "role": "adoption_fixture",
+      "sha256": "74f19788ece7303b572710d1536d2753901d2f0bf995530a14d14692f0500ac5"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-controlled-adoption/rollback-narrows.json",
+      "bytes": 12771,
+      "path": "fixtures/cbb-controlled-adoption/rollback-narrows.json",
+      "purpose": "Rollback narrows the allowed scope fixture.",
+      "role": "adoption_fixture",
+      "sha256": "8e5e72201079fff68457f8bf57bb9929078fc0c89f190e62234e3f96594f20a6"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-controlled-adoption/claim-violation-revokes.json",
+      "bytes": 12811,
+      "path": "fixtures/cbb-controlled-adoption/claim-violation-revokes.json",
+      "purpose": "Claim violation revokes source clearance fixture.",
+      "role": "adoption_fixture",
+      "sha256": "32fb0b9b31ce1a2e75e1d57b0e9a1b3e9af75b542ef47b3c719069be6b34c9d2"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-controlled-adoption/reopen-requires-fresh-clearance.json",
+      "bytes": 12890,
+      "path": "fixtures/cbb-controlled-adoption/reopen-requires-fresh-clearance.json",
+      "purpose": "Reopen requires a fresh clearance fixture.",
+      "role": "adoption_fixture",
+      "sha256": "740c6f47564ac2711bd90bab080c3e31a14430e65de0eec80128182ad643281c"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-external-audit-intake/audit-ready.json",
+      "bytes": 3260,
+      "path": "fixtures/cbb-external-audit-intake/audit-ready.json",
+      "purpose": "Audit-ready state without a received report fixture.",
+      "role": "audit_intake_fixture",
+      "sha256": "c5ac3fc036945c6de684a575d13b31bbc49e9b9177d3cbd53a45ef1d9ead737b"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-external-audit-intake/synthetic-valid.json",
+      "bytes": 7789,
+      "path": "fixtures/cbb-external-audit-intake/synthetic-valid.json",
+      "purpose": "Synthetic signature-shape validation without external identity fixture.",
+      "role": "audit_intake_fixture",
+      "sha256": "b374b5b36f0822fd8946eafe90b3b56d53b5c2eeff1840a0e39d9e64461d9150"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-external-audit-intake/wrong-commit.json",
+      "bytes": 7774,
+      "path": "fixtures/cbb-external-audit-intake/wrong-commit.json",
+      "purpose": "Wrong audit commit binding rejection fixture.",
+      "role": "audit_intake_fixture",
+      "sha256": "a404d204614b1dc8375ed2037b49adb136dc3bf87e7fcbd2926c187590fd3b94"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-external-audit-intake/incomplete-scope.json",
+      "bytes": 7751,
+      "path": "fixtures/cbb-external-audit-intake/incomplete-scope.json",
+      "purpose": "Incomplete audit scope rejection fixture.",
+      "role": "audit_intake_fixture",
+      "sha256": "d40d9b4e63b05ec4535b9520c60507ca94adff35d7f708acc90354edf809cbf0"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-external-audit-intake/self-certified.json",
+      "bytes": 7780,
+      "path": "fixtures/cbb-external-audit-intake/self-certified.json",
+      "purpose": "Repository self-certification rejection fixture.",
+      "role": "audit_intake_fixture",
+      "sha256": "41659176ae26a2ed9f56287b716bdf70ce258d2744a8a912b306fcf38a8697b4"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-external-audit-intake/open-high.json",
+      "bytes": 9197,
+      "path": "fixtures/cbb-external-audit-intake/open-high.json",
+      "purpose": "Open high finding keeps remediation pending fixture.",
+      "role": "audit_intake_fixture",
+      "sha256": "44f39ddbeeeb3d5e24fa1c0a9ef76c7253abf6bfecf604a2654dc443f4158916"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-external-audit-intake/invalid-signature.json",
+      "bytes": 7797,
+      "path": "fixtures/cbb-external-audit-intake/invalid-signature.json",
+      "purpose": "Invalid detached signature rejection fixture.",
+      "role": "audit_intake_fixture",
+      "sha256": "d0acf2817a49c3c433f859d79b52d3b9d49ceea5379d83c9ecf305a74dc8b8e6"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/apps/api/study_anything/cbb/adoption/models.py",
+      "bytes": 7617,
+      "path": "apps/api/study_anything/cbb/adoption/models.py",
+      "purpose": "Controlled adoption contracts.",
+      "role": "reference_source",
+      "sha256": "bfe27476217a6467f653701a5007cdd7b0becd84bb7db6a174e6b951cc9ee6b3"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/apps/api/study_anything/cbb/adoption/evaluator.py",
+      "bytes": 10749,
+      "path": "apps/api/study_anything/cbb/adoption/evaluator.py",
+      "purpose": "Deterministic controlled adoption evaluator.",
+      "role": "reference_source",
+      "sha256": "793f31fd4df7a022eecf985f61d3b722ac06a13278e9d7e292674f8a3abfc74f"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/apps/api/study_anything/cbb/adoption/fixtures.py",
+      "bytes": 9742,
+      "path": "apps/api/study_anything/cbb/adoption/fixtures.py",
+      "purpose": "Controlled adoption fixture builder.",
+      "role": "reference_source",
+      "sha256": "392922480f1265b23a5ec11ae0c408965d3240364996b7b4984b0e13319cddd4"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/apps/api/study_anything/cbb/audit/models.py",
+      "bytes": 14674,
+      "path": "apps/api/study_anything/cbb/audit/models.py",
+      "purpose": "External audit intake contracts.",
+      "role": "reference_source",
+      "sha256": "5314a45a51ef7d5eb14c51718a7c2c3cfc51a7200deb2972a8db88a24caf2892"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/apps/api/study_anything/cbb/audit/intake.py",
+      "bytes": 14726,
+      "path": "apps/api/study_anything/cbb/audit/intake.py",
+      "purpose": "Deterministic signature, identity, remediation, and closure intake evaluator.",
+      "role": "reference_source",
+      "sha256": "87d98e32453224a459d44bdd42b7a0e8078eb6dcfe6fb8920b0bfcf092528090"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/apps/api/study_anything/cbb/audit/fixtures.py",
+      "bytes": 14113,
+      "path": "apps/api/study_anything/cbb/audit/fixtures.py",
+      "purpose": "External audit intake fixture builder.",
+      "role": "reference_source",
+      "sha256": "88cc017e6c1a70ed61dd3c5947e0917660b0583853ca7c8b93b60ce35e32bfb0"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/apps/api/tests/test_cbb_controlled_adoption_audit_intake.py",
+      "bytes": 6270,
+      "path": "apps/api/tests/test_cbb_controlled_adoption_audit_intake.py",
+      "purpose": "Controlled adoption and audit intake unit coverage.",
+      "role": "reference_test",
+      "sha256": "045046204707ef437fa27fa73e7144f81c012f409de8814df717a3d1e0c22b46"
+    },
+    {
       "archive_path": "study-anything-external-security-audit-pack/conformance/python/cbb_v1_consumer.py",
       "bytes": 40808,
       "path": "conformance/python/cbb_v1_consumer.py",
@@ -948,6 +1188,46 @@
       "purpose": "Isolated second-consumer and archive-tamper verifier.",
       "role": "verification",
       "sha256": "5519d49d2b97c819a803ef1c10c791081b612143d8cd6983cb1263e003369b4b"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/scripts/generate_cbb_adoption_audit_assets.py",
+      "bytes": 1684,
+      "path": "scripts/generate_cbb_adoption_audit_assets.py",
+      "purpose": "Generate controlled-adoption and external-audit intake schemas and fixtures.",
+      "role": "generator",
+      "sha256": "463052023d52c08289b91b3fae1835199d357abd5892704b9fb4725793dc3504"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/scripts/cbb_controlled_adoption.py",
+      "bytes": 2234,
+      "path": "scripts/cbb_controlled_adoption.py",
+      "purpose": "Build controlled adoption receipts from bounded local case metadata.",
+      "role": "cli",
+      "sha256": "b3dd7bea5be9b1a98f55765295c66ca97ad6259cdd6704a49095d5c0c16a7fee"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/scripts/cbb_external_audit_intake.py",
+      "bytes": 2484,
+      "path": "scripts/cbb_external_audit_intake.py",
+      "purpose": "Evaluate audit-ready and signed external report intake envelopes.",
+      "role": "cli",
+      "sha256": "428eed5ec03e145c605917a83e6396ddaec414adeabcf9fc5ed83c1e8ad17d0a"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/scripts/verify_cbb_controlled_adoption_outcomes.py",
+      "bytes": 11611,
+      "path": "scripts/verify_cbb_controlled_adoption_outcomes.py",
+      "purpose": "Verify controlled adoption outcomes and no scope expansion.",
+      "role": "verification",
+      "sha256": "cd1482abc7b95d4ffa6cd8f47a14a23af7943e3a3d269b77e93567aeefeb4086"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/scripts/verify_cbb_external_audit_intake.py",
+      "bytes": 10786,
+      "path": "scripts/verify_cbb_external_audit_intake.py",
+      "purpose": "Verify signed audit intake, identity separation, remediation, and closure boundaries.",
+      "role": "verification",
+      "sha256": "c308668b3a47ee31f53b2fef85ae168f978d74e2cce985a102d89859449681c2"
     }
   ],
   "independence": {
@@ -1001,6 +1281,9 @@
   "verification_commands": [
     "python3 scripts/generate_cbb_v1_conformance_pack.py --check",
     "python3 scripts/verify_cbb_v1_external_consumer.py --check",
+    "python3 scripts/generate_cbb_adoption_audit_assets.py --check",
+    "python3 scripts/verify_cbb_controlled_adoption_outcomes.py --check",
+    "python3 scripts/verify_cbb_external_audit_intake.py --check",
     "python3 scripts/generate_external_security_audit_pack.py --check",
     "python3 scripts/verify_external_security_audit_pack.py --check"
   ],

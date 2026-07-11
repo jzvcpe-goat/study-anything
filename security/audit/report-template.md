@@ -38,11 +38,17 @@ deployment limitation.
 
 ## Evidence
 
-List the audit-pack SHA-256, source commit, protected CI run links, SBOM hash,
-verification commands, and finding or retest artifact hashes.
+List the exact Protocol v1 version, audit-pack SHA-256, conformance-pack SHA-256,
+audit-plan SHA-256, source commit, protected CI run links, SBOM hash, verification
+commands, and finding or retest artifact hashes. The machine-readable report must use
+the `evidence_bindings` object; changing any bound artifact requires a new signed report.
 
 ## Signature
 
-Record the signature method, report SHA-256, detached signature reference, and
-signing identity. The machine-readable report must validate against
-`external-security-audit-report-v1.schema.json`.
+Record the signature method, report SHA-256, detached signature reference, and signing
+identity. `report_sha256` is the canonical SHA-256 of the machine-readable report with
+the top-level `signature` object omitted. The detached signature covers those same
+canonical bytes. The machine-readable report must validate against
+`external-security-audit-report-v1.schema.json`. The receiving expected scope must pin
+the independently verified Ed25519 public-key fingerprint before intake; a fingerprint
+declared only inside the submitted envelope is not an identity trust root.

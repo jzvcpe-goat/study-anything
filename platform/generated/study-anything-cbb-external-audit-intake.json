@@ -1,0 +1,92 @@
+{
+  "audit": {
+    "audit_closure_accepted": false,
+    "audit_completed": false,
+    "audit_issue_ref": "github-issue:414",
+    "external_auditor_assigned": false,
+    "external_signed_report_received": false,
+    "synthetic_fixture_count": 7
+  },
+  "case_reports": [
+    {
+      "case_id": "audit-ready",
+      "external_identity_attested": false,
+      "open_critical_high_count": 0,
+      "signature_verified": false,
+      "state": "audit_ready"
+    },
+    {
+      "case_id": "incomplete-scope",
+      "external_identity_attested": false,
+      "open_critical_high_count": 0,
+      "signature_verified": true,
+      "state": "rejected"
+    },
+    {
+      "case_id": "invalid-signature",
+      "external_identity_attested": false,
+      "open_critical_high_count": 0,
+      "signature_verified": false,
+      "state": "rejected"
+    },
+    {
+      "case_id": "open-high",
+      "external_identity_attested": false,
+      "open_critical_high_count": 1,
+      "signature_verified": true,
+      "state": "remediation_pending"
+    },
+    {
+      "case_id": "self-certified",
+      "external_identity_attested": false,
+      "open_critical_high_count": 0,
+      "signature_verified": true,
+      "state": "rejected"
+    },
+    {
+      "case_id": "synthetic-valid",
+      "external_identity_attested": false,
+      "open_critical_high_count": 0,
+      "signature_verified": true,
+      "state": "synthetic_validated"
+    },
+    {
+      "case_id": "wrong-commit",
+      "external_identity_attested": false,
+      "open_critical_high_count": 0,
+      "signature_verified": true,
+      "state": "rejected"
+    }
+  ],
+  "checks": {
+    "audit_states_remain_distinct": true,
+    "forged_public_key_fingerprint_rejected": true,
+    "generated_assets_current": true,
+    "incomplete_scope_rejected": true,
+    "invalid_signature_rejected": true,
+    "no_fixture_claims_real_audit_execution": true,
+    "open_high_requires_remediation": true,
+    "report_schema_binds_audit_conformance_and_plan": true,
+    "secret_like_metadata_rejected": true,
+    "self_asserted_external_identity_rejected": true,
+    "self_certification_rejected": true,
+    "seven_intake_cases_replayed": true,
+    "synthetic_closure_forgery_rejected": true,
+    "synthetic_fixture_never_closes_audit": true,
+    "synthetic_to_real_source_forgery_rejected": true,
+    "wrong_commit_rejected": true
+  },
+  "claim_boundary": "This verifies the structure, signature, binding, rejection, and state-machine behavior of external audit intake using synthetic fixtures. It does not invent an auditor, receive a real report, complete issue #414, certify production, or grant delivery authority.",
+  "failed_checks": [],
+  "privacy": {
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "network_calls_performed": false,
+    "private_exploit_details_included": false,
+    "production_mutation_performed": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false
+  },
+  "schema_version": "cbb-external-audit-intake-verification-v1",
+  "status": "pass"
+}

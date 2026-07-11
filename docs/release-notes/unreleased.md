@@ -1,5 +1,14 @@
 # Unreleased Main Development Line
 
+## Protocol v1 Controlled Adoption And Audit Intake
+
+- Added metadata-only shadow, dogfood, canary, incident, rollback, revocation, and
+  reopen receipts bound to an existing Delivery Clearance package and conformance digest.
+- Added detached-signature external audit intake with exact commit, audit pack,
+  conformance pack, audit plan, scope, finding, and identity boundaries.
+- Added synthetic-only fixtures and verifiers that never claim real adoption, external
+  audit execution, production certification, or new delivery authority.
+
 ## Protocol v1 Conformance And Open Governance
 
 - Added a deterministic conformance ZIP with all eight schemas, eight canonical

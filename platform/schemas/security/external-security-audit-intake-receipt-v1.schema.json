@@ -1,0 +1,339 @@
+{
+  "$defs": {
+    "AuditFindingCountsV1": {
+      "additionalProperties": false,
+      "properties": {
+        "critical": {
+          "minimum": 0,
+          "title": "Critical",
+          "type": "integer"
+        },
+        "high": {
+          "minimum": 0,
+          "title": "High",
+          "type": "integer"
+        },
+        "informational": {
+          "minimum": 0,
+          "title": "Informational",
+          "type": "integer"
+        },
+        "low": {
+          "minimum": 0,
+          "title": "Low",
+          "type": "integer"
+        },
+        "medium": {
+          "minimum": 0,
+          "title": "Medium",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "critical",
+        "high",
+        "medium",
+        "low",
+        "informational"
+      ],
+      "title": "AuditFindingCountsV1",
+      "type": "object"
+    },
+    "AuditIntakeState": {
+      "enum": [
+        "audit_ready",
+        "rejected",
+        "synthetic_validated",
+        "audit_received",
+        "remediation_pending",
+        "audit_closed"
+      ],
+      "title": "AuditIntakeState",
+      "type": "string"
+    },
+    "AuditSourceClass": {
+      "enum": [
+        "synthetic_fixture",
+        "external_shape_fixture",
+        "external_report"
+      ],
+      "title": "AuditSourceClass",
+      "type": "string"
+    },
+    "ClaimBoundaryV1": {
+      "additionalProperties": false,
+      "properties": {
+        "current_claim": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Current Claim",
+          "type": "string"
+        },
+        "maximum_scope": {
+          "$ref": "#/$defs/DeliveryScope"
+        },
+        "not_claimed": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Not Claimed",
+          "type": "array"
+        }
+      },
+      "required": [
+        "current_claim",
+        "maximum_scope",
+        "not_claimed"
+      ],
+      "title": "ClaimBoundaryV1",
+      "type": "object"
+    },
+    "DeliveryScope": {
+      "description": "Ordered scopes from no release authority to a production candidate.",
+      "enum": [
+        "blocked",
+        "personal_local",
+        "sandbox_only",
+        "public_demo",
+        "internal_handoff",
+        "controlled_customer_handoff",
+        "limited_beta",
+        "production_candidate"
+      ],
+      "title": "DeliveryScope",
+      "type": "string"
+    },
+    "PrivacyBoundaryV1": {
+      "additionalProperties": false,
+      "properties": {
+        "attention_stream_included": {
+          "const": false,
+          "title": "Attention Stream Included",
+          "type": "boolean"
+        },
+        "automatic_customer_send_performed": {
+          "const": false,
+          "title": "Automatic Customer Send Performed",
+          "type": "boolean"
+        },
+        "cookies_or_bearer_tokens_included": {
+          "const": false,
+          "title": "Cookies Or Bearer Tokens Included",
+          "type": "boolean"
+        },
+        "metadata_only": {
+          "const": true,
+          "title": "Metadata Only",
+          "type": "boolean"
+        },
+        "model_credentials_included": {
+          "const": false,
+          "title": "Model Credentials Included",
+          "type": "boolean"
+        },
+        "model_prompts_included": {
+          "const": false,
+          "title": "Model Prompts Included",
+          "type": "boolean"
+        },
+        "production_mutation_performed": {
+          "const": false,
+          "title": "Production Mutation Performed",
+          "type": "boolean"
+        },
+        "raw_customer_payload_included": {
+          "const": false,
+          "title": "Raw Customer Payload Included",
+          "type": "boolean"
+        },
+        "raw_report_text_included": {
+          "const": false,
+          "title": "Raw Report Text Included",
+          "type": "boolean"
+        },
+        "raw_source_text_included": {
+          "const": false,
+          "title": "Raw Source Text Included",
+          "type": "boolean"
+        },
+        "signed_urls_included": {
+          "const": false,
+          "title": "Signed Urls Included",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "metadata_only",
+        "raw_source_text_included",
+        "raw_report_text_included",
+        "raw_customer_payload_included",
+        "attention_stream_included",
+        "model_prompts_included",
+        "model_credentials_included",
+        "cookies_or_bearer_tokens_included",
+        "signed_urls_included",
+        "production_mutation_performed",
+        "automatic_customer_send_performed"
+      ],
+      "title": "PrivacyBoundaryV1",
+      "type": "object"
+    }
+  },
+  "$id": "external-security-audit-intake-receipt-v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "audit_closure_accepted": {
+      "title": "Audit Closure Accepted",
+      "type": "boolean"
+    },
+    "blocking_reasons": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Blocking Reasons",
+      "type": "array"
+    },
+    "checks": {
+      "additionalProperties": {
+        "type": "boolean"
+      },
+      "minProperties": 1,
+      "title": "Checks",
+      "type": "object"
+    },
+    "claim_boundary": {
+      "$ref": "#/$defs/ClaimBoundaryV1"
+    },
+    "decision": {
+      "anyOf": [
+        {
+          "enum": [
+            "pass",
+            "conditional_pass",
+            "fail"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Decision"
+    },
+    "delivery_authority_granted": {
+      "const": false,
+      "title": "Delivery Authority Granted",
+      "type": "boolean"
+    },
+    "evaluated_at": {
+      "maxLength": 64,
+      "minLength": 1,
+      "title": "Evaluated At",
+      "type": "string"
+    },
+    "external_identity_attested": {
+      "title": "External Identity Attested",
+      "type": "boolean"
+    },
+    "finding_counts": {
+      "$ref": "#/$defs/AuditFindingCountsV1"
+    },
+    "next_required_actions": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Next Required Actions",
+      "type": "array"
+    },
+    "open_critical_high_count": {
+      "minimum": 0,
+      "title": "Open Critical High Count",
+      "type": "integer"
+    },
+    "privacy": {
+      "$ref": "#/$defs/PrivacyBoundaryV1"
+    },
+    "production_certification_granted": {
+      "const": false,
+      "title": "Production Certification Granted",
+      "type": "boolean"
+    },
+    "receipt_id": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Receipt Id",
+      "type": "string"
+    },
+    "report_digest_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Report Digest Sha256"
+    },
+    "report_execution_completed": {
+      "title": "Report Execution Completed",
+      "type": "boolean"
+    },
+    "schema_version": {
+      "const": "external-security-audit-intake-receipt-v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "scope_commit": {
+      "pattern": "^[0-9a-f]{40}$",
+      "title": "Scope Commit",
+      "type": "string"
+    },
+    "signature_verified": {
+      "title": "Signature Verified",
+      "type": "boolean"
+    },
+    "source_class": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/AuditSourceClass"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "state": {
+      "$ref": "#/$defs/AuditIntakeState"
+    }
+  },
+  "required": [
+    "schema_version",
+    "receipt_id",
+    "state",
+    "source_class",
+    "scope_commit",
+    "signature_verified",
+    "external_identity_attested",
+    "report_execution_completed",
+    "audit_closure_accepted",
+    "decision",
+    "finding_counts",
+    "open_critical_high_count",
+    "checks",
+    "blocking_reasons",
+    "next_required_actions",
+    "delivery_authority_granted",
+    "production_certification_granted",
+    "claim_boundary",
+    "privacy",
+    "evaluated_at"
+  ],
+  "title": "ExternalAuditIntakeReceiptV1",
+  "type": "object"
+}
