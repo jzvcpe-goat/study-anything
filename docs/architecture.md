@@ -124,6 +124,10 @@ change or issue its own final approval. Delivery Clearance changes to its own pr
 receipt, deterministic conformance checks, rollback, and an independent acceptance
 path appropriate to the affected scope.
 
+The shipped local skeleton enforces this boundary with a typed three-tool allowlist,
+quarantined metadata memory, deterministic decision replay, six required controls,
+actor separation, and a signed receipt that stops at `local_candidate`.
+
 ## Physical Isolation
 
 The controlled-failure runtime and human-reconstruction runtime are physically and
@@ -177,7 +181,7 @@ artifact migration, deprecation evidence, and a no-old-import gate.
 ### Implemented
 
 - deterministic metadata-only Dual Loop and Protocol v1 receipt contracts;
-- seven strict canonical Protocol v1 objects plus scope-narrowing v0 adapters;
+- eight strict canonical Protocol v1 objects plus scope-narrowing v0 adapters;
 - model-free Trust Kernel, local gate, hard denies, and negative fixtures;
 - local Ed25519 provenance, tamper, expiry, replay, and revocation checks;
 - scenario-scoped recipients, risk owners, affected parties, safeguards, MRUs,
@@ -186,6 +190,8 @@ artifact migration, deprecation evidence, and a no-old-import gate.
   and regulated/irreversible candidates;
 - signed-source outcome receipts, bounded sampling, shared deterministic degradation
   replay, historical source binding, recipe freeze, and local clearance revocation;
+- typed Agentic evidence tools, quarantined memory with provenance, expiry, and
+  counter-evidence, plus signed proposal-only evolution receipts with no automatic apply;
 - Delivery Trust Receipt and Customer Handoff Package;
 - receipt-chain and repository self-intake evidence;
 - local API, Skill, platform-Agent, Docker, and static HTML adapters;
@@ -193,9 +199,8 @@ artifact migration, deprecation evidence, and a no-old-import gate.
 
 ### Planned For Protocol v1
 
-- isolated Agentic evidence discovery and quarantined trust memory;
-- Evolution Receipt extensions inside the canonical ceiling;
-- vendor-neutral conformance fixtures and governance.
+- vendor-neutral conformance fixtures and governance;
+- independent-consumer verification of all eight canonical objects.
 
 ### Explicitly Not Claimed
 
@@ -225,5 +230,7 @@ The provenance layer is local and explicit: Ed25519 signatures bind canonical
 policy, evidence, qualified reconstruction, and deterministic decision objects.
 It remains separate from the Trust Kernel and proves local key possession rather
 than external signer identity. Scenario and qualification policy is also implemented
-without creating another pre-delivery receipt family. Outcome degradation is now a
-canonical post-delivery extension; Agentic runtime isolation remains the next milestone.
+without creating another pre-delivery receipt family. Outcome degradation is a
+canonical post-delivery extension. The Agentic layer now stops at signed local
+candidates; vendor-neutral conformance and a second independent implementation are
+the next milestone.

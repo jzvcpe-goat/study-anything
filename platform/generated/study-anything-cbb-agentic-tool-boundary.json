@@ -1,0 +1,28 @@
+{
+  "checks": {
+    "allowlist_exact": true,
+    "contracts_have_no_side_effect_authority": true,
+    "effect_mismatch_rejected": true,
+    "missing_quarantine_rejected": true,
+    "output_bound_rejected": true,
+    "policy_mutation_request_rejected": true,
+    "results_are_supporting_only": true,
+    "static_runtime_isolation": true,
+    "unknown_gate_tool_rejected": true,
+    "valid_plan_passes": true,
+    "valid_results_pass": true
+  },
+  "claim_boundary": "This verifies a deterministic typed allowlist and proposal-only tool results. It does not prove model safety, production sandboxing, or external identity.",
+  "privacy": {
+    "filesystem_writes_performed_by_tools": false,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "network_calls_performed": false,
+    "policy_mutation_performed": false,
+    "production_mutation_performed": false
+  },
+  "registry_digest_sha256": "f8d996e28902c9b530dc6ca7e247c8389b4e106c736deb370261a2579b017675",
+  "schema_version": "cbb-agentic-tool-boundary-verification-v1",
+  "status": "pass",
+  "tool_count": 3
+}

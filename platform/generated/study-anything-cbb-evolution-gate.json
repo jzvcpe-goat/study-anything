@@ -1,0 +1,75 @@
+{
+  "case_count": 6,
+  "cases": [
+    {
+      "automatic_apply_performed": false,
+      "candidate_state": "local_candidate",
+      "case_id": "approved-local-candidate",
+      "status": "approved_for_local_candidate"
+    },
+    {
+      "automatic_apply_performed": false,
+      "candidate_state": "rejected",
+      "case_id": "hard-deny-change-blocked",
+      "status": "block"
+    },
+    {
+      "automatic_apply_performed": false,
+      "candidate_state": "pending",
+      "case_id": "missing-human-reconstruction",
+      "status": "needs_evidence"
+    },
+    {
+      "automatic_apply_performed": false,
+      "candidate_state": "pending",
+      "case_id": "poisoned-memory-needs-evidence",
+      "status": "needs_evidence"
+    },
+    {
+      "automatic_apply_performed": false,
+      "candidate_state": "rejected",
+      "case_id": "self-authorization-blocked",
+      "status": "block"
+    },
+    {
+      "automatic_apply_performed": false,
+      "candidate_state": "rejected",
+      "case_id": "tool-authority-expansion-blocked",
+      "status": "block"
+    }
+  ],
+  "checks": {
+    "approved_stops_at_local_candidate": true,
+    "automatic_apply_state_rejected": true,
+    "canonical_schema_registered": true,
+    "hard_deny_change_blocked": true,
+    "local_revocation_enforced": true,
+    "missing_human_reconstruction_not_approved": true,
+    "poisoned_memory_not_usable": true,
+    "proposer_cannot_sign_approved_candidate": true,
+    "receipt_grants_no_delivery_scope": true,
+    "self_authorization_blocked": true,
+    "signature_tamper_detected": true,
+    "tool_authority_expansion_blocked": true,
+    "valid_signature_cannot_override_replay": true
+  },
+  "claim_boundary": "This verifies a local deterministic proposal gate and local signature. It does not apply policy, prove production safety, establish third-party identity, or complete an independent audit.",
+  "invariants": [
+    "Agentic tool and memory output is supporting evidence only",
+    "protected boundary changes fail closed",
+    "the proposer cannot provide its own human authorization",
+    "every approval requires replay, canary, rollback, reconstruction, risk owner, and maintainer controls",
+    "a valid local signature cannot override deterministic evolution replay",
+    "approved candidates are not automatically applied and grant no delivery scope"
+  ],
+  "privacy": {
+    "automatic_policy_application_performed": false,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "network_calls_performed": false,
+    "production_mutation_performed": false,
+    "raw_patch_included": false
+  },
+  "schema_version": "cbb-evolution-gate-verification-v1",
+  "status": "pass"
+}

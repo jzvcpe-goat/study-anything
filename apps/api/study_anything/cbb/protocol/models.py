@@ -24,6 +24,9 @@ RECEIPT_PROVENANCE_SCHEMA_VERSION: Literal["cbb.receipt-provenance.v1"] = (
 DELIVERY_OUTCOME_RECEIPT_SCHEMA_VERSION: Literal["cbb.delivery-outcome-receipt.v1"] = (
     "cbb.delivery-outcome-receipt.v1"
 )
+EVOLUTION_GATE_RECEIPT_SCHEMA_VERSION: Literal["cbb.evolution-gate-receipt.v1"] = (
+    "cbb.evolution-gate-receipt.v1"
+)
 
 CANONICALIZATION_ALGORITHM: Literal["cbb-json-c14n-v1"] = "cbb-json-c14n-v1"
 DETERMINISTIC_TIMESTAMP = "2026-06-28T00:00:00Z"
@@ -105,6 +108,52 @@ class TrustDegradationAction(StrEnum):
     NARROW_SCOPE = "narrow_scope"
     FREEZE_RECIPE = "freeze_recipe"
     REVOKE_CLEARANCE = "revoke_clearance"
+
+
+class AgenticToolEffect(StrEnum):
+    READ_METADATA = "read_metadata"
+    QUERY_QUARANTINE = "query_quarantine"
+    PROPOSE_CANDIDATE = "propose_candidate"
+
+
+class AgenticPlannerKind(StrEnum):
+    DETERMINISTIC_FIXTURE = "deterministic_fixture"
+    MODEL_ASSISTED = "model_assisted"
+
+
+class MemorySourceTrust(StrEnum):
+    UNTRUSTED = "untrusted"
+    LOCAL_VERIFIED = "local_verified"
+    SIGNED_EXTERNAL = "signed_external"
+
+
+class EvolutionChangeKind(StrEnum):
+    TRUST_RECIPE = "trust_recipe"
+    POLICY = "policy"
+    RUNTIME = "runtime"
+    TOOL_REGISTRY = "tool_registry"
+    MEMORY_POLICY = "memory_policy"
+
+
+class EvolutionControlType(StrEnum):
+    DETERMINISTIC_REPLAY = "deterministic_replay"
+    CANARY = "canary"
+    ROLLBACK = "rollback"
+    HUMAN_RECONSTRUCTION = "human_reconstruction"
+    RISK_OWNER_ACCEPTANCE = "risk_owner_acceptance"
+    MAINTAINER_APPROVAL = "maintainer_approval"
+
+
+class EvolutionControlStatus(StrEnum):
+    PASSED = "passed"
+    FAILED = "failed"
+    MISSING = "missing"
+
+
+class EvolutionDecisionStatus(StrEnum):
+    BLOCK = "block"
+    NEEDS_EVIDENCE = "needs_evidence"
+    APPROVED_FOR_LOCAL_CANDIDATE = "approved_for_local_candidate"
 
 
 def scope_is_at_most(candidate: DeliveryScope, ceiling: DeliveryScope) -> bool:
@@ -1103,6 +1152,452 @@ class DeliveryOutcomeReceiptV1(StrictProtocolModel):
         return self
 
 
+class AgenticToolContractV1(StrictProtocolModel):
+    tool_id: str = Field(min_length=1, max_length=160)
+    tool_version: str = Field(min_length=1, max_length=40)
+    effect: AgenticToolEffect
+    input_schema_ref: str = Field(min_length=1, max_length=500)
+    output_schema_ref: str = Field(min_length=1, max_length=500)
+    max_input_refs: int = Field(ge=1, le=100)
+    max_output_refs: int = Field(ge=1, le=100)
+    accepts_untrusted_input: bool
+    requires_quarantine: bool
+    network_allowed: Literal[False]
+    filesystem_write_allowed: Literal[False]
+    policy_mutation_allowed: Literal[False]
+    gate_decision_allowed: Literal[False]
+    production_mutation_allowed: Literal[False]
+
+    @model_validator(mode="after")
+    def validate_tool_boundary(self) -> AgenticToolContractV1:
+        if self.accepts_untrusted_input and not self.requires_quarantine:
+            raise ValueError("untrusted tool input requires quarantine")
+        if self.effect == AgenticToolEffect.PROPOSE_CANDIDATE and not self.requires_quarantine:
+            raise ValueError("candidate proposal tools require quarantine")
+        return self
+
+
+class AgenticToolCallV1(StrictProtocolModel):
+    call_id: str = Field(min_length=1, max_length=160)
+    tool_id: str = Field(min_length=1, max_length=160)
+    requested_effect: AgenticToolEffect
+    input_refs: list[str] = Field(min_length=1, max_length=100)
+    untrusted_input_present: bool
+    quarantine_acknowledged: bool
+    requests_policy_mutation: Literal[False]
+    requests_gate_decision: Literal[False]
+    requests_production_mutation: Literal[False]
+
+    @model_validator(mode="after")
+    def validate_tool_call(self) -> AgenticToolCallV1:
+        if len(self.input_refs) != len(set(self.input_refs)):
+            raise ValueError("agentic tool call contains duplicate input refs")
+        if self.untrusted_input_present and not self.quarantine_acknowledged:
+            raise ValueError("untrusted tool call input was not quarantined")
+        return self
+
+
+class AgenticPlanV1(StrictProtocolModel):
+    plan_id: str = Field(min_length=1, max_length=160)
+    planner_id: str = Field(min_length=1, max_length=160)
+    planner_kind: AgenticPlannerKind
+    created_at: str = Field(min_length=1, max_length=64, pattern=TIMESTAMP_PATTERN)
+    calls: list[AgenticToolCallV1] = Field(min_length=1, max_length=30)
+    final_authority: Literal["proposal_only"]
+    policy_mutation_requested: Literal[False]
+    gate_decision_requested: Literal[False]
+    production_mutation_requested: Literal[False]
+
+    @model_validator(mode="after")
+    def validate_agentic_plan(self) -> AgenticPlanV1:
+        parse_timestamp(self.created_at)
+        call_ids = [call.call_id for call in self.calls]
+        if len(call_ids) != len(set(call_ids)):
+            raise ValueError("agentic plan contains duplicate call ids")
+        return self
+
+
+class AgenticToolResultV1(StrictProtocolModel):
+    call_id: str = Field(min_length=1, max_length=160)
+    tool_id: str = Field(min_length=1, max_length=160)
+    effect: AgenticToolEffect
+    status: Literal["passed", "blocked"]
+    output_refs: list[str] = Field(max_length=100)
+    provenance_refs: list[str] = Field(min_length=1, max_length=100)
+    redaction_count: int = Field(ge=0)
+    reasons: list[str]
+    authority: Literal["supporting_evidence_only"]
+    policy_override_allowed: Literal[False]
+    gate_decision_allowed: Literal[False]
+    production_mutation_performed: Literal[False]
+
+    @model_validator(mode="after")
+    def validate_tool_result(self) -> AgenticToolResultV1:
+        if len(self.output_refs) != len(set(self.output_refs)):
+            raise ValueError("agentic tool result contains duplicate output refs")
+        if len(self.provenance_refs) != len(set(self.provenance_refs)):
+            raise ValueError("agentic tool result contains duplicate provenance refs")
+        if self.status == "passed":
+            if not self.output_refs or self.reasons:
+                raise ValueError("passed tool result requires output refs and no reasons")
+        elif self.output_refs or not self.reasons:
+            raise ValueError("blocked tool result requires reasons and no output refs")
+        return self
+
+
+class QuarantinedMemoryEntryV1(StrictProtocolModel):
+    memory_id: str = Field(min_length=1, max_length=160)
+    memory_kind: Literal["failure", "receipt", "outcome", "counter_evidence"]
+    source_ref: str = Field(min_length=1, max_length=500)
+    source_digest_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    content_digest_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    source_trust: MemorySourceTrust
+    verification_ref: str | None = Field(default=None, max_length=500)
+    signature_ref: str | None = Field(default=None, max_length=500)
+    observed_at: str = Field(min_length=1, max_length=64, pattern=TIMESTAMP_PATTERN)
+    expires_at: str = Field(min_length=1, max_length=64, pattern=TIMESTAMP_PATTERN)
+    counter_evidence_refs: list[str]
+    injection_signals: list[str]
+    policy_directive_detected: bool
+    eligible_as_supporting_evidence: bool
+    quarantined: Literal[True]
+    policy_authority: Literal[False]
+    raw_content_included: Literal[False]
+
+    @model_validator(mode="after")
+    def validate_memory_entry(self) -> QuarantinedMemoryEntryV1:
+        observed_at = parse_timestamp(self.observed_at)
+        expires_at = parse_timestamp(self.expires_at)
+        if expires_at <= observed_at:
+            raise ValueError("quarantined memory must expire after observation")
+        if len(self.counter_evidence_refs) != len(set(self.counter_evidence_refs)):
+            raise ValueError("memory entry contains duplicate counter-evidence refs")
+        if len(self.injection_signals) != len(set(self.injection_signals)):
+            raise ValueError("memory entry contains duplicate injection signals")
+        if self.source_trust == MemorySourceTrust.UNTRUSTED:
+            if self.verification_ref is not None or self.signature_ref is not None:
+                raise ValueError("untrusted memory cannot claim verification or signature")
+            if self.eligible_as_supporting_evidence:
+                raise ValueError("untrusted memory cannot be eligible evidence")
+        elif self.source_trust == MemorySourceTrust.LOCAL_VERIFIED:
+            if self.verification_ref is None or self.signature_ref is not None:
+                raise ValueError("local-verified memory requires only a verification ref")
+        elif self.signature_ref is None or self.verification_ref is not None:
+            raise ValueError("signed-external memory requires only a signature ref")
+        if (
+            self.policy_directive_detected or self.injection_signals
+        ) and self.eligible_as_supporting_evidence:
+            raise ValueError("injected memory cannot be eligible evidence")
+        return self
+
+
+class MemoryDispositionV1(StrictProtocolModel):
+    memory_id: str = Field(min_length=1, max_length=160)
+    reason: Literal[
+        "expired",
+        "not_yet_observed",
+        "untrusted",
+        "injection_signal",
+        "policy_directive",
+        "counter_evidence_pending",
+        "ineligible",
+    ]
+
+
+class MemoryQueryResultV1(StrictProtocolModel):
+    query_id: str = Field(min_length=1, max_length=160)
+    as_of: str = Field(min_length=1, max_length=64, pattern=TIMESTAMP_PATTERN)
+    considered_entries: list[QuarantinedMemoryEntryV1] = Field(min_length=1, max_length=100)
+    eligible_memory_ids: list[str]
+    ignored_entries: list[MemoryDispositionV1]
+    unresolved_counter_evidence_refs: list[str]
+    policy_override_allowed: Literal[False]
+    trust_increase_allowed: Literal[False]
+    raw_content_returned: Literal[False]
+
+    @model_validator(mode="after")
+    def validate_memory_query(self) -> MemoryQueryResultV1:
+        as_of = parse_timestamp(self.as_of)
+        memory_ids = [entry.memory_id for entry in self.considered_entries]
+        if len(memory_ids) != len(set(memory_ids)):
+            raise ValueError("memory query contains duplicate entries")
+        if len(self.eligible_memory_ids) != len(set(self.eligible_memory_ids)):
+            raise ValueError("memory query contains duplicate eligible ids")
+        ignored_ids = [item.memory_id for item in self.ignored_entries]
+        if len(ignored_ids) != len(set(ignored_ids)):
+            raise ValueError("memory query contains duplicate ignored ids")
+        if set(self.eligible_memory_ids).intersection(ignored_ids):
+            raise ValueError("memory entry cannot be both eligible and ignored")
+        if set(self.eligible_memory_ids).union(ignored_ids) != set(memory_ids):
+            raise ValueError("memory query must classify every considered entry")
+        by_id = {entry.memory_id: entry for entry in self.considered_entries}
+        for memory_id in self.eligible_memory_ids:
+            entry = by_id[memory_id]
+            if not entry.eligible_as_supporting_evidence:
+                raise ValueError("memory query marked an ineligible entry as evidence")
+            if parse_timestamp(entry.observed_at) > as_of:
+                raise ValueError("memory query marked a future entry as evidence")
+            if parse_timestamp(entry.expires_at) <= as_of:
+                raise ValueError("memory query marked an expired entry as evidence")
+            if entry.counter_evidence_refs:
+                raise ValueError("memory query ignored pending counter-evidence")
+        if len(self.unresolved_counter_evidence_refs) != len(
+            set(self.unresolved_counter_evidence_refs)
+        ):
+            raise ValueError("memory query contains duplicate counter-evidence refs")
+        return self
+
+
+class AgenticEvidenceContextV1(StrictProtocolModel):
+    plan: AgenticPlanV1
+    tool_results: list[AgenticToolResultV1] = Field(min_length=1, max_length=30)
+    memory_query: MemoryQueryResultV1
+    agentic_output_authority: Literal["supporting_evidence_only"]
+    policy_override_allowed: Literal[False]
+    gate_decision_from_agent: Literal[False]
+    production_mutation_performed: Literal[False]
+
+    @model_validator(mode="after")
+    def validate_agentic_context(self) -> AgenticEvidenceContextV1:
+        calls = {call.call_id: call for call in self.plan.calls}
+        result_ids = [result.call_id for result in self.tool_results]
+        if len(result_ids) != len(set(result_ids)):
+            raise ValueError("agentic evidence contains duplicate tool results")
+        if set(result_ids) != set(calls):
+            raise ValueError("agentic evidence must account for every planned tool call")
+        for result in self.tool_results:
+            call = calls[result.call_id]
+            if result.tool_id != call.tool_id or result.effect != call.requested_effect:
+                raise ValueError("agentic tool result does not match its planned call")
+        return self
+
+
+class EvolutionProposalV1(StrictProtocolModel):
+    proposal_id: str = Field(min_length=1, max_length=160)
+    change_kind: EvolutionChangeKind
+    target_ref: str = Field(min_length=1, max_length=500)
+    base_digest_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    candidate_digest_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    summary_digest_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    proposer_kind: Literal["agent", "human", "deterministic"]
+    proposer_ref: str = Field(min_length=1, max_length=200)
+    submitted_at: str = Field(min_length=1, max_length=64, pattern=TIMESTAMP_PATTERN)
+    current_scope: DeliveryScope
+    requested_scope: DeliveryScope
+    evidence_refs: list[str] = Field(min_length=1, max_length=100)
+    memory_refs: list[str] = Field(min_length=1, max_length=100)
+    touches_hard_denies: bool
+    weakens_required_evidence: bool
+    expands_delivery_scope: bool
+    expands_tool_authority: bool
+    changes_verifier_or_signing: bool
+    changes_revocation_semantics: bool
+    requests_automatic_apply: bool
+    requests_production_mutation: bool
+    proposal_only: Literal[True]
+    raw_patch_included: Literal[False]
+
+    @model_validator(mode="after")
+    def validate_evolution_proposal(self) -> EvolutionProposalV1:
+        parse_timestamp(self.submitted_at)
+        if self.base_digest_sha256 == self.candidate_digest_sha256:
+            raise ValueError("evolution proposal must change the candidate digest")
+        if len(self.evidence_refs) != len(set(self.evidence_refs)):
+            raise ValueError("evolution proposal contains duplicate evidence refs")
+        if len(self.memory_refs) != len(set(self.memory_refs)):
+            raise ValueError("evolution proposal contains duplicate memory refs")
+        scope_expands = not scope_is_at_most(self.requested_scope, self.current_scope)
+        if self.expands_delivery_scope != scope_expands:
+            raise ValueError("evolution scope-expansion flag does not match requested scope")
+        return self
+
+
+class EvolutionControlEvidenceV1(StrictProtocolModel):
+    control_type: EvolutionControlType
+    status: EvolutionControlStatus
+    evidence_ref: str | None = Field(default=None, max_length=500)
+    actor_kind: Literal[
+        "deterministic_verifier",
+        "human_reconstructor",
+        "risk_owner",
+        "maintainer",
+    ]
+    actor_ref: str = Field(min_length=1, max_length=200)
+
+    @model_validator(mode="after")
+    def validate_control_evidence(self) -> EvolutionControlEvidenceV1:
+        expected_actor = {
+            EvolutionControlType.DETERMINISTIC_REPLAY: "deterministic_verifier",
+            EvolutionControlType.CANARY: "deterministic_verifier",
+            EvolutionControlType.ROLLBACK: "deterministic_verifier",
+            EvolutionControlType.HUMAN_RECONSTRUCTION: "human_reconstructor",
+            EvolutionControlType.RISK_OWNER_ACCEPTANCE: "risk_owner",
+            EvolutionControlType.MAINTAINER_APPROVAL: "maintainer",
+        }[self.control_type]
+        if self.actor_kind != expected_actor:
+            raise ValueError("evolution control actor kind does not match control type")
+        if self.status == EvolutionControlStatus.MISSING:
+            if self.evidence_ref is not None:
+                raise ValueError("missing evolution control cannot include evidence")
+        elif self.evidence_ref is None:
+            raise ValueError("evaluated evolution control requires evidence")
+        return self
+
+
+class EvolutionControlSetV1(StrictProtocolModel):
+    controls: list[EvolutionControlEvidenceV1] = Field(min_length=6, max_length=6)
+
+    @model_validator(mode="after")
+    def validate_control_set(self) -> EvolutionControlSetV1:
+        control_types = [control.control_type for control in self.controls]
+        if len(control_types) != len(set(control_types)):
+            raise ValueError("evolution control set contains duplicate controls")
+        if set(control_types) != set(EvolutionControlType):
+            raise ValueError("evolution control set is incomplete")
+        return self
+
+
+class EvolutionGateDecisionV1(StrictProtocolModel):
+    status: EvolutionDecisionStatus
+    candidate_state: Literal["rejected", "pending", "local_candidate"]
+    proposal_digest_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    reasons: list[str]
+    automatic_apply_allowed: Literal[False]
+    production_apply_allowed: Literal[False]
+    trust_kernel_mutation_performed: Literal[False]
+    release_performed: Literal[False]
+    tool_or_memory_authority_used_as_final_basis: Literal[False]
+    explicit_maintainer_apply_required: Literal[True]
+
+    @model_validator(mode="after")
+    def validate_evolution_decision(self) -> EvolutionGateDecisionV1:
+        if len(self.reasons) != len(set(self.reasons)):
+            raise ValueError("evolution decision contains duplicate reasons")
+        if self.status == EvolutionDecisionStatus.APPROVED_FOR_LOCAL_CANDIDATE:
+            if self.candidate_state != "local_candidate" or self.reasons:
+                raise ValueError("approved evolution candidate cannot have blocking reasons")
+        elif self.status == EvolutionDecisionStatus.NEEDS_EVIDENCE:
+            if self.candidate_state != "pending" or not self.reasons:
+                raise ValueError("pending evolution candidate requires reasons")
+        elif self.candidate_state != "rejected" or not self.reasons:
+            raise ValueError("blocked evolution candidate requires rejection reasons")
+        return self
+
+
+class EvolutionReceiptProvenanceV1(StrictProtocolModel):
+    envelope_digest_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    decision_digest_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    verifier: VerifierIdentityV1
+    canonicalization: Literal["cbb-json-c14n-v1"]
+    signing_status: Literal["locally_signed"]
+    signature_algorithm: Literal["ed25519"]
+    signature: str = Field(pattern=r"^[A-Za-z0-9_-]{86}$")
+    signer: SignerIdentityV1
+    created_at: str = Field(min_length=1, max_length=64, pattern=TIMESTAMP_PATTERN)
+    expires_at: str = Field(min_length=1, max_length=64, pattern=TIMESTAMP_PATTERN)
+    replay_nonce: str = Field(min_length=16, max_length=200)
+    revocation: RevocationReferenceV1
+    claim_boundary: ClaimBoundaryV1
+
+    @model_validator(mode="after")
+    def validate_evolution_provenance(self) -> EvolutionReceiptProvenanceV1:
+        if parse_timestamp(self.expires_at) <= parse_timestamp(self.created_at):
+            raise ValueError("evolution receipt provenance must expire after creation")
+        if self.claim_boundary.maximum_scope != DeliveryScope.BLOCKED:
+            raise ValueError("evolution signature cannot grant delivery authority")
+        if "third-party signer identity" not in self.claim_boundary.not_claimed:
+            raise ValueError("local evolution signature must disclaim third-party identity")
+        return self
+
+
+class EvolutionGateReceiptV1(StrictProtocolModel):
+    model_config = ConfigDict(
+        extra="forbid",
+        frozen=True,
+        str_strip_whitespace=True,
+        json_schema_extra={"$id": EVOLUTION_GATE_RECEIPT_SCHEMA_VERSION},
+    )
+
+    schema_version: Literal["cbb.evolution-gate-receipt.v1"]
+    evolution_receipt_id: str = Field(min_length=1, max_length=160)
+    proposal: EvolutionProposalV1
+    agentic_evidence: AgenticEvidenceContextV1
+    controls: EvolutionControlSetV1
+    decision: EvolutionGateDecisionV1
+    issued_at: str = Field(min_length=1, max_length=64, pattern=TIMESTAMP_PATTERN)
+    claim_boundary: ClaimBoundaryV1
+    provenance: EvolutionReceiptProvenanceV1
+    privacy: PrivacyBoundaryV1
+    automatic_apply_performed: Literal[False]
+
+    @model_validator(mode="after")
+    def validate_evolution_receipt(self) -> EvolutionGateReceiptV1:
+        issued_at = parse_timestamp(self.issued_at)
+        if issued_at != parse_timestamp(self.provenance.created_at):
+            raise ValueError("evolution provenance must be created when receipt is issued")
+        if self.claim_boundary.maximum_scope != DeliveryScope.BLOCKED:
+            raise ValueError("evolution receipt cannot grant delivery authority")
+        if parse_timestamp(self.proposal.submitted_at) > issued_at:
+            raise ValueError("evolution proposal cannot be submitted after receipt issuance")
+        if parse_timestamp(self.agentic_evidence.plan.created_at) > issued_at:
+            raise ValueError("agentic plan cannot be created after receipt issuance")
+        if parse_timestamp(self.agentic_evidence.memory_query.as_of) > issued_at:
+            raise ValueError("memory query cannot occur after receipt issuance")
+        required_disclaimers = {
+            "automatic policy application",
+            "production authorization",
+            "global protocol conformance",
+        }
+        if not required_disclaimers.issubset(self.claim_boundary.not_claimed):
+            raise ValueError("evolution receipt claim boundary is incomplete")
+        control_by_type = {
+            control.control_type: control for control in self.controls.controls
+        }
+        human_controls = {
+            EvolutionControlType.HUMAN_RECONSTRUCTION,
+            EvolutionControlType.RISK_OWNER_ACCEPTANCE,
+            EvolutionControlType.MAINTAINER_APPROVAL,
+        }
+        self_authorized = any(
+            control_by_type[control_type].actor_ref == self.proposal.proposer_ref
+            for control_type in human_controls
+        ) or self.provenance.signer.signer_id == self.proposal.proposer_ref
+        if (
+            self_authorized
+            and self.decision.status == EvolutionDecisionStatus.APPROVED_FOR_LOCAL_CANDIDATE
+        ):
+            raise ValueError("evolution proposer cannot authorize its own proposal")
+        if not set(self.proposal.memory_refs).issubset(
+            self.agentic_evidence.memory_query.eligible_memory_ids
+        ):
+            if self.decision.status == EvolutionDecisionStatus.APPROVED_FOR_LOCAL_CANDIDATE:
+                raise ValueError("approved evolution candidate uses ineligible memory")
+        protected_change = any(
+            (
+                self.proposal.touches_hard_denies,
+                self.proposal.weakens_required_evidence,
+                self.proposal.expands_delivery_scope,
+                self.proposal.expands_tool_authority,
+                self.proposal.changes_verifier_or_signing,
+                self.proposal.changes_revocation_semantics,
+                self.proposal.requests_automatic_apply,
+                self.proposal.requests_production_mutation,
+            )
+        )
+        if (
+            protected_change
+            and self.decision.status == EvolutionDecisionStatus.APPROVED_FOR_LOCAL_CANDIDATE
+        ):
+            raise ValueError("protected evolution change cannot be approved locally")
+        if self.decision.status == EvolutionDecisionStatus.APPROVED_FOR_LOCAL_CANDIDATE:
+            if any(
+                control.status != EvolutionControlStatus.PASSED
+                for control in self.controls.controls
+            ):
+                raise ValueError("approved evolution candidate requires every control")
+        return self
+
+
 PROTOCOL_MODELS: dict[str, type[StrictProtocolModel]] = {
     TRUST_POLICY_SCHEMA_VERSION: TrustPolicyV1,
     EVIDENCE_BUNDLE_SCHEMA_VERSION: EvidenceBundleV1,
@@ -1111,4 +1606,5 @@ PROTOCOL_MODELS: dict[str, type[StrictProtocolModel]] = {
     DELIVERY_TRUST_RECEIPT_SCHEMA_VERSION: DeliveryTrustReceiptV1,
     RECEIPT_PROVENANCE_SCHEMA_VERSION: ReceiptProvenanceV1,
     DELIVERY_OUTCOME_RECEIPT_SCHEMA_VERSION: DeliveryOutcomeReceiptV1,
+    EVOLUTION_GATE_RECEIPT_SCHEMA_VERSION: EvolutionGateReceiptV1,
 }

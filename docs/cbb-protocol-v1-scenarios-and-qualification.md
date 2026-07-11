@@ -10,7 +10,8 @@ second reading of every generated artifact.
 
 This work extends the six pre-delivery canonical Protocol v1 objects. It does not add
 a new pre-delivery trust receipt family or let scenario classification authorize
-delivery by itself. The post-delivery outcome receipt is a separate seventh schema.
+delivery by itself. The post-delivery outcome receipt is a separate seventh schema,
+and proposal-only Agentic evolution is a separate eighth schema.
 
 ## Nested Policy Contracts
 

@@ -150,6 +150,12 @@ Opaque systems may propose trust evidence. They cannot be the final source of tr
 
 黑箱系统可以提出信任证据，但不能成为最终信任来源。
 
+The local Agentic skeleton makes this operational: three typed tools produce only
+bounded supporting refs; memory stays quarantined with provenance, expiry, injection
+signals, and counter-evidence; and the evolution receipt is recomputed by a fixed
+verifier. Six controls and distinct human actors are required before a candidate can
+reach `local_candidate`. That state grants no delivery scope and performs no apply.
+
 ## Trust Growth And Degradation
 
 Repeated success can reduce friction only inside the same bounded scenario. A mature
@@ -218,6 +224,9 @@ python3 scripts/verify_cbb_receipt_chain.py --check
 python3 scripts/verify_cbb_v1_scenarios.py --check
 python3 scripts/verify_cbb_v1_qualification.py --check
 python3 scripts/verify_cbb_v1_outcomes.py --check
+python3 scripts/verify_cbb_agentic_tool_boundary.py --check
+python3 scripts/verify_cbb_memory_quarantine.py --check
+python3 scripts/verify_cbb_evolution_gate.py --check
 ```
 
 Passing these commands proves only their documented deterministic scope.

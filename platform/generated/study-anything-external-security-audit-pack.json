@@ -12,10 +12,10 @@
     "open_high_findings_allowed": 0
   },
   "archive": {
-    "bytes": 252017,
+    "bytes": 288304,
     "path": "platform/generated/study-anything-external-security-audit-pack.zip",
     "root": "study-anything-external-security-audit-pack",
-    "sha256": "926752b856909d5db14246d16fa124bb056ad01945b33fb52bb97b4c56747d19"
+    "sha256": "fe08127c47d64e83ab15f9586317cd27c029ffcf4ebbfaaa3748f1f93bcf6f6f"
   },
   "claim_boundary": {
     "current_claim": "The repository is packaged and ready for an independent security audit at a pinned commit.",
@@ -47,11 +47,11 @@
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/security/audit/audit-plan.json",
-      "bytes": 10832,
+      "bytes": 12101,
       "path": "security/audit/audit-plan.json",
       "purpose": "Machine-readable scope, methods, acceptance, and independence rules.",
       "role": "audit_plan",
-      "sha256": "eae4bc06eb10dd6506869dc3734cce7fb42f90b25a08ff66374a84af1d7173b0"
+      "sha256": "f01b76a1f5a4f58b61d20bd2f4376a2439d7f29abf6d7699b16769881ead5e65"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/security/audit/threat-model.md",
@@ -111,11 +111,11 @@
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/security.md",
-      "bytes": 10933,
+      "bytes": 11728,
       "path": "docs/security.md",
       "purpose": "Local-first security and privacy boundary.",
       "role": "security_doc",
-      "sha256": "1a4b98c2871ba9426622e946e331fb20730237b8d861d3adb74520fb3b721e80"
+      "sha256": "015d8aee1a6f02455adbc46e0c24b4564c5e6d42883b8e042270436ac0446f06"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/security-baseline.md",
@@ -159,27 +159,27 @@
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/trust-model.md",
-      "bytes": 9113,
+      "bytes": 9701,
       "path": "docs/trust-model.md",
       "purpose": "Delivery trust and AI-only review rejection model.",
       "role": "trust_doc",
-      "sha256": "207c53987057c2a074a896f124f9e956457f869d370a3acb2e3c95701bf025d0"
+      "sha256": "bf4c288e769623ca2f582749887ad2ec22109eae2644c76c90c5645d2f30de8a"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/protocol.md",
-      "bytes": 7928,
+      "bytes": 8460,
       "path": "docs/protocol.md",
       "purpose": "AI Delivery Clearance Protocol boundary, verifier surface, and non-claims.",
       "role": "protocol_doc",
-      "sha256": "bd1921c5078d84bc2806dd72e604c16e5cfd455657d14b77875f90f06e2c2385"
+      "sha256": "bdce9021216f85ae38746c2f6e69e0db22c36c236c44e0954a09c1ab271396cc"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/cbb-protocol-v1-contracts.md",
-      "bytes": 4491,
+      "bytes": 4732,
       "path": "docs/cbb-protocol-v1-contracts.md",
       "purpose": "Canonical Protocol v1 contracts and v0 compatibility map.",
       "role": "protocol_doc",
-      "sha256": "f73d7928921c55a590357b18c0616b5085c799081b117973db76517e7f103b1d"
+      "sha256": "faabf6220ceb72c3a3c2033bc9a3cf245870e7113c35fc56ff0fa1c47d139457"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/cbb-protocol-v1-kernel.md",
@@ -199,11 +199,11 @@
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/cbb-protocol-v1-scenarios-and-qualification.md",
-      "bytes": 4646,
+      "bytes": 4711,
       "path": "docs/cbb-protocol-v1-scenarios-and-qualification.md",
       "purpose": "Scenario, affected-party, MRU, and scoped capability policy.",
       "role": "protocol_doc",
-      "sha256": "dad2e8b5cd5a149c7f436cd988ad4cf421cd3cfc3fd3fd393d8cc4a135f6af09"
+      "sha256": "4e0e0bfa073180979025ab8e116efa21f75edad14f917e70de87b5e46e503222"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/cbb-protocol-v1-outcomes.md",
@@ -212,6 +212,14 @@
       "purpose": "Post-delivery outcome receipt and non-increasing trust-degradation policy.",
       "role": "protocol_doc",
       "sha256": "d6f6eec72878f26757fb762f38d5ab252dd516a29a2bccf71881680b9721f65d"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/docs/cbb-protocol-v1-agentic-evolution.md",
+      "bytes": 6903,
+      "path": "docs/cbb-protocol-v1-agentic-evolution.md",
+      "purpose": "Typed Agentic tool boundary, quarantined memory, and proposal-only evolution gate.",
+      "role": "protocol_doc",
+      "sha256": "2898fbb7518f5548af02a2e96a8163179a328271f7d7d374a35fedfc937b5584"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/release-checklist.md",
@@ -270,6 +278,14 @@
       "sha256": "94e7e9dfe63ab3ff2188fce96bbba9706e0a4b866b89e729a54e39110aa9c242"
     },
     {
+      "archive_path": "study-anything-external-security-audit-pack/docs/quality-audits/phase-37-agentic-evolution-isolation.md",
+      "bytes": 8752,
+      "path": "docs/quality-audits/phase-37-agentic-evolution-isolation.md",
+      "purpose": "Agentic evidence isolation and evolution-gate Contract-First audit.",
+      "role": "quality_audit",
+      "sha256": "24145ac5d06dcd85bef78cb7fbc7da689dd139e6ebee8b47ed98f87c67a61e23"
+    },
+    {
       "archive_path": "study-anything-external-security-audit-pack/platform/generated/study-anything-python-supply-chain.json",
       "bytes": 2213,
       "path": "platform/generated/study-anything-python-supply-chain.json",
@@ -311,11 +327,11 @@
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/platform/generated/study-anything-cbb-v1-contracts.json",
-      "bytes": 5593,
+      "bytes": 5879,
       "path": "platform/generated/study-anything-cbb-v1-contracts.json",
       "purpose": "Canonical CBB Protocol v1 contract verification receipt.",
       "role": "generated_evidence",
-      "sha256": "34edbe3b2a16bcbc6e127a9c440214eb4164a52be88b9fde369244f5519329c8"
+      "sha256": "7ffa8097ac8d8f6b8b2f767388c8a44814a1ad5b410a15503e2baf90bc196f68"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/platform/generated/study-anything-cbb-v0-compatibility.json",
@@ -335,11 +351,11 @@
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/platform/generated/study-anything-cbb-runtime-isolation.json",
-      "bytes": 1214,
+      "bytes": 2301,
       "path": "platform/generated/study-anything-cbb-runtime-isolation.json",
       "purpose": "Static canonical kernel runtime-isolation receipt.",
       "role": "generated_evidence",
-      "sha256": "e50949fd7352c6ee34aea22aa5c31dd3839ca77b04811d59a120d687aa762a77"
+      "sha256": "43f6dd90d9b7190cf9bd1b7212da59e9334a9e965710a9cf344c520e558899c3"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/platform/generated/study-anything-cbb-v1-provenance.json",
@@ -380,6 +396,30 @@
       "purpose": "Post-delivery outcome, deterministic degradation replay, and trust-degradation verification receipt.",
       "role": "generated_evidence",
       "sha256": "1c3bbbbafdbadc2b95f4be2e68b6a43f2de3e476a844bc3d86a2449029fb116d"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/platform/generated/study-anything-cbb-agentic-tool-boundary.json",
+      "bytes": 1078,
+      "path": "platform/generated/study-anything-cbb-agentic-tool-boundary.json",
+      "purpose": "Typed allowlisted Agentic tool boundary verification receipt.",
+      "role": "generated_evidence",
+      "sha256": "fef0932f0c61d114508a0b5ea2aa33fd63063b32a305d47c6730511a5e624031"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/platform/generated/study-anything-cbb-memory-quarantine.json",
+      "bytes": 1158,
+      "path": "platform/generated/study-anything-cbb-memory-quarantine.json",
+      "purpose": "Quarantined memory provenance, expiry, injection, and counter-evidence receipt.",
+      "role": "generated_evidence",
+      "sha256": "b69556b6bdb4143486f0a809c046890650e1ebc7f7a7d98f402d4c1096cc74bb"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/platform/generated/study-anything-cbb-evolution-gate.json",
+      "bytes": 2677,
+      "path": "platform/generated/study-anything-cbb-evolution-gate.json",
+      "purpose": "Proposal-only deterministic evolution-gate verification receipt.",
+      "role": "generated_evidence",
+      "sha256": "820977a363a47eb280b66911dee69289eb2f72870c3918a9e5151990a364d062"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/platform/schemas/cbb/cbb.trust-policy.v1.schema.json",
@@ -436,6 +476,14 @@
       "purpose": "Canonical post-delivery outcome and trust-degradation schema.",
       "role": "protocol_schema",
       "sha256": "bda0ad7b9a10d0c84cb29f96eb00ef72e17e459d0fa0c2a70ed943e4f9ecb181"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/platform/schemas/cbb/cbb.evolution-gate-receipt.v1.schema.json",
+      "bytes": 33057,
+      "path": "platform/schemas/cbb/cbb.evolution-gate-receipt.v1.schema.json",
+      "purpose": "Canonical Agentic evidence and proposal-only evolution-gate schema.",
+      "role": "protocol_schema",
+      "sha256": "39e948946d4bf3eca5f986dd94b9782c2cda323f7a6029eb77124ee458c1b709"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-contracts/pass.json",
@@ -748,6 +796,54 @@
       "purpose": "Failed rollback fixture that revokes source clearance.",
       "role": "outcome_fixture",
       "sha256": "434ad2e2dc75cca0511042f368b7a74ef23e2d776b687626e94d7cc7921e41fa"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-agentic-evolution/approved-local-candidate.json",
+      "bytes": 20517,
+      "path": "fixtures/cbb-v1-agentic-evolution/approved-local-candidate.json",
+      "purpose": "All controls pass but the candidate remains local and unapplied.",
+      "role": "agentic_fixture",
+      "sha256": "86d05671ad6db05a84fc81379d842081aa3805b646b764fcc6295d4935a0b03b"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-agentic-evolution/missing-human-reconstruction.json",
+      "bytes": 20513,
+      "path": "fixtures/cbb-v1-agentic-evolution/missing-human-reconstruction.json",
+      "purpose": "Missing human reconstruction leaves the proposal pending.",
+      "role": "agentic_fixture",
+      "sha256": "b191852661dd06bb2c7b8468ab5bd0fe57763e273bcdb999e10995e273d79fa7"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-agentic-evolution/hard-deny-change-blocked.json",
+      "bytes": 20508,
+      "path": "fixtures/cbb-v1-agentic-evolution/hard-deny-change-blocked.json",
+      "purpose": "Hard-deny modification is blocked.",
+      "role": "agentic_fixture",
+      "sha256": "8c2b32e8906d0f516c313343fa23c15bddb38aafa890402a6463ad6df3af8588"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-agentic-evolution/poisoned-memory-needs-evidence.json",
+      "bytes": 22944,
+      "path": "fixtures/cbb-v1-agentic-evolution/poisoned-memory-needs-evidence.json",
+      "purpose": "Poisoned memory cannot support approval.",
+      "role": "agentic_fixture",
+      "sha256": "01832d08362f6dbdabf643235c8a7c13a2820ae03acb9ee3f201d8cc2acc8536"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-agentic-evolution/self-authorization-blocked.json",
+      "bytes": 20547,
+      "path": "fixtures/cbb-v1-agentic-evolution/self-authorization-blocked.json",
+      "purpose": "Proposer self-authorization is blocked.",
+      "role": "agentic_fixture",
+      "sha256": "9fd3dfe167d1bb44314066b89901af1791f55b69d6334ada32066c1b3f6bbd03"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-agentic-evolution/tool-authority-expansion-blocked.json",
+      "bytes": 20599,
+      "path": "fixtures/cbb-v1-agentic-evolution/tool-authority-expansion-blocked.json",
+      "purpose": "Tool-authority expansion is blocked.",
+      "role": "agentic_fixture",
+      "sha256": "08e8b9201867ed0869730c5fa9ae04a45137c70680ab72a1d8e2537cf4772437"
     }
   ],
   "independence": {

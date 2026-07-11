@@ -1,0 +1,544 @@
+{
+  "case_id": "self-authorization-blocked",
+  "expected_status": "block",
+  "inputs": {
+    "agentic_evidence": {
+      "agentic_output_authority": "supporting_evidence_only",
+      "gate_decision_from_agent": false,
+      "memory_query": {
+        "as_of": "2026-07-11T06:55:00Z",
+        "considered_entries": [
+          {
+            "content_digest_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+            "counter_evidence_refs": [],
+            "eligible_as_supporting_evidence": true,
+            "expires_at": "2026-08-10T00:00:00Z",
+            "injection_signals": [],
+            "memory_id": "memory:safe-failure-pattern",
+            "memory_kind": "failure",
+            "observed_at": "2026-07-10T00:00:00Z",
+            "policy_authority": false,
+            "policy_directive_detected": false,
+            "quarantined": true,
+            "raw_content_included": false,
+            "signature_ref": null,
+            "source_digest_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "source_ref": "outcome-receipt:near-miss",
+            "source_trust": "local_verified",
+            "verification_ref": "verification:outcome-replay"
+          }
+        ],
+        "eligible_memory_ids": [
+          "memory:safe-failure-pattern"
+        ],
+        "ignored_entries": [],
+        "policy_override_allowed": false,
+        "query_id": "memory-query:self-authorization-blocked",
+        "raw_content_returned": false,
+        "trust_increase_allowed": false,
+        "unresolved_counter_evidence_refs": []
+      },
+      "plan": {
+        "calls": [
+          {
+            "call_id": "call:receipt-lookup",
+            "input_refs": [
+              "receipt:baseline"
+            ],
+            "quarantine_acknowledged": false,
+            "requested_effect": "read_metadata",
+            "requests_gate_decision": false,
+            "requests_policy_mutation": false,
+            "requests_production_mutation": false,
+            "tool_id": "cbb.receipt.lookup",
+            "untrusted_input_present": false
+          },
+          {
+            "call_id": "call:memory-search",
+            "input_refs": [
+              "memory:safe-failure-pattern"
+            ],
+            "quarantine_acknowledged": true,
+            "requested_effect": "query_quarantine",
+            "requests_gate_decision": false,
+            "requests_policy_mutation": false,
+            "requests_production_mutation": false,
+            "tool_id": "cbb.memory.search",
+            "untrusted_input_present": true
+          },
+          {
+            "call_id": "call:evolution-proposal",
+            "input_refs": [
+              "evolution-proposal:self-authorization-blocked",
+              "receipt:baseline",
+              "memory:safe-failure-pattern"
+            ],
+            "quarantine_acknowledged": true,
+            "requested_effect": "propose_candidate",
+            "requests_gate_decision": false,
+            "requests_policy_mutation": false,
+            "requests_production_mutation": false,
+            "tool_id": "cbb.evolution.propose",
+            "untrusted_input_present": true
+          }
+        ],
+        "created_at": "2026-07-11T06:51:00Z",
+        "final_authority": "proposal_only",
+        "gate_decision_requested": false,
+        "plan_id": "agentic-plan:evolution-proposal:self-authorization-blocked",
+        "planner_id": "delivery-clearance-deterministic-evidence-planner",
+        "planner_kind": "deterministic_fixture",
+        "policy_mutation_requested": false,
+        "production_mutation_requested": false
+      },
+      "policy_override_allowed": false,
+      "production_mutation_performed": false,
+      "tool_results": [
+        {
+          "authority": "supporting_evidence_only",
+          "call_id": "call:receipt-lookup",
+          "effect": "read_metadata",
+          "gate_decision_allowed": false,
+          "output_refs": [
+            "evidence:receipt-baseline"
+          ],
+          "policy_override_allowed": false,
+          "production_mutation_performed": false,
+          "provenance_refs": [
+            "provenance:receipt-baseline"
+          ],
+          "reasons": [],
+          "redaction_count": 0,
+          "status": "passed",
+          "tool_id": "cbb.receipt.lookup"
+        },
+        {
+          "authority": "supporting_evidence_only",
+          "call_id": "call:memory-search",
+          "effect": "query_quarantine",
+          "gate_decision_allowed": false,
+          "output_refs": [
+            "evidence:memory-safe"
+          ],
+          "policy_override_allowed": false,
+          "production_mutation_performed": false,
+          "provenance_refs": [
+            "provenance:memory-query"
+          ],
+          "reasons": [],
+          "redaction_count": 1,
+          "status": "passed",
+          "tool_id": "cbb.memory.search"
+        },
+        {
+          "authority": "supporting_evidence_only",
+          "call_id": "call:evolution-proposal",
+          "effect": "propose_candidate",
+          "gate_decision_allowed": false,
+          "output_refs": [
+            "evidence:recipe-proposal"
+          ],
+          "policy_override_allowed": false,
+          "production_mutation_performed": false,
+          "provenance_refs": [
+            "provenance:proposal-builder"
+          ],
+          "reasons": [],
+          "redaction_count": 0,
+          "status": "passed",
+          "tool_id": "cbb.evolution.propose"
+        }
+      ]
+    },
+    "controls": {
+      "controls": [
+        {
+          "actor_kind": "deterministic_verifier",
+          "actor_ref": "verifier:evolution-replay",
+          "control_type": "deterministic_replay",
+          "evidence_ref": "evidence:deterministic_replay:passed",
+          "status": "passed"
+        },
+        {
+          "actor_kind": "deterministic_verifier",
+          "actor_ref": "verifier:evolution-canary",
+          "control_type": "canary",
+          "evidence_ref": "evidence:canary:passed",
+          "status": "passed"
+        },
+        {
+          "actor_kind": "deterministic_verifier",
+          "actor_ref": "verifier:evolution-rollback",
+          "control_type": "rollback",
+          "evidence_ref": "evidence:rollback:passed",
+          "status": "passed"
+        },
+        {
+          "actor_kind": "human_reconstructor",
+          "actor_ref": "agent:evolution-planner",
+          "control_type": "human_reconstruction",
+          "evidence_ref": "evidence:human_reconstruction:passed",
+          "status": "passed"
+        },
+        {
+          "actor_kind": "risk_owner",
+          "actor_ref": "human:risk-owner",
+          "control_type": "risk_owner_acceptance",
+          "evidence_ref": "evidence:risk_owner_acceptance:passed",
+          "status": "passed"
+        },
+        {
+          "actor_kind": "maintainer",
+          "actor_ref": "human:maintainer",
+          "control_type": "maintainer_approval",
+          "evidence_ref": "evidence:maintainer_approval:passed",
+          "status": "passed"
+        }
+      ]
+    },
+    "expires_at": "2026-08-10T07:00:00Z",
+    "issued_at": "2026-07-11T07:00:00Z",
+    "proposal": {
+      "base_digest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "candidate_digest_sha256": "66e7c3a62e032578ce3d216c138cb360a292cfe44ecb73ae498fb6e08e2b0701",
+      "change_kind": "trust_recipe",
+      "changes_revocation_semantics": false,
+      "changes_verifier_or_signing": false,
+      "current_scope": "internal_handoff",
+      "evidence_refs": [
+        "evidence:receipt-baseline",
+        "evidence:memory-safe",
+        "evidence:recipe-proposal"
+      ],
+      "expands_delivery_scope": false,
+      "expands_tool_authority": false,
+      "memory_refs": [
+        "memory:safe-failure-pattern"
+      ],
+      "proposal_id": "evolution-proposal:self-authorization-blocked",
+      "proposal_only": true,
+      "proposer_kind": "agent",
+      "proposer_ref": "agent:evolution-planner",
+      "raw_patch_included": false,
+      "requested_scope": "internal_handoff",
+      "requests_automatic_apply": false,
+      "requests_production_mutation": false,
+      "submitted_at": "2026-07-11T06:50:00Z",
+      "summary_digest_sha256": "dd1e676148c4c885eee6b3eaea4d1d07c6397b1b1a1e22aa338e4c61c0a2d4d3",
+      "target_ref": "trust-recipe:internal-handoff",
+      "touches_hard_denies": false,
+      "weakens_required_evidence": false
+    },
+    "replay_nonce": "evolution-replay-nonce:self-authorization-blocked"
+  },
+  "receipt": {
+    "agentic_evidence": {
+      "agentic_output_authority": "supporting_evidence_only",
+      "gate_decision_from_agent": false,
+      "memory_query": {
+        "as_of": "2026-07-11T06:55:00Z",
+        "considered_entries": [
+          {
+            "content_digest_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+            "counter_evidence_refs": [],
+            "eligible_as_supporting_evidence": true,
+            "expires_at": "2026-08-10T00:00:00Z",
+            "injection_signals": [],
+            "memory_id": "memory:safe-failure-pattern",
+            "memory_kind": "failure",
+            "observed_at": "2026-07-10T00:00:00Z",
+            "policy_authority": false,
+            "policy_directive_detected": false,
+            "quarantined": true,
+            "raw_content_included": false,
+            "signature_ref": null,
+            "source_digest_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "source_ref": "outcome-receipt:near-miss",
+            "source_trust": "local_verified",
+            "verification_ref": "verification:outcome-replay"
+          }
+        ],
+        "eligible_memory_ids": [
+          "memory:safe-failure-pattern"
+        ],
+        "ignored_entries": [],
+        "policy_override_allowed": false,
+        "query_id": "memory-query:self-authorization-blocked",
+        "raw_content_returned": false,
+        "trust_increase_allowed": false,
+        "unresolved_counter_evidence_refs": []
+      },
+      "plan": {
+        "calls": [
+          {
+            "call_id": "call:receipt-lookup",
+            "input_refs": [
+              "receipt:baseline"
+            ],
+            "quarantine_acknowledged": false,
+            "requested_effect": "read_metadata",
+            "requests_gate_decision": false,
+            "requests_policy_mutation": false,
+            "requests_production_mutation": false,
+            "tool_id": "cbb.receipt.lookup",
+            "untrusted_input_present": false
+          },
+          {
+            "call_id": "call:memory-search",
+            "input_refs": [
+              "memory:safe-failure-pattern"
+            ],
+            "quarantine_acknowledged": true,
+            "requested_effect": "query_quarantine",
+            "requests_gate_decision": false,
+            "requests_policy_mutation": false,
+            "requests_production_mutation": false,
+            "tool_id": "cbb.memory.search",
+            "untrusted_input_present": true
+          },
+          {
+            "call_id": "call:evolution-proposal",
+            "input_refs": [
+              "evolution-proposal:self-authorization-blocked",
+              "receipt:baseline",
+              "memory:safe-failure-pattern"
+            ],
+            "quarantine_acknowledged": true,
+            "requested_effect": "propose_candidate",
+            "requests_gate_decision": false,
+            "requests_policy_mutation": false,
+            "requests_production_mutation": false,
+            "tool_id": "cbb.evolution.propose",
+            "untrusted_input_present": true
+          }
+        ],
+        "created_at": "2026-07-11T06:51:00Z",
+        "final_authority": "proposal_only",
+        "gate_decision_requested": false,
+        "plan_id": "agentic-plan:evolution-proposal:self-authorization-blocked",
+        "planner_id": "delivery-clearance-deterministic-evidence-planner",
+        "planner_kind": "deterministic_fixture",
+        "policy_mutation_requested": false,
+        "production_mutation_requested": false
+      },
+      "policy_override_allowed": false,
+      "production_mutation_performed": false,
+      "tool_results": [
+        {
+          "authority": "supporting_evidence_only",
+          "call_id": "call:receipt-lookup",
+          "effect": "read_metadata",
+          "gate_decision_allowed": false,
+          "output_refs": [
+            "evidence:receipt-baseline"
+          ],
+          "policy_override_allowed": false,
+          "production_mutation_performed": false,
+          "provenance_refs": [
+            "provenance:receipt-baseline"
+          ],
+          "reasons": [],
+          "redaction_count": 0,
+          "status": "passed",
+          "tool_id": "cbb.receipt.lookup"
+        },
+        {
+          "authority": "supporting_evidence_only",
+          "call_id": "call:memory-search",
+          "effect": "query_quarantine",
+          "gate_decision_allowed": false,
+          "output_refs": [
+            "evidence:memory-safe"
+          ],
+          "policy_override_allowed": false,
+          "production_mutation_performed": false,
+          "provenance_refs": [
+            "provenance:memory-query"
+          ],
+          "reasons": [],
+          "redaction_count": 1,
+          "status": "passed",
+          "tool_id": "cbb.memory.search"
+        },
+        {
+          "authority": "supporting_evidence_only",
+          "call_id": "call:evolution-proposal",
+          "effect": "propose_candidate",
+          "gate_decision_allowed": false,
+          "output_refs": [
+            "evidence:recipe-proposal"
+          ],
+          "policy_override_allowed": false,
+          "production_mutation_performed": false,
+          "provenance_refs": [
+            "provenance:proposal-builder"
+          ],
+          "reasons": [],
+          "redaction_count": 0,
+          "status": "passed",
+          "tool_id": "cbb.evolution.propose"
+        }
+      ]
+    },
+    "automatic_apply_performed": false,
+    "claim_boundary": {
+      "current_claim": "This receipt records a deterministic decision about a local evolution candidate. It does not apply the candidate or grant delivery authority.",
+      "maximum_scope": "blocked",
+      "not_claimed": [
+        "automatic policy application",
+        "production authorization",
+        "global protocol conformance",
+        "third-party signer identity",
+        "independent security audit completion",
+        "model or memory output as a trust root"
+      ]
+    },
+    "controls": {
+      "controls": [
+        {
+          "actor_kind": "deterministic_verifier",
+          "actor_ref": "verifier:evolution-replay",
+          "control_type": "deterministic_replay",
+          "evidence_ref": "evidence:deterministic_replay:passed",
+          "status": "passed"
+        },
+        {
+          "actor_kind": "deterministic_verifier",
+          "actor_ref": "verifier:evolution-canary",
+          "control_type": "canary",
+          "evidence_ref": "evidence:canary:passed",
+          "status": "passed"
+        },
+        {
+          "actor_kind": "deterministic_verifier",
+          "actor_ref": "verifier:evolution-rollback",
+          "control_type": "rollback",
+          "evidence_ref": "evidence:rollback:passed",
+          "status": "passed"
+        },
+        {
+          "actor_kind": "human_reconstructor",
+          "actor_ref": "agent:evolution-planner",
+          "control_type": "human_reconstruction",
+          "evidence_ref": "evidence:human_reconstruction:passed",
+          "status": "passed"
+        },
+        {
+          "actor_kind": "risk_owner",
+          "actor_ref": "human:risk-owner",
+          "control_type": "risk_owner_acceptance",
+          "evidence_ref": "evidence:risk_owner_acceptance:passed",
+          "status": "passed"
+        },
+        {
+          "actor_kind": "maintainer",
+          "actor_ref": "human:maintainer",
+          "control_type": "maintainer_approval",
+          "evidence_ref": "evidence:maintainer_approval:passed",
+          "status": "passed"
+        }
+      ]
+    },
+    "decision": {
+      "automatic_apply_allowed": false,
+      "candidate_state": "rejected",
+      "explicit_maintainer_apply_required": true,
+      "production_apply_allowed": false,
+      "proposal_digest_sha256": "95192fd6bc4c7a26375d2cc6bd9c277bd371b01fe4bf95cc43bc5a1b8bf6b51e",
+      "reasons": [
+        "actor_separation:self_authorization"
+      ],
+      "release_performed": false,
+      "status": "block",
+      "tool_or_memory_authority_used_as_final_basis": false,
+      "trust_kernel_mutation_performed": false
+    },
+    "evolution_receipt_id": "cbb-evolution:4e911c2b9f65c21b0c1396e87d05e6bc",
+    "issued_at": "2026-07-11T07:00:00Z",
+    "privacy": {
+      "attention_stream_included": false,
+      "automatic_customer_send_performed": false,
+      "cookies_or_bearer_tokens_included": false,
+      "metadata_only": true,
+      "model_credentials_included": false,
+      "model_prompts_included": false,
+      "production_mutation_performed": false,
+      "raw_customer_payload_included": false,
+      "raw_report_text_included": false,
+      "raw_source_text_included": false,
+      "signed_urls_included": false
+    },
+    "proposal": {
+      "base_digest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "candidate_digest_sha256": "66e7c3a62e032578ce3d216c138cb360a292cfe44ecb73ae498fb6e08e2b0701",
+      "change_kind": "trust_recipe",
+      "changes_revocation_semantics": false,
+      "changes_verifier_or_signing": false,
+      "current_scope": "internal_handoff",
+      "evidence_refs": [
+        "evidence:receipt-baseline",
+        "evidence:memory-safe",
+        "evidence:recipe-proposal"
+      ],
+      "expands_delivery_scope": false,
+      "expands_tool_authority": false,
+      "memory_refs": [
+        "memory:safe-failure-pattern"
+      ],
+      "proposal_id": "evolution-proposal:self-authorization-blocked",
+      "proposal_only": true,
+      "proposer_kind": "agent",
+      "proposer_ref": "agent:evolution-planner",
+      "raw_patch_included": false,
+      "requested_scope": "internal_handoff",
+      "requests_automatic_apply": false,
+      "requests_production_mutation": false,
+      "submitted_at": "2026-07-11T06:50:00Z",
+      "summary_digest_sha256": "dd1e676148c4c885eee6b3eaea4d1d07c6397b1b1a1e22aa338e4c61c0a2d4d3",
+      "target_ref": "trust-recipe:internal-handoff",
+      "touches_hard_denies": false,
+      "weakens_required_evidence": false
+    },
+    "provenance": {
+      "canonicalization": "cbb-json-c14n-v1",
+      "claim_boundary": {
+        "current_claim": "The local signature binds this deterministic evolution-gate receipt. The receipt does not apply the candidate.",
+        "maximum_scope": "blocked",
+        "not_claimed": [
+          "third-party signer identity",
+          "automatic policy application",
+          "production authorization",
+          "global protocol conformance",
+          "independent security audit completion",
+          "model or memory output as a trust root"
+        ]
+      },
+      "created_at": "2026-07-11T07:00:00Z",
+      "decision_digest_sha256": "eb8eb3395391f000c0542f356d3bbe99d7e8ec217a0e821c12dc911bd9070fd3",
+      "envelope_digest_sha256": "0d638e879c1d306d43dca63023132cddb54fdaeac1ae9edafdb7e63378f23766",
+      "expires_at": "2026-08-10T07:00:00Z",
+      "replay_nonce": "evolution-replay-nonce:self-authorization-blocked",
+      "revocation": {
+        "handle": "cbb-evolution-revocation:cbb-evolution:4e911c2b9f65c21b0c1396e87d05e6bc",
+        "registry_ref": "evolution-revocation-registry.json"
+      },
+      "signature": "rtQ15Rt3G1uAoSwZenkRcB-wrk2rXP7YMBmcSD-C5KDM0OkNrUAbCGPH9FI-tvX1096R9GDLYYRLYK6soLpfBQ",
+      "signature_algorithm": "ed25519",
+      "signer": {
+        "identity_scope": "local_self_asserted",
+        "key_id": "fixture-agentic-evolution-key-1",
+        "public_key": "A_RsZnzYDfH0V2KW2KFy7vOGGpiOTFlZrojNJlv_a-Y",
+        "public_key_encoding": "ed25519-raw-base64url",
+        "public_key_fingerprint_sha256": "a94eb3288ca12148645109dfb473a57dd7e77503e0eebd649085e8820f49ad35",
+        "signer_id": "maintainer:fixture-signer"
+      },
+      "signing_status": "locally_signed",
+      "verifier": {
+        "verifier_digest_sha256": "8d6f5bffee083dcd8b2fe8948b40851657e3f398c49da33a21c1895b0826f8bc",
+        "verifier_id": "delivery-clearance-evolution-gate",
+        "verifier_version": "1"
+      }
+    },
+    "schema_version": "cbb.evolution-gate-receipt.v1"
+  }
+}

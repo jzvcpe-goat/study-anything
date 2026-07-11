@@ -118,6 +118,9 @@ The current `main` line includes deterministic, metadata-only implementations fo
 - signed-source and locally signed post-delivery outcome receipts, bounded sampling,
   deterministic degradation replay, affected-party challenges, rollback failure,
   historical source binding, local revocation, and non-increasing trust updates;
+- typed Agentic evidence tools, quarantined metadata memory, proposal/approver
+  separation, and signed deterministic evolution-gate receipts that stop at a local
+  candidate and never auto-apply;
 - delivery-class, scenario, external feedback, and controlled handoff evidence;
 - local API, Skill, platform-Agent, Docker, and static HTML artifact adapters;
 - local release, security, adoption, and external-audit preparation evidence.
@@ -227,6 +230,7 @@ not an autonomous release decision.
 - [Protocol v1 local provenance](docs/cbb-protocol-v1-provenance.md)
 - [Protocol v1 scenarios and qualification](docs/cbb-protocol-v1-scenarios-and-qualification.md)
 - [Protocol v1 outcomes and trust degradation](docs/cbb-protocol-v1-outcomes.md)
+- [Protocol v1 Agentic evidence and evolution gate](docs/cbb-protocol-v1-agentic-evolution.md)
 - [Roadmap](docs/roadmap.md)
 - [Delivery Trust Receipt](docs/delivery-trust-receipt.md)
 - [Customer Handoff Package](docs/customer-handoff-package.md)

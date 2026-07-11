@@ -15,6 +15,10 @@ KERNEL_FILES = (
     ROOT / "apps" / "api" / "study_anything" / "cbb" / "kernel" / "__init__.py",
     ROOT / "apps" / "api" / "study_anything" / "cbb" / "kernel" / "gate.py",
     ROOT / "apps" / "api" / "study_anything" / "cbb" / "outcomes" / "policy.py",
+    ROOT / "apps" / "api" / "study_anything" / "cbb" / "agentic" / "tools.py",
+    ROOT / "apps" / "api" / "study_anything" / "cbb" / "agentic" / "memory.py",
+    ROOT / "apps" / "api" / "study_anything" / "cbb" / "agentic" / "planner.py",
+    ROOT / "apps" / "api" / "study_anything" / "cbb" / "agentic" / "policy.py",
 )
 DEFAULT_REPORT = ROOT / "platform" / "generated" / "study-anything-cbb-runtime-isolation.json"
 REPORT_SCHEMA_VERSION = "cbb-runtime-isolation-verification-v1"
@@ -95,8 +99,8 @@ def build_report() -> dict[str, Any]:
         "files": files,
         "claim_boundary": (
             "This verifier proves static runtime isolation for the canonical kernel "
-            "and outcome-policy files only; it is not a production sandbox or external "
-            "security audit."
+            "and pure outcome/Agentic policy files only; it is not a production sandbox, "
+            "prompt-injection proof, or external security audit."
         ),
     }
 

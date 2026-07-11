@@ -294,7 +294,6 @@ Gate:
 
 ```bash
 python3 scripts/verify_cbb_v1_outcomes.py --check
-python3 scripts/verify_cbb_v1_degradation.py --check
 ```
 
 ### PR 6: Agentic Evidence Runtime Skeleton
@@ -311,6 +310,11 @@ python3 scripts/verify_cbb_agentic_tool_boundary.py --check
 python3 scripts/verify_cbb_memory_quarantine.py --check
 python3 scripts/verify_cbb_evolution_gate.py --check
 ```
+
+**Status:** implemented as a deterministic metadata-only skeleton. The typed tool
+allowlist, memory quarantine, six-control evolution gate, actor separation, local
+signature, revocation, and deterministic decision replay are shipped. Approval stops
+at `local_candidate`; no candidate is automatically applied.
 
 ### PR 7: Conformance Pack And Second Implementation
 
@@ -405,7 +409,7 @@ Pause and require explicit human intervention when:
 ## 11. Next Codex Goal
 
 ```text
-/goal Implement CBB Protocol v1 PR 1: canonical models and v0 compatibility mapping.
+/goal Implement CBB Protocol v1 PR 7: conformance pack and second implementation.
 
 Source of truth:
 - README.md
@@ -416,29 +420,29 @@ Source of truth:
 - docs/cbb-protocol-v1-development-plan.md
 
 Objective:
-Converge the existing Dual Loop and CBB receipt families into the canonical Protocol
-v1 contract set without breaking current adapters or expanding any trust claim.
+Prove that an implementation outside the Study Anything package can validate the
+eight canonical Protocol v1 objects and their claim boundaries without treating this
+repository as the only trust authority.
 
 Required:
-1. Add canonical schemas for trust policy, evidence bundle, qualified reconstruction,
-   gate decision, delivery trust receipt, and receipt provenance.
-2. Add deterministic canonical JSON serialization.
-3. Add explicit v0-to-v1 adapters for current failure contract, sandbox receipt,
-   attention reconstruction summary, Dual Loop gate, and Delivery Trust Receipt.
-4. Prove every mapping preserves or narrows delivery scope and claim boundaries.
-5. Add pass, missing-evidence, hard-deny, stale, secret-like, malformed, and
-   scope-expansion fixtures.
-6. Add verify_cbb_v1_contracts.py --check and
-   verify_cbb_v0_compatibility.py --check.
-7. Wire both gates into release_check.sh --cbb-protocol-only.
-8. Keep the deterministic kernel path free of model, RAG, Agent, browser, network,
-   production mutation, and customer-sending behavior.
-9. Preserve existing package, API, script, schema, and artifact names as compatibility
-   surfaces; do not mass rename them.
-10. Run the named Contract-First quality audit after implementation.
+1. Publish a bounded conformance pack with all eight schemas, canonical vectors,
+   negative fixtures, verifier identity, version negotiation, and migration metadata.
+2. Add a dependency-light second consumer outside the Study Anything package path.
+3. Prove the second consumer verifies canonical bytes, digests, scope ceilings,
+   signatures, expiry, revocation, outcome degradation, and evolution decisions.
+4. Reject unknown extensions that claim authority and preserve compatibility-only v0
+   identifiers without expanding scope.
+5. Add protocol versioning, deprecation, extension, trademark, security-disclosure,
+   and spec-change governance documents.
+6. Require migration, rollback, negative fixtures, and an evolution receipt for any
+   future authoritative schema change.
+7. Wire conformance and external-consumer gates into release_check.sh.
+8. Extend platform/adoption/audit packs without adding production mutation, customer
+   send, model calls, or network-only assumptions.
+9. Run the named Contract-First quality audit after implementation.
 
 Claim boundary:
-This PR defines and verifies local deterministic Protocol v1 contracts. It does not
-implement production delivery, customer outcome guarantees, cryptographic signing,
-safe Agentic self-evolution, or independent audit completion.
+This PR proves local cross-implementation conformance against published fixtures. It
+does not create a certification authority, prove production safety, establish global
+revocation, guarantee customer outcomes, or complete an independent security audit.
 ```

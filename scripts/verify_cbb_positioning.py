@@ -105,6 +105,13 @@ REQUIRED_TEXT: dict[str, tuple[str, ...]] = {
         "revoke_clearance",
         "never increases scope",
     ),
+    "docs/cbb-protocol-v1-agentic-evolution.md": (
+        "cbb.evolution-gate-receipt.v1",
+        "supporting evidence only",
+        "Memory is evidence, not policy or truth.",
+        "approved_for_local_candidate",
+        "automatic_apply_allowed = false",
+    ),
     "docs/adapters/study-anything.md": (
         "Human Reconstruction / Learning Adapter",
         "not the protocol, the Trust Kernel, or the top-level product identity.",
@@ -117,6 +124,9 @@ REQUIRED_TEXT: dict[str, tuple[str, ...]] = {
         "scripts/verify_cbb_v1_scenarios.py --check",
         "scripts/verify_cbb_v1_qualification.py --check",
         "scripts/verify_cbb_v1_outcomes.py --check",
+        "scripts/verify_cbb_agentic_tool_boundary.py --check",
+        "scripts/verify_cbb_memory_quarantine.py --check",
+        "scripts/verify_cbb_evolution_gate.py --check",
     ),
 }
 
