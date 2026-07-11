@@ -17,7 +17,7 @@ def _resolve_version() -> str:
     if pyproject.exists():
         text = pyproject.read_text(encoding="utf-8")
         if tomllib is not None:
-            return tomllib.loads(text)["project"]["version"]
+            return str(tomllib.loads(text)["project"]["version"])
         match = re.search(r'(?m)^version\s*=\s*"([^"]+)"', text)
         if match:
             return match.group(1)

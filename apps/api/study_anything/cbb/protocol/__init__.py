@@ -7,6 +7,7 @@ from study_anything.cbb.protocol.canonical import (
     validate_payload,
 )
 from study_anything.cbb.protocol.models import (
+    DeliveryOutcomeReceiptV1,
     DeliveryScope,
     DeliveryTrustReceiptV1,
     EvidenceBundleV1,
@@ -17,6 +18,7 @@ from study_anything.cbb.protocol.models import (
 )
 
 __all__ = [
+    "DeliveryOutcomeReceiptV1",
     "DeliveryScope",
     "DeliveryTrustReceiptV1",
     "EvidenceBundleV1",
@@ -29,4 +31,3 @@ __all__ = [
     "model_payload",
     "validate_payload",
 ]
-

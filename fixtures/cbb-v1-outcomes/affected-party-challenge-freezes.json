@@ -1,0 +1,231 @@
+{
+  "case_id": "affected-party-challenge-freezes",
+  "expected": {
+    "action": "freeze_recipe",
+    "recipe_state": "frozen",
+    "resulting_scope": "blocked",
+    "source_clearance_revoked": false,
+    "status": "frozen"
+  },
+  "inputs": {
+    "events": [
+      {
+        "affected_party_refs": [
+          "affected-party:affected-party-challenge-freezes"
+        ],
+        "claim_boundary_violated": false,
+        "counter_evidence_refs": [
+          "counter-evidence:affected-party-challenge-freezes"
+        ],
+        "event_id": "outcome-event:affected-party-challenge-freezes",
+        "event_type": "affected_party_challenge",
+        "external_effect_observed": false,
+        "occurred_at": "2026-07-08T12:00:00Z",
+        "resolution_refs": [],
+        "severity": "medium",
+        "source_refs": [
+          "outcome-evidence:affected-party-challenge-freezes"
+        ],
+        "status": "reported"
+      }
+    ],
+    "issued_at": "2026-07-11T00:00:00Z",
+    "recipe_ref": "trust-recipe:metadata-only-demo",
+    "rollback": {
+      "attempted": false,
+      "evidence_refs": [],
+      "required": false,
+      "status": "not_required"
+    },
+    "sampling": {
+      "coverage_complete": false,
+      "eligible_count": 25,
+      "limitations": [
+        "bounded sample does not cover every delivery"
+      ],
+      "sampled_count": 5,
+      "sampling_id": "outcome-sampling:affected-party-challenge-freezes",
+      "selection_ref": "sampling-plan:affected-party-challenge-freezes",
+      "strategy": "bounded_sample",
+      "window_ended_at": "2026-07-10T00:00:00Z",
+      "window_started_at": "2026-07-01T00:00:00Z"
+    }
+  },
+  "receipt": {
+    "claim_boundary": {
+      "current_claim": "Post-delivery evidence reduced or suspended the prior clearance boundary.",
+      "maximum_scope": "blocked",
+      "not_claimed": [
+        "customer outcome guarantee",
+        "global model correctness",
+        "production approval",
+        "legal or security certification",
+        "trust increase from elapsed time or accumulated pass count",
+        "automatic policy mutation"
+      ]
+    },
+    "events": [
+      {
+        "affected_party_refs": [
+          "affected-party:affected-party-challenge-freezes"
+        ],
+        "claim_boundary_violated": false,
+        "counter_evidence_refs": [
+          "counter-evidence:affected-party-challenge-freezes"
+        ],
+        "event_id": "outcome-event:affected-party-challenge-freezes",
+        "event_type": "affected_party_challenge",
+        "external_effect_observed": false,
+        "occurred_at": "2026-07-08T12:00:00Z",
+        "resolution_refs": [],
+        "severity": "medium",
+        "source_refs": [
+          "outcome-evidence:affected-party-challenge-freezes"
+        ],
+        "status": "reported"
+      }
+    ],
+    "issued_at": "2026-07-11T00:00:00Z",
+    "outcome_provenance": {
+      "canonicalization": "cbb-json-c14n-v1",
+      "claim_boundary": {
+        "current_claim": "The local signature binds this deterministic post-delivery outcome receipt and cannot expand its resulting scope.",
+        "maximum_scope": "blocked",
+        "not_claimed": [
+          "third-party signer identity",
+          "customer outcome guarantee",
+          "production approval",
+          "legal or security certification",
+          "global revocation status outside the supplied registry",
+          "scope beyond the deterministic outcome action"
+        ]
+      },
+      "created_at": "2026-07-11T00:00:00Z",
+      "expires_at": "2026-08-10T00:00:00Z",
+      "outcome_envelope_digest_sha256": "0436e2d9024949aff9b8c08fc0906193780eb5964174bdb2e489932e01f5440c",
+      "replay_nonce": "outcome-replay-nonce:affected-party-challenge-freezes",
+      "revocation": {
+        "handle": "cbb-outcome-revocation:cbb-outcome:f3c11803a6734ca6c7c6e99ad6279f89",
+        "registry_ref": "outcome-revocation-registry.json"
+      },
+      "signature": "EJOAjz5Cx2PB1PMS5SDfyrI8-42BNgFQG0BkXipS50FiQ5H1CcdCQeG60kvOFToPIrDUEYpzLWmJVHR6wFvWBQ",
+      "signature_algorithm": "ed25519",
+      "signer": {
+        "identity_scope": "local_self_asserted",
+        "key_id": "fixture-outcome-ed25519-key-1",
+        "public_key": "iOhzLKl83V0lApsWThuKyhOi1i0GfUciD5f1RUobvB8",
+        "public_key_encoding": "ed25519-raw-base64url",
+        "public_key_fingerprint_sha256": "fb7a83680920c605157f8e6e0067f3e203a23bb4b7216ec742503e08a163801c",
+        "signer_id": "fixture-local-outcome-signer"
+      },
+      "signing_status": "locally_signed",
+      "source_package_digest_sha256": "2ccaffefc82b48e8d209f37d27d89bfd37b9a407958fbc036a51c22be72c7b4c",
+      "verifier": {
+        "verifier_digest_sha256": "5bcc084ebb7e5dc4ca67a8adb8bb901103ed930dca4bb1cd7336de8e4018f73e",
+        "verifier_id": "delivery-clearance-outcome-evaluator",
+        "verifier_version": "1"
+      }
+    },
+    "outcome_receipt_id": "cbb-outcome:f3c11803a6734ca6c7c6e99ad6279f89",
+    "policy_ref": "cbb-policy:failure-contract-demo-001",
+    "privacy": {
+      "attention_stream_included": false,
+      "automatic_customer_send_performed": false,
+      "cookies_or_bearer_tokens_included": false,
+      "metadata_only": true,
+      "model_credentials_included": false,
+      "model_prompts_included": false,
+      "production_mutation_performed": false,
+      "raw_customer_payload_included": false,
+      "raw_report_text_included": false,
+      "raw_source_text_included": false,
+      "signed_urls_included": false
+    },
+    "rollback": {
+      "attempted": false,
+      "evidence_refs": [],
+      "required": false,
+      "status": "not_required"
+    },
+    "sampling": {
+      "coverage_complete": false,
+      "eligible_count": 25,
+      "limitations": [
+        "bounded sample does not cover every delivery"
+      ],
+      "sampled_count": 5,
+      "sampling_id": "outcome-sampling:affected-party-challenge-freezes",
+      "selection_ref": "sampling-plan:affected-party-challenge-freezes",
+      "strategy": "bounded_sample",
+      "window_ended_at": "2026-07-10T00:00:00Z",
+      "window_started_at": "2026-07-01T00:00:00Z"
+    },
+    "scenario_ref": "task:dual-loop-demo",
+    "schema_version": "cbb.delivery-outcome-receipt.v1",
+    "source_approved_scope": "internal_handoff",
+    "source_clearance_revocation_handle": "cbb-revocation:cbb-decision:9253eb6f61145b82494f8594038b4a21",
+    "source_delivery_receipt_digest_sha256": "a4cce47500154e32203d620c2a7136f368ddc557c554e593f81a15add991a04a",
+    "source_delivery_receipt_ref": "cbb-receipt:delivery-trust-receipt-demo-001",
+    "source_verification": {
+      "checks_passed": [
+        "decision_digest",
+        "deterministic_gate",
+        "embedded_provenance",
+        "evidence_digest",
+        "locally_signed",
+        "not_before",
+        "not_expired",
+        "not_revoked",
+        "package_digest",
+        "policy_digest",
+        "public_key_fingerprint",
+        "receipt_envelope_digest",
+        "receipt_scope",
+        "receipt_status",
+        "reconstruction_digest",
+        "replay_nonce_unused",
+        "safe_metadata",
+        "scope_not_expanded",
+        "signature",
+        "subject_digest",
+        "verifier_digest"
+      ],
+      "clearance_valid_at": "2026-06-28T00:00:00Z",
+      "local_self_asserted_signer_only": true,
+      "package_digest_sha256": "2ccaffefc82b48e8d209f37d27d89bfd37b9a407958fbc036a51c22be72c7b4c",
+      "package_ref": "cbb-offline-package:cbb-decision:9253eb6f61145b82494f8594038b4a21",
+      "verification_status": "pass",
+      "verified_at": "2026-07-11T00:00:00Z"
+    },
+    "status": "frozen",
+    "subject_ref": "artifact:metadata-only-demo-change",
+    "trust_update": {
+      "action": "freeze_recipe",
+      "affected_party_follow_up_required": true,
+      "counter_evidence_refs": [
+        "counter-evidence:affected-party-challenge-freezes",
+        "outcome-evidence:affected-party-challenge-freezes"
+      ],
+      "policy_reconstruction_required": true,
+      "previous_scope": "internal_handoff",
+      "reasons": [
+        "outcome:affected_party_challenge:reported:medium",
+        "trust_action:freeze_recipe"
+      ],
+      "recipe_ref": "trust-recipe:metadata-only-demo",
+      "recipe_state": "frozen",
+      "replay_required": true,
+      "resulting_scope": "blocked",
+      "revoked_clearance_handles": [],
+      "risk_owner_reacceptance_required": true,
+      "source_clearance_revoked": false,
+      "trust_increase_allowed": false
+    }
+  },
+  "source": {
+    "delivery_receipt_ref": "cbb-receipt:delivery-trust-receipt-demo-001",
+    "package_digest_sha256": "2ccaffefc82b48e8d209f37d27d89bfd37b9a407958fbc036a51c22be72c7b4c",
+    "package_ref": "cbb-offline-package:cbb-decision:9253eb6f61145b82494f8594038b4a21",
+    "revocation_handle": "cbb-revocation:cbb-decision:9253eb6f61145b82494f8594038b4a21"
+  }
+}

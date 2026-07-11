@@ -1,16 +1,16 @@
 {
   "files": [
     {
-      "bytes": 1318,
+      "bytes": 1288,
       "exists": true,
       "path": ".codebuddy-plugin/marketplace.json",
-      "sha256": "951a823da6025c262fd2062ca2e6261f2477981e666433f7cff433fe316a73e6"
+      "sha256": "f9ff93ac9ce210527a45aead5444904ed5cb3463cb198ee5ac71fcdb274814fc"
     },
     {
-      "bytes": 2019,
+      "bytes": 2009,
       "exists": true,
       "path": "plugins/study-anything/.codebuddy-plugin/plugin.json",
-      "sha256": "ab8e07e783dc2a4ae091c3b5dd92f1f3079657ce2f748a9d7f3fe26feebca9a8"
+      "sha256": "6cb7aa01c7aaa24fa9ea98fac7fb15086b7bfc07acf9773ac82b1f6bf0815c36"
     },
     {
       "bytes": 3927,

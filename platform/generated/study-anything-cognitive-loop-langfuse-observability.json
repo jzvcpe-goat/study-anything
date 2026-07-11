@@ -36,9 +36,9 @@
       "sha256": "1b4f55f5db75ab30d85009f7c5e6c398536b239d2c12dc4d470e932affe55b66"
     },
     {
-      "bytes": 1840,
+      "bytes": 1839,
       "path": "platform/mastra-runtime/README.md",
-      "sha256": "1c42abb1b5af0808eef01b09030dd86dd4fcd66101c26b34e28e5f4fa3f25fd1"
+      "sha256": "8251efce9f1e73f37af40ae78aedd44b7bbe7418be7b20f3356b11a573f62c83"
     },
     {
       "bytes": 12388,
@@ -53,12 +53,12 @@
     {
       "bytes": 5846,
       "path": "platform/generated/study-anything-cognitive-loop-mastra-runtime-service.json",
-      "sha256": "402884cd85c03e2afdae967509b4b666fa0d80988d61763955172a3740b5ba8e"
+      "sha256": "33483c0252e274b379ab22fc1e7f2296e4a21c03fb4bc42cc0b53c46a38477da"
     },
     {
       "bytes": 5144,
       "path": "platform/generated/study-anything-cognitive-loop-mastra-runtime-durable.json",
-      "sha256": "200600bb3991501866d8f7c16aee47f7995e39b302372ef5ab64469adf66404b"
+      "sha256": "0bd67ece678665f080c328dad374f5c1431fd0d60183fbf4a39d50aad829abdf"
     }
   ],
   "observability": {

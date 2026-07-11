@@ -14,6 +14,7 @@ families without deleting or renaming their public v0 interfaces.
 | `cbb.gate-decision.v1` | Canonical allow, block, or needs-evidence result |
 | `cbb.delivery-trust-receipt.v1` | Claim-bounded receipt that carries the canonical decision and provenance |
 | `cbb.receipt-provenance.v1` | Deterministic digest bindings and explicit unsigned-development status |
+| `cbb.delivery-outcome-receipt.v1` | Signed-source post-delivery evidence and non-increasing trust update |
 
 All models reject unknown fields. The committed Draft 2020-12 JSON Schemas are
 generated from the strict Python models and checked for exact freshness.

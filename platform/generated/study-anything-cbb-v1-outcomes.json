@@ -1,0 +1,85 @@
+{
+  "case_count": 5,
+  "cases": [
+    {
+      "action": "freeze_recipe",
+      "case_id": "affected-party-challenge-freezes",
+      "recipe_state": "frozen",
+      "resulting_scope": "blocked",
+      "source_clearance_revoked": false,
+      "status": "frozen"
+    },
+    {
+      "action": "revoke_clearance",
+      "case_id": "claim-violation-revokes",
+      "recipe_state": "revoked",
+      "resulting_scope": "blocked",
+      "source_clearance_revoked": true,
+      "status": "revoked"
+    },
+    {
+      "action": "revoke_clearance",
+      "case_id": "failed-rollback-revokes",
+      "recipe_state": "revoked",
+      "resulting_scope": "blocked",
+      "source_clearance_revoked": true,
+      "status": "revoked"
+    },
+    {
+      "action": "maintain_current_ceiling",
+      "case_id": "monitored-no-adverse-signal",
+      "recipe_state": "active",
+      "resulting_scope": "internal_handoff",
+      "source_clearance_revoked": false,
+      "status": "monitored"
+    },
+    {
+      "action": "narrow_scope",
+      "case_id": "near-miss-narrows-scope",
+      "recipe_state": "active",
+      "resulting_scope": "sandbox_only",
+      "source_clearance_revoked": false,
+      "status": "degraded"
+    }
+  ],
+  "checks": {
+    "affected_party_bypass_rejected": true,
+    "deterministic_replay_enforced": true,
+    "expired_source_history_recordable": true,
+    "failed_rollback_bypass_rejected": true,
+    "outcome_receipt_revocation_enforced": true,
+    "outcome_signature_tamper_detected": true,
+    "pass_count_inflation_rejected": true,
+    "resolved_adverse_not_clean": true,
+    "revocation_blocks_original_clearance": true,
+    "revoked_source_rejected": true,
+    "scope_increase_rejected": true,
+    "secret_like_metadata_rejected": true,
+    "source_binding_tamper_detected": true,
+    "unsigned_source_rejected": true
+  },
+  "claim_boundary": "This verifies deterministic metadata-only outcome and local trust-degradation semantics. It does not prove customer success, global revocation, production safety, legal compliance, third-party signer identity, or independent audit completion.",
+  "invariants": [
+    "post-delivery evidence can maintain, narrow, freeze, or revoke trust",
+    "post-delivery evidence can never increase the source clearance scope",
+    "failed rollback and substantiated claim violations revoke source clearance",
+    "resolved adverse events cannot restore the previous clearance ceiling",
+    "verification replays the deterministic trust action instead of trusting a signature",
+    "expired source clearance can be referenced historically but cannot regain authority",
+    "open affected-party challenges freeze delivery and require follow-up",
+    "elapsed time and accumulated pass count never increase trust",
+    "revocation handles make the original signed package fail offline verification",
+    "outcome receipts are locally signed and independently revocable"
+  ],
+  "privacy": {
+    "automatic_policy_mutation_performed": false,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "network_calls_performed": false,
+    "personal_identity_included": false,
+    "production_mutation_performed": false,
+    "raw_customer_payload_included": false
+  },
+  "schema_version": "cbb-v1-outcome-verification-v1",
+  "status": "pass"
+}

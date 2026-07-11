@@ -1487,6 +1487,11 @@ FILES: list[tuple[str, str, str]] = [
         "Scoped MRU and human/model qualification verification report.",
     ),
     (
+        "platform/generated/study-anything-cbb-v1-outcomes.json",
+        "generated_asset",
+        "Post-delivery outcome and trust-degradation verification report.",
+    ),
+    (
         "platform/generated/study-anything-cbb-protocol-contracts.json",
         "generated_asset",
         "Cognitive Black Box protocol contract and privacy verification report.",
@@ -3267,6 +3272,11 @@ FILES: list[tuple[str, str, str]] = [
         "Scenario, affected-party, MRU, and scoped capability policy guide.",
     ),
     (
+        "docs/cbb-protocol-v1-outcomes.md",
+        "operator_doc",
+        "Post-delivery outcome receipt and non-increasing trust-degradation guide.",
+    ),
+    (
         "docs/delivery-trust-receipt.md",
         "operator_doc",
         "Delivery Trust Receipt contract and verifier guide.",
@@ -3390,6 +3400,11 @@ FILES: list[tuple[str, str, str]] = [
         "platform/schemas/cbb/cbb.receipt-provenance.v1.schema.json",
         "schema",
         "Canonical CBB Protocol v1 receipt provenance JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/cbb.delivery-outcome-receipt.v1.schema.json",
+        "schema",
+        "Canonical CBB Protocol v1 post-delivery outcome JSON Schema.",
     ),
     (
         "platform/schemas/cbb/claim-boundary-v1.schema.json",
@@ -5638,6 +5653,11 @@ FILES: list[tuple[str, str, str]] = [
     ("fixtures/cbb-v1-scenarios/paid-customer-candidate.json", "fixture", "Controlled paid-customer candidate fixture."),
     ("fixtures/cbb-v1-scenarios/production-candidate-blocked.json", "fixture", "Production candidate missing-evidence fixture."),
     ("fixtures/cbb-v1-scenarios/regulated-or-irreversible-blocked.json", "fixture", "Regulated or irreversible hard-deny fixture."),
+    ("fixtures/cbb-v1-outcomes/monitored-no-adverse-signal.json", "fixture", "Bounded monitoring fixture that preserves but does not increase scope."),
+    ("fixtures/cbb-v1-outcomes/near-miss-narrows-scope.json", "fixture", "Near-miss outcome fixture that narrows future scope."),
+    ("fixtures/cbb-v1-outcomes/affected-party-challenge-freezes.json", "fixture", "Affected-party challenge fixture that freezes the recipe."),
+    ("fixtures/cbb-v1-outcomes/claim-violation-revokes.json", "fixture", "Confirmed claim-violation fixture that revokes clearance."),
+    ("fixtures/cbb-v1-outcomes/failed-rollback-revokes.json", "fixture", "Failed rollback fixture that revokes clearance."),
     (
         "scripts/verify_cbb_protocol_contracts.py",
         "verification",
@@ -5671,6 +5691,9 @@ FILES: list[tuple[str, str, str]] = [
     ("scripts/generate_cbb_v1_scenario_assets.py", "generator", "Generate deterministic CBB Protocol v1 scenario fixtures."),
     ("scripts/verify_cbb_v1_scenarios.py", "verification", "Verify scenario scope, actor, safeguard, and hard-deny decisions."),
     ("scripts/verify_cbb_v1_qualification.py", "verification", "Verify MRU and scoped human/model capability boundaries."),
+    ("scripts/generate_cbb_v1_outcome_assets.py", "generator", "Generate deterministic post-delivery outcome fixtures."),
+    ("scripts/cbb_delivery_outcome.py", "cli", "Build metadata-only post-delivery outcome receipts from signed clearance packages."),
+    ("scripts/verify_cbb_v1_outcomes.py", "verification", "Verify historical source binding, deterministic degradation replay, non-increasing trust, recipe freeze, and revocation."),
     (
         "scripts/verify_cbb_positioning.py",
         "verification",
@@ -8003,6 +8026,8 @@ def build_manifest() -> dict[str, object]:
             "python3 scripts/generate_cbb_v1_scenario_assets.py --check",
             "python3 scripts/verify_cbb_v1_scenarios.py --check",
             "python3 scripts/verify_cbb_v1_qualification.py --check",
+            "python3 scripts/generate_cbb_v1_outcome_assets.py --check",
+            "python3 scripts/verify_cbb_v1_outcomes.py --check",
             "python3 scripts/verify_cbb_protocol_contracts.py --check",
             "python3 scripts/verify_cbb_gate.py --check",
             "python3 scripts/verify_cbb_receipt_chain.py --check",

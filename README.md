@@ -95,8 +95,8 @@ AI candidate
   is allowed, and what is not claimed.
 - **Customer Handoff Package** carries an allowed receipt and its referenced evidence.
   It cannot expand the approved scope.
-- **Outcome Receipt** is the planned post-delivery feedback object that can reduce,
-  revoke, or rebuild trust.
+- **Outcome Receipt** records bounded post-delivery evidence and can maintain, narrow,
+  freeze, or revoke trust without ever increasing the source clearance scope.
 
 ## Current Reference Implementation
 
@@ -115,6 +115,9 @@ The current `main` line includes deterministic, metadata-only implementations fo
   Reconstructable Units, and challengeable human/model capability profiles;
 - deterministic vibe-coding fixtures from personal-local use through blocked
   production and regulated/irreversible candidates;
+- signed-source and locally signed post-delivery outcome receipts, bounded sampling,
+  deterministic degradation replay, affected-party challenges, rollback failure,
+  historical source binding, local revocation, and non-increasing trust updates;
 - delivery-class, scenario, external feedback, and controlled handoff evidence;
 - local API, Skill, platform-Agent, Docker, and static HTML artifact adapters;
 - local release, security, adoption, and external-audit preparation evidence.
@@ -223,6 +226,7 @@ not an autonomous release decision.
 - [Protocol v1 deterministic Trust Kernel](docs/cbb-protocol-v1-kernel.md)
 - [Protocol v1 local provenance](docs/cbb-protocol-v1-provenance.md)
 - [Protocol v1 scenarios and qualification](docs/cbb-protocol-v1-scenarios-and-qualification.md)
+- [Protocol v1 outcomes and trust degradation](docs/cbb-protocol-v1-outcomes.md)
 - [Roadmap](docs/roadmap.md)
 - [Delivery Trust Receipt](docs/delivery-trust-receipt.md)
 - [Customer Handoff Package](docs/customer-handoff-package.md)

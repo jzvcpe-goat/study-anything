@@ -72,7 +72,7 @@ milestones:
 
 ## 4. Target V1 Schema Set
 
-The public Protocol v1 surface should converge on seven canonical objects:
+The public Protocol v1 surface should converge on eight canonical schema documents:
 
 | Object | Responsibility |
 |---|---|
@@ -81,12 +81,12 @@ The public Protocol v1 surface should converge on seven canonical objects:
 | `cbb.qualified-reconstruction.v1` | Scope-qualified human reconstruction result |
 | `cbb.gate-decision.v1` | Deterministic allow, block, or needs-evidence decision |
 | `cbb.delivery-trust-receipt.v1` | Portable claim-bounded delivery attestation |
+| `cbb.receipt-provenance.v1` | Shared canonical digest, signer, expiry, replay, and revocation bindings |
 | `cbb.delivery-outcome-receipt.v1` | Post-delivery result, incident, rollback, and challenge |
 | `cbb.evolution-gate-receipt.v1` | Governed policy, recipe, or runtime change decision |
 
-`cbb.receipt-provenance.v1` may be embedded in every receipt or shared as a common
-definition. The implementation decision belongs in PR 2 after canonicalization tests
-show which shape produces the smallest stable surface.
+`cbb.receipt-provenance.v1` is embedded in delivery receipts and also published as a
+shared schema so independent implementations can verify the binding contract.
 
 Existing v0 artifacts remain supported through deterministic adapters:
 
@@ -380,7 +380,7 @@ Do not replace this with a generic “tests passed” summary.
 | Risk | Countermeasure |
 |---|---|
 | Receipt becomes another pretty report | canonical digest, signature, verifier identity, tamper tests |
-| Schema explosion | seven-object v1 ceiling and composition review |
+| Schema explosion | bounded eight-schema v1 surface and composition review |
 | AI reviews itself | model-free final kernel and proposal/decision separation |
 | Human gate becomes fatigue approval | Minimum Reconstructable Unit and scoped qualification |
 | Memory poisoning | quarantine, provenance, expiry, counter-evidence, rollback |

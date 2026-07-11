@@ -1,5 +1,23 @@
 # Unreleased Main Development Line
 
+## Delivery Clearance Outcomes And Trust Degradation
+
+- Made `Delivery Clearance / AI Delivery Clearance Protocol / AI 交付放行协议` the
+  public GitHub identity with the rule `未经放行，不得交付。`
+- Added `cbb.delivery-outcome-receipt.v1`, bounded post-delivery sampling, typed
+  incidents/complaints/near misses/claim violations/affected-party challenges, and
+  rollback outcomes.
+- Added deterministic `maintain_current_ceiling`, `narrow_scope`, `freeze_recipe`, and
+  `revoke_clearance` actions. Outcome evidence can never increase source authority.
+- Bound every outcome envelope to a separate local Ed25519 signature, expiry, replay
+  nonce, verifier identity, and revocation handle before it can update local trust state.
+- Failed rollback and substantiated claim/evidence violations revoke the local source
+  handle; open affected-party challenges freeze the recipe and require follow-up.
+- Added five outcome fixtures, source-binding and revocation negative tests, CLI,
+  verifier, release receipt fields, and external-audit preparation evidence.
+- This is metadata-only local proof, not customer-success evidence, production
+  approval, global revocation, or independent audit completion.
+
 ## CBB Protocol v1 Local Provenance
 
 - Extended `cbb.receipt-provenance.v1` with canonical policy, evidence,
@@ -33,8 +51,8 @@ It is not a release tag or published-image claim.
 
 ## Product
 
-- Cognitive Black Box Protocol is the public project identity: an open,
-  local-first receipt protocol with this repository as its reference harness.
+- Delivery Clearance is the public project identity: an open, local-first AI Delivery
+  Clearance Protocol with this repository as its reference harness.
 - Dual Loop is the core controlled-failure plus qualified-human-reconstruction
   mechanism, not the complete protocol identity.
 - Study Anything remains the compatible Human Reconstruction / Learning Adapter,
@@ -43,7 +61,7 @@ It is not a release tag or published-image claim.
   top-level product name.
 - A deterministic positioning verifier now blocks obsolete current branding while
   preserving historical release notes and compatibility identifiers.
-- Protocol v1 now has six strict canonical contract schemas, deterministic JSON
+- Protocol v1 now has seven strict canonical contract schemas, deterministic JSON
   bytes, and explicit v0 compatibility adapters. Pass, missing-evidence, hard-deny,
   stale, secret-like, malformed, naive-timestamp, invalid-state, and scope-expansion
   fixtures prove mappings preserve or narrow delivery authority and never expand it.

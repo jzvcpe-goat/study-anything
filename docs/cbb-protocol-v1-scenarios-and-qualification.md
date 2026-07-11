@@ -8,8 +8,9 @@ safeguard, and model evidence a specific delivery scenario requires. It keeps th
 human decision surface focused on unresolved boundaries instead of requiring a full
 second reading of every generated artifact.
 
-This work extends the existing six canonical Protocol v1 objects. It does not add a
-new trust receipt family or let scenario classification authorize delivery by itself.
+This work extends the six pre-delivery canonical Protocol v1 objects. It does not add
+a new pre-delivery trust receipt family or let scenario classification authorize
+delivery by itself. The post-delivery outcome receipt is a separate seventh schema.
 
 ## Nested Policy Contracts
 

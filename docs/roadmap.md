@@ -194,6 +194,15 @@ Exit criteria:
 - trust never increases solely from elapsed time or accumulated pass count;
 - affected-party outcomes can challenge the original risk-owner decision.
 
+**Status:** implemented for deterministic, metadata-only local outcome receipts. The
+reference evaluator verifies a signed source package, signs the outcome envelope,
+records bounded sampling, replays the same deterministic degradation policy during
+verification, maintains/narrows/freezes/revokes future scope, and proves local
+source/outcome revocation effects. Later outcome recording may reference a historically
+valid expired clearance but cannot restore its delivery authority.
+It does not prove customer success, global revocation, production safety, redress
+completion, or independent audit completion.
+
 ## M5: Isolated Agentic Evolution Runtime
 
 **Goal:** use modern model capabilities to reduce evidence friction without turning
@@ -281,6 +290,6 @@ phase, including clean clone and dependency installation, to complete.
 The PR-level implementation sequence, acceptance matrix, risk register, and next
 Codex goal are in [Protocol v1 Development Plan](cbb-protocol-v1-development-plan.md).
 
-Canonical contracts, the deterministic Trust Kernel, local provenance/signing, and
-scenario/qualification policy are implemented. The next ordered milestone is
-outcome-driven trust degradation, followed by isolated Agentic evolution.
+Canonical contracts, the deterministic Trust Kernel, local provenance/signing,
+scenario/qualification policy, and outcome-driven trust degradation are implemented.
+The next ordered milestone is isolated Agentic evolution.
