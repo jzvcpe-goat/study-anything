@@ -36,18 +36,13 @@ Current `main` already proves these local deterministic capabilities:
 - delivery-class and scenario matrices;
 - local API, Skill, platform-Agent, Docker, static artifact, release, and security
   evidence;
-- an external security audit preparation package.
+- an external security audit preparation package;
+- a deterministic conformance ZIP and package-independent second consumer.
 
 What this baseline does not yet prove beyond the canonical contract and kernel
 milestones:
 
-- one minimal canonical Protocol v1 schema family;
-- portable cryptographic provenance across implementations;
-- post-delivery outcome feedback and revocation;
-- affected-party disclosure, appeal, and redress policy;
-- scoped human/model capability profiles with expiry and counter-evidence;
-- safe Agentic evidence discovery under prompt injection and memory poisoning;
-- independent conformance implementation;
+- third-party implementation or standards-body adoption beyond this repository;
 - independent human security audit completion;
 - production or customer outcome trust.
 
@@ -329,6 +324,11 @@ python3 scripts/generate_cbb_v1_conformance_pack.py --check
 python3 scripts/verify_cbb_v1_external_consumer.py --check
 ```
 
+**Status:** implemented as local cross-implementation fixture conformance. The pack
+contains all eight schemas, canonical and negative vectors, signed provenance and
+evolution fixtures, version negotiation, extension authority rules, v0 migration, and
+governance documents. The isolated second consumer imports no reference package code.
+
 ### PR 8: Controlled Real Adoption And Audit Intake
 
 - pin exact release scope and external audit pack;
@@ -409,7 +409,7 @@ Pause and require explicit human intervention when:
 ## 11. Next Codex Goal
 
 ```text
-/goal Implement CBB Protocol v1 PR 7: conformance pack and second implementation.
+/goal Implement CBB Protocol v1 PR 8: controlled adoption and external audit intake.
 
 Source of truth:
 - README.md
@@ -420,29 +420,25 @@ Source of truth:
 - docs/cbb-protocol-v1-development-plan.md
 
 Objective:
-Prove that an implementation outside the Study Anything package can validate the
-eight canonical Protocol v1 objects and their claim boundaries without treating this
-repository as the only trust authority.
+Exercise the completed Protocol v1 stack in bounded shadow and dogfood scenarios,
+while keeping independent audit intake and real-world outcomes distinct from local
+conformance evidence.
 
 Required:
-1. Publish a bounded conformance pack with all eight schemas, canonical vectors,
-   negative fixtures, verifier identity, version negotiation, and migration metadata.
-2. Add a dependency-light second consumer outside the Study Anything package path.
-3. Prove the second consumer verifies canonical bytes, digests, scope ceilings,
-   signatures, expiry, revocation, outcome degradation, and evolution decisions.
-4. Reject unknown extensions that claim authority and preserve compatibility-only v0
-   identifiers without expanding scope.
-5. Add protocol versioning, deprecation, extension, trademark, security-disclosure,
-   and spec-change governance documents.
-6. Require migration, rollback, negative fixtures, and an evolution receipt for any
-   future authoritative schema change.
-7. Wire conformance and external-consumer gates into release_check.sh.
-8. Extend platform/adoption/audit packs without adding production mutation, customer
-   send, model calls, or network-only assumptions.
-9. Run the named Contract-First quality audit after implementation.
+1. Define metadata-only shadow and dogfood adoption receipts bound to exact Protocol v1
+   package and conformance digests.
+2. Add controlled pass, block, incident, rollback, revocation, and reopen fixtures.
+3. Add an external-audit report intake contract that rejects self-certification,
+   wrong commits, invalid signatures, incomplete scope, and open critical/high findings.
+4. Keep audit-ready, audit-received, remediation-pending, and audit-closed states
+   distinct; do not synthesize a passing external report.
+5. Prove adoption evidence cannot expand customer or production scope.
+6. Publish passes and failures with the same metadata-only outcome discipline.
+7. Wire adoption and audit-intake verifiers into release and distribution packs.
+8. Run the named Contract-First quality audit after implementation.
 
 Claim boundary:
-This PR proves local cross-implementation conformance against published fixtures. It
-does not create a certification authority, prove production safety, establish global
-revocation, guarantee customer outcomes, or complete an independent security audit.
+This PR may prove local shadow/dogfood workflow behavior and validate the structure of
+an independently signed audit report if one is supplied. It must not invent an auditor,
+claim the open audit is complete, authorize production, or generalize bounded outcomes.
 ```

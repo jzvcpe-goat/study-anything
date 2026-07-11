@@ -36,6 +36,10 @@ EXPECTED_CBB_V1_PACK_ASSETS = {
     "docs/cbb-protocol-v1-scenarios-and-qualification.md",
     "docs/cbb-protocol-v1-outcomes.md",
     "docs/cbb-protocol-v1-agentic-evolution.md",
+    "docs/cbb-protocol-v1-conformance.md",
+    "docs/protocol-governance.md",
+    "docs/extensions-and-versioning.md",
+    "docs/compatibility-and-trademark.md",
     "platform/generated/study-anything-cbb-v1-contracts.json",
     "platform/generated/study-anything-cbb-v0-compatibility.json",
     "platform/generated/study-anything-cbb-v1-kernel.json",
@@ -48,6 +52,14 @@ EXPECTED_CBB_V1_PACK_ASSETS = {
     "platform/generated/study-anything-cbb-agentic-tool-boundary.json",
     "platform/generated/study-anything-cbb-memory-quarantine.json",
     "platform/generated/study-anything-cbb-evolution-gate.json",
+    "platform/generated/study-anything-cbb-v1-conformance-pack.json",
+    "platform/generated/study-anything-cbb-v1-conformance-pack.md",
+    "platform/generated/study-anything-cbb-v1-conformance-pack.zip",
+    "platform/generated/study-anything-cbb-v1-conformance-pack.sha256",
+    "platform/generated/study-anything-cbb-v1-external-consumer.json",
+    "conformance/python/cbb_v1_consumer.py",
+    "scripts/generate_cbb_v1_conformance_pack.py",
+    "scripts/verify_cbb_v1_external_consumer.py",
     "platform/schemas/cbb/cbb.trust-policy.v1.schema.json",
     "platform/schemas/cbb/cbb.evidence-bundle.v1.schema.json",
     "platform/schemas/cbb/cbb.qualified-reconstruction.v1.schema.json",
@@ -109,6 +121,7 @@ EXPECTED_CBB_V1_PLAN_ASSETS = EXPECTED_CBB_V1_PACK_ASSETS | {
     "docs/quality-audits/phase-35-delivery-clearance-scenarios-and-positioning.md",
     "docs/quality-audits/phase-36-delivery-clearance-outcomes.md",
     "docs/quality-audits/phase-37-agentic-evolution-isolation.md",
+    "docs/quality-audits/phase-38-protocol-conformance.md",
 }
 LOCAL_PATH_PATTERN = re.compile(r"(?:/Users/|/home/|[A-Za-z]:\\\\Users\\\\)")
 SECRET_PATTERN = re.compile(

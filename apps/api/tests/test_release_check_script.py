@@ -40,6 +40,8 @@ class ReleaseCheckScriptTests(unittest.TestCase):
         self.assertIn("verify_cbb_agentic_tool_boundary.py --check", script)
         self.assertIn("verify_cbb_memory_quarantine.py --check", script)
         self.assertIn("verify_cbb_evolution_gate.py --check", script)
+        self.assertIn("generate_cbb_v1_conformance_pack.py --check", script)
+        self.assertIn("verify_cbb_v1_external_consumer.py --check", script)
         self.assertIn('release_python_prefix="$("$python_bin" -c', script)
         self.assertIn('--venv "$release_python_prefix"', script)
 
@@ -82,6 +84,8 @@ class ReleaseCheckScriptTests(unittest.TestCase):
         self.assertFalse(receipt["cbb_v1_outcome_verifiers_passed_individually"])
         self.assertTrue(receipt["cbb_v1_agentic_verifiers_integrated"])
         self.assertFalse(receipt["cbb_v1_agentic_verifiers_passed_individually"])
+        self.assertTrue(receipt["cbb_v1_conformance_verifiers_integrated"])
+        self.assertFalse(receipt["cbb_v1_conformance_verifiers_passed_individually"])
         self.assertTrue(receipt["partial_modes"]["dual_loop_only"])
         self.assertTrue(receipt["partial_modes"]["skip_clean_clone"])
         self.assertIn("do not claim full", receipt["claim_boundary"])

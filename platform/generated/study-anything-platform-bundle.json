@@ -30,6 +30,8 @@
     "python3 scripts/verify_cbb_agentic_tool_boundary.py --check",
     "python3 scripts/verify_cbb_memory_quarantine.py --check",
     "python3 scripts/verify_cbb_evolution_gate.py --check",
+    "python3 scripts/generate_cbb_v1_conformance_pack.py --check",
+    "python3 scripts/verify_cbb_v1_external_consumer.py --check",
     "python3 scripts/verify_cbb_protocol_contracts.py --check",
     "python3 scripts/verify_cbb_gate.py --check",
     "python3 scripts/verify_cbb_receipt_chain.py --check",
@@ -135,7 +137,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-operator-drill-transcript.json",
       "purpose": "Deterministic external-platform operator drill transcript.",
-      "sha256": "28852b5d15d24bb49d16dca332fed02c579908cedbfb98c2eb377de7b83d989d"
+      "sha256": "68a42e9f68486c4a274b5f8d8f921adbaa4692c0cc924163604ddb1fa7a742a1"
     },
     {
       "bytes": 1939,
@@ -229,39 +231,39 @@
       "sha256": "facbcf88e2affdfc284218af3c7b1915e9aa2ddc46d9a1858c57289752d6200a"
     },
     {
-      "bytes": 38747,
+      "bytes": 38748,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-dual-loop-trust-scenario-pack.json",
       "purpose": "Portable Dual Loop trust scenario pack sidecar manifest.",
-      "sha256": "87bea43ef84b5a0156c8ca65f77c900e74340d79fb9bc09a9077072dd12ad6e6"
+      "sha256": "75ef5efbbcc3793688ed791975669ce3da92cb062f7d9c34ad42ff2633c8a046"
     },
     {
       "bytes": 841,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-dual-loop-trust-scenario-pack.md",
       "purpose": "Portable Dual Loop trust scenario pack operator summary.",
-      "sha256": "261e19471b5b9b5f150232e2c86877e4da38b762b53ce788697b61cf1a77fef8"
+      "sha256": "f806995e0542b9aa270df84b2ac2d8f6519f219a703d29072ba2edbba93330a5"
     },
     {
-      "bytes": 121254,
+      "bytes": 121653,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-dual-loop-trust-scenario-pack.zip",
       "purpose": "Portable metadata-only Dual Loop trust scenario pack archive.",
-      "sha256": "cfd47b7aa6b210936f89ed59b706070b2227f613dcf6a3883a1ec7cc62dd65c5"
+      "sha256": "c55a722a5dbb282fa9c8fbc295c3aa6ae9f00c305b9973d52aeb4613ab54ca75"
     },
     {
       "bytes": 115,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-dual-loop-trust-scenario-pack.sha256",
       "purpose": "Portable Dual Loop trust scenario pack archive checksum.",
-      "sha256": "df170985325a2cfc4037de6ad9106fa1c41f9b65f2b478d27c0142f0374d14f5"
+      "sha256": "8063b9c4ce52eba82d23debb1e2d5b64df52c11699ed90989c32968cd7663462"
     },
     {
       "bytes": 5928,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-dual-loop-trust-pack-consumer-walkthrough.json",
       "purpose": "ZIP-only external consumer walkthrough report for the Dual Loop trust scenario pack.",
-      "sha256": "f8809f5bb6b8e76184893e879121276ae3acae9923393395b24513f759ebbe16"
+      "sha256": "f366ec23ecedad5b49edd4827d5242c394c67a49fd243613351c21678e363942"
     },
     {
       "bytes": 5879,
@@ -348,6 +350,41 @@
       "sha256": "820977a363a47eb280b66911dee69289eb2f72870c3918a9e5151990a364d062"
     },
     {
+      "bytes": 1076,
+      "kind": "generated_asset",
+      "path": "platform/generated/study-anything-cbb-v1-conformance-pack.json",
+      "purpose": "Deterministic Protocol v1 conformance pack manifest.",
+      "sha256": "913cd6a9a5a22f4cad04febe33791f035f6ff8309315685168852b350c63245b"
+    },
+    {
+      "bytes": 549,
+      "kind": "generated_asset",
+      "path": "platform/generated/study-anything-cbb-v1-conformance-pack.md",
+      "purpose": "Human-readable Protocol v1 conformance pack summary.",
+      "sha256": "29caf34940c3496b694ea0c220c2b2e9aff69e70e2c33eaf9331360b74f98706"
+    },
+    {
+      "bytes": 153633,
+      "kind": "generated_asset",
+      "path": "platform/generated/study-anything-cbb-v1-conformance-pack.zip",
+      "purpose": "Portable offline Protocol v1 conformance pack archive.",
+      "sha256": "aa8c80e9cc71b08d08785e92c6d0be55935c4386b924b28c7de5a9aa8b6817fe"
+    },
+    {
+      "bytes": 109,
+      "kind": "generated_asset",
+      "path": "platform/generated/study-anything-cbb-v1-conformance-pack.sha256",
+      "purpose": "Protocol v1 conformance pack archive checksum.",
+      "sha256": "5c2b9f18a43fb97f58051cb140b294e0b26aa2b971c48af1ab87f5954ca4a68f"
+    },
+    {
+      "bytes": 2234,
+      "kind": "generated_asset",
+      "path": "platform/generated/study-anything-cbb-v1-external-consumer.json",
+      "purpose": "Package-independent Protocol v1 consumer verification report.",
+      "sha256": "b21fe5bafa9bc8563c9b79f1d59e16581b444cd49e5a7ab8f63196c8da511664"
+    },
+    {
       "bytes": 3793,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cbb-protocol-contracts.json",
@@ -404,39 +441,39 @@
       "sha256": "84c9807e9a61dc8524e59d6dd44ad5569f2143eb5eee7dc199819e8b0590be2a"
     },
     {
-      "bytes": 29926,
+      "bytes": 29927,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-delivery-trust-case-pack.json",
       "purpose": "Portable Delivery Trust Case pack sidecar manifest.",
-      "sha256": "9860ff0aba29295599858042edbce6749a53314c5f600f3bb1fdd00f7b4e9032"
+      "sha256": "f9a588a7fdbc01f3d8cc4d8bd3fbf845aa9731ca3066dd487576ce2d624b5cf9"
     },
     {
       "bytes": 830,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-delivery-trust-case-pack.md",
       "purpose": "Portable Delivery Trust Case pack operator summary.",
-      "sha256": "d21773977eb287b2fa425cd5eaf3681b4e53c1c0cddc8b28951c281d08b469ad"
+      "sha256": "4a916fdc37c366c789957cd9e97f2d290f1bfcddbace26caaa709e3eaf856216"
     },
     {
-      "bytes": 100570,
+      "bytes": 100968,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-delivery-trust-case-pack.zip",
       "purpose": "Portable metadata-only Delivery Trust Case pack archive.",
-      "sha256": "eb754234255064cb4bf379d18cfa579a1f77add85a7dd9f11a27d5ce9698be41"
+      "sha256": "43b108af4563bac5403c641d77f61418f49025d58e4c9e9f08463f900e86977d"
     },
     {
       "bytes": 110,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-delivery-trust-case-pack.sha256",
       "purpose": "Portable Delivery Trust Case pack archive checksum.",
-      "sha256": "78537141e6cd6d22df98138f19f3fbf3c78aa1294ac2d2d1fd50696fa78312fb"
+      "sha256": "b50152a016977d43acf2269046ce356dff2c31fbd163f3122df888c0166a97c8"
     },
     {
       "bytes": 5081,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-delivery-trust-case-pack-consumer-walkthrough.json",
       "purpose": "ZIP-only external consumer walkthrough report for the Delivery Trust Case pack.",
-      "sha256": "10c4dc76ebf878bf687e49e72ff6ba00f8a179e1d27532898a5db05e73fe1870"
+      "sha256": "7786f28fb9d0cf9a86502ad986a1ec831814300474b0d99d76ac00af40837938"
     },
     {
       "bytes": 3502,
@@ -1619,7 +1656,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-maintainer-acceptance-ledger.json",
       "purpose": "Cognitive Loop maintainer go/no-go acceptance ledger verification report.",
-      "sha256": "16603c2d14140ad7f96a8a800a4bb8434bec6a81b3418b9b21c4c89c6aa5f3a7"
+      "sha256": "98adc669c49e315524374f3823e4bcfe95a091ac18fb2d2e081fc0e3a07a27c5"
     },
     {
       "bytes": 3786,
@@ -1766,14 +1803,14 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-review-agent-workflow-install-smoke.json",
       "purpose": "External Cognitive Loop Review Agent adoption-pack workflow install smoke verification report.",
-      "sha256": "d1711edb27253af96266ed0ff1f1d14f2068441e6d14ae7225a78d18af9eb6b3"
+      "sha256": "12f6822d44d404386f49bfe346625ebac59521a3780aef50e497a6546680f16a"
     },
     {
       "bytes": 6682,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-review-agent-adoption-drill.json",
       "purpose": "External Cognitive Loop Review Agent zip-only adoption drill verification report.",
-      "sha256": "d3c1dc03771d48fd17ceb16afda4a01cd9f6f65b2c9495735167e100df98d987"
+      "sha256": "194df076962d15e86df94cc6cf425411f2ea64f7a2fc3b4a0bc220e9b4f2de70"
     },
     {
       "bytes": 2466,
@@ -1843,28 +1880,28 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json",
       "purpose": "Zip-only consumer proof for Cognitive Loop recipe CLI schema evidence in the adoption pack.",
-      "sha256": "3fed7c5b76049be5b3363b9462f5753437d000f74fea42e951383dde92edcc52"
+      "sha256": "cce445739db826621f983e0737fc5b3900d06dcf84fee59523be2ac3f7eab6a4"
     },
     {
       "bytes": 5372,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
       "purpose": "Tampered adoption-pack failure proof for Cognitive Loop recipe CLI schema evidence.",
-      "sha256": "f32ad2a960b0bc2896785c7705760471530d0b4069cdb8d795a08cb9ec78237e"
+      "sha256": "07165438551d125a1091b4459ef2a288e6031f882cfef447ddb3c62ac9703c2d"
     },
     {
       "bytes": 2714,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
       "purpose": "Extracted adoption-pack smoke proof for bundled Cognitive Loop schema consumer checks.",
-      "sha256": "85c7c4facf5dd6545d16cfb10a56b54ddf46adb8cce61ab79d17b8d2028a84f0"
+      "sha256": "dead4c523616e293b41ca898797463ca218957b37f3d06e78f22224f568330a2"
     },
     {
       "bytes": 7892,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-handoff-checklist.json",
       "purpose": "External platform handoff checklist for import, verification, runtime, and support escalation.",
-      "sha256": "699f12fd60db00571ac37c301ca91bdf7e04e30bd7cb779b16c59934058d8d5b"
+      "sha256": "b6366002d5d190e3535a773a92c1bbd0bd309277ea2c489bc5dcde88779fbe95"
     },
     {
       "bytes": 9410,
@@ -1906,7 +1943,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-submission-dry-run.json",
       "purpose": "External platform submission dry-run readiness report.",
-      "sha256": "ddfd5f203f8e21d6795de8558f8bd98794cb8bb474fc20270df6665dfabec0d2"
+      "sha256": "f0ecc912f62be30a3a158702026078f338d70b4d51495949287e4bd14d0c4637"
     },
     {
       "bytes": 107336,
@@ -2046,112 +2083,112 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-published-image-evidence.json",
       "purpose": "Published-image evidence JSON.",
-      "sha256": "0230364d992c52b469a1b4fd5fdfd1df1c2d087475bf729db5106c08458f42c5"
+      "sha256": "f7eea26803a1a02033b743cc63343af221991feea8eb3195ddc5cfc158a50cb6"
     },
     {
       "bytes": 3442,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-published-image-evidence.md",
       "purpose": "Published-image evidence Markdown.",
-      "sha256": "38d95ec7cac509004636c62b4a02dbf010d5048817428aa06f203deb8b84421e"
+      "sha256": "6169d788cfdd69b88241fe6e99822a51aef5e83f1965af3c9cf73519c0a2cc50"
     },
     {
-      "bytes": 120935,
+      "bytes": 121273,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-published-image-evidence.zip",
       "purpose": "Published-image evidence package.",
-      "sha256": "4923934d0a1eb165164a86fc9f5c8b9f4b9a69f8c66454eafa4775a8cb94a0bd"
+      "sha256": "1c4ee83a6e74e4d9b318af967aab247aaf0e6876bb8e08cd3b2b0085e8a17bbd"
     },
     {
       "bytes": 110,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-published-image-evidence.sha256",
       "purpose": "Published-image evidence checksum.",
-      "sha256": "43749457a174ec7bedb12444b6c99a08351e38c3c290513ff711ecbcc2059003"
+      "sha256": "735bc57672a3bfd6dad0f287a91d6ba8d874eb2fbd022e733ccd8e9aaa0c5e8b"
     },
     {
       "bytes": 13000,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.json",
       "purpose": "External adopter evidence archive JSON.",
-      "sha256": "8511d8a8ba22bd4a9937e5f2deb201f0384be69bc813adc6872334fc2b0609ba"
+      "sha256": "88dffcfcb4d5bd6ceb890ffc65936276f4087620716ef4a45725b8a7f4b560b8"
     },
     {
       "bytes": 2424,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.md",
       "purpose": "External adopter evidence archive Markdown.",
-      "sha256": "da6699ae68dee6019ade0821c49b9300f9b4f2cbb70694ac0318916b6f32c82c"
+      "sha256": "6d8a860a08f2c2a7bcce2e82613d38c3256fe61d3e669680a18ab64ba8cebca1"
     },
     {
-      "bytes": 228519,
+      "bytes": 229205,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.zip",
       "purpose": "External adopter evidence archive package.",
-      "sha256": "ba0041c8200260da44c0c4c4056b4f3f6ca7420613b34cda93b8ef1980211a05"
+      "sha256": "15232bceb6bb308a6ce216c0533b296d137dbfe02c810ba679c74dcd5fd133d9"
     },
     {
       "bytes": 110,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.sha256",
       "purpose": "External adopter evidence archive checksum.",
-      "sha256": "1224822b2fd393ea74eb511471d240552fb0565407947cf89aec10837433642b"
+      "sha256": "033290ba1cd44b063286da5f1528db8b2735c50a261c54c2706bf4c82ea76700"
     },
     {
       "bytes": 10417,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-adoption.json",
       "purpose": "GitHub Release asset adoption replay evidence JSON.",
-      "sha256": "733ef554d6d8c571777e0421a9272a6b8bf22c7d980f908eb44f840a682cbbf5"
+      "sha256": "6603b768fa997408332e56fbe52fa2b1b6784a0e2901f13ead3746ad811ab51e"
     },
     {
       "bytes": 2392,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-adoption.md",
       "purpose": "GitHub Release asset adoption replay evidence Markdown.",
-      "sha256": "999ad6283ded25290281d47cf17bf8a436588182d3641c9b176c1a41e213a0c4"
+      "sha256": "6fa30a358f1d6ad07ac9c3701f3f52f31a4ea9f60b67035dea4bdfc53de48de9"
     },
     {
-      "bytes": 140887,
+      "bytes": 141224,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-adoption.zip",
       "purpose": "GitHub Release asset adoption replay evidence archive.",
-      "sha256": "bb9941a99ff053f822b56b0e7f769ac9a2afef0f0b81ac8ab16e1b047d9f2624"
+      "sha256": "1f1b062f22c3f94b6379199f9d5e1fc4fb1d7d55aed1d3d16b44b208a7312efa"
     },
     {
       "bytes": 108,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-adoption.sha256",
       "purpose": "GitHub Release asset adoption replay evidence checksum.",
-      "sha256": "f6f2c190e75e7f56eb2abaaa3424932c815e0c441888e4b3571fc4d638c277fd"
+      "sha256": "4793b6676197ef880af7f3eadcdc4d1cb6776296f013d030faa2ecde1fe70bc5"
     },
     {
       "bytes": 8886,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-bootstrap.json",
       "purpose": "GitHub Release asset bootstrap evidence JSON.",
-      "sha256": "f4e31680e168b501a898acf91a93e8bb42818888a84407a1a418108e96ccc289"
+      "sha256": "7fb9e6469665088b6cdd95414063527d9b84b4ac7c8382efa42600117de50ea1"
     },
     {
       "bytes": 2706,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-bootstrap.md",
       "purpose": "GitHub Release asset bootstrap evidence Markdown.",
-      "sha256": "3b06c4dfa8b93e1eb849ef552c75473490fd6c1c45fcf6bb4d5222c3a5bdb183"
+      "sha256": "e5a791f6e5ce3240987a736c3e632617ba89cc31aea458805ef5269cf84be7a8"
     },
     {
-      "bytes": 91038,
+      "bytes": 91043,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-bootstrap.zip",
       "purpose": "GitHub Release asset bootstrap evidence archive.",
-      "sha256": "f48c468378cb7427c08b5cb13065daf0794013005ecb9bd00f23406e95adcd85"
+      "sha256": "0bff160942ca8551792d618a620ccde0b258a0e7cf4b9f9669288a87f29be178"
     },
     {
       "bytes": 109,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-bootstrap.sha256",
       "purpose": "GitHub Release asset bootstrap evidence checksum.",
-      "sha256": "42fe4e8c618559ca05d79930846aafc8039e85278acc4e9668c33ca5b97feba9"
+      "sha256": "a9d23d19a600409dc0341c38bd53d2953deaba4934f480bff8047fdd932154cf"
     },
     {
       "bytes": 7890,
@@ -2214,91 +2251,91 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-codex-plugin-pack.json",
       "purpose": "Codex downloadable plugin pack sidecar manifest.",
-      "sha256": "c775895f3fe955ac1cb870a49355e1e03b2d3c512ecb84cf8b76902de2427c12"
+      "sha256": "7763bfa05d9a374f005dee9c16786a235c7b02f1e6b1434dbc7624518ce87caa"
     },
     {
-      "bytes": 122944,
+      "bytes": 123121,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-codex-plugin-pack.zip",
       "purpose": "Codex downloadable plugin pack archive.",
-      "sha256": "ed7760f8487afcfdee39ba5a64fa59edffc2315ab07103707c2506f47b2e5c64"
+      "sha256": "3e9e3815e4812fc8b5f171bab2741791579de4f975a684a84b7ab228bccb04cc"
     },
     {
       "bytes": 103,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-codex-plugin-pack.sha256",
       "purpose": "Codex downloadable plugin pack checksum.",
-      "sha256": "1f47b60b7bf90bfcc3a932b064f9a22b336c20b5c55f501dd82518feba4537c2"
+      "sha256": "e5e940fbfedcc18b4042dd4fe671f9b64d66296a2a7cf21d459d193338935a11"
     },
     {
       "bytes": 10599,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-kimi-plugin-pack.json",
       "purpose": "Kimi downloadable plugin pack sidecar manifest.",
-      "sha256": "94a76e39235c72ccb86895df6f05484c9b1773fdbfb2b564f0c32a06f1130bbd"
+      "sha256": "9b21a9ff4a04451a90af6a6c4595af001d28e464e0f5dd7a633a42f8385c57f1"
     },
     {
-      "bytes": 147166,
+      "bytes": 147347,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-kimi-plugin-pack.zip",
       "purpose": "Kimi downloadable plugin pack archive.",
-      "sha256": "c4cc7e278bd32489acf19c795cc872381f7abeb74c60debbe6ffc5a62303cdd6"
+      "sha256": "b2f118cdc911375fef81cf3fea41663ec3b112911a697f9c15f85f9066c9fb55"
     },
     {
       "bytes": 102,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-kimi-plugin-pack.sha256",
       "purpose": "Kimi downloadable plugin pack checksum.",
-      "sha256": "216eb070393e371f4306f99b4061e5ce97b6e1070375e53c28c415f2c6fcc0e0"
+      "sha256": "1ab14d347dda727ff9242a39a32346fba3c92304efaa0a077e45557b79450cb4"
     },
     {
       "bytes": 13551,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-workbuddy-plugin-pack.json",
       "purpose": "WorkBuddy downloadable plugin pack sidecar manifest.",
-      "sha256": "717553d3c008fddba2ff956771a738574fd5fdcb59b3122e0a13eb349284522c"
+      "sha256": "230197ac8f131e98a57936e58369a0521b1069d478964a50a38efa83455b51b7"
     },
     {
-      "bytes": 149281,
+      "bytes": 149457,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-workbuddy-plugin-pack.zip",
       "purpose": "WorkBuddy downloadable plugin pack archive.",
-      "sha256": "717a2f8abeb859e0b5c1c92a140b9c30b3af144ad8ed8be71e8d0b201812939b"
+      "sha256": "8f1c6cd6a34ee4feefffdceab2122bec8e6dd41a10408fe00314b6b6b21bcd3b"
     },
     {
       "bytes": 107,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-workbuddy-plugin-pack.sha256",
       "purpose": "WorkBuddy downloadable plugin pack checksum.",
-      "sha256": "7cf7ff307a945831c5acf5a2d5feab0978134ce1fbecdff175367e979de8774d"
+      "sha256": "a57f6274c1daa8737352eff5330cb609c0ac9c786b091661f4d8689d79351353"
     },
     {
       "bytes": 10362,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-hermes-plugin-pack.json",
       "purpose": "Hermes downloadable plugin pack sidecar manifest.",
-      "sha256": "75929c9750d18cb36615668ce34e878c8bb8b423652e3d7dbd66d39b6760ceb4"
+      "sha256": "0bd018fc2377dbb307a2018a4f2f7ced85ba7fac4b763e3d79e5476fab971ea2"
     },
     {
-      "bytes": 137246,
+      "bytes": 137423,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-hermes-plugin-pack.zip",
       "purpose": "Hermes downloadable plugin pack archive.",
-      "sha256": "34954a66bb4c2b49d9f6a2ff7103d99d488f28bee78952f6c462589f15ca21ae"
+      "sha256": "d502239d159828ef7bc6b4b39464fce453b32fd2159bae4672ea13ff4b3c25da"
     },
     {
       "bytes": 104,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-hermes-plugin-pack.sha256",
       "purpose": "Hermes downloadable plugin pack checksum.",
-      "sha256": "31eeb5b3d1a6fb1cdb03d6e3551dcea2f1d1c9f44afc80749068ea8a566fd07e"
+      "sha256": "af0e179daac7dfd55f8f39fb0f60fa50596a6177836493f21c988eb9f0ec625d"
     },
     {
       "bytes": 14256,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-plugin-downloads.json",
       "purpose": "Public GitHub Release download index for platform plugin packs.",
-      "sha256": "ac65982e6a08c842d1fc9ff20d0b4a25f63efbdebcda5e3875b57ca1f548eb61"
+      "sha256": "8224cacde87acb2f56f491dd2355c06407bb657149c06d55f7d48b4be097f396"
     },
     {
       "bytes": 1764,
@@ -2777,11 +2814,11 @@
       "sha256": "6d0a642b2811479f24e733aee0f18eff64e1fab53011c14a08f37a655e88842e"
     },
     {
-      "bytes": 9701,
+      "bytes": 10824,
       "kind": "operator_doc",
       "path": "docs/trust-model.md",
       "purpose": "Cognitive Black Box AI delivery trust model.",
-      "sha256": "bf4c288e769623ca2f582749887ad2ec22109eae2644c76c90c5645d2f30de8a"
+      "sha256": "6443492d162631a7a9a6ce03a9c4cc400e7884a91e540e29be7dc60b0c136250"
     },
     {
       "bytes": 8411,
@@ -2791,11 +2828,11 @@
       "sha256": "33719759434d5158a46d6b5353040aa6b32b309ceee208dc1e3febdb56465e33"
     },
     {
-      "bytes": 11783,
+      "bytes": 12133,
       "kind": "operator_doc",
       "path": "docs/architecture.md",
       "purpose": "Protocol-first reference harness architecture and isolation boundary.",
-      "sha256": "88945c0e8a7396b65877fafb1a05306ea3f58aaa7a0b1a2985125ab2cb54d4f2"
+      "sha256": "896cbd242e041ba19907984d9e6d5b943fee3cd9cdbb96ce8d12e0cd79e4ad9a"
     },
     {
       "bytes": 5173,
@@ -2805,11 +2842,11 @@
       "sha256": "2f7c2dd246aa495ce35b8097db8c8c680e797f03f50a1d207a6feff254b3c67a"
     },
     {
-      "bytes": 17269,
+      "bytes": 17101,
       "kind": "operator_doc",
       "path": "docs/cbb-protocol-v1-development-plan.md",
       "purpose": "CBB Protocol v1 implementation sequence and acceptance matrix.",
-      "sha256": "5097cc83540883d29a47327ccbdea1ca7274a02e3d34cf170f41eb8e86d59b81"
+      "sha256": "f27d98839a4df944b3718e1532f797b633d971db04bf15913e252bcb763a0df8"
     },
     {
       "bytes": 4732,
@@ -2854,6 +2891,34 @@
       "sha256": "2898fbb7518f5548af02a2e96a8163179a328271f7d7d374a35fedfc937b5584"
     },
     {
+      "bytes": 2966,
+      "kind": "operator_doc",
+      "path": "docs/cbb-protocol-v1-conformance.md",
+      "purpose": "Protocol v1 offline fixture-conformance and second-consumer guide.",
+      "sha256": "51ead08931574eeccf85bc4f7043a99286b26ad9c88f86a00a07586118e191b2"
+    },
+    {
+      "bytes": 2817,
+      "kind": "operator_doc",
+      "path": "docs/protocol-governance.md",
+      "purpose": "Open protocol change, review, and security-disclosure governance.",
+      "sha256": "509f193f76513ad457aaee5d3bad4c1172f18a4dafa295c76b9713292c6d933a"
+    },
+    {
+      "bytes": 2101,
+      "kind": "operator_doc",
+      "path": "docs/extensions-and-versioning.md",
+      "purpose": "Fail-closed extension authority and version-negotiation rules.",
+      "sha256": "9e99434a9d628320d0b3700a096c9e2fb0301275ec0361830a02e5090a4dafe0"
+    },
+    {
+      "bytes": 1647,
+      "kind": "operator_doc",
+      "path": "docs/compatibility-and-trademark.md",
+      "purpose": "Neutral compatibility language and non-certification boundary.",
+      "sha256": "0358a80537411160cffc489e21484f942a5b5a2216d6a163c946aab13ec71019"
+    },
+    {
       "bytes": 4249,
       "kind": "operator_doc",
       "path": "docs/delivery-trust-receipt.md",
@@ -2868,11 +2933,11 @@
       "sha256": "ca4ebca93cbaf575b2732d5b1ac785766d9a5e80fd604bf7a464e780d2f946e1"
     },
     {
-      "bytes": 8460,
+      "bytes": 9066,
       "kind": "operator_doc",
       "path": "docs/protocol.md",
       "purpose": "Cognitive Black Box protocol core and AI delivery trust boundary guide.",
-      "sha256": "bdce9021216f85ae38746c2f6e69e0db22c36c236c44e0954a09c1ab271396cc"
+      "sha256": "b33932a80a191e8ca348763feb491d0fa2d5a8db918c449e85137af5c3361f41"
     },
     {
       "bytes": 5252,
@@ -11863,18 +11928,18 @@
       "sha256": "c76d9ce1497195781fb18f1258601e0192b16e628bbcc1032909f7299e3cc850"
     },
     {
-      "bytes": 23109,
+      "bytes": 25129,
       "kind": "generator",
       "path": "scripts/generate_external_security_audit_pack.py",
       "purpose": "Generate the deterministic metadata-only external security audit preparation pack.",
-      "sha256": "e082d21be9775bca1ffa4c7bf498a81d7e04340371b5e1815d71c2727a45218e"
+      "sha256": "a2d9a3b483f926fa1a41ead03dab6c0136f5863e4ef454afa581b3ddd2c62081"
     },
     {
-      "bytes": 17797,
+      "bytes": 18515,
       "kind": "verification",
       "path": "scripts/verify_external_security_audit_pack.py",
       "purpose": "Verify audit-pack integrity, privacy, scope, and independent-review boundaries.",
-      "sha256": "6dc66c6a9c78db09603970b852e1199ad072f1ad5ebf37edc923d0ecafced497"
+      "sha256": "29e438825650edaa087e7cd2fd53a9581d54474eaeaf6cbc5adbe34b29584177"
     },
     {
       "bytes": 8317,
@@ -11968,32 +12033,32 @@
       "sha256": "10e4304a8e35bc11b8a022ba2e734fdfe8d8dcf72c8cd443fed9bf13b359112e"
     },
     {
-      "bytes": 44289,
+      "bytes": 49744,
       "kind": "audit_pack",
       "path": "platform/generated/study-anything-external-security-audit-pack.json",
       "purpose": "Machine-readable external security audit preparation pack manifest.",
-      "sha256": "7affccc0dea97be0aaec6bdd32fd61465996604ef366f2b0dea645f555a4e425"
+      "sha256": "fa1a64d3ebacc423476bd3421907881b7fe6eed4be1d2802dde6fb798ee8aeeb"
     },
     {
       "bytes": 674,
       "kind": "audit_pack",
       "path": "platform/generated/study-anything-external-security-audit-pack.md",
       "purpose": "Human-readable external security audit preparation summary.",
-      "sha256": "e5a724fa5ae8db0d0afb5deb6cbda2e3ea78c0287770b55ec927007e4e7a0cae"
+      "sha256": "22f04ed59b1a34624134e6bfe01503a0757050ed6112441af69945c1b678815a"
     },
     {
-      "bytes": 288304,
+      "bytes": 459021,
       "kind": "audit_pack",
       "path": "platform/generated/study-anything-external-security-audit-pack.zip",
       "purpose": "Portable metadata-only external security audit preparation archive.",
-      "sha256": "fe08127c47d64e83ab15f9586317cd27c029ffcf4ebbfaaa3748f1f93bcf6f6f"
+      "sha256": "a511697dd3cdec593b71dfdc8968b39ae8ff3a373bb348337733374fac4bc0f5"
     },
     {
       "bytes": 114,
       "kind": "audit_pack",
       "path": "platform/generated/study-anything-external-security-audit-pack.sha256",
       "purpose": "SHA-256 checksum for the external security audit preparation archive.",
-      "sha256": "7f069de7a29a2f805a9e6f2f8776fb647b2fb350ca536aef210085fc83cd2650"
+      "sha256": "f2349b95cf5f319d2c029d2bd7dc71b6160d1b0d7d0424a03e500e0729cf1221"
     },
     {
       "bytes": 17268,
@@ -12892,11 +12957,32 @@
       "sha256": "36a705c711f96f25bc99f309d8385ef559647f8ff8ea7ce75076237ed76e5580"
     },
     {
-      "bytes": 12592,
+      "bytes": 40808,
+      "kind": "conformance_consumer",
+      "path": "conformance/python/cbb_v1_consumer.py",
+      "purpose": "Package-independent offline Protocol v1 fixture consumer.",
+      "sha256": "491f9ce8643432cd691fafeb8107379e75709390e41a330bed37d1a6172b8785"
+    },
+    {
+      "bytes": 15829,
+      "kind": "generator",
+      "path": "scripts/generate_cbb_v1_conformance_pack.py",
+      "purpose": "Generate the deterministic Protocol v1 conformance archive.",
+      "sha256": "fee00ad419fb72c00966ba6c420bf1371e9c4f36170e6b15bad983c265cc4905"
+    },
+    {
+      "bytes": 9483,
+      "kind": "verification",
+      "path": "scripts/verify_cbb_v1_external_consumer.py",
+      "purpose": "Verify the isolated second consumer and fail-closed archive tamper behavior.",
+      "sha256": "5519d49d2b97c819a803ef1c10c791081b612143d8cd6983cb1263e003369b4b"
+    },
+    {
+      "bytes": 13622,
       "kind": "verification",
       "path": "scripts/verify_cbb_positioning.py",
       "purpose": "Verify protocol-first positioning, compatibility boundaries, and obsolete-brand removal.",
-      "sha256": "a95ca841039fdf4078d50f87b22be130f187e6d88d0897adf7ed0db5f3850bdb"
+      "sha256": "24adb2a250abfb3c0191da6952d75e04943cd3f319a2feea10209b2523d4f61d"
     },
     {
       "bytes": 10407,
@@ -13067,39 +13153,39 @@
       "sha256": "c29ece6124023a9ba64ce65029711bd1370f8a5246558b2b77d574d66e5216f1"
     },
     {
-      "bytes": 39235,
+      "bytes": 39236,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack.json",
       "purpose": "Trust Evidence Handoff Pack manifest.",
-      "sha256": "dfbd0ed76f178746264140401d9073d44df8b6019b23881ac27caa710d95f4ab"
+      "sha256": "fd3f29ae17d6eee33cce316d4cf8ca7adb20bc3ad57da3c34f5e61e54688c533"
     },
     {
       "bytes": 933,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack.md",
       "purpose": "Trust Evidence Handoff Pack markdown report.",
-      "sha256": "2e731c9391fbc0e006b6c81158c63e42f74b871280ef132f8d8d7eb32b243c5d"
+      "sha256": "174c435d77d5b8fa57991548962a250d4219ffac39ff4a7bda299ac4c827cd83"
     },
     {
       "bytes": 113,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack.sha256",
       "purpose": "Trust Evidence Handoff Pack checksum.",
-      "sha256": "b7bb182a43e6a1d35247d81841fefc4315f6dfd0d5ecd7b199e3537f9d2ad552"
+      "sha256": "fe606b2148e75c68a06c4256180c166c191b6e53f259fd8fd90abe3e0e5b7dae"
     },
     {
-      "bytes": 148297,
+      "bytes": 148702,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack.zip",
       "purpose": "Portable metadata-only Trust Evidence Handoff Pack archive.",
-      "sha256": "4c52279a00165dfd11e4ddea3ede41b1a1544cb444f710c70cdfc2b5b3b794eb"
+      "sha256": "c181a60f29373a7bd4dc59a904f1e135a48e4fbf71a9d3b4199f06fae9c2ae0b"
     },
     {
       "bytes": 3511,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack-consumer-walkthrough.json",
       "purpose": "ZIP-only consumer walkthrough for the Trust Evidence Handoff Pack.",
-      "sha256": "0d387e7033cdec33f453af9fd1251f908011f9da2bba9194fb86362a19c4d590"
+      "sha256": "691db7db62ecf5d474449a6703c1d9a257632d27ea182f94c71193222e1869b1"
     },
     {
       "bytes": 26355,
@@ -13127,14 +13213,14 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-acceptance-drill.json",
       "purpose": "Trust Evidence Acceptance Drill report.",
-      "sha256": "344c3e381f5095d98ca18f311296d4829512e60ba0c4cd8eafe0900ace5cf7bb"
+      "sha256": "c3ac4b1f327ee18acdd6011b0bc364b3da21a94144ac18f13935eeedd4291324"
     },
     {
       "bytes": 1786,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-acceptance-drill.md",
       "purpose": "Trust Evidence Acceptance Drill markdown report.",
-      "sha256": "3d8144ab2994f16a3c86e8b28b15a3b61cf25f7440c0ed06fe9ffa4a665b3ceb"
+      "sha256": "3cf7dd608ba2c7d598b6b08fe24a2ab5c36633220f682ec3da33f92b0a58e954"
     },
     {
       "bytes": 14532,
@@ -13155,14 +13241,14 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-controlled-handoff-runbook.json",
       "purpose": "Controlled Handoff Runbook report.",
-      "sha256": "65351a626499694f3ad83c3a47f4c35cb99b6a7e915e8dad7eed50bcf20ed799"
+      "sha256": "a2cb80914c2e483c35469108f6d290bc5f156f7522ad20d71fac2ed9d78e3767"
     },
     {
       "bytes": 2426,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-controlled-handoff-runbook.md",
       "purpose": "Controlled Handoff Runbook markdown report.",
-      "sha256": "240b0025f054e025edc27904577f898ce5f646029a6dbf6783d391140aa1fc93"
+      "sha256": "512ab27bf010a654b579e2a04bd9c58c6cd4eb528c3669e5a67b910e40c8e656"
     },
     {
       "bytes": 14855,
@@ -15489,11 +15575,11 @@
       "sha256": "c9db74249d49eaa26fb261c0884c00060d6062aee64f949d53b87c19f7da249d"
     },
     {
-      "bytes": 299326,
+      "bytes": 300985,
       "kind": "verification",
       "path": "scripts/generate_platform_adoption_pack.py",
       "purpose": "Deterministic generator for the distributable external-platform adoption pack.",
-      "sha256": "0e984fd0bae822c8a7fc07157a66638194808dc090de1235057418f4663f407e"
+      "sha256": "4f0ed45c09ee35f1b778c1e560e44e7d4d5adb277e45e4e6621225075c147ad3"
     },
     {
       "bytes": 69370,
@@ -15664,11 +15750,11 @@
       "sha256": "373e0a64d714978fe3b14fe80ae90d227ffde8fc45536560eb286e6a79899b8d"
     },
     {
-      "bytes": 11728,
+      "bytes": 12285,
       "kind": "docs",
       "path": "docs/security.md",
       "purpose": "Local-first security model and recovery hardening guide.",
-      "sha256": "015d8aee1a6f02455adbc46e0c24b4564c5e6d42883b8e042270436ac0446f06"
+      "sha256": "ea1502a24ad9e50e5c49d3f7958a0cffe493d00747ae9b272c7812155d19bce3"
     },
     {
       "bytes": 4715,
@@ -15699,11 +15785,11 @@
       "sha256": "b294b983099f7330a82cef30e47325efdc58112b068acc9a536511646863d9a8"
     },
     {
-      "bytes": 12101,
+      "bytes": 13063,
       "kind": "security_audit",
       "path": "security/audit/audit-plan.json",
       "purpose": "Machine-readable external audit scope, methods, and acceptance rules.",
-      "sha256": "f01b76a1f5a4f58b61d20bd2f4376a2439d7f29abf6d7699b16769881ead5e65"
+      "sha256": "f6b7c3f8be9e69f3c76ddeb669a72767748b4ca9f59559a00489652ddc80bb33"
     },
     {
       "bytes": 3121,
@@ -15811,11 +15897,11 @@
       "sha256": "03feddb939fd15c91142762fb09a03fc67b9a256f438cdeaf7fdc0d4cdb78d74"
     },
     {
-      "bytes": 12472,
+      "bytes": 12952,
       "kind": "docs",
       "path": "docs/roadmap.md",
       "purpose": "Roadmap and release track for platform adoption goals.",
-      "sha256": "accd56be186a0fa5c1ebd16d24b6f393d4f7879553e1a4cdbe00aeef6541c112"
+      "sha256": "5fade03b1342632d9a338bbf0c9df6e69ec301914c18810c05849c8925571af6"
     },
     {
       "bytes": 3917,

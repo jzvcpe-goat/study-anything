@@ -12,10 +12,10 @@
     "open_high_findings_allowed": 0
   },
   "archive": {
-    "bytes": 288304,
+    "bytes": 459021,
     "path": "platform/generated/study-anything-external-security-audit-pack.zip",
     "root": "study-anything-external-security-audit-pack",
-    "sha256": "fe08127c47d64e83ab15f9586317cd27c029ffcf4ebbfaaa3748f1f93bcf6f6f"
+    "sha256": "a511697dd3cdec593b71dfdc8968b39ae8ff3a373bb348337733374fac4bc0f5"
   },
   "claim_boundary": {
     "current_claim": "The repository is packaged and ready for an independent security audit at a pinned commit.",
@@ -47,11 +47,11 @@
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/security/audit/audit-plan.json",
-      "bytes": 12101,
+      "bytes": 13063,
       "path": "security/audit/audit-plan.json",
       "purpose": "Machine-readable scope, methods, acceptance, and independence rules.",
       "role": "audit_plan",
-      "sha256": "f01b76a1f5a4f58b61d20bd2f4376a2439d7f29abf6d7699b16769881ead5e65"
+      "sha256": "f6b7c3f8be9e69f3c76ddeb669a72767748b4ca9f59559a00489652ddc80bb33"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/security/audit/threat-model.md",
@@ -111,11 +111,11 @@
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/security.md",
-      "bytes": 11728,
+      "bytes": 12285,
       "path": "docs/security.md",
       "purpose": "Local-first security and privacy boundary.",
       "role": "security_doc",
-      "sha256": "015d8aee1a6f02455adbc46e0c24b4564c5e6d42883b8e042270436ac0446f06"
+      "sha256": "ea1502a24ad9e50e5c49d3f7958a0cffe493d00747ae9b272c7812155d19bce3"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/security-baseline.md",
@@ -159,19 +159,19 @@
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/trust-model.md",
-      "bytes": 9701,
+      "bytes": 10824,
       "path": "docs/trust-model.md",
       "purpose": "Delivery trust and AI-only review rejection model.",
       "role": "trust_doc",
-      "sha256": "bf4c288e769623ca2f582749887ad2ec22109eae2644c76c90c5645d2f30de8a"
+      "sha256": "6443492d162631a7a9a6ce03a9c4cc400e7884a91e540e29be7dc60b0c136250"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/protocol.md",
-      "bytes": 8460,
+      "bytes": 9066,
       "path": "docs/protocol.md",
       "purpose": "AI Delivery Clearance Protocol boundary, verifier surface, and non-claims.",
       "role": "protocol_doc",
-      "sha256": "bdce9021216f85ae38746c2f6e69e0db22c36c236c44e0954a09c1ab271396cc"
+      "sha256": "b33932a80a191e8ca348763feb491d0fa2d5a8db918c449e85137af5c3361f41"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/cbb-protocol-v1-contracts.md",
@@ -220,6 +220,38 @@
       "purpose": "Typed Agentic tool boundary, quarantined memory, and proposal-only evolution gate.",
       "role": "protocol_doc",
       "sha256": "2898fbb7518f5548af02a2e96a8163179a328271f7d7d374a35fedfc937b5584"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/docs/cbb-protocol-v1-conformance.md",
+      "bytes": 2966,
+      "path": "docs/cbb-protocol-v1-conformance.md",
+      "purpose": "Protocol v1 offline fixture-conformance and second-consumer boundary.",
+      "role": "protocol_doc",
+      "sha256": "51ead08931574eeccf85bc4f7043a99286b26ad9c88f86a00a07586118e191b2"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/docs/protocol-governance.md",
+      "bytes": 2817,
+      "path": "docs/protocol-governance.md",
+      "purpose": "Open protocol change and security-disclosure governance.",
+      "role": "protocol_doc",
+      "sha256": "509f193f76513ad457aaee5d3bad4c1172f18a4dafa295c76b9713292c6d933a"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/docs/extensions-and-versioning.md",
+      "bytes": 2101,
+      "path": "docs/extensions-and-versioning.md",
+      "purpose": "Fail-closed extension authority and version-negotiation rules.",
+      "role": "protocol_doc",
+      "sha256": "9e99434a9d628320d0b3700a096c9e2fb0301275ec0361830a02e5090a4dafe0"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/docs/compatibility-and-trademark.md",
+      "bytes": 1647,
+      "path": "docs/compatibility-and-trademark.md",
+      "purpose": "Neutral compatibility language and non-certification boundary.",
+      "role": "protocol_doc",
+      "sha256": "0358a80537411160cffc489e21484f942a5b5a2216d6a163c946aab13ec71019"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/release-checklist.md",
@@ -284,6 +316,14 @@
       "purpose": "Agentic evidence isolation and evolution-gate Contract-First audit.",
       "role": "quality_audit",
       "sha256": "24145ac5d06dcd85bef78cb7fbc7da689dd139e6ebee8b47ed98f87c67a61e23"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/docs/quality-audits/phase-38-protocol-conformance.md",
+      "bytes": 8763,
+      "path": "docs/quality-audits/phase-38-protocol-conformance.md",
+      "purpose": "Protocol v1 conformance and open-governance Contract-First audit.",
+      "role": "quality_audit",
+      "sha256": "1576d3be0ec8ce29e071b3b10882509e6c2e2e4e5d4a1ca6b81074d0fb22dc00"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/platform/generated/study-anything-python-supply-chain.json",
@@ -420,6 +460,46 @@
       "purpose": "Proposal-only deterministic evolution-gate verification receipt.",
       "role": "generated_evidence",
       "sha256": "820977a363a47eb280b66911dee69289eb2f72870c3918a9e5151990a364d062"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/platform/generated/study-anything-cbb-v1-conformance-pack.json",
+      "bytes": 1076,
+      "path": "platform/generated/study-anything-cbb-v1-conformance-pack.json",
+      "purpose": "Deterministic Protocol v1 conformance pack manifest.",
+      "role": "generated_evidence",
+      "sha256": "913cd6a9a5a22f4cad04febe33791f035f6ff8309315685168852b350c63245b"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/platform/generated/study-anything-cbb-v1-conformance-pack.md",
+      "bytes": 549,
+      "path": "platform/generated/study-anything-cbb-v1-conformance-pack.md",
+      "purpose": "Human-readable Protocol v1 conformance summary.",
+      "role": "generated_evidence",
+      "sha256": "29caf34940c3496b694ea0c220c2b2e9aff69e70e2c33eaf9331360b74f98706"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/platform/generated/study-anything-cbb-v1-conformance-pack.zip",
+      "bytes": 153633,
+      "path": "platform/generated/study-anything-cbb-v1-conformance-pack.zip",
+      "purpose": "Portable offline Protocol v1 conformance archive.",
+      "role": "generated_evidence",
+      "sha256": "aa8c80e9cc71b08d08785e92c6d0be55935c4386b924b28c7de5a9aa8b6817fe"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/platform/generated/study-anything-cbb-v1-conformance-pack.sha256",
+      "bytes": 109,
+      "path": "platform/generated/study-anything-cbb-v1-conformance-pack.sha256",
+      "purpose": "Protocol v1 conformance archive checksum.",
+      "role": "generated_evidence",
+      "sha256": "5c2b9f18a43fb97f58051cb140b294e0b26aa2b971c48af1ab87f5954ca4a68f"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/platform/generated/study-anything-cbb-v1-external-consumer.json",
+      "bytes": 2234,
+      "path": "platform/generated/study-anything-cbb-v1-external-consumer.json",
+      "purpose": "Package-independent Protocol v1 consumer verification report.",
+      "role": "generated_evidence",
+      "sha256": "b21fe5bafa9bc8563c9b79f1d59e16581b444cd49e5a7ab8f63196c8da511664"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/platform/schemas/cbb/cbb.trust-policy.v1.schema.json",
@@ -844,6 +924,30 @@
       "purpose": "Tool-authority expansion is blocked.",
       "role": "agentic_fixture",
       "sha256": "08e8b9201867ed0869730c5fa9ae04a45137c70680ab72a1d8e2537cf4772437"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/conformance/python/cbb_v1_consumer.py",
+      "bytes": 40808,
+      "path": "conformance/python/cbb_v1_consumer.py",
+      "purpose": "Package-independent offline Protocol v1 fixture consumer.",
+      "role": "conformance_consumer",
+      "sha256": "491f9ce8643432cd691fafeb8107379e75709390e41a330bed37d1a6172b8785"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/scripts/generate_cbb_v1_conformance_pack.py",
+      "bytes": 15829,
+      "path": "scripts/generate_cbb_v1_conformance_pack.py",
+      "purpose": "Deterministic Protocol v1 conformance pack generator.",
+      "role": "generator",
+      "sha256": "fee00ad419fb72c00966ba6c420bf1371e9c4f36170e6b15bad983c265cc4905"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/scripts/verify_cbb_v1_external_consumer.py",
+      "bytes": 9483,
+      "path": "scripts/verify_cbb_v1_external_consumer.py",
+      "purpose": "Isolated second-consumer and archive-tamper verifier.",
+      "role": "verification",
+      "sha256": "5519d49d2b97c819a803ef1c10c791081b612143d8cd6983cb1263e003369b4b"
     }
   ],
   "independence": {
@@ -895,6 +999,8 @@
   "status": "ready_for_independent_audit",
   "title": "Study Anything External Security Audit Pack",
   "verification_commands": [
+    "python3 scripts/generate_cbb_v1_conformance_pack.py --check",
+    "python3 scripts/verify_cbb_v1_external_consumer.py --check",
     "python3 scripts/generate_external_security_audit_pack.py --check",
     "python3 scripts/verify_external_security_audit_pack.py --check"
   ],

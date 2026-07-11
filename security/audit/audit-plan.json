@@ -118,7 +118,9 @@
         "python3 scripts/generate_cbb_v1_agentic_assets.py --check",
         "python3 scripts/verify_cbb_agentic_tool_boundary.py --check",
         "python3 scripts/verify_cbb_memory_quarantine.py --check",
-        "python3 scripts/verify_cbb_evolution_gate.py --check"
+        "python3 scripts/verify_cbb_evolution_gate.py --check",
+        "python3 scripts/generate_cbb_v1_conformance_pack.py --check",
+        "python3 scripts/verify_cbb_v1_external_consumer.py --check"
       ],
       "evidence_assets": [
         "docs/dual-loop-mvp.md",
@@ -130,12 +132,17 @@
         "docs/cbb-protocol-v1-scenarios-and-qualification.md",
         "docs/cbb-protocol-v1-outcomes.md",
         "docs/cbb-protocol-v1-agentic-evolution.md",
+        "docs/cbb-protocol-v1-conformance.md",
+        "docs/protocol-governance.md",
+        "docs/extensions-and-versioning.md",
+        "docs/compatibility-and-trademark.md",
         "docs/quality-audits/phase-31-cbb-protocol-v1-contracts.md",
         "docs/quality-audits/phase-33-cbb-protocol-v1-kernel.md",
         "docs/quality-audits/phase-34-cbb-protocol-v1-provenance.md",
         "docs/quality-audits/phase-35-delivery-clearance-scenarios-and-positioning.md",
         "docs/quality-audits/phase-36-delivery-clearance-outcomes.md",
         "docs/quality-audits/phase-37-agentic-evolution-isolation.md",
+        "docs/quality-audits/phase-38-protocol-conformance.md",
         "platform/generated/study-anything-dual-loop-contracts.json",
         "platform/generated/study-anything-dual-loop-gate.json",
         "platform/generated/study-anything-cbb-v1-contracts.json",
@@ -150,6 +157,14 @@
         "platform/generated/study-anything-cbb-agentic-tool-boundary.json",
         "platform/generated/study-anything-cbb-memory-quarantine.json",
         "platform/generated/study-anything-cbb-evolution-gate.json",
+        "platform/generated/study-anything-cbb-v1-conformance-pack.json",
+        "platform/generated/study-anything-cbb-v1-conformance-pack.md",
+        "platform/generated/study-anything-cbb-v1-conformance-pack.zip",
+        "platform/generated/study-anything-cbb-v1-conformance-pack.sha256",
+        "platform/generated/study-anything-cbb-v1-external-consumer.json",
+        "conformance/python/cbb_v1_consumer.py",
+        "scripts/generate_cbb_v1_conformance_pack.py",
+        "scripts/verify_cbb_v1_external_consumer.py",
         "platform/schemas/cbb/cbb.trust-policy.v1.schema.json",
         "platform/schemas/cbb/cbb.evidence-bundle.v1.schema.json",
         "platform/schemas/cbb/cbb.qualified-reconstruction.v1.schema.json",
@@ -211,7 +226,8 @@
         "ai_only_approval_rejection_review",
         "agentic_tool_authority_review",
         "memory_poisoning_review",
-        "self_authorization_review"
+        "self_authorization_review",
+        "cross_implementation_conformance_review"
       ]
     },
     {

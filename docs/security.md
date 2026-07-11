@@ -145,6 +145,8 @@ python3 scripts/verify_cbb_v1_outcomes.py --check
 python3 scripts/verify_cbb_agentic_tool_boundary.py --check
 python3 scripts/verify_cbb_memory_quarantine.py --check
 python3 scripts/verify_cbb_evolution_gate.py --check
+python3 scripts/generate_cbb_v1_conformance_pack.py --check
+python3 scripts/verify_cbb_v1_external_consumer.py --check
 ```
 
 CBB v1 local provenance uses optional Ed25519 signing. Private keys remain local,
@@ -178,6 +180,12 @@ rollback, reconstruction, risk-owner, and maintainer evidence. Its locally signe
 receipt stops at a non-applied local candidate and grants no delivery scope. This does
 not prove prompt-injection elimination, production sandboxing, external signer
 identity, or safe autonomous self-evolution.
+
+The conformance ZIP is deterministic, single-root, and file-digest bound. Its second
+consumer runs in isolated Python mode outside the `study_anything` package and has no
+model, network, subprocess, or policy-apply import. It uses the optional `cryptography`
+dependency only for Ed25519 public-key verification. Passing fixtures does not establish
+third-party identity, certification, production safety, or independent audit completion.
 
 The external audit kit lives under `security/audit/` and is distributed as
 `platform/generated/study-anything-external-security-audit-pack.zip`. The pack

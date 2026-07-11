@@ -163,6 +163,8 @@ where the scenario requires them.
 | Deterministic Trust Kernel | `apps/api/study_anything/cbb/kernel/` |
 | Local provenance | `apps/api/study_anything/cbb/provenance/` |
 | Scenario and qualification fixtures | `apps/api/study_anything/cbb/scenarios/` |
+| Independent conformance consumer | `conformance/python/cbb_v1_consumer.py` |
+| Deterministic conformance pack | `scripts/generate_cbb_v1_conformance_pack.py` |
 | Dual Loop | `apps/api/study_anything/core/dual_loop.py` |
 | Delivery receipt | `apps/api/study_anything/core/delivery_trust.py` |
 | Customer package | `apps/api/study_anything/core/customer_handoff.py` |
@@ -192,6 +194,8 @@ artifact migration, deprecation evidence, and a no-old-import gate.
   replay, historical source binding, recipe freeze, and local clearance revocation;
 - typed Agentic evidence tools, quarantined memory with provenance, expiry, and
   counter-evidence, plus signed proposal-only evolution receipts with no automatic apply;
+- deterministic conformance ZIP, public vectors, version/extension/migration rules, and
+  a package-independent consumer that replays all eight canonical object classes;
 - Delivery Trust Receipt and Customer Handoff Package;
 - receipt-chain and repository self-intake evidence;
 - local API, Skill, platform-Agent, Docker, and static HTML adapters;
@@ -199,8 +203,7 @@ artifact migration, deprecation evidence, and a no-old-import gate.
 
 ### Planned For Protocol v1
 
-- vendor-neutral conformance fixtures and governance;
-- independent-consumer verification of all eight canonical objects.
+- controlled real-world adoption evidence and signed independent-audit intake.
 
 ### Explicitly Not Claimed
 
@@ -232,5 +235,5 @@ It remains separate from the Trust Kernel and proves local key possession rather
 than external signer identity. Scenario and qualification policy is also implemented
 without creating another pre-delivery receipt family. Outcome degradation is a
 canonical post-delivery extension. The Agentic layer now stops at signed local
-candidates; vendor-neutral conformance and a second independent implementation are
-the next milestone.
+candidates. Vendor-neutral fixture conformance and the second package-independent
+consumer are implemented; controlled adoption and external audit intake are next.
