@@ -13,6 +13,9 @@ dependencies = [
   "httpx>=0.27.0",
 ]
 
+[project.scripts]
+delivery-clearance = "study_anything.cbb.personal.cli:main"
+
 [project.optional-dependencies]
 skill = []
 crypto = [

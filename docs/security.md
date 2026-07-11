@@ -29,6 +29,33 @@ external data access outside the repository database.
 - Optional graph and retrieval projections are derived from Postgres. They must
   not become the source of truth.
 
+## Personal Clearance Command Boundary
+
+The `delivery-clearance` command can audit an operator-selected local Git repository.
+It is a local shell capability, not an API endpoint and not a hosted multi-tenant feature.
+
+- `init` writes only `.delivery-clearance/personal-clearance.json` and a nested
+  `.gitignore` in the selected repository.
+- `audit` writes only `.delivery-clearance/artifacts/` in that repository, except for
+  effects caused by operator-configured child checks.
+- Child checks are argument arrays invoked with `shell=False`, but they run with the
+  current user's permissions and inherited environment. They are not OS-sandboxed and
+  may have network or external side effects.
+- The harness compares Git-visible state before and after checks. A change triggers a
+  hard deny. This does not detect mutation confined to ignored files, external services,
+  databases, credentials, or network systems.
+- Artifacts retain hashes, byte counts, exit states, boundaries, and claim metadata. They
+  exclude raw source, raw diffs, untracked paths, raw command text, raw stdout/stderr,
+  model credentials, tokens, and local absolute paths.
+- A passing receipt is a run-specific self-attestation for `personal_local` only. It is
+  not independent review, external authority, production approval, or identity proof.
+
+Verify the boundary with:
+
+```bash
+python3 scripts/verify_personal_clearance_mvp.py --check
+```
+
 ## Local API Boundary
 
 - Docker publishes the API on `127.0.0.1` by default. Skill Mode already binds

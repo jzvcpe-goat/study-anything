@@ -1,5 +1,20 @@
 # Unreleased Main Development Line
 
+## Personal Local Clearance MVP
+
+- Added the installed `delivery-clearance` command and compatibility script with
+  `init`, `audit`, and `verify` workflows for arbitrary local Git projects.
+- Bound every receipt to the current commit, branch-name hash, staged/unstaged diff
+  hashes, non-ignored untracked content manifest, submodule state, config, check results,
+  active boundary reconstruction, per-run responsibility acceptance, and expiry.
+- Locked all successful results to `personal_local`; missing responsibility, placeholder
+  boundaries, unexecuted or failed checks, check-driven Git-state mutation, scope expansion,
+  tamper, expiry, and later state changes fail closed.
+- Added five strict schemas, pass/placeholder fixtures, a metadata-only HTML receipt,
+  fourteen verifier cases, unit tests, security documentation, and a release gate.
+- The MVP is self-attested and child checks are not OS-sandboxed. It is not independent
+  review, external delivery authority, production approval, or proof that AI is correct.
+
 ## Protocol v1 Controlled Adoption And Audit Intake
 
 - Added metadata-only shadow, dogfood, canary, incident, rollback, revocation, and

@@ -1,13 +1,38 @@
 # GitHub Release Guide
 
-This guide is for public alpha releases. The goal is open-source and local-first: users should be able to clone, inspect, run, and extend Study Anything without creating an account or giving Study Anything model keys.
+This guide is for public alpha releases of Delivery Clearance. The goal is open-source and
+local-first: an operator should be able to clone the reference harness, audit an AI-assisted
+local Git project, and verify a state-bound personal receipt without creating an account or
+providing model keys.
 
 ## Launch Positioning
 
 - License: Apache-2.0.
 - Distribution: GitHub repository first, Docker Compose self-host first.
-- Real reasoning: Bring Your Own Agent. Study Anything stores endpoint/config metadata, not real model API keys.
+- Primary MVP: `delivery-clearance init/audit/verify` for self-responsible
+  `personal_local` development flow control.
+- Real reasoning: Bring Your Own Agent. Delivery Clearance stores protocol metadata, not
+  real model API keys.
 - Monetization: not in the MVP. Future hosted services should sell convenience and collaboration, not lock-in.
+
+## Personal Local MVP Readiness
+
+Before presenting the personal MVP on GitHub, confirm:
+
+```bash
+.venv/bin/delivery-clearance --help
+.venv/bin/python scripts/verify_personal_clearance_mvp.py --check
+.venv/bin/python -m unittest discover -s apps/api/tests -p 'test_personal_clearance.py'
+```
+
+Run one disposable end-to-end project and verify that:
+
+- placeholder boundaries cannot pass;
+- omitted `--execute-checks` or `--accept-responsibility` cannot pass;
+- a passing result is exactly `personal_local`;
+- a subsequent Git-visible state change invalidates the receipt;
+- the HTML report includes the responsibility and claim boundaries;
+- no independent-audit, customer-delivery, production, or AI-correctness claim is made.
 
 ## Before Publishing A Release
 
@@ -17,6 +42,7 @@ Run:
 python3 scripts/setup_env.py --force --output /tmp/study-anything.env
 python3 scripts/check_env.py --env /tmp/study-anything.env --strict
 ./scripts/release_check.sh
+python3 scripts/verify_personal_clearance_mvp.py --check
 python3 scripts/generate_platform_agent_assets.py --check
 python3 scripts/verify_clean_clone_adoption.py --repo . --copy-worktree
 python3 scripts/verify_platform_ecosystem_packs.py

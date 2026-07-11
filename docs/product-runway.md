@@ -1,23 +1,28 @@
 # Product Runway
 
-The project should now move from release-stack self-intake maintenance back to
-the product core: Cognitive Black Box / Dual Loop as a trust protocol for AI
-delivery.
+The current product focus is Delivery Clearance as the last protocol before an
+AI-assisted deliverable advances. The first operational MVP serves one operator
+auditing personal local projects; external adoption and independent audit remain
+future evidence classes, not prerequisites for honest self-use.
 
-## Current Reset
+## Current MVP Objective
 
-The release-stack chain is verifiable, but the next valuable work is not another
-automatic self-intake. The release evidence machinery has done its job when it
-can prove:
+Make `delivery-clearance init/audit/verify` useful as a daily development gate:
 
-- what changed;
-- which verifier covered it;
-- which public evidence package carries it;
-- which claim boundary is still honest.
+- bind a receipt to one exact Git-visible project state;
+- require project-specific checks and active boundary reconstruction;
+- require the operator to accept responsibility for each run;
+- fail closed on missing evidence, failed checks, check mutation, tamper, expiry,
+  or later state change;
+- authorize at most `personal_local`.
 
-After that, the project needs product proof.
+The MVP is complete when a new user can apply it to a local repository from the
+README, understand why it allowed or blocked, and use `verify` before continuing
+their own development process. It does not need external adopter evidence to make
+that personal claim. Any customer, production, regulated, or independent claim
+still requires a separate scope and evidence path.
 
-## Current Product Objective
+## Later Product Objective
 
 Move the delivery-trust chain from "evidence can be inspected" to "a platform
 Agent can prepare a customer-delivery envelope without crossing the customer

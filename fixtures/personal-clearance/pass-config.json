@@ -1,0 +1,34 @@
+{
+  "checks": [
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "check_id": "git-diff-check",
+      "required": true,
+      "timeout_seconds": 60
+    }
+  ],
+  "critical_failure_path": "A required local verification can fail.",
+  "evidence_limitations": [
+    "Configured checks run with the current user's permissions and are not independently sandboxed."
+  ],
+  "hard_boundaries": {
+    "external_delivery_allowed": false,
+    "irreversible_effects_allowed": false,
+    "production_mutation_allowed": false
+  },
+  "maximum_scope": "personal_local",
+  "non_goals": [
+    "No external delivery, customer handoff, or production use."
+  ],
+  "project_id": "personal-clearance-fixture",
+  "purpose": "Audit one exact local development candidate.",
+  "recipient_kind": "self",
+  "rollback_strategy": "Discard the candidate and return to the last Git state.",
+  "rollback_trigger": "Any failed check or unexpected project-state mutation.",
+  "schema_version": "delivery-clearance.personal-config.v1",
+  "validity_hours": 24
+}
