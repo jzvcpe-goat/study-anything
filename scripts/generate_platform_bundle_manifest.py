@@ -1477,6 +1477,16 @@ FILES: list[tuple[str, str, str]] = [
         "Canonical object and signature tamper rejection report.",
     ),
     (
+        "platform/generated/study-anything-cbb-v1-scenarios.json",
+        "generated_asset",
+        "Deterministic CBB Protocol v1 scenario decision report.",
+    ),
+    (
+        "platform/generated/study-anything-cbb-v1-qualification.json",
+        "generated_asset",
+        "Scoped MRU and human/model qualification verification report.",
+    ),
+    (
         "platform/generated/study-anything-cbb-protocol-contracts.json",
         "generated_asset",
         "Cognitive Black Box protocol contract and privacy verification report.",
@@ -3219,7 +3229,7 @@ FILES: list[tuple[str, str, str]] = [
     (
         "docs/product-positioning.md",
         "operator_doc",
-        "Canonical Cognitive Black Box Protocol positioning and claim boundary.",
+        "Canonical Delivery Clearance positioning and claim boundary.",
     ),
     (
         "docs/architecture.md",
@@ -3250,6 +3260,11 @@ FILES: list[tuple[str, str, str]] = [
         "docs/cbb-protocol-v1-provenance.md",
         "operator_doc",
         "Canonical local signing, offline verification, and claim-boundary guide.",
+    ),
+    (
+        "docs/cbb-protocol-v1-scenarios-and-qualification.md",
+        "operator_doc",
+        "Scenario, affected-party, MRU, and scoped capability policy guide.",
     ),
     (
         "docs/delivery-trust-receipt.md",
@@ -5617,6 +5632,12 @@ FILES: list[tuple[str, str, str]] = [
     ("fixtures/cbb-v1-provenance/tampered-receipt.json", "fixture", "Delivery receipt envelope tamper rejection fixture."),
     ("fixtures/cbb-v1-provenance/tampered-signature.json", "fixture", "Signature tamper rejection fixture."),
     ("fixtures/cbb-v1-provenance/wrong-public-key.json", "fixture", "Wrong public key rejection fixture."),
+    ("fixtures/cbb-v1-scenarios/personal-local-prototype.json", "fixture", "Personal-local scenario allow fixture."),
+    ("fixtures/cbb-v1-scenarios/public-fake-data-demo.json", "fixture", "Public fake-data demo allow fixture."),
+    ("fixtures/cbb-v1-scenarios/limited-beta.json", "fixture", "Limited-beta candidate fixture."),
+    ("fixtures/cbb-v1-scenarios/paid-customer-candidate.json", "fixture", "Controlled paid-customer candidate fixture."),
+    ("fixtures/cbb-v1-scenarios/production-candidate-blocked.json", "fixture", "Production candidate missing-evidence fixture."),
+    ("fixtures/cbb-v1-scenarios/regulated-or-irreversible-blocked.json", "fixture", "Regulated or irreversible hard-deny fixture."),
     (
         "scripts/verify_cbb_protocol_contracts.py",
         "verification",
@@ -5647,6 +5668,9 @@ FILES: list[tuple[str, str, str]] = [
     ("scripts/cbb_provenance.py", "cli", "Generate local keys, sign canonical receipt sets, and verify packages offline."),
     ("scripts/verify_cbb_v1_provenance.py", "verification", "Verify local signing, expiry, revocation, replay, and scope boundaries."),
     ("scripts/verify_cbb_v1_tamper_cases.py", "verification", "Verify canonical object, signature, and public-key tamper rejection."),
+    ("scripts/generate_cbb_v1_scenario_assets.py", "generator", "Generate deterministic CBB Protocol v1 scenario fixtures."),
+    ("scripts/verify_cbb_v1_scenarios.py", "verification", "Verify scenario scope, actor, safeguard, and hard-deny decisions."),
+    ("scripts/verify_cbb_v1_qualification.py", "verification", "Verify MRU and scoped human/model capability boundaries."),
     (
         "scripts/verify_cbb_positioning.py",
         "verification",
@@ -7976,6 +8000,9 @@ def build_manifest() -> dict[str, object]:
             "python3 scripts/verify_cbb_runtime_isolation.py --check",
             "python3 scripts/verify_cbb_v1_provenance.py --check",
             "python3 scripts/verify_cbb_v1_tamper_cases.py --check",
+            "python3 scripts/generate_cbb_v1_scenario_assets.py --check",
+            "python3 scripts/verify_cbb_v1_scenarios.py --check",
+            "python3 scripts/verify_cbb_v1_qualification.py --check",
             "python3 scripts/verify_cbb_protocol_contracts.py --check",
             "python3 scripts/verify_cbb_gate.py --check",
             "python3 scripts/verify_cbb_receipt_chain.py --check",

@@ -12,38 +12,60 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_VERSION = "cbb-positioning-verification-v1"
+PUBLIC_DEFINITION = (
+    "Delivery Clearance does not prove that AI is always correct. It proves why this\n"
+    "delivery may move forward, to whom, for what purpose, within what limits, and under\n"
+    "whose responsibility."
+)
+PUBLIC_SLOGAN = "未经放行，不得交付。"
+PUBLIC_DEFINITION_ZH = (
+    "AI 交付放行协议不证明 AI 永远正确；它证明这次交付为什么可以继续向前、可以交给谁、\n"
+    "可以用于什么、受到哪些限制，以及由谁承担责任。"
+)
 
 REQUIRED_TEXT: dict[str, tuple[str, ...]] = {
     "README.md": (
-        "# Cognitive Black Box Protocol / 认知黑箱协议",
-        "open, local-first receipt protocol",
-        "CBB Reference Harness",
+        "# Delivery Clearance",
+        "## AI Delivery Clearance Protocol / AI 交付放行协议",
+        PUBLIC_SLOGAN,
+        PUBLIC_DEFINITION,
+        PUBLIC_DEFINITION_ZH,
+        "Delivery Clearance Reference Harness",
         "Study Anything is the Human",
         "Reconstruction / Learning Adapter. Cognitive Loop is an internal evidence",
         "Cognitive Loop is an internal evidence",
-        "The repository and Python distribution retain the historical `study-anything` name",
+        "The repository and Python distribution retain the historical `study-anything` name,",
         "scripts/verify_cbb_positioning.py --check",
     ),
     "docs/product-positioning.md": (
-        "Cognitive Black Box Protocol is an open protocol",
+        "Delivery Clearance is the public product identity",
+        PUBLIC_DEFINITION,
+        PUBLIC_DEFINITION_ZH,
+        PUBLIC_SLOGAN,
+        "Cognitive Load Contract",
         "Controlled Release, Not Permanent Restraint",
         "Study Anything Adapter",
         "Cognitive Loop | Internal evidence/evolution workflow",
     ),
     "docs/protocol.md": (
-        "# Cognitive Black Box Protocol",
+        "# AI Delivery Clearance Protocol",
+        PUBLIC_DEFINITION,
+        PUBLIC_DEFINITION_ZH,
+        PUBLIC_SLOGAN,
         "No receipt, no release.",
         "Stable Trust Kernel",
         "Adaptive Evolution Layer",
     ),
     "docs/trust-model.md": (
+        "Last Protocol Before Responsibility Transfer",
         "Trust is scoped, stateful, time-bound, evidence-backed, and reversible.",
         "Equal-Weight Dual Loop",
         "The protocol must distrust itself.",
         "Trust Growth And Degradation",
     ),
     "docs/architecture.md": (
-        "Cognitive Black Box is protocol-first.",
+        "Delivery Clearance is protocol-first.",
+        "AI Delivery Clearance Protocol is the final protocol before an AI delivery",
         "Deterministic Trust Kernel",
         "Physical Isolation",
         "Current Reference Implementation Map",
@@ -55,6 +77,9 @@ REQUIRED_TEXT: dict[str, tuple[str, ...]] = {
         "M6: Conformance And Open Governance",
     ),
     "docs/naming-and-compatibility.md": (
+        "Delivery Clearance | Public product identity",
+        "AI Delivery Clearance Protocol | Open protocol",
+        "CBB / `cbb.*` | Existing Protocol v1 schema and implementation namespace | Compatibility only",
         "Compatibility-Only Identifiers",
         "Banned Current Framing",
         "Technical Rename Criteria",
@@ -65,14 +90,24 @@ REQUIRED_TEXT: dict[str, tuple[str, ...]] = {
         "Quality Audit After Every PR",
         "Next Codex Goal",
     ),
+    "docs/cbb-protocol-v1-scenarios-and-qualification.md": (
+        "AI Delivery Clearance Protocol is the final open protocol before an AI delivery",
+        "Minimum Reconstructable Unit",
+        "Capability Profiles",
+        "production-candidate-blocked",
+        "regulated-or-irreversible-blocked",
+    ),
     "docs/adapters/study-anything.md": (
         "Human Reconstruction / Learning Adapter",
         "not the protocol, the Trust Kernel, or the top-level product identity.",
         "The mapping may narrow or expire a claim. It may never increase delivery scope.",
     ),
     "scripts/release_check.sh": (
+        "Delivery Clearance protocol release check",
         "scripts/verify_cbb_positioning.py --check",
         "scripts/verify_cbb_protocol_contracts.py --check",
+        "scripts/verify_cbb_v1_scenarios.py --check",
+        "scripts/verify_cbb_v1_qualification.py --check",
     ),
 }
 
@@ -155,6 +190,37 @@ def verify_required_text() -> dict[str, list[str]]:
     return verified
 
 
+def verify_public_first_view() -> dict[str, Any]:
+    lines = read_text("README.md").splitlines()
+    first_view = "\n".join(lines[:27])
+    if PUBLIC_DEFINITION not in first_view or PUBLIC_SLOGAN not in first_view:
+        raise PositioningError(
+            "README first view does not lead with the Delivery Clearance contract."
+        )
+    obsolete_first_view = (
+        "learning system",
+        "learning product",
+        "plugin ecosystem",
+        "Cognitive Loop System",
+        "Cognitive Black Box",
+        "CBB Protocol",
+        "CBB is",
+        "CBB ",
+    )
+    findings = [term for term in obsolete_first_view if term in first_view]
+    if findings:
+        raise PositioningError(
+            f"README first view leaks obsolete product framing: {findings}"
+        )
+    return {
+        "line_window": 27,
+        "delivery_clearance_definition_present": True,
+        "no_clearance_no_delivery_present": True,
+        "obsolete_product_terms": [],
+        "human_review_contract": "bounded boundary decisions, not exhaustive rereading",
+    }
+
+
 def verify_banned_framing() -> dict[str, Any]:
     findings: list[dict[str, str]] = []
     scanned = iter_current_text_files()
@@ -183,28 +249,29 @@ def verify_package_metadata() -> dict[str, Any]:
     if 'name = "study-anything"' not in pyproject:
         raise PositioningError("Historical Python distribution name must remain study-anything.")
     expected_description = (
-        "Open, local-first protocol and reference harness for scoped AI delivery trust."
+        "Delivery Clearance: open, local-first AI Delivery Clearance Protocol and "
+        "reference harness."
     )
     if f'description = "{expected_description}"' not in pyproject:
         raise PositioningError("pyproject description does not match the canonical CBB position.")
-    if 'authors = [{ name = "Cognitive Black Box Protocol contributors" }]' not in pyproject:
+    if 'authors = [{ name = "Delivery Clearance contributors" }]' not in pyproject:
         raise PositioningError("pyproject authors still use the obsolete product identity.")
 
     api_source = read_text("apps/api/study_anything/api/main.py")
-    api_title = "Cognitive Black Box Protocol: Study Anything Adapter"
+    api_title = "Delivery Clearance: Study Anything Adapter"
     if api_title not in api_source:
-        raise PositioningError("FastAPI title does not expose CBB Protocol plus adapter boundary.")
+        raise PositioningError("FastAPI title does not expose Delivery Clearance plus adapter boundary.")
 
     artifact_source = read_text("apps/api/study_anything/core/cognitive_loop_contracts.py")
-    if "<h1 class=\"brand\">Cognitive Black Box Protocol</h1>" not in artifact_source:
-        raise PositioningError("Generated Cognitive Loop artifact branding is not CBB Protocol.")
+    if "<h1 class=\"brand\">Delivery Clearance</h1>" not in artifact_source:
+        raise PositioningError("Generated artifact branding is not Delivery Clearance.")
 
     return {
         "distribution_name": "study-anything",
         "distribution_name_is_compatibility_only": True,
         "description": expected_description,
         "api_title": api_title,
-        "generated_artifact_brand": "Cognitive Black Box Protocol",
+        "generated_artifact_brand": "Delivery Clearance",
     }
 
 
@@ -212,11 +279,13 @@ def build_report() -> dict[str, Any]:
     return {
         "schema_version": SCHEMA_VERSION,
         "status": "pass",
-        "canonical_name": "Cognitive Black Box Protocol",
-        "reference_implementation": "CBB Reference Harness",
+        "canonical_name": "Delivery Clearance",
+        "canonical_protocol_name": "AI Delivery Clearance Protocol",
+        "reference_implementation": "Delivery Clearance Reference Harness",
         "study_anything_role": "Human Reconstruction / Learning Adapter",
         "cognitive_loop_role": "internal evidence and evolution workflow",
         "required_text": verify_required_text(),
+        "public_first_view": verify_public_first_view(),
         "legacy_leakage": verify_banned_framing(),
         "package_metadata": verify_package_metadata(),
         "claim_boundary": {

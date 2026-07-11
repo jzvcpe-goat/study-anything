@@ -1,5 +1,52 @@
 {
   "$defs": {
+    "AffectedPartyContractV1": {
+      "additionalProperties": false,
+      "properties": {
+        "appeal_required": {
+          "title": "Appeal Required",
+          "type": "boolean"
+        },
+        "disclosure_required": {
+          "title": "Disclosure Required",
+          "type": "boolean"
+        },
+        "impact_classes": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Impact Classes",
+          "type": "array"
+        },
+        "party_kind": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Party Kind",
+          "type": "string"
+        },
+        "party_ref": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Party Ref",
+          "type": "string"
+        },
+        "redress_required": {
+          "title": "Redress Required",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "party_ref",
+        "party_kind",
+        "impact_classes",
+        "disclosure_required",
+        "appeal_required",
+        "redress_required"
+      ],
+      "title": "AffectedPartyContractV1",
+      "type": "object"
+    },
     "ClaimBoundaryV1": {
       "additionalProperties": false,
       "properties": {
@@ -29,12 +76,106 @@
       "title": "ClaimBoundaryV1",
       "type": "object"
     },
+    "DeliveryScenarioClass": {
+      "enum": [
+        "personal_local_prototype",
+        "public_fake_data_demo",
+        "internal_handoff_candidate",
+        "limited_beta",
+        "paid_customer_candidate",
+        "production_candidate",
+        "regulated_or_irreversible"
+      ],
+      "title": "DeliveryScenarioClass",
+      "type": "string"
+    },
+    "DeliveryScenarioV1": {
+      "additionalProperties": false,
+      "properties": {
+        "affected_parties": {
+          "items": {
+            "$ref": "#/$defs/AffectedPartyContractV1"
+          },
+          "title": "Affected Parties",
+          "type": "array"
+        },
+        "appeal": {
+          "$ref": "#/$defs/SafeguardRequirementV1"
+        },
+        "disclosure": {
+          "$ref": "#/$defs/SafeguardRequirementV1"
+        },
+        "impact_classes": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Impact Classes",
+          "type": "array"
+        },
+        "maximum_scope": {
+          "$ref": "#/$defs/DeliveryScope"
+        },
+        "model_ref": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Model Ref",
+          "type": "string"
+        },
+        "project_ref": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Project Ref",
+          "type": "string"
+        },
+        "recipient": {
+          "$ref": "#/$defs/RecipientContractV1"
+        },
+        "redress": {
+          "$ref": "#/$defs/SafeguardRequirementV1"
+        },
+        "regulated_or_irreversible": {
+          "title": "Regulated Or Irreversible",
+          "type": "boolean"
+        },
+        "risk_owner": {
+          "$ref": "#/$defs/RiskOwnerContractV1"
+        },
+        "scenario_class": {
+          "$ref": "#/$defs/DeliveryScenarioClass"
+        },
+        "scenario_ref": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Scenario Ref",
+          "type": "string"
+        }
+      },
+      "required": [
+        "scenario_ref",
+        "scenario_class",
+        "project_ref",
+        "model_ref",
+        "maximum_scope",
+        "recipient",
+        "risk_owner",
+        "affected_parties",
+        "disclosure",
+        "appeal",
+        "redress",
+        "impact_classes",
+        "regulated_or_irreversible"
+      ],
+      "title": "DeliveryScenarioV1",
+      "type": "object"
+    },
     "DeliveryScope": {
       "description": "Ordered scopes from no release authority to a production candidate.",
       "enum": [
         "blocked",
         "personal_local",
         "sandbox_only",
+        "public_demo",
         "internal_handoff",
         "controlled_customer_handoff",
         "limited_beta",
@@ -66,6 +207,144 @@
         "blocking"
       ],
       "title": "EvidenceRequirementV1",
+      "type": "object"
+    },
+    "MinimumReconstructableUnitV1": {
+      "additionalProperties": false,
+      "properties": {
+        "blocks_promotion": {
+          "const": true,
+          "title": "Blocks Promotion",
+          "type": "boolean"
+        },
+        "boundary_type": {
+          "$ref": "#/$defs/ReconstructionBoundaryType"
+        },
+        "evidence_kind": {
+          "const": "active_reconstruction",
+          "title": "Evidence Kind",
+          "type": "string"
+        },
+        "mru_ref": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Mru Ref",
+          "type": "string"
+        },
+        "required_for_scope": {
+          "$ref": "#/$defs/DeliveryScope"
+        }
+      },
+      "required": [
+        "mru_ref",
+        "boundary_type",
+        "required_for_scope",
+        "evidence_kind",
+        "blocks_promotion"
+      ],
+      "title": "MinimumReconstructableUnitV1",
+      "type": "object"
+    },
+    "ModelCapabilityProfileV1": {
+      "additionalProperties": false,
+      "properties": {
+        "counter_evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Counter Evidence Refs",
+          "type": "array"
+        },
+        "evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Refs",
+          "type": "array"
+        },
+        "known_failure_modes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Known Failure Modes",
+          "type": "array"
+        },
+        "maximum_autonomy_scope": {
+          "$ref": "#/$defs/DeliveryScope"
+        },
+        "model_ref": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Model Ref",
+          "type": "string"
+        },
+        "observed_at": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$",
+          "title": "Observed At",
+          "type": "string"
+        },
+        "profile_id": {
+          "maxLength": 160,
+          "minLength": 1,
+          "title": "Profile Id",
+          "type": "string"
+        },
+        "scenario_refs": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Scenario Refs",
+          "type": "array"
+        },
+        "status": {
+          "enum": [
+            "observed",
+            "challenged",
+            "stale",
+            "unproven"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "task_types": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Task Types",
+          "type": "array"
+        },
+        "valid_until": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$",
+          "title": "Valid Until",
+          "type": "string"
+        },
+        "vendor_claims_sufficient": {
+          "const": false,
+          "title": "Vendor Claims Sufficient",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "profile_id",
+        "model_ref",
+        "scenario_refs",
+        "task_types",
+        "status",
+        "maximum_autonomy_scope",
+        "evidence_refs",
+        "counter_evidence_refs",
+        "known_failure_modes",
+        "observed_at",
+        "valid_until",
+        "vendor_claims_sufficient"
+      ],
+      "title": "ModelCapabilityProfileV1",
       "type": "object"
     },
     "PrivacyBoundaryV1": {
@@ -143,6 +422,59 @@
       "title": "PrivacyBoundaryV1",
       "type": "object"
     },
+    "RecipientContractV1": {
+      "additionalProperties": false,
+      "properties": {
+        "automatic_execution_authority": {
+          "const": false,
+          "title": "Automatic Execution Authority",
+          "type": "boolean"
+        },
+        "external": {
+          "title": "External",
+          "type": "boolean"
+        },
+        "recipient_kind": {
+          "enum": [
+            "self",
+            "internal_operator",
+            "public_demo_audience",
+            "limited_beta_user",
+            "paid_customer_operator",
+            "production_operator",
+            "regulated_subject"
+          ],
+          "title": "Recipient Kind",
+          "type": "string"
+        },
+        "recipient_ref": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Recipient Ref",
+          "type": "string"
+        }
+      },
+      "required": [
+        "recipient_ref",
+        "recipient_kind",
+        "external",
+        "automatic_execution_authority"
+      ],
+      "title": "RecipientContractV1",
+      "type": "object"
+    },
+    "ReconstructionBoundaryType": {
+      "enum": [
+        "intent_and_non_goals",
+        "critical_failure_path",
+        "affected_parties_and_recipient",
+        "rollback_trigger",
+        "evidence_weakness_and_limitations",
+        "residual_risk"
+      ],
+      "title": "ReconstructionBoundaryType",
+      "type": "string"
+    },
     "RiskBudgetV1": {
       "additionalProperties": false,
       "properties": {
@@ -180,6 +512,99 @@
       ],
       "title": "RiskBudgetV1",
       "type": "object"
+    },
+    "RiskOwnerContractV1": {
+      "additionalProperties": false,
+      "properties": {
+        "acceptance_evidence_type": {
+          "anyOf": [
+            {
+              "maxLength": 120,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Acceptance Evidence Type"
+        },
+        "accepted_scope_ceiling": {
+          "$ref": "#/$defs/DeliveryScope"
+        },
+        "required": {
+          "title": "Required",
+          "type": "boolean"
+        },
+        "risk_owner_ref": {
+          "anyOf": [
+            {
+              "maxLength": 500,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Risk Owner Ref"
+        }
+      },
+      "required": [
+        "required",
+        "accepted_scope_ceiling"
+      ],
+      "title": "RiskOwnerContractV1",
+      "type": "object"
+    },
+    "SafeguardRequirementV1": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_type": {
+          "anyOf": [
+            {
+              "maxLength": 120,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Evidence Type"
+        },
+        "human_fallback_required": {
+          "title": "Human Fallback Required",
+          "type": "boolean"
+        },
+        "mechanism_ref": {
+          "anyOf": [
+            {
+              "maxLength": 500,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Mechanism Ref"
+        },
+        "required": {
+          "title": "Required",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "required",
+        "human_fallback_required"
+      ],
+      "title": "SafeguardRequirementV1",
+      "type": "object"
     }
   },
   "$id": "cbb.trust-policy.v1",
@@ -207,6 +632,9 @@
     "maximum_scope": {
       "$ref": "#/$defs/DeliveryScope"
     },
+    "model_capability_profile": {
+      "$ref": "#/$defs/ModelCapabilityProfileV1"
+    },
     "policy_id": {
       "maxLength": 160,
       "minLength": 1,
@@ -224,6 +652,14 @@
       "title": "Required Evidence",
       "type": "array"
     },
+    "required_mrus": {
+      "items": {
+        "$ref": "#/$defs/MinimumReconstructableUnitV1"
+      },
+      "minItems": 1,
+      "title": "Required Mrus",
+      "type": "array"
+    },
     "required_roles": {
       "items": {
         "type": "string"
@@ -234,6 +670,9 @@
     },
     "risk_budget": {
       "$ref": "#/$defs/RiskBudgetV1"
+    },
+    "scenario": {
+      "$ref": "#/$defs/DeliveryScenarioV1"
     },
     "scenario_ref": {
       "maxLength": 500,
@@ -258,11 +697,14 @@
     "policy_id",
     "subject_ref",
     "scenario_ref",
+    "scenario",
+    "model_capability_profile",
     "maximum_scope",
     "hard_denies",
     "risk_budget",
     "required_evidence",
     "required_roles",
+    "required_mrus",
     "claim_boundary",
     "privacy",
     "created_at"

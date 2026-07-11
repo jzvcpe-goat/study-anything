@@ -164,7 +164,7 @@ class CognitiveLoopContractsTests(unittest.TestCase):
         html = render_cli_artifact_html(report)
 
         self.assertEqual(report["schema_version"], CLI_ARTIFACT_SCHEMA_VERSION)
-        self.assertIn("Cognitive Black Box Protocol", html)
+        self.assertIn("Delivery Clearance", html)
         self.assertIn("Decision Card", html)
         self.assertIn("Contract Files", html)
         self.assertFalse(report["privacy"]["standalone_frontend_required"])

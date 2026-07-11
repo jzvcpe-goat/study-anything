@@ -2,11 +2,33 @@
 
 ## Core Claim
 
-CBB Protocol does not prove that an AI is trustworthy in general. It proves that a
-specific candidate may move only as far as a specific policy and receipt allow.
+Delivery Clearance does not prove that AI is always correct. It proves why a specific
+delivery may move forward, to whom, for what purpose, within what limits, and under
+whose responsibility.
 
-CBB 协议不证明某个 AI 在全局上值得信任。它只证明一个具体候选物可以走到某份策略和
-收据允许的范围。
+AI 交付放行协议不证明 AI 永远正确；它证明这次交付为什么可以继续向前、可以交给谁、
+可以用于什么、受到哪些限制，以及由谁承担责任。
+
+## Last Protocol Before Responsibility Transfer
+
+AI Delivery Clearance Protocol is the final open protocol before an AI delivery crosses a real-world
+responsibility boundary. A responsibility boundary changes who receives the result,
+who may be affected, who owns residual risk, what can be reversed, or which external
+effect becomes possible. Every such change requires a fresh scoped decision; an old
+receipt cannot be silently inherited.
+
+AI 交付放行协议是 AI 交付跨越现实责任边界前的最后一道开放协议。只要接收者、受影响者、风险
+承担者、可逆性或外部影响发生变化，就必须重新形成范围化决策，旧收据不能被静默继承。
+
+The human review target is the residual boundary, not the full generated artifact:
+
+```text
+Human decision load =
+  unresolved boundary delta
+  + novel context
+  + residual risk
+  + scope change
+```
 
 Trust is scoped, stateful, time-bound, evidence-backed, and reversible. A model,
 human, project, recipient, or delivery context changing can invalidate an earlier
@@ -63,6 +85,11 @@ Passive attention routes the reviewer to likely gaps. Active reconstruction prov
 the stronger evidence. Qualification is local to a project, boundary type, and time
 window. It is not a permanent label attached to a person.
 
+Human and model capability profiles are evidence records, not status rankings. They
+are scenario-scoped, project-scoped where applicable, expiring, challengeable, and
+bounded by counter-evidence. A profile cannot grant authority outside its recorded
+scope or turn a vendor claim into gate evidence.
+
 ### Propagation Gate
 
 Both loops must pass. Controlled failure without human reconstruction blocks.
@@ -114,7 +141,7 @@ The protocol must distrust itself. Its main structural threats are:
    counter-evidence, and incident-triggered rollback.
 4. **Goodhart pressure**: mitigated by negative fixtures, random audit, hidden
    adversarial cases, post-delivery sampling, and receipt revocation.
-5. **Self-authorization**: mitigated by proposal/decision separation and CBB-on-CBB
+5. **Self-authorization**: mitigated by proposal/decision separation and protocol self-change
    evolution receipts.
 6. **Affected-party omission**: mitigated by separate recipient, risk-owner,
    affected-party, disclosure, appeal, and redress fields.
@@ -143,7 +170,7 @@ regression, compromised memory, or claim-boundary violation can:
 
 This is a design analogy, not a neuroscience claim:
 
-| Layer | CBB role |
+| Layer | Delivery Clearance role |
 |---|---|
 | Spinal reflex | Fast local guardrails and hard stops |
 | Brainstem | Stable Trust Kernel and survival boundaries |
@@ -180,6 +207,8 @@ python3 scripts/verify_customer_handoff_package.py --check
 python3 scripts/verify_cbb_protocol_contracts.py --check
 python3 scripts/verify_cbb_gate.py --check
 python3 scripts/verify_cbb_receipt_chain.py --check
+python3 scripts/verify_cbb_v1_scenarios.py --check
+python3 scripts/verify_cbb_v1_qualification.py --check
 ```
 
 Passing these commands proves only their documented deterministic scope.

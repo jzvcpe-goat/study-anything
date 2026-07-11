@@ -6,7 +6,7 @@
   "payload": {
     "claim_boundary": {
       "current_claim": "The candidate may be evaluated up to the mapped v0 delivery scope only.",
-      "maximum_scope": "controlled_customer_handoff",
+      "maximum_scope": "internal_handoff",
       "not_claimed": [
         "production approval",
         "portable signed attestation",
@@ -21,7 +21,30 @@
       "production_mutation",
       "unbounded_real_user_exposure"
     ],
-    "maximum_scope": "controlled_customer_handoff",
+    "maximum_scope": "internal_handoff",
+    "model_capability_profile": {
+      "counter_evidence_refs": [],
+      "evidence_refs": [
+        "failure-contract.json",
+        "sandbox-receipt.json"
+      ],
+      "known_failure_modes": [
+        "legacy_v0_actor_context_incomplete"
+      ],
+      "maximum_autonomy_scope": "internal_handoff",
+      "model_ref": "model:v0-unspecified-agent",
+      "observed_at": "2026-06-28T00:00:00Z",
+      "profile_id": "model-capability:failure-contract-demo-001",
+      "scenario_refs": [
+        "task:dual-loop-demo"
+      ],
+      "status": "observed",
+      "task_types": [
+        "v0_dual_loop_delivery_chain"
+      ],
+      "valid_until": "2026-09-26T00:00:00Z",
+      "vendor_claims_sufficient": false
+    },
     "policy_id": "cbb-policy:failure-contract-demo-001",
     "privacy": {
       "attention_stream_included": false,
@@ -50,12 +73,35 @@
       {
         "blocking": true,
         "evidence_type": "qualified_reconstruction",
-        "required_for_scope": "controlled_customer_handoff"
+        "required_for_scope": "internal_handoff"
       },
       {
         "blocking": true,
         "evidence_type": "dual_loop_gate",
-        "required_for_scope": "controlled_customer_handoff"
+        "required_for_scope": "internal_handoff"
+      }
+    ],
+    "required_mrus": [
+      {
+        "blocks_promotion": true,
+        "boundary_type": "critical_failure_path",
+        "evidence_kind": "active_reconstruction",
+        "mru_ref": "mru:mru-failure-path",
+        "required_for_scope": "internal_handoff"
+      },
+      {
+        "blocks_promotion": true,
+        "boundary_type": "rollback_trigger",
+        "evidence_kind": "active_reconstruction",
+        "mru_ref": "mru:mru-rollback-trigger",
+        "required_for_scope": "internal_handoff"
+      },
+      {
+        "blocks_promotion": true,
+        "boundary_type": "residual_risk",
+        "evidence_kind": "active_reconstruction",
+        "mru_ref": "mru:mru-acceptance-boundary",
+        "required_for_scope": "internal_handoff"
       }
     ],
     "required_roles": [
@@ -66,6 +112,48 @@
       "level": "medium",
       "production_mutation_allowed": false,
       "real_user_exposure_allowed": false
+    },
+    "scenario": {
+      "affected_parties": [],
+      "appeal": {
+        "evidence_type": null,
+        "human_fallback_required": false,
+        "mechanism_ref": null,
+        "required": false
+      },
+      "disclosure": {
+        "evidence_type": null,
+        "human_fallback_required": false,
+        "mechanism_ref": null,
+        "required": false
+      },
+      "impact_classes": [
+        "internal_candidate_review"
+      ],
+      "maximum_scope": "internal_handoff",
+      "model_ref": "model:v0-unspecified-agent",
+      "project_ref": "project:failure-contract-demo-001",
+      "recipient": {
+        "automatic_execution_authority": false,
+        "external": false,
+        "recipient_kind": "internal_operator",
+        "recipient_ref": "recipient:v0-local-operator"
+      },
+      "redress": {
+        "evidence_type": null,
+        "human_fallback_required": false,
+        "mechanism_ref": null,
+        "required": false
+      },
+      "regulated_or_irreversible": false,
+      "risk_owner": {
+        "acceptance_evidence_type": null,
+        "accepted_scope_ceiling": "blocked",
+        "required": false,
+        "risk_owner_ref": null
+      },
+      "scenario_class": "internal_handoff_candidate",
+      "scenario_ref": "task:dual-loop-demo"
     },
     "schema_version": "cbb.trust-policy.v1",
     "subject_ref": "artifact:metadata-only-demo-change",

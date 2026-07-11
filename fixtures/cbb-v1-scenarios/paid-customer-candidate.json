@@ -1,0 +1,547 @@
+{
+  "case_id": "paid-customer-candidate",
+  "decision": {
+    "approved_scope": "controlled_customer_handoff",
+    "claim_boundary": {
+      "current_claim": "The deterministic CBB v1 kernel authorizes only controlled_customer_handoff.",
+      "maximum_scope": "controlled_customer_handoff",
+      "not_claimed": [
+        "production approval",
+        "portable signed attestation",
+        "customer outcome guarantee",
+        "general model correctness",
+        "authority beyond the evaluated policy and evidence"
+      ]
+    },
+    "decided_at": "2026-06-28T00:00:00Z",
+    "decision_id": "cbb-decision:bae8953b0b4459804cff5bf374831a83",
+    "evidence_bundle_ref": "cbb-evidence:paid-customer-candidate",
+    "hard_denies_triggered": [],
+    "missing_evidence_types": [],
+    "policy_ref": "cbb-policy:paid-customer-candidate",
+    "privacy": {
+      "attention_stream_included": false,
+      "automatic_customer_send_performed": false,
+      "cookies_or_bearer_tokens_included": false,
+      "metadata_only": true,
+      "model_credentials_included": false,
+      "model_prompts_included": false,
+      "production_mutation_performed": false,
+      "raw_customer_payload_included": false,
+      "raw_report_text_included": false,
+      "raw_source_text_included": false,
+      "signed_urls_included": false
+    },
+    "reasons": [],
+    "reconstruction_ref": "cbb-reconstruction:paid-customer-candidate",
+    "schema_version": "cbb.gate-decision.v1",
+    "source_decision_refs": [
+      "evidence/appeal_path.json",
+      "evidence/disclosure_notice.json",
+      "evidence/dual_loop_gate.json",
+      "evidence/external_eval_receipt.json",
+      "evidence/failure_contract.json",
+      "evidence/redress_path.json",
+      "evidence/risk_owner_acceptance.json",
+      "evidence/rollback_replay.json",
+      "evidence/sandbox_receipt.json",
+      "human-reconstruction:paid-customer-candidate",
+      "policy:cbb-policy:paid-customer-candidate"
+    ],
+    "status": "allow",
+    "subject_ref": "artifact:vibe-coded-app:paid-customer-candidate"
+  },
+  "expected": {
+    "approved_scope": "controlled_customer_handoff",
+    "omitted_evidence": [],
+    "status": "allow"
+  },
+  "inputs": {
+    "evidence_bundle": {
+      "bundle_id": "cbb-evidence:paid-customer-candidate",
+      "claim_boundary": {
+        "current_claim": "Evidence is bounded to the paid-customer-candidate fixture only.",
+        "maximum_scope": "controlled_customer_handoff",
+        "not_claimed": [
+          "production approval",
+          "legal or security certification",
+          "customer outcome guarantee",
+          "general model correctness",
+          "permanent global human or model qualification"
+        ]
+      },
+      "created_at": "2026-06-28T00:00:00Z",
+      "evidence": [
+        {
+          "evidence_id": "evidence:paid-customer-candidate:failure_contract",
+          "evidence_type": "failure_contract",
+          "metadata": {
+            "scenario_ref": "scenario:vibe-coded-app:paid-customer-candidate"
+          },
+          "source_ref": "evidence/failure_contract.json",
+          "source_schema_version": "cbb.scenario-evidence.v1",
+          "status": "passed",
+          "supported_scope": "controlled_customer_handoff"
+        },
+        {
+          "evidence_id": "evidence:paid-customer-candidate:sandbox_receipt",
+          "evidence_type": "sandbox_receipt",
+          "metadata": {
+            "scenario_ref": "scenario:vibe-coded-app:paid-customer-candidate"
+          },
+          "source_ref": "evidence/sandbox_receipt.json",
+          "source_schema_version": "cbb.scenario-evidence.v1",
+          "status": "passed",
+          "supported_scope": "controlled_customer_handoff"
+        },
+        {
+          "evidence_id": "evidence:paid-customer-candidate:dual_loop_gate",
+          "evidence_type": "dual_loop_gate",
+          "metadata": {
+            "scenario_ref": "scenario:vibe-coded-app:paid-customer-candidate"
+          },
+          "source_ref": "evidence/dual_loop_gate.json",
+          "source_schema_version": "cbb.scenario-evidence.v1",
+          "status": "passed",
+          "supported_scope": "controlled_customer_handoff"
+        },
+        {
+          "evidence_id": "evidence:paid-customer-candidate:risk_owner_acceptance",
+          "evidence_type": "risk_owner_acceptance",
+          "metadata": {
+            "scenario_ref": "scenario:vibe-coded-app:paid-customer-candidate"
+          },
+          "source_ref": "evidence/risk_owner_acceptance.json",
+          "source_schema_version": "cbb.scenario-evidence.v1",
+          "status": "passed",
+          "supported_scope": "controlled_customer_handoff"
+        },
+        {
+          "evidence_id": "evidence:paid-customer-candidate:disclosure_notice",
+          "evidence_type": "disclosure_notice",
+          "metadata": {
+            "scenario_ref": "scenario:vibe-coded-app:paid-customer-candidate"
+          },
+          "source_ref": "evidence/disclosure_notice.json",
+          "source_schema_version": "cbb.scenario-evidence.v1",
+          "status": "passed",
+          "supported_scope": "controlled_customer_handoff"
+        },
+        {
+          "evidence_id": "evidence:paid-customer-candidate:appeal_path",
+          "evidence_type": "appeal_path",
+          "metadata": {
+            "scenario_ref": "scenario:vibe-coded-app:paid-customer-candidate"
+          },
+          "source_ref": "evidence/appeal_path.json",
+          "source_schema_version": "cbb.scenario-evidence.v1",
+          "status": "passed",
+          "supported_scope": "controlled_customer_handoff"
+        },
+        {
+          "evidence_id": "evidence:paid-customer-candidate:redress_path",
+          "evidence_type": "redress_path",
+          "metadata": {
+            "scenario_ref": "scenario:vibe-coded-app:paid-customer-candidate"
+          },
+          "source_ref": "evidence/redress_path.json",
+          "source_schema_version": "cbb.scenario-evidence.v1",
+          "status": "passed",
+          "supported_scope": "controlled_customer_handoff"
+        },
+        {
+          "evidence_id": "evidence:paid-customer-candidate:rollback_replay",
+          "evidence_type": "rollback_replay",
+          "metadata": {
+            "scenario_ref": "scenario:vibe-coded-app:paid-customer-candidate"
+          },
+          "source_ref": "evidence/rollback_replay.json",
+          "source_schema_version": "cbb.scenario-evidence.v1",
+          "status": "passed",
+          "supported_scope": "controlled_customer_handoff"
+        },
+        {
+          "evidence_id": "evidence:paid-customer-candidate:external_eval_receipt",
+          "evidence_type": "external_eval_receipt",
+          "metadata": {
+            "scenario_ref": "scenario:vibe-coded-app:paid-customer-candidate"
+          },
+          "source_ref": "evidence/external_eval_receipt.json",
+          "source_schema_version": "cbb.scenario-evidence.v1",
+          "status": "passed",
+          "supported_scope": "controlled_customer_handoff"
+        }
+      ],
+      "maximum_supported_scope": "controlled_customer_handoff",
+      "policy_ref": "cbb-policy:paid-customer-candidate",
+      "privacy": {
+        "attention_stream_included": false,
+        "automatic_customer_send_performed": false,
+        "cookies_or_bearer_tokens_included": false,
+        "metadata_only": true,
+        "model_credentials_included": false,
+        "model_prompts_included": false,
+        "production_mutation_performed": false,
+        "raw_customer_payload_included": false,
+        "raw_report_text_included": false,
+        "raw_source_text_included": false,
+        "signed_urls_included": false
+      },
+      "schema_version": "cbb.evidence-bundle.v1",
+      "subject_ref": "artifact:vibe-coded-app:paid-customer-candidate"
+    },
+    "qualified_reconstruction": {
+      "active_reconstruction": true,
+      "claim_boundary": {
+        "current_claim": "The reviewer is qualified only for paid-customer-candidate and this time window.",
+        "maximum_scope": "controlled_customer_handoff",
+        "not_claimed": [
+          "production approval",
+          "legal or security certification",
+          "customer outcome guarantee",
+          "general model correctness",
+          "permanent global human or model qualification"
+        ]
+      },
+      "evidence_refs": [
+        "human-reconstruction:paid-customer-candidate"
+      ],
+      "human_capability_profile": {
+        "boundary_types": [
+          "intent_and_non_goals",
+          "critical_failure_path",
+          "affected_parties_and_recipient",
+          "rollback_trigger",
+          "evidence_weakness_and_limitations",
+          "residual_risk"
+        ],
+        "counter_evidence_refs": [],
+        "evidence_refs": [
+          "human-reconstruction:paid-customer-candidate"
+        ],
+        "human_ref": "reviewer:paid-customer-candidate",
+        "maximum_scope": "controlled_customer_handoff",
+        "observed_at": "2026-06-28T00:00:00Z",
+        "permanent_global_label": false,
+        "profile_id": "human-capability:paid-customer-candidate",
+        "project_ref": "project:vibe-coded-app",
+        "qualified_roles": [
+          "qualified_reviewer",
+          "technical_reviewer",
+          "operational_reviewer"
+        ],
+        "scenario_refs": [
+          "scenario:vibe-coded-app:paid-customer-candidate"
+        ],
+        "status": "active",
+        "valid_until": "2026-09-26T00:00:00Z"
+      },
+      "missing_mru_refs": [],
+      "mru_results": [
+        {
+          "boundary_type": "intent_and_non_goals",
+          "evidence_refs": [
+            "reconstruction/mru:paid-customer-candidate:intent_and_non_goals.json"
+          ],
+          "mru_ref": "mru:paid-customer-candidate:intent_and_non_goals",
+          "status": "passed"
+        },
+        {
+          "boundary_type": "critical_failure_path",
+          "evidence_refs": [
+            "reconstruction/mru:paid-customer-candidate:critical_failure_path.json"
+          ],
+          "mru_ref": "mru:paid-customer-candidate:critical_failure_path",
+          "status": "passed"
+        },
+        {
+          "boundary_type": "affected_parties_and_recipient",
+          "evidence_refs": [
+            "reconstruction/mru:paid-customer-candidate:affected_parties_and_recipient.json"
+          ],
+          "mru_ref": "mru:paid-customer-candidate:affected_parties_and_recipient",
+          "status": "passed"
+        },
+        {
+          "boundary_type": "rollback_trigger",
+          "evidence_refs": [
+            "reconstruction/mru:paid-customer-candidate:rollback_trigger.json"
+          ],
+          "mru_ref": "mru:paid-customer-candidate:rollback_trigger",
+          "status": "passed"
+        },
+        {
+          "boundary_type": "evidence_weakness_and_limitations",
+          "evidence_refs": [
+            "reconstruction/mru:paid-customer-candidate:evidence_weakness_and_limitations.json"
+          ],
+          "mru_ref": "mru:paid-customer-candidate:evidence_weakness_and_limitations",
+          "status": "passed"
+        },
+        {
+          "boundary_type": "residual_risk",
+          "evidence_refs": [
+            "reconstruction/mru:paid-customer-candidate:residual_risk.json"
+          ],
+          "mru_ref": "mru:paid-customer-candidate:residual_risk",
+          "status": "passed"
+        }
+      ],
+      "observed_at": "2026-06-28T00:00:00Z",
+      "passive_attention_only": false,
+      "policy_ref": "cbb-policy:paid-customer-candidate",
+      "privacy": {
+        "attention_stream_included": false,
+        "automatic_customer_send_performed": false,
+        "cookies_or_bearer_tokens_included": false,
+        "metadata_only": true,
+        "model_credentials_included": false,
+        "model_prompts_included": false,
+        "production_mutation_performed": false,
+        "raw_customer_payload_included": false,
+        "raw_report_text_included": false,
+        "raw_source_text_included": false,
+        "signed_urls_included": false
+      },
+      "project_ref": "project:vibe-coded-app",
+      "qualified_scope": "controlled_customer_handoff",
+      "reconstruction_id": "cbb-reconstruction:paid-customer-candidate",
+      "required_mrus_passed": 6,
+      "required_mrus_total": 6,
+      "reviewer_ref": "reviewer:paid-customer-candidate",
+      "reviewer_roles": [
+        "qualified_reviewer",
+        "technical_reviewer",
+        "operational_reviewer"
+      ],
+      "scenario_ref": "scenario:vibe-coded-app:paid-customer-candidate",
+      "schema_version": "cbb.qualified-reconstruction.v1",
+      "status": "passed",
+      "valid_until": "2026-09-26T00:00:00Z"
+    },
+    "trust_policy": {
+      "claim_boundary": {
+        "current_claim": "This fixture evaluates only the paid-customer-candidate scenario boundary.",
+        "maximum_scope": "controlled_customer_handoff",
+        "not_claimed": [
+          "production approval",
+          "legal or security certification",
+          "customer outcome guarantee",
+          "general model correctness",
+          "permanent global human or model qualification"
+        ]
+      },
+      "created_at": "2026-06-28T00:00:00Z",
+      "hard_denies": [
+        "ai_review_only_trust",
+        "irreversible_external_effect",
+        "production_mutation",
+        "unbounded_real_user_exposure"
+      ],
+      "maximum_scope": "controlled_customer_handoff",
+      "model_capability_profile": {
+        "counter_evidence_refs": [],
+        "evidence_refs": [
+          "model-replay:paid-customer-candidate"
+        ],
+        "known_failure_modes": [
+          "generated_tests_may_miss_cross_boundary_effects",
+          "model_self_review_is_not_final_authority"
+        ],
+        "maximum_autonomy_scope": "controlled_customer_handoff",
+        "model_ref": "model:fixture-agent-v1",
+        "observed_at": "2026-06-28T00:00:00Z",
+        "profile_id": "model-capability:paid-customer-candidate",
+        "scenario_refs": [
+          "scenario:vibe-coded-app:paid-customer-candidate"
+        ],
+        "status": "observed",
+        "task_types": [
+          "vibe_coded_web_application"
+        ],
+        "valid_until": "2026-09-26T00:00:00Z",
+        "vendor_claims_sufficient": false
+      },
+      "policy_id": "cbb-policy:paid-customer-candidate",
+      "privacy": {
+        "attention_stream_included": false,
+        "automatic_customer_send_performed": false,
+        "cookies_or_bearer_tokens_included": false,
+        "metadata_only": true,
+        "model_credentials_included": false,
+        "model_prompts_included": false,
+        "production_mutation_performed": false,
+        "raw_customer_payload_included": false,
+        "raw_report_text_included": false,
+        "raw_source_text_included": false,
+        "signed_urls_included": false
+      },
+      "required_evidence": [
+        {
+          "blocking": true,
+          "evidence_type": "failure_contract",
+          "required_for_scope": "controlled_customer_handoff"
+        },
+        {
+          "blocking": true,
+          "evidence_type": "sandbox_receipt",
+          "required_for_scope": "controlled_customer_handoff"
+        },
+        {
+          "blocking": true,
+          "evidence_type": "qualified_reconstruction",
+          "required_for_scope": "controlled_customer_handoff"
+        },
+        {
+          "blocking": true,
+          "evidence_type": "dual_loop_gate",
+          "required_for_scope": "controlled_customer_handoff"
+        },
+        {
+          "blocking": true,
+          "evidence_type": "risk_owner_acceptance",
+          "required_for_scope": "controlled_customer_handoff"
+        },
+        {
+          "blocking": true,
+          "evidence_type": "disclosure_notice",
+          "required_for_scope": "controlled_customer_handoff"
+        },
+        {
+          "blocking": true,
+          "evidence_type": "appeal_path",
+          "required_for_scope": "controlled_customer_handoff"
+        },
+        {
+          "blocking": true,
+          "evidence_type": "redress_path",
+          "required_for_scope": "controlled_customer_handoff"
+        },
+        {
+          "blocking": true,
+          "evidence_type": "rollback_replay",
+          "required_for_scope": "controlled_customer_handoff"
+        },
+        {
+          "blocking": false,
+          "evidence_type": "external_eval_receipt",
+          "required_for_scope": "controlled_customer_handoff"
+        }
+      ],
+      "required_mrus": [
+        {
+          "blocks_promotion": true,
+          "boundary_type": "intent_and_non_goals",
+          "evidence_kind": "active_reconstruction",
+          "mru_ref": "mru:paid-customer-candidate:intent_and_non_goals",
+          "required_for_scope": "controlled_customer_handoff"
+        },
+        {
+          "blocks_promotion": true,
+          "boundary_type": "critical_failure_path",
+          "evidence_kind": "active_reconstruction",
+          "mru_ref": "mru:paid-customer-candidate:critical_failure_path",
+          "required_for_scope": "controlled_customer_handoff"
+        },
+        {
+          "blocks_promotion": true,
+          "boundary_type": "affected_parties_and_recipient",
+          "evidence_kind": "active_reconstruction",
+          "mru_ref": "mru:paid-customer-candidate:affected_parties_and_recipient",
+          "required_for_scope": "controlled_customer_handoff"
+        },
+        {
+          "blocks_promotion": true,
+          "boundary_type": "rollback_trigger",
+          "evidence_kind": "active_reconstruction",
+          "mru_ref": "mru:paid-customer-candidate:rollback_trigger",
+          "required_for_scope": "controlled_customer_handoff"
+        },
+        {
+          "blocks_promotion": true,
+          "boundary_type": "evidence_weakness_and_limitations",
+          "evidence_kind": "active_reconstruction",
+          "mru_ref": "mru:paid-customer-candidate:evidence_weakness_and_limitations",
+          "required_for_scope": "controlled_customer_handoff"
+        },
+        {
+          "blocks_promotion": true,
+          "boundary_type": "residual_risk",
+          "evidence_kind": "active_reconstruction",
+          "mru_ref": "mru:paid-customer-candidate:residual_risk",
+          "required_for_scope": "controlled_customer_handoff"
+        }
+      ],
+      "required_roles": [
+        "qualified_reviewer",
+        "technical_reviewer",
+        "operational_reviewer",
+        "risk_owner"
+      ],
+      "risk_budget": {
+        "irreversible_external_effects_allowed": false,
+        "level": "medium",
+        "production_mutation_allowed": false,
+        "real_user_exposure_allowed": false
+      },
+      "scenario": {
+        "affected_parties": [
+          {
+            "appeal_required": true,
+            "disclosure_required": true,
+            "impact_classes": [
+              "service_access",
+              "decision_or_experience"
+            ],
+            "party_kind": "scenario_user",
+            "party_ref": "affected-party:paid-customer-candidate",
+            "redress_required": true
+          }
+        ],
+        "appeal": {
+          "evidence_type": "appeal_path",
+          "human_fallback_required": true,
+          "mechanism_ref": "mechanism:appeal_path",
+          "required": true
+        },
+        "disclosure": {
+          "evidence_type": "disclosure_notice",
+          "human_fallback_required": false,
+          "mechanism_ref": "mechanism:disclosure_notice",
+          "required": true
+        },
+        "impact_classes": [
+          "real_delivery_candidate"
+        ],
+        "maximum_scope": "controlled_customer_handoff",
+        "model_ref": "model:fixture-agent-v1",
+        "project_ref": "project:vibe-coded-app",
+        "recipient": {
+          "automatic_execution_authority": false,
+          "external": true,
+          "recipient_kind": "paid_customer_operator",
+          "recipient_ref": "recipient:paid-customer-candidate"
+        },
+        "redress": {
+          "evidence_type": "redress_path",
+          "human_fallback_required": true,
+          "mechanism_ref": "mechanism:redress_path",
+          "required": true
+        },
+        "regulated_or_irreversible": false,
+        "risk_owner": {
+          "acceptance_evidence_type": "risk_owner_acceptance",
+          "accepted_scope_ceiling": "controlled_customer_handoff",
+          "required": true,
+          "risk_owner_ref": "risk-owner:paid-customer-candidate"
+        },
+        "scenario_class": "paid_customer_candidate",
+        "scenario_ref": "scenario:vibe-coded-app:paid-customer-candidate"
+      },
+      "scenario_ref": "scenario:vibe-coded-app:paid-customer-candidate",
+      "schema_version": "cbb.trust-policy.v1",
+      "subject_ref": "artifact:vibe-coded-app:paid-customer-candidate"
+    }
+  },
+  "policy_digest_sha256": "fab6317f4720f774f752ffed844f78600ca7f0b9303f689fb34b7786ee5cb69b"
+}

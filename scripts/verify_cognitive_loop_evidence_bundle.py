@@ -168,7 +168,7 @@ def build_report() -> dict[str, Any]:
             },
             "html_artifact": {
                 "created": bundle_html_path.is_file(),
-                "contains_brand": "Cognitive Black Box Protocol" in html,
+                "contains_brand": "Delivery Clearance" in html,
                 "contains_evidence_bundle": "Evidence Bundle" in html,
                 "contains_redacted_json": "Redacted JSON" in html,
                 "standalone_frontend_required": False,

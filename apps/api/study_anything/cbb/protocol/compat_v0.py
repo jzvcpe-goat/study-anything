@@ -14,17 +14,27 @@ from study_anything.cbb.protocol.models import (
     RECEIPT_PROVENANCE_SCHEMA_VERSION,
     TRUST_POLICY_SCHEMA_VERSION,
     ClaimBoundaryV1,
+    DeliveryScenarioClass,
+    DeliveryScenarioV1,
     DeliveryScope,
     DeliveryTrustReceiptV1,
     EvidenceBundleV1,
     EvidenceItemV1,
     EvidenceRequirementV1,
     GateDecisionV1,
+    HumanCapabilityProfileV1,
+    MinimumReconstructableUnitV1,
+    ModelCapabilityProfileV1,
+    MruResultV1,
     PrivacyBoundaryV1,
     QualifiedReconstructionV1,
+    RecipientContractV1,
     ReceiptProvenanceV1,
+    ReconstructionBoundaryType,
     RevocationReferenceV1,
+    RiskOwnerContractV1,
     RiskBudgetV1,
+    SafeguardRequirementV1,
     TrustPolicyV1,
     VerifierIdentityV1,
     parse_timestamp,
@@ -35,6 +45,12 @@ from study_anything.core import delivery_trust, dual_loop
 
 DEFAULT_OBSERVED_AT = dual_loop.DETERMINISTIC_TIMESTAMP
 DEFAULT_VALID_UNTIL = "2026-09-26T00:00:00Z"
+
+V0_MRU_BOUNDARIES = {
+    "mru:mru-failure-path": ReconstructionBoundaryType.CRITICAL_FAILURE_PATH,
+    "mru:mru-rollback-trigger": ReconstructionBoundaryType.ROLLBACK_TRIGGER,
+    "mru:mru-acceptance-boundary": ReconstructionBoundaryType.RESIDUAL_RISK,
+}
 
 
 class CompatibilityMappingError(ValueError):
@@ -64,6 +80,28 @@ def assert_scope_not_expanded(source_scope: DeliveryScope, target_scope: Deliver
         )
 
 
+def _optional_safeguard() -> SafeguardRequirementV1:
+    return SafeguardRequirementV1(
+        required=False,
+        evidence_type=None,
+        mechanism_ref=None,
+        human_fallback_required=False,
+    )
+
+
+def _v0_required_mrus() -> list[MinimumReconstructableUnitV1]:
+    return [
+        MinimumReconstructableUnitV1(
+            mru_ref=mru_ref,
+            boundary_type=boundary,
+            required_for_scope=DeliveryScope.INTERNAL_HANDOFF,
+            evidence_kind="active_reconstruction",
+            blocks_promotion=True,
+        )
+        for mru_ref, boundary in V0_MRU_BOUNDARIES.items()
+    ]
+
+
 def failure_contract_to_trust_policy(
     failure_contract: Mapping[str, Any],
 ) -> TrustPolicyV1:
@@ -71,13 +109,62 @@ def failure_contract_to_trust_policy(
     maximum_scope = (
         DeliveryScope.BLOCKED
         if contract["risk"]["level"] == "blocked"
-        else DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF
+        else DeliveryScope.INTERNAL_HANDOFF
+    )
+    scenario_ref = str(contract["task_ref"])
+    project_ref = f"project:{contract['contract_id']}"
+    model_ref = "model:v0-unspecified-agent"
+    scenario = DeliveryScenarioV1(
+        scenario_ref=scenario_ref,
+        scenario_class=DeliveryScenarioClass.INTERNAL_HANDOFF_CANDIDATE,
+        project_ref=project_ref,
+        model_ref=model_ref,
+        maximum_scope=DeliveryScope.INTERNAL_HANDOFF,
+        recipient=RecipientContractV1(
+            recipient_ref="recipient:v0-local-operator",
+            recipient_kind="internal_operator",
+            external=False,
+            automatic_execution_authority=False,
+        ),
+        risk_owner=RiskOwnerContractV1(
+            required=False,
+            risk_owner_ref=None,
+            accepted_scope_ceiling=DeliveryScope.BLOCKED,
+            acceptance_evidence_type=None,
+        ),
+        affected_parties=[],
+        disclosure=_optional_safeguard(),
+        appeal=_optional_safeguard(),
+        redress=_optional_safeguard(),
+        impact_classes=["internal_candidate_review"],
+        regulated_or_irreversible=False,
     )
     return TrustPolicyV1(
         schema_version=TRUST_POLICY_SCHEMA_VERSION,
         policy_id=f"cbb-policy:{contract['contract_id']}",
         subject_ref=str(contract["candidate_artifact_ref"]),
-        scenario_ref=str(contract["task_ref"]),
+        scenario_ref=scenario_ref,
+        scenario=scenario,
+        model_capability_profile=ModelCapabilityProfileV1(
+            profile_id=f"model-capability:{contract['contract_id']}",
+            model_ref=model_ref,
+            scenario_refs=[scenario_ref],
+            task_types=["v0_dual_loop_delivery_chain"],
+            status="observed" if maximum_scope != DeliveryScope.BLOCKED else "unproven",
+            maximum_autonomy_scope=maximum_scope,
+            evidence_refs=(
+                ["failure-contract.json", "sandbox-receipt.json"]
+                if maximum_scope != DeliveryScope.BLOCKED
+                else []
+            ),
+            counter_evidence_refs=[],
+            known_failure_modes=["legacy_v0_actor_context_incomplete"],
+            observed_at=str(
+                contract.get("created_at") or dual_loop.DETERMINISTIC_TIMESTAMP
+            ),
+            valid_until=DEFAULT_VALID_UNTIL,
+            vendor_claims_sufficient=False,
+        ),
         maximum_scope=maximum_scope,
         hard_denies=[
             "ai_review_only_trust",
@@ -104,16 +191,17 @@ def failure_contract_to_trust_policy(
             ),
             EvidenceRequirementV1(
                 evidence_type="qualified_reconstruction",
-                required_for_scope=DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
+                required_for_scope=DeliveryScope.INTERNAL_HANDOFF,
                 blocking=True,
             ),
             EvidenceRequirementV1(
                 evidence_type="dual_loop_gate",
-                required_for_scope=DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
+                required_for_scope=DeliveryScope.INTERNAL_HANDOFF,
                 blocking=True,
             ),
         ],
         required_roles=["qualified_reviewer"],
+        required_mrus=_v0_required_mrus(),
         claim_boundary=ClaimBoundaryV1(
             current_claim=(
                 "The candidate may be evaluated up to the mapped v0 delivery scope only."
@@ -235,6 +323,26 @@ def attention_summary_to_qualified_reconstruction(
     else:
         status = "failed"
     passed = status == "passed"
+    result_status: Literal["passed", "failed", "missing", "stale"] = status
+    mru_results = [
+        MruResultV1(
+            mru_ref=mru_ref,
+            boundary_type=boundary,
+            status=result_status,
+            evidence_refs=(
+                [f"attention-reconstruction-summary.json#{mru_ref}"] if passed else []
+            ),
+        )
+        for mru_ref, boundary in V0_MRU_BOUNDARIES.items()
+    ]
+    missing_mrus = [] if passed else sorted(V0_MRU_BOUNDARIES)
+    profile_status: Literal["active", "challenged", "stale", "insufficient"]
+    if passed:
+        profile_status = "active"
+    elif status == "stale":
+        profile_status = "stale"
+    else:
+        profile_status = "insufficient"
     return QualifiedReconstructionV1(
         schema_version=QUALIFIED_RECONSTRUCTION_SCHEMA_VERSION,
         reconstruction_id=(
@@ -244,17 +352,46 @@ def attention_summary_to_qualified_reconstruction(
         ),
         policy_ref=policy.policy_id,
         reviewer_ref="reviewer:v0-local-operator",
+        scenario_ref=policy.scenario_ref,
+        project_ref=policy.scenario.project_ref,
+        reviewer_roles=["qualified_reviewer"],
         status=status,
         qualified_scope=(
-            DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF
+            DeliveryScope.INTERNAL_HANDOFF
             if passed
             else DeliveryScope.BLOCKED
         ),
         active_reconstruction=passed,
         passive_attention_only=False,
-        required_mrus_total=int((summary or {}).get("required_mrus_total") or 0),
-        required_mrus_passed=int((summary or {}).get("required_mrus_passed") or 0),
-        missing_mru_refs=list((summary or {}).get("missing_mrus") or []),
+        required_mrus_total=len(mru_results),
+        required_mrus_passed=len(mru_results) if passed else 0,
+        missing_mru_refs=missing_mrus,
+        mru_results=mru_results,
+        human_capability_profile=HumanCapabilityProfileV1(
+            profile_id=(
+                f"human-capability:{summary['summary_id']}"
+                if summary is not None
+                else "human-capability:v0-missing"
+            ),
+            human_ref="reviewer:v0-local-operator",
+            project_ref=policy.scenario.project_ref,
+            scenario_refs=[policy.scenario_ref],
+            qualified_roles=["qualified_reviewer"],
+            boundary_types=list(V0_MRU_BOUNDARIES.values()),
+            status=profile_status,
+            maximum_scope=(
+                DeliveryScope.INTERNAL_HANDOFF if passed else DeliveryScope.BLOCKED
+            ),
+            evidence_refs=(
+                ["attention-reconstruction-summary.json"]
+                if summary is not None
+                else []
+            ),
+            counter_evidence_refs=[],
+            observed_at=observed_at,
+            valid_until=effective_valid_until,
+            permanent_global_label=False,
+        ),
         evidence_refs=(
             ["attention-reconstruction-summary.json"] if summary is not None else []
         ),
@@ -267,7 +404,7 @@ def attention_summary_to_qualified_reconstruction(
                 else "The mapped v0 reconstruction does not currently qualify delivery."
             ),
             maximum_scope=(
-                DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF
+                DeliveryScope.INTERNAL_HANDOFF
                 if passed
                 else DeliveryScope.BLOCKED
             ),
@@ -481,7 +618,7 @@ def delivery_trust_to_v1_receipt(
         "reasons": list(decision.reasons),
         "claim_boundary": ClaimBoundaryV1(
             current_claim=(
-                "The candidate may enter controlled customer handoff under the mapped v0 receipt."
+                f"The candidate may enter {decision.approved_scope.value} under the mapped v0 receipt."
                 if decision.status == "allow"
                 else "The candidate is not authorized for delivery by the mapped v0 receipt."
             ),

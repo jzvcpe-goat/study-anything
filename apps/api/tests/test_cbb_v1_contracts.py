@@ -76,7 +76,7 @@ class CBBV1ContractTests(unittest.TestCase):
         self.assertEqual(mapped["gate_decision"].status, "allow")
         self.assertEqual(
             mapped["gate_decision"].approved_scope,
-            DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
+            DeliveryScope.INTERNAL_HANDOFF,
         )
 
     def test_stale_reconstruction_narrows_v0_allow(self) -> None:

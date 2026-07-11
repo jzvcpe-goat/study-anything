@@ -8,7 +8,7 @@
     "archive_digest_included": false,
     "claim_boundary": {
       "current_claim": "This metadata-only package can be verified offline against its embedded local public key and deterministic CBB gate.",
-      "maximum_scope": "controlled_customer_handoff",
+      "maximum_scope": "internal_handoff",
       "not_claimed": [
         "production approval",
         "third-party signer identity",
@@ -23,10 +23,10 @@
       ]
     },
     "delivery_trust_receipt": {
-      "approved_scope": "controlled_customer_handoff",
+      "approved_scope": "internal_handoff",
       "claim_boundary": {
-        "current_claim": "The candidate may enter controlled customer handoff under the mapped v0 receipt.",
-        "maximum_scope": "controlled_customer_handoff",
+        "current_claim": "The candidate may enter internal_handoff under the mapped v0 receipt.",
+        "maximum_scope": "internal_handoff",
         "not_claimed": [
           "general model correctness",
           "production deployment approval",
@@ -37,7 +37,7 @@
           "scope beyond the source v0 receipt"
         ]
       },
-      "decision_ref": "cbb-decision:4c6904805d6fcd58ad60256de4ef6b61",
+      "decision_ref": "cbb-decision:9253eb6f61145b82494f8594038b4a21",
       "evidence_bundle_ref": "cbb-evidence:sandbox-run-demo-001",
       "issued_at": "2026-06-28T00:00:00Z",
       "policy_ref": "cbb-policy:failure-contract-demo-001",
@@ -58,7 +58,7 @@
         "canonicalization": "cbb-json-c14n-v1",
         "claim_boundary": {
           "current_claim": "The local signature binds this policy, evidence bundle, qualified reconstruction, and gate decision.",
-          "maximum_scope": "controlled_customer_handoff",
+          "maximum_scope": "internal_handoff",
           "not_claimed": [
             "production approval",
             "third-party signer identity",
@@ -73,21 +73,21 @@
           ]
         },
         "created_at": "2026-06-28T00:00:00Z",
-        "decision_digest_sha256": "44cd4e8da4beb98f56024836cec252eb945cf850f6ac4394c0b705f8b8bb3606",
+        "decision_digest_sha256": "8170038708840673bdca56d2c24841894c16a96baaec65380a089f2bd7ab79a8",
         "evidence_digest_sha256": "e1662b365cfa970ec753a7389a62cac25797381845e86aad3aea6f1e62a42250",
         "expires_at": "2026-09-26T00:00:00Z",
-        "package_digest_sha256": "4022d4166395cb0e9edba376db17811cbd0fbfdb18f8b651cde178f62f2ecffa",
-        "policy_digest_sha256": "1b3994554184f32f9e5372d0c4c5ad6506a2898da82255c05829b5fb8cd0c550",
+        "package_digest_sha256": "2ccaffefc82b48e8d209f37d27d89bfd37b9a407958fbc036a51c22be72c7b4c",
+        "policy_digest_sha256": "0ae390f48af496bcd300f762f0356b263f45ea1aa4ebc0698848ff215a7851b4",
         "provenance_id": "cbb-provenance:cbb-evidence:sandbox-run-demo-001",
-        "receipt_envelope_digest_sha256": "c95d6bd490e17b14bde744508af1bc94bb48ce769be8307d9eed662a4af146e8",
-        "reconstruction_digest_sha256": "d876840612a4ca44990fcd0d82d7c39541525c6d42fe52ef1beada66330da8c5",
-        "replay_nonce": "82b4356d75dc95277e40aaa7616935fe",
+        "receipt_envelope_digest_sha256": "e575bcd362c02fb258673dfa325a259f94599b468497bd5dcc79ba943b75c428",
+        "reconstruction_digest_sha256": "cd904d516c4c27b21f43137c3c70285444d86c71c6992f643d7ade2f9cec056c",
+        "replay_nonce": "50b89e3110098b064e32756f9eba1201",
         "revocation": {
-          "handle": "cbb-revocation:cbb-decision:4c6904805d6fcd58ad60256de4ef6b61",
+          "handle": "cbb-revocation:cbb-decision:9253eb6f61145b82494f8594038b4a21",
           "registry_ref": "revocation-registry.json"
         },
         "schema_version": "cbb.receipt-provenance.v1",
-        "signature": "G5pk5z8W0NHqUT4vDDDhzntT9eOXp9Vd-9NG3oilW7o5iHeDzg73EbHl9xlfMeUtmh9SfUMgEOLsANRNVFHmDg",
+        "signature": "w6mq9b7QY1F0kKM6ZD2vjX6vpa_OckuplNWhmffSEhfhY40a6X3JQHnKjO5poUBbgyX3JmLRc-UD0mY4GVz8Ag",
         "signature_algorithm": "ed25519",
         "signer": {
           "identity_scope": "local_self_asserted",
@@ -194,10 +194,10 @@
       "subject_ref": "artifact:metadata-only-demo-change"
     },
     "gate_decision": {
-      "approved_scope": "controlled_customer_handoff",
+      "approved_scope": "internal_handoff",
       "claim_boundary": {
-        "current_claim": "The deterministic CBB v1 kernel authorizes only controlled_customer_handoff.",
-        "maximum_scope": "controlled_customer_handoff",
+        "current_claim": "The deterministic CBB v1 kernel authorizes only internal_handoff.",
+        "maximum_scope": "internal_handoff",
         "not_claimed": [
           "production approval",
           "portable signed attestation",
@@ -207,7 +207,7 @@
         ]
       },
       "decided_at": "2026-06-28T00:00:00Z",
-      "decision_id": "cbb-decision:4c6904805d6fcd58ad60256de4ef6b61",
+      "decision_id": "cbb-decision:9253eb6f61145b82494f8594038b4a21",
       "evidence_bundle_ref": "cbb-evidence:sandbox-run-demo-001",
       "hard_denies_triggered": [],
       "missing_evidence_types": [],
@@ -239,13 +239,13 @@
       "status": "allow",
       "subject_ref": "artifact:metadata-only-demo-change"
     },
-    "package_id": "cbb-offline-package:cbb-decision:4c6904805d6fcd58ad60256de4ef6b61",
+    "package_id": "cbb-offline-package:cbb-decision:9253eb6f61145b82494f8594038b4a21",
     "private_key_material_included": false,
     "qualified_reconstruction": {
       "active_reconstruction": true,
       "claim_boundary": {
         "current_claim": "The mapped v0 reconstruction qualifies the reviewer for this scope.",
-        "maximum_scope": "controlled_customer_handoff",
+        "maximum_scope": "internal_handoff",
         "not_claimed": [
           "global reviewer qualification",
           "permanent human capability",
@@ -256,7 +256,58 @@
       "evidence_refs": [
         "attention-reconstruction-summary.json"
       ],
+      "human_capability_profile": {
+        "boundary_types": [
+          "critical_failure_path",
+          "rollback_trigger",
+          "residual_risk"
+        ],
+        "counter_evidence_refs": [],
+        "evidence_refs": [
+          "attention-reconstruction-summary.json"
+        ],
+        "human_ref": "reviewer:v0-local-operator",
+        "maximum_scope": "internal_handoff",
+        "observed_at": "2026-06-28T00:00:00Z",
+        "permanent_global_label": false,
+        "profile_id": "human-capability:attention-summary-demo-001",
+        "project_ref": "project:failure-contract-demo-001",
+        "qualified_roles": [
+          "qualified_reviewer"
+        ],
+        "scenario_refs": [
+          "task:dual-loop-demo"
+        ],
+        "status": "active",
+        "valid_until": "2026-09-26T00:00:00Z"
+      },
       "missing_mru_refs": [],
+      "mru_results": [
+        {
+          "boundary_type": "critical_failure_path",
+          "evidence_refs": [
+            "attention-reconstruction-summary.json#mru:mru-failure-path"
+          ],
+          "mru_ref": "mru:mru-failure-path",
+          "status": "passed"
+        },
+        {
+          "boundary_type": "rollback_trigger",
+          "evidence_refs": [
+            "attention-reconstruction-summary.json#mru:mru-rollback-trigger"
+          ],
+          "mru_ref": "mru:mru-rollback-trigger",
+          "status": "passed"
+        },
+        {
+          "boundary_type": "residual_risk",
+          "evidence_refs": [
+            "attention-reconstruction-summary.json#mru:mru-acceptance-boundary"
+          ],
+          "mru_ref": "mru:mru-acceptance-boundary",
+          "status": "passed"
+        }
+      ],
       "observed_at": "2026-06-28T00:00:00Z",
       "passive_attention_only": false,
       "policy_ref": "cbb-policy:failure-contract-demo-001",
@@ -273,11 +324,16 @@
         "raw_source_text_included": false,
         "signed_urls_included": false
       },
-      "qualified_scope": "controlled_customer_handoff",
+      "project_ref": "project:failure-contract-demo-001",
+      "qualified_scope": "internal_handoff",
       "reconstruction_id": "cbb-reconstruction:attention-summary-demo-001",
       "required_mrus_passed": 3,
       "required_mrus_total": 3,
       "reviewer_ref": "reviewer:v0-local-operator",
+      "reviewer_roles": [
+        "qualified_reviewer"
+      ],
+      "scenario_ref": "task:dual-loop-demo",
       "schema_version": "cbb.qualified-reconstruction.v1",
       "status": "passed",
       "valid_until": "2026-09-26T00:00:00Z"
@@ -286,7 +342,7 @@
       "canonicalization": "cbb-json-c14n-v1",
       "claim_boundary": {
         "current_claim": "The local signature binds this policy, evidence bundle, qualified reconstruction, and gate decision.",
-        "maximum_scope": "controlled_customer_handoff",
+        "maximum_scope": "internal_handoff",
         "not_claimed": [
           "production approval",
           "third-party signer identity",
@@ -301,21 +357,21 @@
         ]
       },
       "created_at": "2026-06-28T00:00:00Z",
-      "decision_digest_sha256": "44cd4e8da4beb98f56024836cec252eb945cf850f6ac4394c0b705f8b8bb3606",
+      "decision_digest_sha256": "8170038708840673bdca56d2c24841894c16a96baaec65380a089f2bd7ab79a8",
       "evidence_digest_sha256": "e1662b365cfa970ec753a7389a62cac25797381845e86aad3aea6f1e62a42250",
       "expires_at": "2026-09-26T00:00:00Z",
-      "package_digest_sha256": "4022d4166395cb0e9edba376db17811cbd0fbfdb18f8b651cde178f62f2ecffa",
-      "policy_digest_sha256": "1b3994554184f32f9e5372d0c4c5ad6506a2898da82255c05829b5fb8cd0c550",
+      "package_digest_sha256": "2ccaffefc82b48e8d209f37d27d89bfd37b9a407958fbc036a51c22be72c7b4c",
+      "policy_digest_sha256": "0ae390f48af496bcd300f762f0356b263f45ea1aa4ebc0698848ff215a7851b4",
       "provenance_id": "cbb-provenance:cbb-evidence:sandbox-run-demo-001",
-      "receipt_envelope_digest_sha256": "c95d6bd490e17b14bde744508af1bc94bb48ce769be8307d9eed662a4af146e8",
-      "reconstruction_digest_sha256": "d876840612a4ca44990fcd0d82d7c39541525c6d42fe52ef1beada66330da8c5",
-      "replay_nonce": "82b4356d75dc95277e40aaa7616935fe",
+      "receipt_envelope_digest_sha256": "e575bcd362c02fb258673dfa325a259f94599b468497bd5dcc79ba943b75c428",
+      "reconstruction_digest_sha256": "cd904d516c4c27b21f43137c3c70285444d86c71c6992f643d7ade2f9cec056c",
+      "replay_nonce": "50b89e3110098b064e32756f9eba1201",
       "revocation": {
-        "handle": "cbb-revocation:cbb-decision:4c6904805d6fcd58ad60256de4ef6b61",
+        "handle": "cbb-revocation:cbb-decision:9253eb6f61145b82494f8594038b4a21",
         "registry_ref": "revocation-registry.json"
       },
       "schema_version": "cbb.receipt-provenance.v1",
-      "signature": "G5pk5z8W0NHqUT4vDDDhzntT9eOXp9Vd-9NG3oilW7o5iHeDzg73EbHl9xlfMeUtmh9SfUMgEOLsANRNVFHmDg",
+      "signature": "w6mq9b7QY1F0kKM6ZD2vjX6vpa_OckuplNWhmffSEhfhY40a6X3JQHnKjO5poUBbgyX3JmLRc-UD0mY4GVz8Ag",
       "signature_algorithm": "ed25519",
       "signer": {
         "identity_scope": "local_self_asserted",
@@ -338,7 +394,7 @@
     "trust_policy": {
       "claim_boundary": {
         "current_claim": "The candidate may be evaluated up to the mapped v0 delivery scope only.",
-        "maximum_scope": "controlled_customer_handoff",
+        "maximum_scope": "internal_handoff",
         "not_claimed": [
           "production approval",
           "portable signed attestation",
@@ -353,7 +409,30 @@
         "production_mutation",
         "unbounded_real_user_exposure"
       ],
-      "maximum_scope": "controlled_customer_handoff",
+      "maximum_scope": "internal_handoff",
+      "model_capability_profile": {
+        "counter_evidence_refs": [],
+        "evidence_refs": [
+          "failure-contract.json",
+          "sandbox-receipt.json"
+        ],
+        "known_failure_modes": [
+          "legacy_v0_actor_context_incomplete"
+        ],
+        "maximum_autonomy_scope": "internal_handoff",
+        "model_ref": "model:v0-unspecified-agent",
+        "observed_at": "2026-06-28T00:00:00Z",
+        "profile_id": "model-capability:failure-contract-demo-001",
+        "scenario_refs": [
+          "task:dual-loop-demo"
+        ],
+        "status": "observed",
+        "task_types": [
+          "v0_dual_loop_delivery_chain"
+        ],
+        "valid_until": "2026-09-26T00:00:00Z",
+        "vendor_claims_sufficient": false
+      },
       "policy_id": "cbb-policy:failure-contract-demo-001",
       "privacy": {
         "attention_stream_included": false,
@@ -382,12 +461,35 @@
         {
           "blocking": true,
           "evidence_type": "qualified_reconstruction",
-          "required_for_scope": "controlled_customer_handoff"
+          "required_for_scope": "internal_handoff"
         },
         {
           "blocking": true,
           "evidence_type": "dual_loop_gate",
-          "required_for_scope": "controlled_customer_handoff"
+          "required_for_scope": "internal_handoff"
+        }
+      ],
+      "required_mrus": [
+        {
+          "blocks_promotion": true,
+          "boundary_type": "critical_failure_path",
+          "evidence_kind": "active_reconstruction",
+          "mru_ref": "mru:mru-failure-path",
+          "required_for_scope": "internal_handoff"
+        },
+        {
+          "blocks_promotion": true,
+          "boundary_type": "rollback_trigger",
+          "evidence_kind": "active_reconstruction",
+          "mru_ref": "mru:mru-rollback-trigger",
+          "required_for_scope": "internal_handoff"
+        },
+        {
+          "blocks_promotion": true,
+          "boundary_type": "residual_risk",
+          "evidence_kind": "active_reconstruction",
+          "mru_ref": "mru:mru-acceptance-boundary",
+          "required_for_scope": "internal_handoff"
         }
       ],
       "required_roles": [
@@ -399,6 +501,48 @@
         "production_mutation_allowed": false,
         "real_user_exposure_allowed": false
       },
+      "scenario": {
+        "affected_parties": [],
+        "appeal": {
+          "evidence_type": null,
+          "human_fallback_required": false,
+          "mechanism_ref": null,
+          "required": false
+        },
+        "disclosure": {
+          "evidence_type": null,
+          "human_fallback_required": false,
+          "mechanism_ref": null,
+          "required": false
+        },
+        "impact_classes": [
+          "internal_candidate_review"
+        ],
+        "maximum_scope": "internal_handoff",
+        "model_ref": "model:v0-unspecified-agent",
+        "project_ref": "project:failure-contract-demo-001",
+        "recipient": {
+          "automatic_execution_authority": false,
+          "external": false,
+          "recipient_kind": "internal_operator",
+          "recipient_ref": "recipient:v0-local-operator"
+        },
+        "redress": {
+          "evidence_type": null,
+          "human_fallback_required": false,
+          "mechanism_ref": null,
+          "required": false
+        },
+        "regulated_or_irreversible": false,
+        "risk_owner": {
+          "acceptance_evidence_type": null,
+          "accepted_scope_ceiling": "blocked",
+          "required": false,
+          "risk_owner_ref": null
+        },
+        "scenario_class": "internal_handoff_candidate",
+        "scenario_ref": "task:dual-loop-demo"
+      },
       "scenario_ref": "task:dual-loop-demo",
       "schema_version": "cbb.trust-policy.v1",
       "subject_ref": "artifact:metadata-only-demo-change"
@@ -407,7 +551,7 @@
   "verification_context": {
     "now": "2026-07-10T00:00:00Z",
     "revoked_handles": [
-      "cbb-revocation:cbb-decision:4c6904805d6fcd58ad60256de4ef6b61"
+      "cbb-revocation:cbb-decision:9253eb6f61145b82494f8594038b4a21"
     ]
   }
 }

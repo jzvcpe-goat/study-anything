@@ -1,9 +1,9 @@
 # Operating Model / 工程闭环模型
 
-Cognitive Black Box is not only a product concept. It is also an operating
+Delivery Clearance is not only a protocol concept. It is also an operating
 model for building AI-delivered systems without letting speed outrun trust.
 
-认知黑箱不只是一个产品概念，也是一套工程运行方式：让 AI 可以快速交付，但不能让
+AI 交付放行协议不只是一个协议概念，也是一套工程运行方式：让 AI 可以快速交付，但不能让
 速度越过信任边界。
 
 This model turns the operator-supplied "3 key product development loops" diagram

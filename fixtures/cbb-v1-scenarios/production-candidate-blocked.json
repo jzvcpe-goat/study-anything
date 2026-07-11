@@ -1,0 +1,571 @@
+{
+  "case_id": "production-candidate-blocked",
+  "decision": {
+    "approved_scope": "blocked",
+    "claim_boundary": {
+      "current_claim": "The deterministic CBB v1 kernel does not authorize delivery.",
+      "maximum_scope": "blocked",
+      "not_claimed": [
+        "production approval",
+        "portable signed attestation",
+        "customer outcome guarantee",
+        "general model correctness",
+        "authority beyond the evaluated policy and evidence"
+      ]
+    },
+    "decided_at": "2026-06-28T00:00:00Z",
+    "decision_id": "cbb-decision:c2a621a58ff3e3c260bbef68c44475a2",
+    "evidence_bundle_ref": "cbb-evidence:production-candidate-blocked",
+    "hard_denies_triggered": [],
+    "missing_evidence_types": [
+      "affected_party_protection",
+      "deployment_approval",
+      "domain_review",
+      "security_review"
+    ],
+    "policy_ref": "cbb-policy:production-candidate-blocked",
+    "privacy": {
+      "attention_stream_included": false,
+      "automatic_customer_send_performed": false,
+      "cookies_or_bearer_tokens_included": false,
+      "metadata_only": true,
+      "model_credentials_included": false,
+      "model_prompts_included": false,
+      "production_mutation_performed": false,
+      "raw_customer_payload_included": false,
+      "raw_report_text_included": false,
+      "raw_source_text_included": false,
+      "signed_urls_included": false
+    },
+    "reasons": [
+      "required_evidence_unavailable"
+    ],
+    "reconstruction_ref": "cbb-reconstruction:production-candidate-blocked",
+    "schema_version": "cbb.gate-decision.v1",
+    "source_decision_refs": [
+      "evidence/appeal_path.json",
+      "evidence/disclosure_notice.json",
+      "evidence/dual_loop_gate.json",
+      "evidence/failure_contract.json",
+      "evidence/redress_path.json",
+      "evidence/risk_owner_acceptance.json",
+      "evidence/rollback_replay.json",
+      "evidence/sandbox_receipt.json",
+      "human-reconstruction:production-candidate-blocked",
+      "policy:cbb-policy:production-candidate-blocked"
+    ],
+    "status": "needs_evidence",
+    "subject_ref": "artifact:vibe-coded-app:production-candidate-blocked"
+  },
+  "expected": {
+    "approved_scope": "blocked",
+    "omitted_evidence": [
+      "domain_review",
+      "security_review",
+      "deployment_approval",
+      "affected_party_protection"
+    ],
+    "status": "needs_evidence"
+  },
+  "inputs": {
+    "evidence_bundle": {
+      "bundle_id": "cbb-evidence:production-candidate-blocked",
+      "claim_boundary": {
+        "current_claim": "Evidence is bounded to the production-candidate-blocked fixture only.",
+        "maximum_scope": "production_candidate",
+        "not_claimed": [
+          "production approval",
+          "legal or security certification",
+          "customer outcome guarantee",
+          "general model correctness",
+          "permanent global human or model qualification"
+        ]
+      },
+      "created_at": "2026-06-28T00:00:00Z",
+      "evidence": [
+        {
+          "evidence_id": "evidence:production-candidate-blocked:failure_contract",
+          "evidence_type": "failure_contract",
+          "metadata": {
+            "scenario_ref": "scenario:vibe-coded-app:production-candidate-blocked"
+          },
+          "source_ref": "evidence/failure_contract.json",
+          "source_schema_version": "cbb.scenario-evidence.v1",
+          "status": "passed",
+          "supported_scope": "production_candidate"
+        },
+        {
+          "evidence_id": "evidence:production-candidate-blocked:sandbox_receipt",
+          "evidence_type": "sandbox_receipt",
+          "metadata": {
+            "scenario_ref": "scenario:vibe-coded-app:production-candidate-blocked"
+          },
+          "source_ref": "evidence/sandbox_receipt.json",
+          "source_schema_version": "cbb.scenario-evidence.v1",
+          "status": "passed",
+          "supported_scope": "production_candidate"
+        },
+        {
+          "evidence_id": "evidence:production-candidate-blocked:dual_loop_gate",
+          "evidence_type": "dual_loop_gate",
+          "metadata": {
+            "scenario_ref": "scenario:vibe-coded-app:production-candidate-blocked"
+          },
+          "source_ref": "evidence/dual_loop_gate.json",
+          "source_schema_version": "cbb.scenario-evidence.v1",
+          "status": "passed",
+          "supported_scope": "production_candidate"
+        },
+        {
+          "evidence_id": "evidence:production-candidate-blocked:risk_owner_acceptance",
+          "evidence_type": "risk_owner_acceptance",
+          "metadata": {
+            "scenario_ref": "scenario:vibe-coded-app:production-candidate-blocked"
+          },
+          "source_ref": "evidence/risk_owner_acceptance.json",
+          "source_schema_version": "cbb.scenario-evidence.v1",
+          "status": "passed",
+          "supported_scope": "production_candidate"
+        },
+        {
+          "evidence_id": "evidence:production-candidate-blocked:disclosure_notice",
+          "evidence_type": "disclosure_notice",
+          "metadata": {
+            "scenario_ref": "scenario:vibe-coded-app:production-candidate-blocked"
+          },
+          "source_ref": "evidence/disclosure_notice.json",
+          "source_schema_version": "cbb.scenario-evidence.v1",
+          "status": "passed",
+          "supported_scope": "production_candidate"
+        },
+        {
+          "evidence_id": "evidence:production-candidate-blocked:appeal_path",
+          "evidence_type": "appeal_path",
+          "metadata": {
+            "scenario_ref": "scenario:vibe-coded-app:production-candidate-blocked"
+          },
+          "source_ref": "evidence/appeal_path.json",
+          "source_schema_version": "cbb.scenario-evidence.v1",
+          "status": "passed",
+          "supported_scope": "production_candidate"
+        },
+        {
+          "evidence_id": "evidence:production-candidate-blocked:redress_path",
+          "evidence_type": "redress_path",
+          "metadata": {
+            "scenario_ref": "scenario:vibe-coded-app:production-candidate-blocked"
+          },
+          "source_ref": "evidence/redress_path.json",
+          "source_schema_version": "cbb.scenario-evidence.v1",
+          "status": "passed",
+          "supported_scope": "production_candidate"
+        },
+        {
+          "evidence_id": "evidence:production-candidate-blocked:rollback_replay",
+          "evidence_type": "rollback_replay",
+          "metadata": {
+            "scenario_ref": "scenario:vibe-coded-app:production-candidate-blocked"
+          },
+          "source_ref": "evidence/rollback_replay.json",
+          "source_schema_version": "cbb.scenario-evidence.v1",
+          "status": "passed",
+          "supported_scope": "production_candidate"
+        }
+      ],
+      "maximum_supported_scope": "production_candidate",
+      "policy_ref": "cbb-policy:production-candidate-blocked",
+      "privacy": {
+        "attention_stream_included": false,
+        "automatic_customer_send_performed": false,
+        "cookies_or_bearer_tokens_included": false,
+        "metadata_only": true,
+        "model_credentials_included": false,
+        "model_prompts_included": false,
+        "production_mutation_performed": false,
+        "raw_customer_payload_included": false,
+        "raw_report_text_included": false,
+        "raw_source_text_included": false,
+        "signed_urls_included": false
+      },
+      "schema_version": "cbb.evidence-bundle.v1",
+      "subject_ref": "artifact:vibe-coded-app:production-candidate-blocked"
+    },
+    "qualified_reconstruction": {
+      "active_reconstruction": true,
+      "claim_boundary": {
+        "current_claim": "The reviewer is qualified only for production-candidate-blocked and this time window.",
+        "maximum_scope": "production_candidate",
+        "not_claimed": [
+          "production approval",
+          "legal or security certification",
+          "customer outcome guarantee",
+          "general model correctness",
+          "permanent global human or model qualification"
+        ]
+      },
+      "evidence_refs": [
+        "human-reconstruction:production-candidate-blocked"
+      ],
+      "human_capability_profile": {
+        "boundary_types": [
+          "intent_and_non_goals",
+          "critical_failure_path",
+          "affected_parties_and_recipient",
+          "rollback_trigger",
+          "evidence_weakness_and_limitations",
+          "residual_risk"
+        ],
+        "counter_evidence_refs": [],
+        "evidence_refs": [
+          "human-reconstruction:production-candidate-blocked"
+        ],
+        "human_ref": "reviewer:production-candidate-blocked",
+        "maximum_scope": "production_candidate",
+        "observed_at": "2026-06-28T00:00:00Z",
+        "permanent_global_label": false,
+        "profile_id": "human-capability:production-candidate-blocked",
+        "project_ref": "project:vibe-coded-app",
+        "qualified_roles": [
+          "qualified_reviewer",
+          "technical_reviewer",
+          "operational_reviewer",
+          "domain_reviewer",
+          "security_reviewer",
+          "deployment_operator"
+        ],
+        "scenario_refs": [
+          "scenario:vibe-coded-app:production-candidate-blocked"
+        ],
+        "status": "active",
+        "valid_until": "2026-09-26T00:00:00Z"
+      },
+      "missing_mru_refs": [],
+      "mru_results": [
+        {
+          "boundary_type": "intent_and_non_goals",
+          "evidence_refs": [
+            "reconstruction/mru:production-candidate-blocked:intent_and_non_goals.json"
+          ],
+          "mru_ref": "mru:production-candidate-blocked:intent_and_non_goals",
+          "status": "passed"
+        },
+        {
+          "boundary_type": "critical_failure_path",
+          "evidence_refs": [
+            "reconstruction/mru:production-candidate-blocked:critical_failure_path.json"
+          ],
+          "mru_ref": "mru:production-candidate-blocked:critical_failure_path",
+          "status": "passed"
+        },
+        {
+          "boundary_type": "affected_parties_and_recipient",
+          "evidence_refs": [
+            "reconstruction/mru:production-candidate-blocked:affected_parties_and_recipient.json"
+          ],
+          "mru_ref": "mru:production-candidate-blocked:affected_parties_and_recipient",
+          "status": "passed"
+        },
+        {
+          "boundary_type": "rollback_trigger",
+          "evidence_refs": [
+            "reconstruction/mru:production-candidate-blocked:rollback_trigger.json"
+          ],
+          "mru_ref": "mru:production-candidate-blocked:rollback_trigger",
+          "status": "passed"
+        },
+        {
+          "boundary_type": "evidence_weakness_and_limitations",
+          "evidence_refs": [
+            "reconstruction/mru:production-candidate-blocked:evidence_weakness_and_limitations.json"
+          ],
+          "mru_ref": "mru:production-candidate-blocked:evidence_weakness_and_limitations",
+          "status": "passed"
+        },
+        {
+          "boundary_type": "residual_risk",
+          "evidence_refs": [
+            "reconstruction/mru:production-candidate-blocked:residual_risk.json"
+          ],
+          "mru_ref": "mru:production-candidate-blocked:residual_risk",
+          "status": "passed"
+        }
+      ],
+      "observed_at": "2026-06-28T00:00:00Z",
+      "passive_attention_only": false,
+      "policy_ref": "cbb-policy:production-candidate-blocked",
+      "privacy": {
+        "attention_stream_included": false,
+        "automatic_customer_send_performed": false,
+        "cookies_or_bearer_tokens_included": false,
+        "metadata_only": true,
+        "model_credentials_included": false,
+        "model_prompts_included": false,
+        "production_mutation_performed": false,
+        "raw_customer_payload_included": false,
+        "raw_report_text_included": false,
+        "raw_source_text_included": false,
+        "signed_urls_included": false
+      },
+      "project_ref": "project:vibe-coded-app",
+      "qualified_scope": "production_candidate",
+      "reconstruction_id": "cbb-reconstruction:production-candidate-blocked",
+      "required_mrus_passed": 6,
+      "required_mrus_total": 6,
+      "reviewer_ref": "reviewer:production-candidate-blocked",
+      "reviewer_roles": [
+        "qualified_reviewer",
+        "technical_reviewer",
+        "operational_reviewer",
+        "domain_reviewer",
+        "security_reviewer",
+        "deployment_operator"
+      ],
+      "scenario_ref": "scenario:vibe-coded-app:production-candidate-blocked",
+      "schema_version": "cbb.qualified-reconstruction.v1",
+      "status": "passed",
+      "valid_until": "2026-09-26T00:00:00Z"
+    },
+    "trust_policy": {
+      "claim_boundary": {
+        "current_claim": "This fixture evaluates only the production-candidate-blocked scenario boundary.",
+        "maximum_scope": "production_candidate",
+        "not_claimed": [
+          "production approval",
+          "legal or security certification",
+          "customer outcome guarantee",
+          "general model correctness",
+          "permanent global human or model qualification"
+        ]
+      },
+      "created_at": "2026-06-28T00:00:00Z",
+      "hard_denies": [
+        "ai_review_only_trust",
+        "irreversible_external_effect",
+        "production_mutation",
+        "unbounded_real_user_exposure"
+      ],
+      "maximum_scope": "production_candidate",
+      "model_capability_profile": {
+        "counter_evidence_refs": [],
+        "evidence_refs": [
+          "model-replay:production-candidate-blocked"
+        ],
+        "known_failure_modes": [
+          "generated_tests_may_miss_cross_boundary_effects",
+          "model_self_review_is_not_final_authority"
+        ],
+        "maximum_autonomy_scope": "production_candidate",
+        "model_ref": "model:fixture-agent-v1",
+        "observed_at": "2026-06-28T00:00:00Z",
+        "profile_id": "model-capability:production-candidate-blocked",
+        "scenario_refs": [
+          "scenario:vibe-coded-app:production-candidate-blocked"
+        ],
+        "status": "observed",
+        "task_types": [
+          "vibe_coded_web_application"
+        ],
+        "valid_until": "2026-09-26T00:00:00Z",
+        "vendor_claims_sufficient": false
+      },
+      "policy_id": "cbb-policy:production-candidate-blocked",
+      "privacy": {
+        "attention_stream_included": false,
+        "automatic_customer_send_performed": false,
+        "cookies_or_bearer_tokens_included": false,
+        "metadata_only": true,
+        "model_credentials_included": false,
+        "model_prompts_included": false,
+        "production_mutation_performed": false,
+        "raw_customer_payload_included": false,
+        "raw_report_text_included": false,
+        "raw_source_text_included": false,
+        "signed_urls_included": false
+      },
+      "required_evidence": [
+        {
+          "blocking": true,
+          "evidence_type": "failure_contract",
+          "required_for_scope": "production_candidate"
+        },
+        {
+          "blocking": true,
+          "evidence_type": "sandbox_receipt",
+          "required_for_scope": "production_candidate"
+        },
+        {
+          "blocking": true,
+          "evidence_type": "qualified_reconstruction",
+          "required_for_scope": "production_candidate"
+        },
+        {
+          "blocking": true,
+          "evidence_type": "dual_loop_gate",
+          "required_for_scope": "production_candidate"
+        },
+        {
+          "blocking": true,
+          "evidence_type": "risk_owner_acceptance",
+          "required_for_scope": "production_candidate"
+        },
+        {
+          "blocking": true,
+          "evidence_type": "disclosure_notice",
+          "required_for_scope": "production_candidate"
+        },
+        {
+          "blocking": true,
+          "evidence_type": "appeal_path",
+          "required_for_scope": "production_candidate"
+        },
+        {
+          "blocking": true,
+          "evidence_type": "redress_path",
+          "required_for_scope": "production_candidate"
+        },
+        {
+          "blocking": true,
+          "evidence_type": "rollback_replay",
+          "required_for_scope": "production_candidate"
+        },
+        {
+          "blocking": true,
+          "evidence_type": "domain_review",
+          "required_for_scope": "production_candidate"
+        },
+        {
+          "blocking": true,
+          "evidence_type": "security_review",
+          "required_for_scope": "production_candidate"
+        },
+        {
+          "blocking": true,
+          "evidence_type": "deployment_approval",
+          "required_for_scope": "production_candidate"
+        },
+        {
+          "blocking": true,
+          "evidence_type": "affected_party_protection",
+          "required_for_scope": "production_candidate"
+        }
+      ],
+      "required_mrus": [
+        {
+          "blocks_promotion": true,
+          "boundary_type": "intent_and_non_goals",
+          "evidence_kind": "active_reconstruction",
+          "mru_ref": "mru:production-candidate-blocked:intent_and_non_goals",
+          "required_for_scope": "production_candidate"
+        },
+        {
+          "blocks_promotion": true,
+          "boundary_type": "critical_failure_path",
+          "evidence_kind": "active_reconstruction",
+          "mru_ref": "mru:production-candidate-blocked:critical_failure_path",
+          "required_for_scope": "production_candidate"
+        },
+        {
+          "blocks_promotion": true,
+          "boundary_type": "affected_parties_and_recipient",
+          "evidence_kind": "active_reconstruction",
+          "mru_ref": "mru:production-candidate-blocked:affected_parties_and_recipient",
+          "required_for_scope": "production_candidate"
+        },
+        {
+          "blocks_promotion": true,
+          "boundary_type": "rollback_trigger",
+          "evidence_kind": "active_reconstruction",
+          "mru_ref": "mru:production-candidate-blocked:rollback_trigger",
+          "required_for_scope": "production_candidate"
+        },
+        {
+          "blocks_promotion": true,
+          "boundary_type": "evidence_weakness_and_limitations",
+          "evidence_kind": "active_reconstruction",
+          "mru_ref": "mru:production-candidate-blocked:evidence_weakness_and_limitations",
+          "required_for_scope": "production_candidate"
+        },
+        {
+          "blocks_promotion": true,
+          "boundary_type": "residual_risk",
+          "evidence_kind": "active_reconstruction",
+          "mru_ref": "mru:production-candidate-blocked:residual_risk",
+          "required_for_scope": "production_candidate"
+        }
+      ],
+      "required_roles": [
+        "qualified_reviewer",
+        "technical_reviewer",
+        "operational_reviewer",
+        "domain_reviewer",
+        "security_reviewer",
+        "deployment_operator",
+        "risk_owner"
+      ],
+      "risk_budget": {
+        "irreversible_external_effects_allowed": false,
+        "level": "medium",
+        "production_mutation_allowed": false,
+        "real_user_exposure_allowed": false
+      },
+      "scenario": {
+        "affected_parties": [
+          {
+            "appeal_required": true,
+            "disclosure_required": true,
+            "impact_classes": [
+              "service_access",
+              "decision_or_experience"
+            ],
+            "party_kind": "scenario_user",
+            "party_ref": "affected-party:production-candidate-blocked",
+            "redress_required": true
+          }
+        ],
+        "appeal": {
+          "evidence_type": "appeal_path",
+          "human_fallback_required": true,
+          "mechanism_ref": "mechanism:appeal_path",
+          "required": true
+        },
+        "disclosure": {
+          "evidence_type": "disclosure_notice",
+          "human_fallback_required": false,
+          "mechanism_ref": "mechanism:disclosure_notice",
+          "required": true
+        },
+        "impact_classes": [
+          "real_delivery_candidate"
+        ],
+        "maximum_scope": "production_candidate",
+        "model_ref": "model:fixture-agent-v1",
+        "project_ref": "project:vibe-coded-app",
+        "recipient": {
+          "automatic_execution_authority": false,
+          "external": true,
+          "recipient_kind": "production_operator",
+          "recipient_ref": "recipient:production-candidate-blocked"
+        },
+        "redress": {
+          "evidence_type": "redress_path",
+          "human_fallback_required": true,
+          "mechanism_ref": "mechanism:redress_path",
+          "required": true
+        },
+        "regulated_or_irreversible": false,
+        "risk_owner": {
+          "acceptance_evidence_type": "risk_owner_acceptance",
+          "accepted_scope_ceiling": "production_candidate",
+          "required": true,
+          "risk_owner_ref": "risk-owner:production-candidate-blocked"
+        },
+        "scenario_class": "production_candidate",
+        "scenario_ref": "scenario:vibe-coded-app:production-candidate-blocked"
+      },
+      "scenario_ref": "scenario:vibe-coded-app:production-candidate-blocked",
+      "schema_version": "cbb.trust-policy.v1",
+      "subject_ref": "artifact:vibe-coded-app:production-candidate-blocked"
+    }
+  },
+  "policy_digest_sha256": "67ccdef08bb22b445319f35a3b31c7286ce7e14774157ba9afc2eced721ef718"
+}

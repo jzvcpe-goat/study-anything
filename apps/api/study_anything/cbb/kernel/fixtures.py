@@ -13,14 +13,25 @@ from study_anything.cbb.protocol.models import (
     EVIDENCE_BUNDLE_SCHEMA_VERSION,
     QUALIFIED_RECONSTRUCTION_SCHEMA_VERSION,
     TRUST_POLICY_SCHEMA_VERSION,
+    AffectedPartyContractV1,
     ClaimBoundaryV1,
+    DeliveryScenarioClass,
+    DeliveryScenarioV1,
     DeliveryScope,
     EvidenceBundleV1,
     EvidenceItemV1,
     EvidenceRequirementV1,
+    HumanCapabilityProfileV1,
+    MinimumReconstructableUnitV1,
+    ModelCapabilityProfileV1,
+    MruResultV1,
     PrivacyBoundaryV1,
     QualifiedReconstructionV1,
+    RecipientContractV1,
+    ReconstructionBoundaryType,
+    RiskOwnerContractV1,
     RiskBudgetV1,
+    SafeguardRequirementV1,
     TrustPolicyV1,
 )
 
@@ -57,11 +68,100 @@ def _claim(scope: DeliveryScope, text: str) -> ClaimBoundaryV1:
 
 
 def passing_inputs() -> tuple[TrustPolicyV1, EvidenceBundleV1, QualifiedReconstructionV1]:
+    scenario_ref = "scenario:controlled-customer-handoff"
+    project_ref = "project:kernel-demo"
+    model_ref = "model:kernel-fixture"
+    mru_requirements = [
+        MinimumReconstructableUnitV1(
+            mru_ref="mru:critical-failure-path",
+            boundary_type=ReconstructionBoundaryType.CRITICAL_FAILURE_PATH,
+            required_for_scope=DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
+            evidence_kind="active_reconstruction",
+            blocks_promotion=True,
+        ),
+        MinimumReconstructableUnitV1(
+            mru_ref="mru:rollback-trigger",
+            boundary_type=ReconstructionBoundaryType.ROLLBACK_TRIGGER,
+            required_for_scope=DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
+            evidence_kind="active_reconstruction",
+            blocks_promotion=True,
+        ),
+        MinimumReconstructableUnitV1(
+            mru_ref="mru:affected-party-boundary",
+            boundary_type=ReconstructionBoundaryType.AFFECTED_PARTIES_AND_RECIPIENT,
+            required_for_scope=DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
+            evidence_kind="active_reconstruction",
+            blocks_promotion=True,
+        ),
+    ]
     policy = TrustPolicyV1(
         schema_version=TRUST_POLICY_SCHEMA_VERSION,
         policy_id="cbb-policy:kernel-demo-001",
         subject_ref="artifact:kernel-demo-001",
-        scenario_ref="scenario:controlled-customer-handoff",
+        scenario_ref=scenario_ref,
+        scenario=DeliveryScenarioV1(
+            scenario_ref=scenario_ref,
+            scenario_class=DeliveryScenarioClass.PAID_CUSTOMER_CANDIDATE,
+            project_ref=project_ref,
+            model_ref=model_ref,
+            maximum_scope=DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
+            recipient=RecipientContractV1(
+                recipient_ref="recipient:customer-operator",
+                recipient_kind="paid_customer_operator",
+                external=True,
+                automatic_execution_authority=False,
+            ),
+            risk_owner=RiskOwnerContractV1(
+                required=True,
+                risk_owner_ref="risk-owner:kernel-fixture",
+                accepted_scope_ceiling=DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
+                acceptance_evidence_type="risk_owner_acceptance",
+            ),
+            affected_parties=[
+                AffectedPartyContractV1(
+                    party_ref="affected-party:customer-user",
+                    party_kind="customer_user",
+                    impact_classes=["service_behavior"],
+                    disclosure_required=True,
+                    appeal_required=True,
+                    redress_required=True,
+                )
+            ],
+            disclosure=SafeguardRequirementV1(
+                required=True,
+                evidence_type="disclosure_notice",
+                mechanism_ref="mechanism:customer-disclosure",
+                human_fallback_required=False,
+            ),
+            appeal=SafeguardRequirementV1(
+                required=True,
+                evidence_type="appeal_path",
+                mechanism_ref="mechanism:human-appeal",
+                human_fallback_required=True,
+            ),
+            redress=SafeguardRequirementV1(
+                required=True,
+                evidence_type="redress_path",
+                mechanism_ref="mechanism:customer-redress",
+                human_fallback_required=True,
+            ),
+            impact_classes=["customer_visible_candidate"],
+            regulated_or_irreversible=False,
+        ),
+        model_capability_profile=ModelCapabilityProfileV1(
+            profile_id="model-capability:kernel-fixture",
+            model_ref=model_ref,
+            scenario_refs=[scenario_ref],
+            task_types=["metadata_only_customer_handoff"],
+            status="observed",
+            maximum_autonomy_scope=DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
+            evidence_refs=["model-replay-evidence.json"],
+            counter_evidence_refs=[],
+            known_failure_modes=["cross_file_effects_may_be_missed"],
+            observed_at="2026-06-28T00:00:00Z",
+            valid_until="2026-09-26T00:00:00Z",
+            vendor_claims_sufficient=False,
+        ),
         maximum_scope=DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
         hard_denies=[
             "ai_review_only_trust",
@@ -96,8 +196,34 @@ def passing_inputs() -> tuple[TrustPolicyV1, EvidenceBundleV1, QualifiedReconstr
                 required_for_scope=DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
                 blocking=True,
             ),
+            EvidenceRequirementV1(
+                evidence_type="risk_owner_acceptance",
+                required_for_scope=DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
+                blocking=True,
+            ),
+            EvidenceRequirementV1(
+                evidence_type="disclosure_notice",
+                required_for_scope=DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
+                blocking=True,
+            ),
+            EvidenceRequirementV1(
+                evidence_type="appeal_path",
+                required_for_scope=DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
+                blocking=True,
+            ),
+            EvidenceRequirementV1(
+                evidence_type="redress_path",
+                required_for_scope=DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
+                blocking=True,
+            ),
         ],
-        required_roles=["qualified_reviewer"],
+        required_roles=[
+            "qualified_reviewer",
+            "technical_reviewer",
+            "operational_reviewer",
+            "risk_owner",
+        ],
+        required_mrus=mru_requirements,
         claim_boundary=_claim(
             DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
             "This policy evaluates a controlled customer handoff candidate only.",
@@ -138,6 +264,42 @@ def passing_inputs() -> tuple[TrustPolicyV1, EvidenceBundleV1, QualifiedReconstr
                 supported_scope=DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
                 metadata={"both_loops_required": True},
             ),
+            EvidenceItemV1(
+                evidence_id="evidence:risk-owner-001",
+                evidence_type="risk_owner_acceptance",
+                status="passed",
+                source_schema_version="risk-owner-scope-v1",
+                source_ref="risk-owner-scope.json",
+                supported_scope=DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
+                metadata={"scoped_acceptance": True},
+            ),
+            EvidenceItemV1(
+                evidence_id="evidence:disclosure-001",
+                evidence_type="disclosure_notice",
+                status="passed",
+                source_schema_version="cbb.safeguard-evidence.v1",
+                source_ref="disclosure-notice.json",
+                supported_scope=DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
+                metadata={"recipient_scope_bound": True},
+            ),
+            EvidenceItemV1(
+                evidence_id="evidence:appeal-001",
+                evidence_type="appeal_path",
+                status="passed",
+                source_schema_version="cbb.safeguard-evidence.v1",
+                source_ref="appeal-path.json",
+                supported_scope=DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
+                metadata={"human_fallback": True},
+            ),
+            EvidenceItemV1(
+                evidence_id="evidence:redress-001",
+                evidence_type="redress_path",
+                status="passed",
+                source_schema_version="cbb.safeguard-evidence.v1",
+                source_ref="redress-path.json",
+                supported_scope=DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
+                metadata={"bounded_redress": True},
+            ),
         ],
         maximum_supported_scope=DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
         claim_boundary=_claim(
@@ -152,13 +314,48 @@ def passing_inputs() -> tuple[TrustPolicyV1, EvidenceBundleV1, QualifiedReconstr
         reconstruction_id="cbb-reconstruction:kernel-demo-001",
         policy_ref=policy.policy_id,
         reviewer_ref="reviewer:kernel-fixture",
+        scenario_ref=scenario_ref,
+        project_ref=project_ref,
+        reviewer_roles=[
+            "qualified_reviewer",
+            "technical_reviewer",
+            "operational_reviewer",
+        ],
         status="passed",
         qualified_scope=DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
         active_reconstruction=True,
         passive_attention_only=False,
-        required_mrus_total=2,
-        required_mrus_passed=2,
+        required_mrus_total=len(mru_requirements),
+        required_mrus_passed=len(mru_requirements),
         missing_mru_refs=[],
+        mru_results=[
+            MruResultV1(
+                mru_ref=requirement.mru_ref,
+                boundary_type=requirement.boundary_type,
+                status="passed",
+                evidence_refs=[f"reconstruction-evidence.json#{requirement.mru_ref}"],
+            )
+            for requirement in mru_requirements
+        ],
+        human_capability_profile=HumanCapabilityProfileV1(
+            profile_id="human-capability:kernel-fixture",
+            human_ref="reviewer:kernel-fixture",
+            project_ref=project_ref,
+            scenario_refs=[scenario_ref],
+            qualified_roles=[
+                "qualified_reviewer",
+                "technical_reviewer",
+                "operational_reviewer",
+            ],
+            boundary_types=[item.boundary_type for item in mru_requirements],
+            status="active",
+            maximum_scope=DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
+            evidence_refs=["attention-reconstruction-summary.json"],
+            counter_evidence_refs=[],
+            observed_at="2026-06-28T00:00:00Z",
+            valid_until="2026-09-26T00:00:00Z",
+            permanent_global_label=False,
+        ),
         evidence_refs=["attention-reconstruction-summary.json"],
         observed_at="2026-06-28T00:00:00Z",
         valid_until="2026-09-26T00:00:00Z",
@@ -213,7 +410,19 @@ def build_kernel_cases() -> dict[str, dict[str, Any]]:
             "qualified_scope": "blocked",
             "active_reconstruction": False,
             "required_mrus_passed": 0,
-            "missing_mru_refs": ["mru:rollback-boundary"],
+            "missing_mru_refs": sorted(
+                item["mru_ref"]
+                for item in stale["qualified_reconstruction"]["mru_results"]
+            ),
+            "valid_until": "2026-06-27T00:00:00Z",
+        }
+    )
+    for item in stale["qualified_reconstruction"]["mru_results"]:
+        item.update({"status": "stale", "evidence_refs": []})
+    stale["qualified_reconstruction"]["human_capability_profile"].update(
+        {
+            "status": "stale",
+            "maximum_scope": "blocked",
             "valid_until": "2026-06-27T00:00:00Z",
         }
     )

@@ -35,6 +35,7 @@
         "blocked",
         "personal_local",
         "sandbox_only",
+        "public_demo",
         "internal_handoff",
         "controlled_customer_handoff",
         "limited_beta",

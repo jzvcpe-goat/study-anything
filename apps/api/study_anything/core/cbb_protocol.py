@@ -472,12 +472,22 @@ def _evaluate_legacy_inputs_with_v1_kernel(
         QUALIFIED_RECONSTRUCTION_SCHEMA_VERSION,
         TRUST_POLICY_SCHEMA_VERSION,
         ClaimBoundaryV1,
+        DeliveryScenarioClass,
+        DeliveryScenarioV1,
         DeliveryScope,
         EvidenceBundleV1,
         EvidenceItemV1,
         EvidenceRequirementV1,
+        HumanCapabilityProfileV1,
+        MinimumReconstructableUnitV1,
+        ModelCapabilityProfileV1,
+        MruResultV1,
         QualifiedReconstructionV1,
+        RecipientContractV1,
+        ReconstructionBoundaryType,
+        RiskOwnerContractV1,
         RiskBudgetV1,
+        SafeguardRequirementV1,
         TrustPolicyV1,
     )
 
@@ -486,12 +496,61 @@ def _evaluate_legacy_inputs_with_v1_kernel(
         or "artifact:unknown-candidate"
     )
     privacy = _v1_privacy_boundary()
+    scenario_ref = "scenario:legacy-internal-handoff"
+    project_ref = "project:legacy-cbb-protocol"
+    model_ref = "model:legacy-unspecified-agent"
+    mru_ref = "mru:legacy-claim-boundary"
+    optional_safeguard = SafeguardRequirementV1(
+        required=False,
+        evidence_type=None,
+        mechanism_ref=None,
+        human_fallback_required=False,
+    )
     policy = TrustPolicyV1(
         schema_version=TRUST_POLICY_SCHEMA_VERSION,
         policy_id="cbb-policy:legacy-gate-compatibility",
         subject_ref=candidate_ref,
-        scenario_ref="scenario:legacy-controlled-customer-handoff",
-        maximum_scope=DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
+        scenario_ref=scenario_ref,
+        scenario=DeliveryScenarioV1(
+            scenario_ref=scenario_ref,
+            scenario_class=DeliveryScenarioClass.INTERNAL_HANDOFF_CANDIDATE,
+            project_ref=project_ref,
+            model_ref=model_ref,
+            maximum_scope=DeliveryScope.INTERNAL_HANDOFF,
+            recipient=RecipientContractV1(
+                recipient_ref="recipient:legacy-local-operator",
+                recipient_kind="internal_operator",
+                external=False,
+                automatic_execution_authority=False,
+            ),
+            risk_owner=RiskOwnerContractV1(
+                required=True,
+                risk_owner_ref="risk-owner:legacy-local-operator",
+                accepted_scope_ceiling=DeliveryScope.INTERNAL_HANDOFF,
+                acceptance_evidence_type="risk_owner_scope",
+            ),
+            affected_parties=[],
+            disclosure=optional_safeguard,
+            appeal=optional_safeguard,
+            redress=optional_safeguard,
+            impact_classes=["legacy_internal_candidate_review"],
+            regulated_or_irreversible=False,
+        ),
+        model_capability_profile=ModelCapabilityProfileV1(
+            profile_id="model-capability:legacy-cbb-protocol",
+            model_ref=model_ref,
+            scenario_refs=[scenario_ref],
+            task_types=["legacy_cbb_gate_compatibility"],
+            status="observed",
+            maximum_autonomy_scope=DeliveryScope.INTERNAL_HANDOFF,
+            evidence_refs=["trust-root.json"],
+            counter_evidence_refs=[],
+            known_failure_modes=["legacy_actor_context_incomplete"],
+            observed_at=dual_loop.DETERMINISTIC_TIMESTAMP,
+            valid_until="2026-09-26T00:00:00Z",
+            vendor_claims_sufficient=False,
+        ),
+        maximum_scope=DeliveryScope.INTERNAL_HANDOFF,
         hard_denies=[
             "ai_review_only_trust",
             "irreversible_external_effect",
@@ -507,29 +566,38 @@ def _evaluate_legacy_inputs_with_v1_kernel(
         required_evidence=[
             EvidenceRequirementV1(
                 evidence_type="claim_boundary",
-                required_for_scope=DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
+                required_for_scope=DeliveryScope.INTERNAL_HANDOFF,
                 blocking=True,
             ),
             EvidenceRequirementV1(
                 evidence_type="trust_root",
-                required_for_scope=DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
+                required_for_scope=DeliveryScope.INTERNAL_HANDOFF,
                 blocking=True,
             ),
             EvidenceRequirementV1(
                 evidence_type="qualified_reconstruction",
-                required_for_scope=DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
+                required_for_scope=DeliveryScope.INTERNAL_HANDOFF,
                 blocking=True,
             ),
             EvidenceRequirementV1(
                 evidence_type="risk_owner_scope",
-                required_for_scope=DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
+                required_for_scope=DeliveryScope.INTERNAL_HANDOFF,
                 blocking=True,
             ),
         ],
-        required_roles=["qualified_reviewer"],
+        required_roles=["qualified_reviewer", "risk_owner"],
+        required_mrus=[
+            MinimumReconstructableUnitV1(
+                mru_ref=mru_ref,
+                boundary_type=ReconstructionBoundaryType.RESIDUAL_RISK,
+                required_for_scope=DeliveryScope.INTERNAL_HANDOFF,
+                evidence_kind="active_reconstruction",
+                blocks_promotion=True,
+            )
+        ],
         claim_boundary=ClaimBoundaryV1(
             current_claim="The compatibility policy evaluates controlled handoff only.",
-            maximum_scope=DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
+            maximum_scope=DeliveryScope.INTERNAL_HANDOFF,
             not_claimed=[
                 "production approval",
                 "portable signed attestation",
@@ -555,7 +623,7 @@ def _evaluate_legacy_inputs_with_v1_kernel(
             source_schema_version=source_schema_version,
             source_ref=source_ref,
             supported_scope=(
-                DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF
+                DeliveryScope.INTERNAL_HANDOFF
                 if valid
                 else DeliveryScope.BLOCKED
             ),
@@ -603,10 +671,10 @@ def _evaluate_legacy_inputs_with_v1_kernel(
         subject_ref=policy.subject_ref,
         policy_ref=policy.policy_id,
         evidence=evidence,
-        maximum_supported_scope=DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
+        maximum_supported_scope=DeliveryScope.INTERNAL_HANDOFF,
         claim_boundary=ClaimBoundaryV1(
             current_claim="Legacy metadata receipts support controlled handoff only.",
-            maximum_scope=DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
+            maximum_scope=DeliveryScope.INTERNAL_HANDOFF,
             not_claimed=[
                 "production approval",
                 "portable signed attestation",
@@ -621,6 +689,9 @@ def _evaluate_legacy_inputs_with_v1_kernel(
         reconstruction_id="cbb-reconstruction:legacy-gate-compatibility",
         policy_ref=policy.policy_id,
         reviewer_ref="reviewer:legacy-local-operator",
+        scenario_ref=scenario_ref,
+        project_ref=project_ref,
+        reviewer_roles=["qualified_reviewer"],
         status=(
             "passed"
             if reviewer_valid
@@ -629,7 +700,7 @@ def _evaluate_legacy_inputs_with_v1_kernel(
             else "missing"
         ),
         qualified_scope=(
-            DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF
+            DeliveryScope.INTERNAL_HANDOFF
             if reviewer_valid
             else DeliveryScope.BLOCKED
         ),
@@ -637,7 +708,48 @@ def _evaluate_legacy_inputs_with_v1_kernel(
         passive_attention_only=False,
         required_mrus_total=1,
         required_mrus_passed=1 if reviewer_valid else 0,
-        missing_mru_refs=[] if reviewer_valid else ["mru:legacy-claim-boundary"],
+        missing_mru_refs=[] if reviewer_valid else [mru_ref],
+        mru_results=[
+            MruResultV1(
+                mru_ref=mru_ref,
+                boundary_type=ReconstructionBoundaryType.RESIDUAL_RISK,
+                status=(
+                    "passed"
+                    if reviewer_valid
+                    else "failed"
+                    if reviewer_reconstruction is not None
+                    else "missing"
+                ),
+                evidence_refs=(
+                    ["reviewer-reconstruction-receipt.json#mru"]
+                    if reviewer_valid
+                    else []
+                ),
+            )
+        ],
+        human_capability_profile=HumanCapabilityProfileV1(
+            profile_id="human-capability:legacy-local-operator",
+            human_ref="reviewer:legacy-local-operator",
+            project_ref=project_ref,
+            scenario_refs=[scenario_ref],
+            qualified_roles=["qualified_reviewer"],
+            boundary_types=[ReconstructionBoundaryType.RESIDUAL_RISK],
+            status="active" if reviewer_valid else "insufficient",
+            maximum_scope=(
+                DeliveryScope.INTERNAL_HANDOFF
+                if reviewer_valid
+                else DeliveryScope.BLOCKED
+            ),
+            evidence_refs=(
+                ["reviewer-reconstruction-receipt.json"]
+                if reviewer_reconstruction is not None
+                else []
+            ),
+            counter_evidence_refs=[],
+            observed_at=dual_loop.DETERMINISTIC_TIMESTAMP,
+            valid_until="2026-09-26T00:00:00Z",
+            permanent_global_label=False,
+        ),
         evidence_refs=(
             ["reviewer-reconstruction-receipt.json"]
             if reviewer_reconstruction is not None
@@ -652,7 +764,7 @@ def _evaluate_legacy_inputs_with_v1_kernel(
                 else "The legacy reviewer is not qualified for this handoff."
             ),
             maximum_scope=(
-                DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF
+                DeliveryScope.INTERNAL_HANDOFF
                 if reviewer_valid
                 else DeliveryScope.BLOCKED
             ),

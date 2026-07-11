@@ -1,7 +1,8 @@
 # Security Model
 
-Cognitive Black Box is a local-first trust harness for AI-generated
-deliverables. Its security model is intentionally narrow: the repository
+AI Delivery Clearance Protocol is the final open protocol before an AI-generated
+deliverable crosses a real-world responsibility boundary. This repository is its
+local-first deterministic reference harness. Its security model is intentionally narrow: it
 orchestrates metadata-only contracts, validation, audit events, local exports,
 Dual-Loop gates, delivery trust receipts, and customer handoff packages;
 user-owned Agents keep real model credentials, tools, browser access, and
@@ -9,14 +10,14 @@ external data access outside the repository database.
 
 ## Trust Boundaries
 
-- Study Anything stores learning sessions, source references, mastery state,
+- The Study Anything adapter stores learning sessions, source references, mastery state,
   aggregate PMF metrics, plugin metadata, and local configuration needed to run
   the API.
 - Dual-Loop, Delivery Trust, and CustomerHandoffPackage artifacts store
   structured refs, hashes, risk summaries, gate results, claim boundaries,
   rollback refs, and package manifests only.
-- Study Anything must not store real model API keys, bearer tokens, cookies,
-  signed URLs, or platform Agent credentials.
+- Neither the Delivery Clearance core nor the Study Anything adapter may store real model API keys,
+  bearer tokens, cookies, signed URLs, or platform Agent credentials.
 - AI eval evidence may support a delivery decision, but it must not become the
   sole trust authority.
 - Full manual re-review is not the default gate; active human reconstruction of
@@ -138,6 +139,8 @@ python3 scripts/verify_external_security_audit_pack.py --check
 python3 scripts/generate_python_supply_chain.py --check
 python3 scripts/verify_cbb_v1_provenance.py --check
 python3 scripts/verify_cbb_v1_tamper_cases.py --check
+python3 scripts/verify_cbb_v1_scenarios.py --check
+python3 scripts/verify_cbb_v1_qualification.py --check
 ```
 
 CBB v1 local provenance uses optional Ed25519 signing. Private keys remain local,
@@ -146,6 +149,12 @@ The embedded public key is self-asserted: a valid signature proves integrity and
 possession, not external identity, audit completion, or production authority.
 Expiry, supplied-registry revocation, and optional nonce consumption are verified
 offline; none is presented as a globally synchronized revocation service.
+
+Scenario and capability records are pseudonymous metadata contracts. They do not
+prove a real person's professional credential, affected-party consent, appeal
+outcome, redress completion, or production authority. Limited-beta and paid-customer
+fixtures are handoff candidates only: the default risk budget still forbids real-user
+exposure, production mutation, automatic sending, and irreversible effects.
 
 The external audit kit lives under `security/audit/` and is distributed as
 `platform/generated/study-anything-external-security-audit-pack.zip`. The pack

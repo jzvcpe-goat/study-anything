@@ -7,7 +7,7 @@
       "reconstruction_status": "passed",
       "scope_expanded": false,
       "source_scope": "controlled_customer_handoff",
-      "target_scope": "controlled_customer_handoff"
+      "target_scope": "internal_handoff"
     },
     {
       "canonical_bytes_stable": true,
@@ -35,7 +35,7 @@
     "existing_script_names_preserved": true,
     "v0_outputs_mutated": false
   },
-  "equal_scope_case_count": 2,
+  "equal_scope_case_count": 1,
   "expanded_scope_case_count": 0,
   "mapping_chain": [
     "failure-contract-v1 -> cbb.trust-policy.v1",
@@ -45,7 +45,7 @@
     "policy + evidence + reconstruction -> cbb.gate-decision.v1",
     "delivery-trust-receipt-v1 + gate decision -> cbb.delivery-trust-receipt.v1"
   ],
-  "narrowed_scope_case_count": 1,
+  "narrowed_scope_case_count": 2,
   "negative_checks": {
     "explicit_scope_expansion": "scope expansion rejected",
     "missing_reconstruction_never_promotes": true,

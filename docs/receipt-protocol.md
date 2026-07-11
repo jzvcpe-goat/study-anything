@@ -1,6 +1,6 @@
 # Receipt Protocol
 
-The Cognitive Black Box protocol uses receipts as structured evidence. A
+AI Delivery Clearance Protocol uses receipts as structured evidence. A
 receipt is not a log dump and not a hidden reasoning trace. It is a compact,
 metadata-only contract that states what was checked, what failed, what passed,
 and what is still outside scope.

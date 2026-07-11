@@ -21,7 +21,7 @@
       ]
     },
     "decided_at": "2026-06-28T00:00:00Z",
-    "decision_id": "cbb-decision:4c6904805d6fcd58ad60256de4ef6b61",
+    "decision_id": "cbb-decision:9253eb6f61145b82494f8594038b4a21",
     "evidence_bundle_ref": "cbb-evidence:sandbox-run-demo-001",
     "hard_denies_triggered": [
       "production_mutation"

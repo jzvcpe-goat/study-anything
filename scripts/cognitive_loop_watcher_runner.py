@@ -502,7 +502,7 @@ def render_runner_html(report: Mapping[str, Any]) -> str:
 <body>
   <main>
     <header>
-      <h1>Cognitive Black Box Protocol</h1>
+      <h1>Delivery Clearance</h1>
       <p class="summary">Watcher Runner Lite: bounded local polling that writes metadata-only project events.</p>
     </header>
     <section>

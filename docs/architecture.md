@@ -2,16 +2,20 @@
 
 ## Architectural Identity
 
-Cognitive Black Box is protocol-first. The protocol defines portable trust contracts;
+Delivery Clearance is protocol-first. The protocol defines portable clearance contracts;
 this repository supplies one deterministic local reference harness; adapters connect
 existing learning, coding, review, and Agent workflows.
 
-认知黑箱以协议为第一层。协议定义可携带的信任契约；本仓库提供一个确定性、本地优先
+AI Delivery Clearance Protocol is the final protocol before an AI delivery crosses a
+real-world responsibility boundary. Architecture is therefore organized around responsibility
+transfer, not around a standalone learning UI or plugin ecosystem.
+
+Delivery Clearance 以协议为第一层。协议定义可携带的放行契约；本仓库提供一个确定性、本地优先
 参考实现；适配器负责连接学习、编码、审查和 Agent 工作流。
 
 ```text
-CBB Protocol
-  -> CBB Reference Harness
+AI Delivery Clearance Protocol
+  -> Delivery Clearance Reference Harness
       -> Adapters and evidence collectors
           -> Study Anything
           -> Cognitive Loop workflows
@@ -76,7 +80,7 @@ reference objects include `failure-contract-v1` and `sandbox-receipt-v1`.
 This loop proves that a reviewer can reconstruct the minimum critical boundary for
 the delivery scenario. Existing compatibility objects are named
 `attention-reconstruction-trace-v1` and `attention-reconstruction-summary-v1`.
-Protocol v1 will normalize them under a qualified-reconstruction contract while
+Protocol v1 normalizes them under a qualified-reconstruction contract while
 preserving v0 compatibility.
 
 ### Dual-Loop Gate
@@ -96,12 +100,12 @@ failure contract + sandbox receipt
   -> customer-handoff-package-v1
 ```
 
-The current CBB protocol-core flow additionally produces claim-boundary, trust-root,
+The current Protocol v1 compatibility flow additionally produces claim-boundary, trust-root,
 reviewer-reconstruction, risk-owner-scope, delivery-decision, receipt-chain, and
 self-intake receipts.
 
-Protocol v1 will converge these parallel receipt families into a minimal canonical
-set with explicit compatibility mappings. It will not delete working v0 artifacts
+Protocol v1 converges these parallel receipt families into a minimal canonical set
+with explicit compatibility mappings. It does not delete working v0 artifacts
 before a migration verifier and replacement path exist.
 
 ## Adaptive Evolution Layer
@@ -116,7 +120,7 @@ The adaptive layer may use:
 - bounded replay and canary evaluation.
 
 It may propose a Trust Recipe or policy change. It cannot apply a hard-boundary
-change or issue its own final approval. CBB changes to CBB require an evolution
+change or issue its own final approval. Delivery Clearance changes to its own protocol require an evolution
 receipt, deterministic conformance checks, rollback, and an independent acceptance
 path appropriate to the affected scope.
 
@@ -149,9 +153,12 @@ where the scenario requires them.
 
 | Concern | Current implementation |
 |---|---|
-| Protocol models | `apps/api/study_anything/core/cbb_protocol.py` |
+| Canonical protocol models | `apps/api/study_anything/cbb/protocol/` |
+| v0 compatibility adapter | `apps/api/study_anything/core/cbb_protocol.py` |
 | Protocol CLI | `scripts/cbb_protocol_cli.py` |
-| Deterministic gate | `scripts/cbb_gate.py` and CBB verifiers |
+| Deterministic Trust Kernel | `apps/api/study_anything/cbb/kernel/` |
+| Local provenance | `apps/api/study_anything/cbb/provenance/` |
+| Scenario and qualification fixtures | `apps/api/study_anything/cbb/scenarios/` |
 | Dual Loop | `apps/api/study_anything/core/dual_loop.py` |
 | Delivery receipt | `apps/api/study_anything/core/delivery_trust.py` |
 | Customer package | `apps/api/study_anything/core/customer_handoff.py` |
@@ -169,8 +176,14 @@ artifact migration, deprecation evidence, and a no-old-import gate.
 
 ### Implemented
 
-- deterministic metadata-only Dual Loop and CBB receipt contracts;
-- local gate and negative fixtures;
+- deterministic metadata-only Dual Loop and Protocol v1 receipt contracts;
+- six strict canonical Protocol v1 objects plus scope-narrowing v0 adapters;
+- model-free Trust Kernel, local gate, hard denies, and negative fixtures;
+- local Ed25519 provenance, tamper, expiry, replay, and revocation checks;
+- scenario-scoped recipients, risk owners, affected parties, safeguards, MRUs,
+  and challengeable human/model capability profiles;
+- deterministic scenario ladder from personal local use through blocked production
+  and regulated/irreversible candidates;
 - Delivery Trust Receipt and Customer Handoff Package;
 - receipt-chain and repository self-intake evidence;
 - local API, Skill, platform-Agent, Docker, and static HTML adapters;
@@ -178,12 +191,9 @@ artifact migration, deprecation evidence, and a no-old-import gate.
 
 ### Planned For Protocol v1
 
-- canonical Trust Policy, Evidence Bundle, Qualified Reconstruction, Gate Decision,
-  Delivery Trust Receipt, Outcome Receipt, and Evolution Receipt schemas;
-- signed local provenance and tamper verification;
-- scenario, recipient, affected-party, reviewer, and risk-owner policies;
 - expiry, revocation, trust degradation, and incident feedback;
 - isolated Agentic evidence discovery and quarantined trust memory;
+- Outcome Receipt and Evolution Receipt extensions inside the canonical ceiling;
 - vendor-neutral conformance fixtures and governance.
 
 ### Explicitly Not Claimed
@@ -205,13 +215,14 @@ None is the protocol's source of truth.
 ## Next Architecture Work
 
 The ordered implementation and acceptance matrix are maintained in
-[CBB Protocol v1 Development Plan](cbb-protocol-v1-development-plan.md). The project
+[Protocol v1 Development Plan](cbb-protocol-v1-development-plan.md). The project
 does not prioritize a new frontend, plugin family, learning experience, or hosted
 service until the protocol-core convergence, provenance, outcome, and runtime
 isolation gates are in place.
 
-The provenance layer is now local and explicit: Ed25519 signatures bind canonical
+The provenance layer is local and explicit: Ed25519 signatures bind canonical
 policy, evidence, qualified reconstruction, and deterministic decision objects.
 It remains separate from the Trust Kernel and proves local key possession rather
-than external signer identity. Outcome degradation and Agentic runtime isolation
-remain later milestones.
+than external signer identity. Scenario and qualification policy is also implemented
+without creating another core receipt family. Outcome degradation and Agentic runtime
+isolation remain the next milestones.

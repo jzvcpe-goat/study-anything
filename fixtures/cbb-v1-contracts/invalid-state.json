@@ -7,7 +7,7 @@
     "active_reconstruction": true,
     "claim_boundary": {
       "current_claim": "The mapped v0 reconstruction qualifies the reviewer for this scope.",
-      "maximum_scope": "controlled_customer_handoff",
+      "maximum_scope": "internal_handoff",
       "not_claimed": [
         "global reviewer qualification",
         "permanent human capability",
@@ -18,7 +18,58 @@
     "evidence_refs": [
       "attention-reconstruction-summary.json"
     ],
+    "human_capability_profile": {
+      "boundary_types": [
+        "critical_failure_path",
+        "rollback_trigger",
+        "residual_risk"
+      ],
+      "counter_evidence_refs": [],
+      "evidence_refs": [
+        "attention-reconstruction-summary.json"
+      ],
+      "human_ref": "reviewer:v0-local-operator",
+      "maximum_scope": "internal_handoff",
+      "observed_at": "2026-06-28T00:00:00Z",
+      "permanent_global_label": false,
+      "profile_id": "human-capability:attention-summary-demo-001",
+      "project_ref": "project:failure-contract-demo-001",
+      "qualified_roles": [
+        "qualified_reviewer"
+      ],
+      "scenario_refs": [
+        "task:dual-loop-demo"
+      ],
+      "status": "active",
+      "valid_until": "2026-09-26T00:00:00Z"
+    },
     "missing_mru_refs": [],
+    "mru_results": [
+      {
+        "boundary_type": "critical_failure_path",
+        "evidence_refs": [
+          "attention-reconstruction-summary.json#mru:mru-failure-path"
+        ],
+        "mru_ref": "mru:mru-failure-path",
+        "status": "passed"
+      },
+      {
+        "boundary_type": "rollback_trigger",
+        "evidence_refs": [
+          "attention-reconstruction-summary.json#mru:mru-rollback-trigger"
+        ],
+        "mru_ref": "mru:mru-rollback-trigger",
+        "status": "passed"
+      },
+      {
+        "boundary_type": "residual_risk",
+        "evidence_refs": [
+          "attention-reconstruction-summary.json#mru:mru-acceptance-boundary"
+        ],
+        "mru_ref": "mru:mru-acceptance-boundary",
+        "status": "passed"
+      }
+    ],
     "observed_at": "2026-06-28T00:00:00Z",
     "passive_attention_only": false,
     "policy_ref": "cbb-policy:failure-contract-demo-001",
@@ -35,11 +86,16 @@
       "raw_source_text_included": false,
       "signed_urls_included": false
     },
-    "qualified_scope": "controlled_customer_handoff",
+    "project_ref": "project:failure-contract-demo-001",
+    "qualified_scope": "internal_handoff",
     "reconstruction_id": "cbb-reconstruction:attention-summary-demo-001",
     "required_mrus_passed": 4,
     "required_mrus_total": 3,
     "reviewer_ref": "reviewer:v0-local-operator",
+    "reviewer_roles": [
+      "qualified_reviewer"
+    ],
+    "scenario_ref": "task:dual-loop-demo",
     "schema_version": "cbb.qualified-reconstruction.v1",
     "status": "passed",
     "valid_until": "2026-09-26T00:00:00Z"

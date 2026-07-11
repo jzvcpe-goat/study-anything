@@ -106,7 +106,9 @@ def _tamper_package(
 ) -> dict[str, Any]:
     payload = deepcopy(base)
     if case_id == "tampered-policy":
-        payload["trust_policy"]["scenario_ref"] = "scenario:tampered"
+        payload["trust_policy"]["scenario"]["recipient"]["recipient_ref"] = (
+            "recipient:tampered"
+        )
     elif case_id == "tampered-evidence":
         payload["evidence_bundle"]["evidence"][0]["metadata"]["tampered"] = True
     elif case_id == "tampered-reconstruction":

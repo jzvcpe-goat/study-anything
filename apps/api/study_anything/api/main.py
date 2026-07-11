@@ -471,7 +471,7 @@ def create_app() -> FastAPI:
     api_security = load_api_security_config(os.environ)
     runtime_agent_endpoint_policy = load_agent_endpoint_policy(os.environ)
     agent_registry.endpoint_policy = runtime_agent_endpoint_policy
-    app = FastAPI(title="Cognitive Black Box Protocol: Study Anything Adapter", version=__version__)
+    app = FastAPI(title="Delivery Clearance: Study Anything Adapter", version=__version__)
     app.state.api_security = api_security
     app.state.agent_endpoint_policy = runtime_agent_endpoint_policy
     if api_security.cors_origins:

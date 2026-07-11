@@ -101,14 +101,52 @@ def _required_evidence_state(
 
 def _role_state(
     policy: TrustPolicyV1,
+    evidence_by_type: dict[str, EvidenceItemV1],
     reconstruction: QualifiedReconstructionV1,
 ) -> list[str]:
     missing_roles: list[str] = []
     for role in policy.required_roles:
         if role == QUALIFIED_REVIEWER_ROLE and reconstruction.status == "passed":
             continue
+        if role == "risk_owner":
+            evidence_type = policy.scenario.risk_owner.acceptance_evidence_type
+            evidence = evidence_by_type.get(evidence_type or "")
+            if evidence is not None and evidence.status == "passed":
+                continue
+        if reconstruction.status == "passed" and role in reconstruction.reviewer_roles:
+            continue
         missing_roles.append(f"role:{role}")
     return sorted(set(missing_roles))
+
+
+def _qualification_state(
+    policy: TrustPolicyV1,
+    reconstruction: QualifiedReconstructionV1,
+) -> tuple[list[str], list[str], list[str]]:
+    integrity: list[str] = []
+    missing: list[str] = []
+    failed: list[str] = []
+    if reconstruction.scenario_ref != policy.scenario_ref:
+        integrity.append("reconstruction_scenario_ref_mismatch")
+    if reconstruction.project_ref != policy.scenario.project_ref:
+        integrity.append("reconstruction_project_ref_mismatch")
+    profile = reconstruction.human_capability_profile
+    if policy.scenario_ref not in profile.scenario_refs:
+        integrity.append("human_capability_scenario_mismatch")
+    if profile.project_ref != policy.scenario.project_ref:
+        integrity.append("human_capability_project_mismatch")
+
+    results = {result.mru_ref: result for result in reconstruction.mru_results}
+    for requirement in policy.required_mrus:
+        result = results.get(requirement.mru_ref)
+        if result is None or result.status in {"missing", "stale"}:
+            missing.append(requirement.mru_ref)
+            continue
+        if result.boundary_type != requirement.boundary_type:
+            integrity.append(f"mru_boundary_mismatch:{requirement.mru_ref}")
+        elif result.status != "passed":
+            failed.append(requirement.mru_ref)
+    return sorted(set(integrity)), sorted(set(missing)), sorted(set(failed))
 
 
 def _source_refs(
@@ -155,7 +193,12 @@ def evaluate_gate(
         evidence_by_type,
         reconstruction,
     )
-    missing.extend(_role_state(policy, reconstruction))
+    qualification_integrity, qualification_missing, qualification_failed = (
+        _qualification_state(policy, reconstruction)
+    )
+    missing.extend(_role_state(policy, evidence_by_type, reconstruction))
+    missing.extend(qualification_missing)
+    failed.extend(qualification_failed)
     missing = sorted(set(missing))
 
     integrity_reasons: list[str] = []
@@ -165,6 +208,7 @@ def evaluate_gate(
         integrity_reasons.append("evidence_policy_ref_mismatch")
     if reconstruction.policy_ref != policy.policy_id:
         integrity_reasons.append("reconstruction_policy_ref_mismatch")
+    integrity_reasons.extend(qualification_integrity)
     integrity_reasons.extend(f"duplicate_evidence_type:{kind}" for kind in duplicate_types)
     integrity_reasons.extend(f"unknown_hard_deny_signal:{kind}" for kind in unknown_denies)
 

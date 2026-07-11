@@ -1,52 +1,62 @@
-# Cognitive Black Box Protocol / 认知黑箱协议
+# Delivery Clearance
 
-**An open, local-first receipt protocol and reference harness for scoped AI delivery trust.**
+## AI Delivery Clearance Protocol / AI 交付放行协议
 
-**面向 AI 交付信任收据的开放协议与本地优先参考实现。**
+**未经放行，不得交付。**
 
-Cognitive Black Box Protocol, or CBB Protocol, defines the evidence an AI-generated
-deliverable must carry before it may move into a higher delivery scope. It does not
-prove that AI is always correct. It proves only that a specific candidate passed a
-specific policy with bounded failure evidence, qualified human reconstruction, a
-deterministic propagation gate, and an explicit claim boundary.
+**Delivery Clearance does not prove that AI is always correct. It proves why this
+delivery may move forward, to whom, for what purpose, within what limits, and under
+whose responsibility.**
 
-认知黑箱协议定义了 AI 生成交付物进入更高交付层级前必须携带的证据。它不证明 AI
-永远正确，只证明某个候选交付物在明确范围内通过了可控失败、合格的人类边界重构、
-确定性传播门和带声明边界的收据。
+**AI 交付放行协议不证明 AI 永远正确；它证明这次交付为什么可以继续向前、可以交给谁、
+可以用于什么、受到哪些限制，以及由谁承担责任。**
 
-> AI delivery is not trusted because it looks correct. It is trusted only within the
-> scope proved by its receipts.
->
-> AI 交付不是因为“看起来对”而可信，只在收据证明的范围内获得信任。
+Delivery Clearance is an open, local-first protocol and reference harness for the
+last decision before an AI-generated deliverable crosses a real-world responsibility
+boundary. It requires controlled-failure evidence, qualified human reconstruction,
+a deterministic clearance gate, explicit responsibility, and a claim-bounded receipt.
 
-## Protocol, Harness, Adapters
+Delivery Clearance 是 AI 交付跨越现实责任边界前的最后一道开放协议与本地优先参考实现。
+它要求可控失败证据、合格的人类边界重构、确定性放行门、明确的责任归属和受声明边界约束
+的收据。
+
+The protocol governs every responsibility transfer, not every model thought. Humans
+do not reread the entire output by default. They handle only unresolved boundary
+deltas, novel context, residual risk, and scope changes that deterministic evidence
+cannot close.
+
+## Protocol, Reference Harness, Adapters
 
 This repository contains three different things. They must not be confused:
 
-1. **CBB Protocol** defines portable contracts, evidence classes, gates, receipts,
+1. **AI Delivery Clearance Protocol** defines portable contracts, evidence classes,
+   clearance gates, receipts,
    conformance rules, and claim boundaries.
-2. **CBB Reference Harness** is this repository's deterministic, local-first
-   implementation of those contracts.
+2. **Delivery Clearance Reference Harness** is this repository's deterministic,
+   local-first implementation. Existing `cbb.*` schemas and CBB module names remain
+   compatibility identifiers.
 3. **Adapters** connect existing workflows to the protocol. Study Anything is the Human
    Reconstruction / Learning Adapter. Cognitive Loop is an internal evidence and evolution
    workflow, not the product name.
 
 本仓库同时包含协议、参考实现和适配器，但三者不是同一个概念：
 
-1. **CBB Protocol** 定义可携带契约、证据类型、门控、收据、一致性规则和声明边界。
-2. **CBB Reference Harness** 是本仓库的确定性、本地优先参考实现。
+1. **AI 交付放行协议**定义可携带契约、证据类型、放行门、收据、一致性规则和声明边界。
+2. **Delivery Clearance Reference Harness** 是本仓库的确定性、本地优先参考实现；
+   `cbb.*` schema 和 CBB 模块名仅作为兼容标识继续存在。
 3. **Adapters** 把现有工作流接入协议。Study Anything 是 Human Reconstruction / Learning
    Adapter；Cognitive Loop 是内部证据与演进工作流，不再是产品名称。
 
-The repository and Python distribution retain the historical `study-anything` name
-for compatibility. That identifier does not define the current product position.
+The repository and Python distribution retain the historical `study-anything` name,
+and Protocol v1 retains the `cbb.*` namespace, for compatibility. Neither identifier
+defines the public product position.
 
 仓库名和 Python 分发名暂时保留历史标识 `study-anything` 以维持兼容，但它不再定义项目定位。
 
 ## Trust Contract
 
 ```text
-Scoped Delivery Trust =
+Delivery Clearance =
   Controlled Failure Evidence
   + Qualified Human Reconstruction
   + Deterministic Propagation Gate
@@ -69,7 +79,7 @@ The protocol rejects two common shortcuts:
 AI candidate
   -> Controlled Failure Environment
   -> Qualified Human Reconstruction
-  -> Dual-Loop Propagation Gate
+  -> Dual-Loop Clearance Gate
   -> Delivery Trust Receipt
   -> Customer Handoff Package
   -> Outcome Receipt and trust update
@@ -96,9 +106,15 @@ The current `main` line includes deterministic, metadata-only implementations fo
 - attention reconstruction traces and summaries;
 - Dual-Loop gate receipts;
 - Delivery Trust Receipts and Customer Handoff Packages;
-- CBB protocol contracts, deterministic gates, receipt chains, and self-intake;
+- Protocol v1 `cbb.*` compatibility contracts, deterministic gates, receipt chains,
+  and self-intake;
 - a canonical v1 Trust Kernel with hard-deny, evidence-state, scope, and static
   runtime-isolation verifiers;
+- local Ed25519 provenance, tamper, expiry, replay, and revocation verification;
+- scenario-scoped recipients, risk owners, affected parties, safeguards, Minimum
+  Reconstructable Units, and challengeable human/model capability profiles;
+- deterministic vibe-coding fixtures from personal-local use through blocked
+  production and regulated/irreversible candidates;
 - delivery-class, scenario, external feedback, and controlled handoff evidence;
 - local API, Skill, platform-Agent, Docker, and static HTML artifact adapters;
 - local release, security, adoption, and external-audit preparation evidence.
@@ -141,6 +157,8 @@ From a prepared checkout:
 .venv/bin/python scripts/verify_cbb_receipt_chain.py --check
 .venv/bin/python scripts/verify_cbb_self_intake.py --check
 .venv/bin/python scripts/verify_cbb_delivery_harness.py --check
+.venv/bin/python scripts/verify_cbb_v1_scenarios.py --check
+.venv/bin/python scripts/verify_cbb_v1_qualification.py --check
 ./scripts/release_check.sh --cbb-protocol-only
 ```
 
@@ -201,9 +219,10 @@ not an autonomous release decision.
 - [Architecture](docs/architecture.md)
 - [Product positioning](docs/product-positioning.md)
 - [Naming and compatibility](docs/naming-and-compatibility.md)
-- [CBB Protocol v1 development plan](docs/cbb-protocol-v1-development-plan.md)
-- [CBB Protocol v1 deterministic Trust Kernel](docs/cbb-protocol-v1-kernel.md)
-- [CBB Protocol v1 local provenance](docs/cbb-protocol-v1-provenance.md)
+- [Protocol v1 development plan](docs/cbb-protocol-v1-development-plan.md)
+- [Protocol v1 deterministic Trust Kernel](docs/cbb-protocol-v1-kernel.md)
+- [Protocol v1 local provenance](docs/cbb-protocol-v1-provenance.md)
+- [Protocol v1 scenarios and qualification](docs/cbb-protocol-v1-scenarios-and-qualification.md)
 - [Roadmap](docs/roadmap.md)
 - [Delivery Trust Receipt](docs/delivery-trust-receipt.md)
 - [Customer Handoff Package](docs/customer-handoff-package.md)

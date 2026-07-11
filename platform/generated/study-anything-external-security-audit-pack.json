@@ -12,10 +12,10 @@
     "open_high_findings_allowed": 0
   },
   "archive": {
-    "bytes": 175054,
+    "bytes": 224454,
     "path": "platform/generated/study-anything-external-security-audit-pack.zip",
     "root": "study-anything-external-security-audit-pack",
-    "sha256": "6224ba6f35e9502aa602dd0357cd4af3912ef227178062c2508f6be7b8e3cbbd"
+    "sha256": "5bf3c71d42fd82137e242aacd7c9ac3484b0aea0e980f13b1d346d9d902e720b"
   },
   "claim_boundary": {
     "current_claim": "The repository is packaged and ready for an independent security audit at a pinned commit.",
@@ -47,11 +47,11 @@
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/security/audit/audit-plan.json",
-      "bytes": 9221,
+      "bytes": 10107,
       "path": "security/audit/audit-plan.json",
       "purpose": "Machine-readable scope, methods, acceptance, and independence rules.",
       "role": "audit_plan",
-      "sha256": "f705fa8295faa2cac67fdc7ace2b0384aedfe9e580e2bc5203a30e839f6a2162"
+      "sha256": "f0f3bda3c2b74868a06231e038c8a56cb6156374015bde0626f6f4f3a8c661c7"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/security/audit/threat-model.md",
@@ -111,11 +111,11 @@
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/security.md",
-      "bytes": 9509,
+      "bytes": 10194,
       "path": "docs/security.md",
       "purpose": "Local-first security and privacy boundary.",
       "role": "security_doc",
-      "sha256": "7afcc923ad3ecfd81dd75f6e771728adf008c739bb614d0c332d05afc4df3111"
+      "sha256": "aeb19e47546e37fcdeea2a923faae639ca2504344412b22ec8b743ad14cc687f"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/security-baseline.md",
@@ -143,11 +143,11 @@
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/commercial-readiness.md",
-      "bytes": 15838,
+      "bytes": 15840,
       "path": "docs/commercial-readiness.md",
       "purpose": "Hosted commercial readiness and non-claims.",
       "role": "readiness_doc",
-      "sha256": "31748f22f3c5be025e7eeba0e2fd2d3e502b0bf049baa37cfc826e0b7eb747ae"
+      "sha256": "4ccce6c2a9655ab985ffc465f18b8afe0b9cc32aab26c3c8d49b68706ab91c65"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/dual-loop-mvp.md",
@@ -159,19 +159,19 @@
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/trust-model.md",
-      "bytes": 7141,
+      "bytes": 8546,
       "path": "docs/trust-model.md",
       "purpose": "Delivery trust and AI-only review rejection model.",
       "role": "trust_doc",
-      "sha256": "6f51e90a6bc55ed0fa08aa38b3416fd5adffbf6f9ed4ad9ccc4bc1381b7df5af"
+      "sha256": "5a1b37a17f6c0a33ae9d20db79c0730352066838bd8ef0ed206901823244148c"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/protocol.md",
-      "bytes": 6723,
+      "bytes": 7606,
       "path": "docs/protocol.md",
-      "purpose": "CBB protocol boundary, verifier surface, and non-claims.",
+      "purpose": "AI Delivery Clearance Protocol boundary, verifier surface, and non-claims.",
       "role": "protocol_doc",
-      "sha256": "45e49a4a191e6d3e520ae19b89f9677f06eda8bedcca4748ae84e825adac2d42"
+      "sha256": "088ed767179e46b89789132f2492fde066b3f4f057038c46c04f6d7382a2d9d5"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/cbb-protocol-v1-contracts.md",
@@ -196,6 +196,14 @@
       "purpose": "Local Ed25519 provenance, expiry, replay, revocation, and claim boundaries.",
       "role": "protocol_doc",
       "sha256": "85113830f96dd7521633b7933a93ea494b5e74727cb4bcd344571d239c38faf7"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/docs/cbb-protocol-v1-scenarios-and-qualification.md",
+      "bytes": 4565,
+      "path": "docs/cbb-protocol-v1-scenarios-and-qualification.md",
+      "purpose": "Scenario, affected-party, MRU, and scoped capability policy.",
+      "role": "protocol_doc",
+      "sha256": "ffa919c4e5f19a9f6273407faf17ce16718362e477e4c293ed6fb5125b1e22e3"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/release-checklist.md",
@@ -238,12 +246,20 @@
       "sha256": "98eb9e24535e26ba093125835dd2b8cca2365730e5fee6f230a4cd72b7489b07"
     },
     {
+      "archive_path": "study-anything-external-security-audit-pack/docs/quality-audits/phase-35-delivery-clearance-scenarios-and-positioning.md",
+      "bytes": 9573,
+      "path": "docs/quality-audits/phase-35-delivery-clearance-scenarios-and-positioning.md",
+      "purpose": "Delivery Clearance positioning, scenario, and qualification Contract-First audit.",
+      "role": "quality_audit",
+      "sha256": "33f34072c98d8d25acea5a4d3d02e29e71d4a80152c9c1d04fee14d65b7017f1"
+    },
+    {
       "archive_path": "study-anything-external-security-audit-pack/platform/generated/study-anything-python-supply-chain.json",
       "bytes": 2213,
       "path": "platform/generated/study-anything-python-supply-chain.json",
       "purpose": "Lock, hash export, and SBOM receipt.",
       "role": "generated_evidence",
-      "sha256": "4a8e23926ae9fef6d55e73a3eb3392a616d559d4412f8358f2a639509fe6c098"
+      "sha256": "74d1cb9a59326991a1e8a718126ded85702830dd64dea23597c0ece5390ba8cc"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/platform/generated/study-anything-python-sbom.cdx.json",
@@ -283,23 +299,23 @@
       "path": "platform/generated/study-anything-cbb-v1-contracts.json",
       "purpose": "Canonical CBB Protocol v1 contract verification receipt.",
       "role": "generated_evidence",
-      "sha256": "a966f880d32e11487864f73cae34a369607887cf39afa00fa427d2029f4485bd"
+      "sha256": "84c6c4234ddd66416c5a71d23edd7d7476fea1ef0b182f102a306553c38444ad"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/platform/generated/study-anything-cbb-v0-compatibility.json",
-      "bytes": 2364,
+      "bytes": 2353,
       "path": "platform/generated/study-anything-cbb-v0-compatibility.json",
       "purpose": "Non-expanding v0 compatibility verification receipt.",
       "role": "generated_evidence",
-      "sha256": "857690875b04fcaf776711d437b18dcc387d39986a401623b3f0cf564a71ddf7"
+      "sha256": "092640669f6c9334771cc502ca368600b0ed69a8f7df3b729cd883bc6a28dad2"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/platform/generated/study-anything-cbb-v1-kernel.json",
-      "bytes": 2509,
+      "bytes": 2689,
       "path": "platform/generated/study-anything-cbb-v1-kernel.json",
       "purpose": "Deterministic CBB Protocol v1 Trust Kernel verification receipt.",
       "role": "generated_evidence",
-      "sha256": "17ad039bb1d7222daaa784c17993c228ab83c90abbadbed212dd44e505941ac0"
+      "sha256": "3c98763efd4d1f3af9c2667021e4109af86b710e5a650f3cbd629dc49efbd591"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/platform/generated/study-anything-cbb-runtime-isolation.json",
@@ -326,68 +342,84 @@
       "sha256": "2402d08a6b4d1dcae8989edc6374e1ba7638fa247180f077fa7e753b02b5b334"
     },
     {
+      "archive_path": "study-anything-external-security-audit-pack/platform/generated/study-anything-cbb-v1-scenarios.json",
+      "bytes": 5764,
+      "path": "platform/generated/study-anything-cbb-v1-scenarios.json",
+      "purpose": "Deterministic scenario and scope decision receipt.",
+      "role": "generated_evidence",
+      "sha256": "840e735f273b0beb43795a9d993c0e970ff1c931864a6bf7222336dfea9de60f"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/platform/generated/study-anything-cbb-v1-qualification.json",
+      "bytes": 5425,
+      "path": "platform/generated/study-anything-cbb-v1-qualification.json",
+      "purpose": "Scoped MRU and human/model qualification receipt.",
+      "role": "generated_evidence",
+      "sha256": "4dc6af31f725553f43a9544c5937cd807c6c78e39820d37cd9ee68889794b068"
+    },
+    {
       "archive_path": "study-anything-external-security-audit-pack/platform/schemas/cbb/cbb.trust-policy.v1.schema.json",
-      "bytes": 6925,
+      "bytes": 18115,
       "path": "platform/schemas/cbb/cbb.trust-policy.v1.schema.json",
       "purpose": "Canonical trust policy schema.",
       "role": "protocol_schema",
-      "sha256": "1a350deb26295423c1898a95f7ae412c5546594a1282ed4fdf88eddb189b6191"
+      "sha256": "1e88dda6c1428f2ab00f30c9c4a65e7ceb52803cd8ee5ceb5d5f4f4f93f411b5"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/platform/schemas/cbb/cbb.evidence-bundle.v1.schema.json",
-      "bytes": 6294,
+      "bytes": 6317,
       "path": "platform/schemas/cbb/cbb.evidence-bundle.v1.schema.json",
       "purpose": "Canonical evidence bundle schema.",
       "role": "protocol_schema",
-      "sha256": "d3b4edc9cdd21a410df65a7af48c74e9172cc899a459edcaaecc9ede9764674c"
+      "sha256": "44b9c685e46f69b8bdaeee096339b5cab0a53cd6c502f71b92a998d5e68a4afd"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/platform/schemas/cbb/cbb.qualified-reconstruction.v1.schema.json",
-      "bytes": 6057,
+      "bytes": 10932,
       "path": "platform/schemas/cbb/cbb.qualified-reconstruction.v1.schema.json",
       "purpose": "Canonical qualified reconstruction schema.",
       "role": "protocol_schema",
-      "sha256": "68dd36122a54afeeb1d719d3244bca51913a83a367a59c3ee2fc71fd91122c61"
+      "sha256": "3041541579fba7b2536e5563030888f4f732a560cb6fccd498d8eaed7093dc50"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/platform/schemas/cbb/cbb.gate-decision.v1.schema.json",
-      "bytes": 5877,
+      "bytes": 5900,
       "path": "platform/schemas/cbb/cbb.gate-decision.v1.schema.json",
       "purpose": "Canonical gate decision schema.",
       "role": "protocol_schema",
-      "sha256": "13be92f228e526fa275b2de14cb066100cc3404c8a20ee511976d25eb3b7181a"
+      "sha256": "70abce2fb84f335243905793b04be6bcb6306b1610d599ff33b6ffa9263d942f"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/platform/schemas/cbb/cbb.delivery-trust-receipt.v1.schema.json",
-      "bytes": 12497,
+      "bytes": 12520,
       "path": "platform/schemas/cbb/cbb.delivery-trust-receipt.v1.schema.json",
       "purpose": "Canonical delivery trust receipt schema.",
       "role": "protocol_schema",
-      "sha256": "eba9c58e0c5b706f5b1bb008570fe1f253f02525911f0a2b9ac093cbf5c3cb4c"
+      "sha256": "e221bc6309210fc2932fd4f6744aac66ef023b18f53f650dfd6c7960a19e2265"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/platform/schemas/cbb/cbb.receipt-provenance.v1.schema.json",
-      "bytes": 7415,
+      "bytes": 7438,
       "path": "platform/schemas/cbb/cbb.receipt-provenance.v1.schema.json",
       "purpose": "Canonical unsigned-development and local-signing provenance schema.",
       "role": "protocol_schema",
-      "sha256": "2d39dc9352c8debb9513a9cb01d36befa02a8d4486ceb84fcb20b2c86f7cc2fc"
+      "sha256": "771a2385d7d3146011be370dc22b8335e0c63d28cf85f1b0438f6ef181adf8c9"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-contracts/pass.json",
-      "bytes": 26977,
+      "bytes": 31579,
       "path": "fixtures/cbb-v1-contracts/pass.json",
       "purpose": "Canonical passing compatibility fixture.",
       "role": "protocol_fixture",
-      "sha256": "da9406ee7528db1f3a511ed6251faa86c0298029e3ec02888d11b74d56b277a8"
+      "sha256": "a33f2ee921e83d0f89a47f77c0c23485df39e02f0e9c94487fc03c919a55b447"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-contracts/missing-evidence.json",
-      "bytes": 25244,
+      "bytes": 29827,
       "path": "fixtures/cbb-v1-contracts/missing-evidence.json",
       "purpose": "Missing reconstruction fixture.",
       "role": "protocol_fixture",
-      "sha256": "911873a9ffbe8bc0446e3357f9b0e62e61054c1c1197945a2a0e7c9c56ca8929"
+      "sha256": "d6e5b35ea41fa2e13d5abeef206de7794c9eac20171b93e4d68aad44fd1d5c6e"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-contracts/hard-deny.json",
@@ -395,47 +427,47 @@
       "path": "fixtures/cbb-v1-contracts/hard-deny.json",
       "purpose": "Hard-deny fixture.",
       "role": "protocol_fixture",
-      "sha256": "e31200d737a5e74e641e98522b6845f16c84fab3504c20353ef684634a9d89e3"
+      "sha256": "4c6aee4f32dcc49258f33dcd7d6d32d15e8346429fc2157f91f1bb0284d5b4b8"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-contracts/stale.json",
-      "bytes": 27062,
+      "bytes": 31707,
       "path": "fixtures/cbb-v1-contracts/stale.json",
       "purpose": "Stale reconstruction fixture.",
       "role": "protocol_fixture",
-      "sha256": "30d702a8551253b2fb57bcc52715a8cd825fe6c91de1fd8852e9e1bd09ae6bcc"
+      "sha256": "8ba5ac5ec56c3373c3cd424847a10a504616263e5b3b38440d0fc62b6cea4ade"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-contracts/secret-like.json",
-      "bytes": 2364,
+      "bytes": 5068,
       "path": "fixtures/cbb-v1-contracts/secret-like.json",
       "purpose": "Unsafe metadata rejection fixture.",
       "role": "protocol_fixture",
-      "sha256": "b1ff12651e901280cd65a508ac4e6ddd73c669197a687bf398e9ca664ebfc57e"
+      "sha256": "1194d89b3903f0b7f23e986bb7df48796639680a7819345ac85a4812b234e907"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-contracts/malformed.json",
-      "bytes": 2323,
+      "bytes": 5027,
       "path": "fixtures/cbb-v1-contracts/malformed.json",
       "purpose": "Malformed contract rejection fixture.",
       "role": "protocol_fixture",
-      "sha256": "85f6441143b80fb19f2cceb02c51fea1169e259c2495d4377ef95ef7fd3a89d4"
+      "sha256": "7db4a019d42ea95f6408358b922fb60690c5809a5bbfbb9c0d3cd2deebef6f51"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-contracts/naive-timestamp.json",
-      "bytes": 2338,
+      "bytes": 5042,
       "path": "fixtures/cbb-v1-contracts/naive-timestamp.json",
       "purpose": "Timezone ambiguity rejection fixture.",
       "role": "protocol_fixture",
-      "sha256": "de3c86c80893ac74f9a6e310a18ed4d174d1b494e4a1bb289f807d82706c058a"
+      "sha256": "5c1fc975e0bfe71207829999e1c9f4569e3c0af275d082148e6bf9b90429b009"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-contracts/invalid-state.json",
-      "bytes": 1714,
+      "bytes": 3401,
       "path": "fixtures/cbb-v1-contracts/invalid-state.json",
       "purpose": "Cross-field state rejection fixture.",
       "role": "protocol_fixture",
-      "sha256": "254369db3117c78812672cc089030bd2f0b2e956955211bdbf79cc454625378e"
+      "sha256": "91c34e20926fdb9352cc93115bb0f3eb6d4288bd8bbfd2cf9075b47f069f739c"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-contracts/scope-expansion.json",
@@ -447,155 +479,203 @@
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-kernel/pass.json",
-      "bytes": 7934,
+      "bytes": 15743,
       "path": "fixtures/cbb-v1-kernel/pass.json",
       "purpose": "Canonical Trust Kernel passing decision fixture.",
       "role": "kernel_fixture",
-      "sha256": "2544526e2f405a8f8be3a55feaa24c2d51f4f1d2ab936016d8c4cc34e822c13d"
+      "sha256": "72f1f640d949043e15ed26bef23192be9f57c3c46c5c3e952c59bfe57b3bba6c"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-kernel/missing-evidence.json",
-      "bytes": 7526,
+      "bytes": 15335,
       "path": "fixtures/cbb-v1-kernel/missing-evidence.json",
       "purpose": "Canonical missing evidence decision fixture.",
       "role": "kernel_fixture",
-      "sha256": "80971588f261813bc698dc02919099224f9c13d7a1e2119a105b3441f26bd932"
+      "sha256": "6d348ee1e9f955c494ae758ea1098df2e127d9ed61bab12766dacd4468834663"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-kernel/failed-evidence.json",
-      "bytes": 7929,
+      "bytes": 15738,
       "path": "fixtures/cbb-v1-kernel/failed-evidence.json",
       "purpose": "Canonical failed evidence blocking fixture.",
       "role": "kernel_fixture",
-      "sha256": "9236698c221d57642a31e6775b2b4daf4c00b8503295f753db0623d4f3582fe4"
+      "sha256": "b17b53e61d11591f4233f0361e28adb6732bab9c19c2f45ca43ba95404501952"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-kernel/stale-reconstruction.json",
-      "bytes": 7980,
+      "bytes": 15773,
       "path": "fixtures/cbb-v1-kernel/stale-reconstruction.json",
       "purpose": "Canonical stale reconstruction fixture.",
       "role": "kernel_fixture",
-      "sha256": "09f77a21455ac78b87a10499e8805604d794601daf183b8314946c28311e3436"
+      "sha256": "9ff1bdf1b862dce1b3a22cd03814572657f8a81cf44f2950cbd8bbbeb214c6e0"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-kernel/hard-deny.json",
-      "bytes": 8384,
+      "bytes": 16193,
       "path": "fixtures/cbb-v1-kernel/hard-deny.json",
       "purpose": "Canonical hard-deny blocking fixture.",
       "role": "kernel_fixture",
-      "sha256": "e90150e7df587a1d8e947c2583a787107e8791edf63344b1db9864967b17a876"
+      "sha256": "7ceaf017b62439d9a755f48cc7b4fac48689a5d346b76457ce00fde1bca76cd1"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-kernel/reference-mismatch.json",
-      "bytes": 7928,
+      "bytes": 15737,
       "path": "fixtures/cbb-v1-kernel/reference-mismatch.json",
       "purpose": "Canonical reference-integrity rejection fixture.",
       "role": "kernel_fixture",
-      "sha256": "86c5db92d4d01b2b0d09161ec1840b2b0fd245223153b54ec11ff9990a7d3362"
+      "sha256": "4a8617bb99dc2301a8844f4dae2ecaf2cbcad43de616603bff3ac20c1a42fccc"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-kernel/claim-boundary-narrowing.json",
-      "bytes": 7878,
+      "bytes": 15643,
       "path": "fixtures/cbb-v1-kernel/claim-boundary-narrowing.json",
       "purpose": "Canonical claim-boundary scope narrowing fixture.",
       "role": "kernel_fixture",
-      "sha256": "e2929de62a0e0cb5039830617dfdd21d0c2d8a527bd403ab56b910e436ae1514"
+      "sha256": "3cfb6b18ce5c521f5e2b538b6c47af06fcb647a7570b096e3cbc7db8b930e7f2"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-provenance/pass-signed.json",
-      "bytes": 17333,
+      "bytes": 21913,
       "path": "fixtures/cbb-v1-provenance/pass-signed.json",
       "purpose": "Locally signed offline verification fixture.",
       "role": "provenance_fixture",
-      "sha256": "15d3397a929d91a16531898f76deb774e93b8a83a70a87fffb799989db5074a8"
+      "sha256": "ea81d2b3983c7d31a52e17614e5e34b944d2ed8b8aa7e06982a1cab2ebd2b766"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-provenance/unsigned-development.json",
-      "bytes": 15586,
+      "bytes": 20199,
       "path": "fixtures/cbb-v1-provenance/unsigned-development.json",
       "purpose": "Unsigned development receipt rejection fixture.",
       "role": "provenance_fixture",
-      "sha256": "c35021d27394fa7aaa535da20614c42d1852ab9cd18db70cd0a67437c14e6fd7"
+      "sha256": "d67802be5e506937ff925c8a1acd02476f1e6d2abaddbed4c49983e63c596a2c"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-provenance/expired.json",
-      "bytes": 17376,
+      "bytes": 21956,
       "path": "fixtures/cbb-v1-provenance/expired.json",
       "purpose": "Expired receipt rejection fixture.",
       "role": "provenance_fixture",
-      "sha256": "6c4cfc58e697a709b7d69ca4e2a192a776141a00f9e703409d9f20e597f73913"
+      "sha256": "51db55f3f1da76e4febe1cd26b7a643986430a5b89a073434669d8bcb90c9c2c"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-provenance/revoked.json",
-      "bytes": 17477,
+      "bytes": 22057,
       "path": "fixtures/cbb-v1-provenance/revoked.json",
       "purpose": "Locally revoked receipt rejection fixture.",
       "role": "provenance_fixture",
-      "sha256": "d9d7ad8349d1859e415f3c382077d5a86683fc3ae02157a075bfe5c2fecd0b3a"
+      "sha256": "117fa6fe42b1d2e89f236ce9549f557fea238f9969843ec202f2f18bcaabde46"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-provenance/replay.json",
-      "bytes": 17459,
+      "bytes": 22039,
       "path": "fixtures/cbb-v1-provenance/replay.json",
       "purpose": "Optional nonce consumption replay fixture.",
       "role": "provenance_fixture",
-      "sha256": "a527a5693a988c6a8b58ecddac4304970baf3bf12551c55d50a27b62d780329f"
+      "sha256": "813d8b6a5c7c7385838ad6000a74a5ae8f9fe7da00ecde112601bcfc8dae7c6a"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-provenance/tampered-policy.json",
-      "bytes": 17335,
+      "bytes": 21908,
       "path": "fixtures/cbb-v1-provenance/tampered-policy.json",
       "purpose": "Policy tamper rejection fixture.",
       "role": "provenance_fixture",
-      "sha256": "0bf40e858b7b6814f85bebe7e049e72267659d83440b4e276948f34bd2394f4f"
+      "sha256": "cc5c062a65873736feb143709c2bd0cd7f4d76051c261abae45d2a337e971093"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-provenance/tampered-evidence.json",
-      "bytes": 17369,
+      "bytes": 21949,
       "path": "fixtures/cbb-v1-provenance/tampered-evidence.json",
       "purpose": "Evidence tamper rejection fixture.",
       "role": "provenance_fixture",
-      "sha256": "9612c2f64accfdfde3a786df807e62871075cb9aa8cfa2f4c246cd3d0b03bfd3"
+      "sha256": "64d3470860609f44e1b518b4cf69a250129bdd0a136ac19aa48d05b8d3a8bcc3"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-provenance/tampered-reconstruction.json",
-      "bytes": 17389,
+      "bytes": 21969,
       "path": "fixtures/cbb-v1-provenance/tampered-reconstruction.json",
       "purpose": "Human reconstruction tamper rejection fixture.",
       "role": "provenance_fixture",
-      "sha256": "f6f0f6cf3f349cde7879709248d1cf0dd1bebd8d105abd8e87a795741bd6e3df"
+      "sha256": "131b797c2fddc82f222b127eebd382bb58c65686d47e6c933d6574fbe7e1a43c"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-provenance/tampered-decision.json",
-      "bytes": 17377,
+      "bytes": 21957,
       "path": "fixtures/cbb-v1-provenance/tampered-decision.json",
       "purpose": "Gate decision tamper rejection fixture.",
       "role": "provenance_fixture",
-      "sha256": "12c8fe8d0871545bfd8d097071ab62d76a1a40805df0248e02989beb1eb6102e"
+      "sha256": "02c0aa1ab0fbdb29b36f9e3e78576036624693b073174e0cc4efd2ee1bfd0dfe"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-provenance/tampered-receipt.json",
-      "bytes": 17315,
+      "bytes": 21895,
       "path": "fixtures/cbb-v1-provenance/tampered-receipt.json",
       "purpose": "Delivery receipt envelope tamper rejection fixture.",
       "role": "provenance_fixture",
-      "sha256": "7e8731b3f0af2a2798c67c3ae43e76916e6d3b21044abdf3523c4a11e48ddb4b"
+      "sha256": "18fca7588943429158ada5cfa8eaa7bfa6236f6f5480ee08989082ffdeb0e871"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-provenance/tampered-signature.json",
-      "bytes": 17340,
+      "bytes": 21920,
       "path": "fixtures/cbb-v1-provenance/tampered-signature.json",
       "purpose": "Signature tamper rejection fixture.",
       "role": "provenance_fixture",
-      "sha256": "f84e7ee54b1267b42aaa9dc98db705a64f7449a141c41f5f915455f0be6db726"
+      "sha256": "754860fb611a1344b7ddde214532720587b0d34429c65f8aa69b90ac2f19edf6"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-provenance/wrong-public-key.json",
-      "bytes": 17338,
+      "bytes": 21918,
       "path": "fixtures/cbb-v1-provenance/wrong-public-key.json",
       "purpose": "Wrong public key rejection fixture.",
       "role": "provenance_fixture",
-      "sha256": "44f56794c8be299e6a0fe3287a235704a73a7833efa4d658e7f256c6c9957f05"
+      "sha256": "36fc74992f11a08682412a6fe0931582e6f73aef7237a2384dd88c8a54344767"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-scenarios/personal-local-prototype.json",
+      "bytes": 13781,
+      "path": "fixtures/cbb-v1-scenarios/personal-local-prototype.json",
+      "purpose": "Personal-local prototype clearance fixture.",
+      "role": "scenario_fixture",
+      "sha256": "816a66bfefd02bebf1e9b08c557192f2bcfb252bae66648d191ab6712f637e26"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-scenarios/public-fake-data-demo.json",
+      "bytes": 14932,
+      "path": "fixtures/cbb-v1-scenarios/public-fake-data-demo.json",
+      "purpose": "Public fake-data demo clearance fixture.",
+      "role": "scenario_fixture",
+      "sha256": "e9b6ffbc37bb4b0dead90904557abd4a532ba925570454e2ea864d2f664a714e"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-scenarios/limited-beta.json",
+      "bytes": 18819,
+      "path": "fixtures/cbb-v1-scenarios/limited-beta.json",
+      "purpose": "Limited-beta candidate clearance fixture.",
+      "role": "scenario_fixture",
+      "sha256": "2ef6613aed23bfb7572f8b8c6aadf8264d7e9787ab2bddfe939655408615c743"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-scenarios/paid-customer-candidate.json",
+      "bytes": 20811,
+      "path": "fixtures/cbb-v1-scenarios/paid-customer-candidate.json",
+      "purpose": "Paid-customer candidate clearance fixture.",
+      "role": "scenario_fixture",
+      "sha256": "973b438cc05a4ecfc22ad9cb79850967e252397a54fbdc05be935d428ae5986c"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-scenarios/production-candidate-blocked.json",
+      "bytes": 21305,
+      "path": "fixtures/cbb-v1-scenarios/production-candidate-blocked.json",
+      "purpose": "Production candidate missing-evidence fixture.",
+      "role": "scenario_fixture",
+      "sha256": "2f6efd8abde13fed3442fb8d8455bb3d5f267152c10f8384dfccb367975db36d"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-scenarios/regulated-or-irreversible-blocked.json",
+      "bytes": 19043,
+      "path": "fixtures/cbb-v1-scenarios/regulated-or-irreversible-blocked.json",
+      "purpose": "Regulated or irreversible hard-deny fixture.",
+      "role": "scenario_fixture",
+      "sha256": "f7d8c19f1cf33122e23053197a5c69cebad20818cb5d1340a6f685f4ee203f55"
     }
   ],
   "independence": {

@@ -47,6 +47,7 @@ class DeliveryScope(StrEnum):
     BLOCKED = "blocked"
     PERSONAL_LOCAL = "personal_local"
     SANDBOX_ONLY = "sandbox_only"
+    PUBLIC_DEMO = "public_demo"
     INTERNAL_HANDOFF = "internal_handoff"
     CONTROLLED_CUSTOMER_HANDOFF = "controlled_customer_handoff"
     LIMITED_BETA = "limited_beta"
@@ -57,11 +58,31 @@ SCOPE_ORDER = {
     DeliveryScope.BLOCKED: 0,
     DeliveryScope.PERSONAL_LOCAL: 1,
     DeliveryScope.SANDBOX_ONLY: 2,
-    DeliveryScope.INTERNAL_HANDOFF: 3,
-    DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF: 4,
-    DeliveryScope.LIMITED_BETA: 5,
-    DeliveryScope.PRODUCTION_CANDIDATE: 6,
+    DeliveryScope.PUBLIC_DEMO: 3,
+    DeliveryScope.INTERNAL_HANDOFF: 4,
+    DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF: 5,
+    DeliveryScope.LIMITED_BETA: 6,
+    DeliveryScope.PRODUCTION_CANDIDATE: 7,
 }
+
+
+class DeliveryScenarioClass(StrEnum):
+    PERSONAL_LOCAL_PROTOTYPE = "personal_local_prototype"
+    PUBLIC_FAKE_DATA_DEMO = "public_fake_data_demo"
+    INTERNAL_HANDOFF_CANDIDATE = "internal_handoff_candidate"
+    LIMITED_BETA = "limited_beta"
+    PAID_CUSTOMER_CANDIDATE = "paid_customer_candidate"
+    PRODUCTION_CANDIDATE = "production_candidate"
+    REGULATED_OR_IRREVERSIBLE = "regulated_or_irreversible"
+
+
+class ReconstructionBoundaryType(StrEnum):
+    INTENT_AND_NON_GOALS = "intent_and_non_goals"
+    CRITICAL_FAILURE_PATH = "critical_failure_path"
+    AFFECTED_PARTIES_AND_RECIPIENT = "affected_parties_and_recipient"
+    ROLLBACK_TRIGGER = "rollback_trigger"
+    EVIDENCE_WEAKNESS_AND_LIMITATIONS = "evidence_weakness_and_limitations"
+    RESIDUAL_RISK = "residual_risk"
 
 
 def scope_is_at_most(candidate: DeliveryScope, ceiling: DeliveryScope) -> bool:
@@ -120,6 +141,228 @@ class EvidenceRequirementV1(StrictProtocolModel):
     blocking: bool
 
 
+class RecipientContractV1(StrictProtocolModel):
+    recipient_ref: str = Field(min_length=1, max_length=500)
+    recipient_kind: Literal[
+        "self",
+        "internal_operator",
+        "public_demo_audience",
+        "limited_beta_user",
+        "paid_customer_operator",
+        "production_operator",
+        "regulated_subject",
+    ]
+    external: bool
+    automatic_execution_authority: Literal[False]
+
+
+class RiskOwnerContractV1(StrictProtocolModel):
+    required: bool
+    risk_owner_ref: str | None = Field(default=None, min_length=1, max_length=500)
+    accepted_scope_ceiling: DeliveryScope
+    acceptance_evidence_type: str | None = Field(
+        default=None,
+        min_length=1,
+        max_length=120,
+    )
+
+    @model_validator(mode="after")
+    def validate_risk_owner_requirement(self) -> RiskOwnerContractV1:
+        if self.required:
+            if self.risk_owner_ref is None or self.acceptance_evidence_type is None:
+                raise ValueError("required risk owner needs an actor and evidence type")
+            if self.accepted_scope_ceiling == DeliveryScope.BLOCKED:
+                raise ValueError("required risk owner needs a non-blocked scope ceiling")
+        elif (
+            self.risk_owner_ref is not None
+            or self.acceptance_evidence_type is not None
+            or self.accepted_scope_ceiling != DeliveryScope.BLOCKED
+        ):
+            raise ValueError("optional risk owner cannot imply accepted authority")
+        return self
+
+
+class AffectedPartyContractV1(StrictProtocolModel):
+    party_ref: str = Field(min_length=1, max_length=500)
+    party_kind: str = Field(min_length=1, max_length=120)
+    impact_classes: list[str] = Field(min_length=1)
+    disclosure_required: bool
+    appeal_required: bool
+    redress_required: bool
+
+
+class SafeguardRequirementV1(StrictProtocolModel):
+    required: bool
+    evidence_type: str | None = Field(default=None, min_length=1, max_length=120)
+    mechanism_ref: str | None = Field(default=None, min_length=1, max_length=500)
+    human_fallback_required: bool
+
+    @model_validator(mode="after")
+    def validate_safeguard_requirement(self) -> SafeguardRequirementV1:
+        if self.required:
+            if self.evidence_type is None or self.mechanism_ref is None:
+                raise ValueError("required safeguard needs evidence and mechanism refs")
+        elif self.evidence_type is not None or self.mechanism_ref is not None:
+            raise ValueError("optional safeguard cannot imply configured evidence")
+        return self
+
+
+class DeliveryScenarioV1(StrictProtocolModel):
+    scenario_ref: str = Field(min_length=1, max_length=500)
+    scenario_class: DeliveryScenarioClass
+    project_ref: str = Field(min_length=1, max_length=500)
+    model_ref: str = Field(min_length=1, max_length=500)
+    maximum_scope: DeliveryScope
+    recipient: RecipientContractV1
+    risk_owner: RiskOwnerContractV1
+    affected_parties: list[AffectedPartyContractV1]
+    disclosure: SafeguardRequirementV1
+    appeal: SafeguardRequirementV1
+    redress: SafeguardRequirementV1
+    impact_classes: list[str] = Field(min_length=1)
+    regulated_or_irreversible: bool
+
+    @model_validator(mode="after")
+    def validate_scenario_boundary(self) -> DeliveryScenarioV1:
+        expected_scopes = {
+            DeliveryScenarioClass.PERSONAL_LOCAL_PROTOTYPE: DeliveryScope.PERSONAL_LOCAL,
+            DeliveryScenarioClass.PUBLIC_FAKE_DATA_DEMO: DeliveryScope.PUBLIC_DEMO,
+            DeliveryScenarioClass.INTERNAL_HANDOFF_CANDIDATE: DeliveryScope.INTERNAL_HANDOFF,
+            DeliveryScenarioClass.LIMITED_BETA: DeliveryScope.LIMITED_BETA,
+            DeliveryScenarioClass.PAID_CUSTOMER_CANDIDATE: DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
+            DeliveryScenarioClass.PRODUCTION_CANDIDATE: DeliveryScope.PRODUCTION_CANDIDATE,
+            DeliveryScenarioClass.REGULATED_OR_IRREVERSIBLE: DeliveryScope.BLOCKED,
+        }
+        if self.maximum_scope != expected_scopes[self.scenario_class]:
+            raise ValueError("scenario class and scope ceiling do not match")
+        if self.regulated_or_irreversible != (
+            self.scenario_class == DeliveryScenarioClass.REGULATED_OR_IRREVERSIBLE
+        ):
+            raise ValueError("regulated scenario classification is inconsistent")
+        party_refs = [party.party_ref for party in self.affected_parties]
+        if len(party_refs) != len(set(party_refs)):
+            raise ValueError("scenario contains duplicate affected-party refs")
+        if (self.recipient.external or self.affected_parties) and not self.disclosure.required:
+            raise ValueError("external or affected-party scenarios require disclosure")
+        if any(party.appeal_required for party in self.affected_parties) and not self.appeal.required:
+            raise ValueError("affected-party appeal requirement is not configured")
+        if any(party.redress_required for party in self.affected_parties) and not self.redress.required:
+            raise ValueError("affected-party redress requirement is not configured")
+        if self.scenario_class in {
+            DeliveryScenarioClass.LIMITED_BETA,
+            DeliveryScenarioClass.PAID_CUSTOMER_CANDIDATE,
+            DeliveryScenarioClass.PRODUCTION_CANDIDATE,
+        } and not self.risk_owner.required:
+            raise ValueError("higher-scope scenario requires a scoped risk owner")
+        if self.scenario_class == DeliveryScenarioClass.PRODUCTION_CANDIDATE and not self.affected_parties:
+            raise ValueError("production candidate must identify affected parties")
+        return self
+
+
+class MinimumReconstructableUnitV1(StrictProtocolModel):
+    mru_ref: str = Field(min_length=1, max_length=500)
+    boundary_type: ReconstructionBoundaryType
+    required_for_scope: DeliveryScope
+    evidence_kind: Literal["active_reconstruction"]
+    blocks_promotion: Literal[True]
+
+
+class MruResultV1(StrictProtocolModel):
+    mru_ref: str = Field(min_length=1, max_length=500)
+    boundary_type: ReconstructionBoundaryType
+    status: Literal["passed", "failed", "missing", "stale"]
+    evidence_refs: list[str]
+
+    @model_validator(mode="after")
+    def validate_mru_result(self) -> MruResultV1:
+        if self.status == "passed" and not self.evidence_refs:
+            raise ValueError("passed MRU requires active reconstruction evidence")
+        return self
+
+
+class HumanCapabilityProfileV1(StrictProtocolModel):
+    profile_id: str = Field(min_length=1, max_length=160)
+    human_ref: str = Field(min_length=1, max_length=500)
+    project_ref: str = Field(min_length=1, max_length=500)
+    scenario_refs: list[str] = Field(min_length=1)
+    qualified_roles: list[str] = Field(min_length=1)
+    boundary_types: list[ReconstructionBoundaryType] = Field(min_length=1)
+    status: Literal["active", "challenged", "stale", "insufficient"]
+    maximum_scope: DeliveryScope
+    evidence_refs: list[str]
+    counter_evidence_refs: list[str]
+    observed_at: str = Field(min_length=1, max_length=64, pattern=TIMESTAMP_PATTERN)
+    valid_until: str = Field(min_length=1, max_length=64, pattern=TIMESTAMP_PATTERN)
+    permanent_global_label: Literal[False]
+
+    @model_validator(mode="after")
+    def validate_human_capability(self) -> HumanCapabilityProfileV1:
+        observed_at = parse_timestamp(self.observed_at)
+        valid_until = parse_timestamp(self.valid_until)
+        if self.project_ref in {"*", "global"} or any(
+            ref in {"*", "global"} for ref in self.scenario_refs
+        ):
+            raise ValueError("human capability must be project and scenario scoped")
+        if len(self.scenario_refs) != len(set(self.scenario_refs)):
+            raise ValueError("human capability has duplicate scenario refs")
+        if len(self.qualified_roles) != len(set(self.qualified_roles)):
+            raise ValueError("human capability has duplicate roles")
+        if len(self.boundary_types) != len(set(self.boundary_types)):
+            raise ValueError("human capability has duplicate boundary types")
+        expired = valid_until <= observed_at
+        if self.status == "active":
+            if expired or self.maximum_scope == DeliveryScope.BLOCKED:
+                raise ValueError("active human capability must be current and scoped")
+            if not self.evidence_refs or self.counter_evidence_refs:
+                raise ValueError("active human capability needs evidence and no counter-evidence")
+        else:
+            if self.maximum_scope != DeliveryScope.BLOCKED:
+                raise ValueError("non-active human capability cannot authorize scope")
+            if self.status == "stale" and not expired:
+                raise ValueError("stale human capability must be expired")
+            if self.status == "challenged" and not self.counter_evidence_refs:
+                raise ValueError("challenged human capability requires counter-evidence")
+        return self
+
+
+class ModelCapabilityProfileV1(StrictProtocolModel):
+    profile_id: str = Field(min_length=1, max_length=160)
+    model_ref: str = Field(min_length=1, max_length=500)
+    scenario_refs: list[str] = Field(min_length=1)
+    task_types: list[str] = Field(min_length=1)
+    status: Literal["observed", "challenged", "stale", "unproven"]
+    maximum_autonomy_scope: DeliveryScope
+    evidence_refs: list[str]
+    counter_evidence_refs: list[str]
+    known_failure_modes: list[str]
+    observed_at: str = Field(min_length=1, max_length=64, pattern=TIMESTAMP_PATTERN)
+    valid_until: str = Field(min_length=1, max_length=64, pattern=TIMESTAMP_PATTERN)
+    vendor_claims_sufficient: Literal[False]
+
+    @model_validator(mode="after")
+    def validate_model_capability(self) -> ModelCapabilityProfileV1:
+        observed_at = parse_timestamp(self.observed_at)
+        valid_until = parse_timestamp(self.valid_until)
+        if len(self.scenario_refs) != len(set(self.scenario_refs)):
+            raise ValueError("model capability has duplicate scenario refs")
+        if len(self.task_types) != len(set(self.task_types)):
+            raise ValueError("model capability has duplicate task types")
+        expired = valid_until <= observed_at
+        if self.status == "observed":
+            if expired or self.maximum_autonomy_scope == DeliveryScope.BLOCKED:
+                raise ValueError("observed model capability must be current and scoped")
+            if not self.evidence_refs or self.counter_evidence_refs:
+                raise ValueError("observed model capability needs evidence and no counter-evidence")
+        else:
+            if self.maximum_autonomy_scope != DeliveryScope.BLOCKED:
+                raise ValueError("untrusted model capability cannot authorize scope")
+            if self.status == "stale" and not expired:
+                raise ValueError("stale model capability must be expired")
+            if self.status == "challenged" and not self.counter_evidence_refs:
+                raise ValueError("challenged model capability requires counter-evidence")
+        return self
+
+
 class TrustPolicyV1(StrictProtocolModel):
     model_config = ConfigDict(
         extra="forbid",
@@ -132,11 +375,14 @@ class TrustPolicyV1(StrictProtocolModel):
     policy_id: str = Field(min_length=1, max_length=160)
     subject_ref: str = Field(min_length=1, max_length=500)
     scenario_ref: str = Field(min_length=1, max_length=500)
+    scenario: DeliveryScenarioV1
+    model_capability_profile: ModelCapabilityProfileV1
     maximum_scope: DeliveryScope
     hard_denies: list[str] = Field(min_length=1)
     risk_budget: RiskBudgetV1
     required_evidence: list[EvidenceRequirementV1] = Field(min_length=1)
     required_roles: list[str] = Field(min_length=1)
+    required_mrus: list[MinimumReconstructableUnitV1] = Field(min_length=1)
     claim_boundary: ClaimBoundaryV1
     privacy: PrivacyBoundaryV1
     created_at: str = Field(min_length=1, max_length=64, pattern=TIMESTAMP_PATTERN)
@@ -146,6 +392,60 @@ class TrustPolicyV1(StrictProtocolModel):
         missing = HARD_DENIES_REQUIRED.difference(self.hard_denies)
         if missing:
             raise ValueError(f"trust policy missing hard denies: {sorted(missing)}")
+        if self.scenario.scenario_ref != self.scenario_ref:
+            raise ValueError("scenario contract does not match policy scenario_ref")
+        if not scope_is_at_most(self.maximum_scope, self.scenario.maximum_scope):
+            raise ValueError("policy expands scenario scope ceiling")
+        model_profile = self.model_capability_profile
+        if model_profile.model_ref != self.scenario.model_ref:
+            raise ValueError("model capability does not match scenario model_ref")
+        if self.scenario_ref not in model_profile.scenario_refs:
+            raise ValueError("model capability is not scoped to this scenario")
+        if not scope_is_at_most(
+            self.maximum_scope,
+            model_profile.maximum_autonomy_scope,
+        ):
+            raise ValueError("policy expands model capability scope ceiling")
+        evidence_types = [item.evidence_type for item in self.required_evidence]
+        if len(evidence_types) != len(set(evidence_types)):
+            raise ValueError("trust policy contains duplicate evidence requirements")
+        if len(self.required_roles) != len(set(self.required_roles)):
+            raise ValueError("trust policy contains duplicate required roles")
+        mru_refs = [item.mru_ref for item in self.required_mrus]
+        if len(mru_refs) != len(set(mru_refs)):
+            raise ValueError("trust policy contains duplicate MRU refs")
+        if self.maximum_scope != DeliveryScope.BLOCKED and any(
+            not scope_is_at_most(item.required_for_scope, self.maximum_scope)
+            for item in self.required_mrus
+        ):
+            raise ValueError("MRU requirement exceeds policy maximum_scope")
+        if "qualified_reconstruction" not in evidence_types:
+            raise ValueError("MRU policy requires qualified reconstruction evidence")
+        safeguards = (
+            self.scenario.disclosure,
+            self.scenario.appeal,
+            self.scenario.redress,
+        )
+        missing_safeguards = sorted(
+            requirement.evidence_type
+            for requirement in safeguards
+            if requirement.required
+            and requirement.evidence_type not in evidence_types
+            and requirement.evidence_type is not None
+        )
+        if missing_safeguards:
+            raise ValueError(
+                f"trust policy missing safeguard evidence: {missing_safeguards}"
+            )
+        if self.scenario.risk_owner.required:
+            risk_evidence = self.scenario.risk_owner.acceptance_evidence_type
+            if "risk_owner" not in self.required_roles or risk_evidence not in evidence_types:
+                raise ValueError("risk-owner contract is not enforced by policy")
+            if not scope_is_at_most(
+                self.maximum_scope,
+                self.scenario.risk_owner.accepted_scope_ceiling,
+            ):
+                raise ValueError("policy expands risk-owner accepted scope ceiling")
         if not scope_is_at_most(self.claim_boundary.maximum_scope, self.maximum_scope):
             raise ValueError("claim boundary expands trust policy maximum_scope")
         parse_timestamp(self.created_at)
@@ -211,6 +511,9 @@ class QualifiedReconstructionV1(StrictProtocolModel):
     reconstruction_id: str = Field(min_length=1, max_length=160)
     policy_ref: str = Field(min_length=1, max_length=500)
     reviewer_ref: str = Field(min_length=1, max_length=500)
+    scenario_ref: str = Field(min_length=1, max_length=500)
+    project_ref: str = Field(min_length=1, max_length=500)
+    reviewer_roles: list[str] = Field(min_length=1)
     status: Literal["passed", "failed", "missing", "stale"]
     qualified_scope: DeliveryScope
     active_reconstruction: bool
@@ -218,6 +521,8 @@ class QualifiedReconstructionV1(StrictProtocolModel):
     required_mrus_total: int = Field(ge=0)
     required_mrus_passed: int = Field(ge=0)
     missing_mru_refs: list[str]
+    mru_results: list[MruResultV1] = Field(min_length=1)
+    human_capability_profile: HumanCapabilityProfileV1
     evidence_refs: list[str]
     observed_at: str = Field(min_length=1, max_length=64, pattern=TIMESTAMP_PATTERN)
     valid_until: str = Field(min_length=1, max_length=64, pattern=TIMESTAMP_PATTERN)
@@ -229,8 +534,35 @@ class QualifiedReconstructionV1(StrictProtocolModel):
         observed_at = parse_timestamp(self.observed_at)
         valid_until = parse_timestamp(self.valid_until)
         expired = valid_until <= observed_at
+        if len(self.reviewer_roles) != len(set(self.reviewer_roles)):
+            raise ValueError("qualified reconstruction has duplicate reviewer roles")
+        mru_refs = [item.mru_ref for item in self.mru_results]
+        if len(mru_refs) != len(set(mru_refs)):
+            raise ValueError("qualified reconstruction has duplicate MRU results")
         if self.required_mrus_passed > self.required_mrus_total:
             raise ValueError("required MRUs passed cannot exceed required MRUs total")
+        passed_mrus = sum(item.status == "passed" for item in self.mru_results)
+        nonpassed_refs = sorted(
+            item.mru_ref for item in self.mru_results if item.status != "passed"
+        )
+        if self.required_mrus_total != len(self.mru_results):
+            raise ValueError("MRU total does not match result count")
+        if self.required_mrus_passed != passed_mrus:
+            raise ValueError("MRU passed count does not match result states")
+        if sorted(self.missing_mru_refs) != nonpassed_refs:
+            raise ValueError("missing MRU refs do not match non-passed results")
+        profile = self.human_capability_profile
+        if profile.human_ref != self.reviewer_ref:
+            raise ValueError("human capability does not match reviewer_ref")
+        if profile.project_ref != self.project_ref:
+            raise ValueError("human capability does not match reconstruction project")
+        if self.scenario_ref not in profile.scenario_refs:
+            raise ValueError("human capability is not scoped to reconstruction scenario")
+        if not set(self.reviewer_roles).issubset(profile.qualified_roles):
+            raise ValueError("human capability does not cover reviewer roles")
+        result_boundaries = {item.boundary_type for item in self.mru_results}
+        if not result_boundaries.issubset(set(profile.boundary_types)):
+            raise ValueError("human capability does not cover reconstructed boundaries")
         if self.status == "passed":
             if expired:
                 raise ValueError("passed reconstruction is stale")
@@ -244,6 +576,10 @@ class QualifiedReconstructionV1(StrictProtocolModel):
                 raise ValueError("passed reconstruction cannot list missing MRUs")
             if not self.evidence_refs:
                 raise ValueError("passed reconstruction requires evidence refs")
+            if profile.status != "active":
+                raise ValueError("passed reconstruction requires active human capability")
+            if not scope_is_at_most(self.qualified_scope, profile.maximum_scope):
+                raise ValueError("reconstruction expands human capability scope")
         else:
             if self.qualified_scope != DeliveryScope.BLOCKED:
                 raise ValueError("non-passed reconstruction cannot qualify delivery scope")

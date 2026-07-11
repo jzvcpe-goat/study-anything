@@ -5,7 +5,7 @@ platform agents that use Study Anything as the local Learning Adapter inside the
 System rather than a standalone frontend.
 
 这份手册面向 Kimi、Codex、WorkBuddy 类工作区 Agent，以及私有平台 Agent。目标是让平台 Agent
-把 Study Anything 当作认知黑箱协议参考实现里的本地 Human Reconstruction / Learning Adapter 使用，而不是把它当成一个独立
+把 Study Anything 当作 AI 交付放行协议参考实现里的本地 Human Reconstruction / Learning Adapter 使用，而不是把它当成一个独立
 前端 App。
 
 ## Operating Split / 分工
