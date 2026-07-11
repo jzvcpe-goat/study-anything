@@ -153,7 +153,8 @@ not:
 - permission for automatic customer sending or irreversible external effects.
 
 The generated external security audit pack is `ready_for_independent_audit`. It is
-not an audit report or certificate.
+not an audit report or certificate. The external-adopter attestation channel is
+implemented, but the repository still records zero real external adopter evidence.
 
 当前实现是本地优先、确定性的参考实现，不是生产批准、法律或安全认证、客户结果保证、
 模型全局正确证明，也不代表独立人工安全审计已经完成。
@@ -174,6 +175,7 @@ From a prepared checkout:
 .venv/bin/python scripts/generate_cbb_v1_conformance_pack.py --check
 .venv/bin/python scripts/verify_cbb_v1_external_consumer.py --check
 .venv/bin/python scripts/verify_cbb_controlled_adoption_outcomes.py --check
+.venv/bin/python scripts/verify_cbb_external_adoption_attestation.py --check
 .venv/bin/python scripts/verify_cbb_external_audit_intake.py --check
 ./scripts/release_check.sh --cbb-protocol-only
 ```

@@ -264,6 +264,8 @@
     },
     "customer_delivery_authorized": false,
     "evidence_class": "synthetic_fixture",
+    "external_attestation_receipt_ref": null,
+    "external_attestation_receipt_sha256": null,
     "observation_kind": "block",
     "observed_at": "2026-07-12T00:00:00Z",
     "outcome_receipt_ref": "cbb-outcome:2a80b4212c490d521ff7954919aed529",

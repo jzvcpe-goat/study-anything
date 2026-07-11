@@ -1,0 +1,441 @@
+{
+  "$defs": {
+    "AdopterTrustRecordV1": {
+      "additionalProperties": false,
+      "properties": {
+        "fixture_only": {
+          "title": "Fixture Only",
+          "type": "boolean"
+        },
+        "human_observer_ref": {
+          "maxLength": 240,
+          "minLength": 3,
+          "title": "Human Observer Ref",
+          "type": "string"
+        },
+        "identity_status": {
+          "enum": [
+            "synthetic_fixture",
+            "externally_attested"
+          ],
+          "title": "Identity Status",
+          "type": "string"
+        },
+        "independence_attestation_ref": {
+          "maxLength": 500,
+          "minLength": 3,
+          "title": "Independence Attestation Ref",
+          "type": "string"
+        },
+        "independent_from_repository": {
+          "title": "Independent From Repository",
+          "type": "boolean"
+        },
+        "organization_ref": {
+          "maxLength": 240,
+          "minLength": 3,
+          "title": "Organization Ref",
+          "type": "string"
+        },
+        "public_key_fingerprint_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Public Key Fingerprint Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "organization_ref",
+        "human_observer_ref",
+        "public_key_fingerprint_sha256",
+        "identity_status",
+        "independence_attestation_ref",
+        "independent_from_repository",
+        "fixture_only"
+      ],
+      "title": "AdopterTrustRecordV1",
+      "type": "object"
+    },
+    "AdoptionAttestationSourceClass": {
+      "enum": [
+        "synthetic_fixture",
+        "external_shape_fixture",
+        "external_attestation"
+      ],
+      "title": "AdoptionAttestationSourceClass",
+      "type": "string"
+    },
+    "AdoptionDetachedSignatureV1": {
+      "additionalProperties": false,
+      "properties": {
+        "algorithm": {
+          "const": "ed25519",
+          "title": "Algorithm",
+          "type": "string"
+        },
+        "public_key": {
+          "pattern": "^[A-Za-z0-9_-]{43}$",
+          "title": "Public Key",
+          "type": "string"
+        },
+        "public_key_encoding": {
+          "const": "ed25519-raw-base64url",
+          "title": "Public Key Encoding",
+          "type": "string"
+        },
+        "public_key_fingerprint_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Public Key Fingerprint Sha256",
+          "type": "string"
+        },
+        "signature": {
+          "pattern": "^[A-Za-z0-9_-]{86}$",
+          "title": "Signature",
+          "type": "string"
+        },
+        "signed_payload_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Signed Payload Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "algorithm",
+        "public_key_encoding",
+        "public_key",
+        "public_key_fingerprint_sha256",
+        "signed_payload_sha256",
+        "signature"
+      ],
+      "title": "AdoptionDetachedSignatureV1",
+      "type": "object"
+    },
+    "AdoptionMode": {
+      "enum": [
+        "shadow",
+        "dogfood",
+        "canary"
+      ],
+      "title": "AdoptionMode",
+      "type": "string"
+    },
+    "AdoptionObservationKind": {
+      "enum": [
+        "pass",
+        "block",
+        "incident",
+        "rollback",
+        "revocation",
+        "reopen"
+      ],
+      "title": "AdoptionObservationKind",
+      "type": "string"
+    },
+    "DeliveryScope": {
+      "description": "Ordered scopes from no release authority to a production candidate.",
+      "enum": [
+        "blocked",
+        "personal_local",
+        "sandbox_only",
+        "public_demo",
+        "internal_handoff",
+        "controlled_customer_handoff",
+        "limited_beta",
+        "production_candidate"
+      ],
+      "title": "DeliveryScope",
+      "type": "string"
+    },
+    "ExternalAdoptionAttestationBindingV1": {
+      "additionalProperties": false,
+      "properties": {
+        "adoption_case_id": {
+          "maxLength": 160,
+          "minLength": 1,
+          "title": "Adoption Case Id",
+          "type": "string"
+        },
+        "adoption_case_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Adoption Case Sha256",
+          "type": "string"
+        },
+        "conformance_pack_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Conformance Pack Sha256",
+          "type": "string"
+        },
+        "protocol_version": {
+          "const": "1.0.0",
+          "title": "Protocol Version",
+          "type": "string"
+        },
+        "release_scope_commit": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Release Scope Commit",
+          "type": "string"
+        },
+        "repository": {
+          "const": "jzvcpe-goat/study-anything",
+          "title": "Repository",
+          "type": "string"
+        },
+        "source_approved_scope": {
+          "$ref": "#/$defs/DeliveryScope"
+        },
+        "source_clearance_revocation_handle": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Source Clearance Revocation Handle",
+          "type": "string"
+        },
+        "source_delivery_receipt_ref": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Source Delivery Receipt Ref",
+          "type": "string"
+        },
+        "source_package_digest_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source Package Digest Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "repository",
+        "release_scope_commit",
+        "protocol_version",
+        "conformance_pack_sha256",
+        "source_package_digest_sha256",
+        "source_delivery_receipt_ref",
+        "source_clearance_revocation_handle",
+        "source_approved_scope",
+        "adoption_case_id",
+        "adoption_case_sha256"
+      ],
+      "title": "ExternalAdoptionAttestationBindingV1",
+      "type": "object"
+    },
+    "ExternalAdoptionAttestationV1": {
+      "additionalProperties": false,
+      "properties": {
+        "adoption_mode": {
+          "$ref": "#/$defs/AdoptionMode"
+        },
+        "binding": {
+          "$ref": "#/$defs/ExternalAdoptionAttestationBindingV1"
+        },
+        "observation": {
+          "$ref": "#/$defs/ExternalAdoptionObservationV1"
+        },
+        "observation_kind": {
+          "$ref": "#/$defs/AdoptionObservationKind"
+        },
+        "outcome_receipt_ref": {
+          "anyOf": [
+            {
+              "maxLength": 500,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Outcome Receipt Ref"
+        },
+        "privacy": {
+          "$ref": "#/$defs/PrivacyBoundaryV1"
+        },
+        "requested_scope": {
+          "$ref": "#/$defs/DeliveryScope"
+        },
+        "signature_ref": {
+          "maxLength": 240,
+          "minLength": 3,
+          "title": "Signature Ref",
+          "type": "string"
+        }
+      },
+      "required": [
+        "binding",
+        "adoption_mode",
+        "observation_kind",
+        "requested_scope",
+        "observation",
+        "signature_ref",
+        "privacy"
+      ],
+      "title": "ExternalAdoptionAttestationV1",
+      "type": "object"
+    },
+    "ExternalAdoptionObservationV1": {
+      "additionalProperties": false,
+      "properties": {
+        "adverse_event_count": {
+          "minimum": 0,
+          "title": "Adverse Event Count",
+          "type": "integer"
+        },
+        "completed_at": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Completed At",
+          "type": "string"
+        },
+        "observed_at": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Observed At",
+          "type": "string"
+        },
+        "observed_delivery_count": {
+          "minimum": 1,
+          "title": "Observed Delivery Count",
+          "type": "integer"
+        },
+        "revocation_exercised": {
+          "title": "Revocation Exercised",
+          "type": "boolean"
+        },
+        "rollback_exercised": {
+          "title": "Rollback Exercised",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "observed_at",
+        "completed_at",
+        "observed_delivery_count",
+        "adverse_event_count",
+        "rollback_exercised",
+        "revocation_exercised"
+      ],
+      "title": "ExternalAdoptionObservationV1",
+      "type": "object"
+    },
+    "PrivacyBoundaryV1": {
+      "additionalProperties": false,
+      "properties": {
+        "attention_stream_included": {
+          "const": false,
+          "title": "Attention Stream Included",
+          "type": "boolean"
+        },
+        "automatic_customer_send_performed": {
+          "const": false,
+          "title": "Automatic Customer Send Performed",
+          "type": "boolean"
+        },
+        "cookies_or_bearer_tokens_included": {
+          "const": false,
+          "title": "Cookies Or Bearer Tokens Included",
+          "type": "boolean"
+        },
+        "metadata_only": {
+          "const": true,
+          "title": "Metadata Only",
+          "type": "boolean"
+        },
+        "model_credentials_included": {
+          "const": false,
+          "title": "Model Credentials Included",
+          "type": "boolean"
+        },
+        "model_prompts_included": {
+          "const": false,
+          "title": "Model Prompts Included",
+          "type": "boolean"
+        },
+        "production_mutation_performed": {
+          "const": false,
+          "title": "Production Mutation Performed",
+          "type": "boolean"
+        },
+        "raw_customer_payload_included": {
+          "const": false,
+          "title": "Raw Customer Payload Included",
+          "type": "boolean"
+        },
+        "raw_report_text_included": {
+          "const": false,
+          "title": "Raw Report Text Included",
+          "type": "boolean"
+        },
+        "raw_source_text_included": {
+          "const": false,
+          "title": "Raw Source Text Included",
+          "type": "boolean"
+        },
+        "signed_urls_included": {
+          "const": false,
+          "title": "Signed Urls Included",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "metadata_only",
+        "raw_source_text_included",
+        "raw_report_text_included",
+        "raw_customer_payload_included",
+        "attention_stream_included",
+        "model_prompts_included",
+        "model_credentials_included",
+        "cookies_or_bearer_tokens_included",
+        "signed_urls_included",
+        "production_mutation_performed",
+        "automatic_customer_send_performed"
+      ],
+      "title": "PrivacyBoundaryV1",
+      "type": "object"
+    }
+  },
+  "$id": "cbb.external-adoption-attestation-envelope.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "adopter_trust": {
+      "$ref": "#/$defs/AdopterTrustRecordV1"
+    },
+    "attestation": {
+      "$ref": "#/$defs/ExternalAdoptionAttestationV1"
+    },
+    "detached_signature": {
+      "$ref": "#/$defs/AdoptionDetachedSignatureV1"
+    },
+    "envelope_id": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Envelope Id",
+      "type": "string"
+    },
+    "privacy": {
+      "$ref": "#/$defs/PrivacyBoundaryV1"
+    },
+    "schema_version": {
+      "const": "cbb.external-adoption-attestation-envelope.v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_class": {
+      "$ref": "#/$defs/AdoptionAttestationSourceClass"
+    },
+    "submitted_at": {
+      "maxLength": 64,
+      "minLength": 1,
+      "title": "Submitted At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "envelope_id",
+    "source_class",
+    "attestation",
+    "detached_signature",
+    "adopter_trust",
+    "submitted_at",
+    "privacy"
+  ],
+  "title": "ExternalAdoptionAttestationEnvelopeV1",
+  "type": "object"
+}

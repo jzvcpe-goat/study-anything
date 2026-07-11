@@ -275,6 +275,8 @@
     },
     "customer_delivery_authorized": false,
     "evidence_class": "synthetic_fixture",
+    "external_attestation_receipt_ref": null,
+    "external_attestation_receipt_sha256": null,
     "observation_kind": "reopen",
     "observed_at": "2026-07-12T00:00:00Z",
     "outcome_receipt_ref": "cbb-outcome:f30a862181fa74264c9b14b40f515a29",

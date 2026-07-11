@@ -4,6 +4,16 @@ from __future__ import annotations
 
 from typing import Literal
 
+from study_anything.cbb.adoption.attestation_intake import (
+    evaluate_external_adoption_attestation,
+)
+from study_anything.cbb.adoption.attestation_models import (
+    AdoptionAttestationSourceClass,
+    AdoptionAttestationState,
+    ExternalAdoptionAttestationEnvelopeV1,
+    ExternalAdoptionAttestationReceiptV1,
+    ExternalAdoptionExpectedScopeV1,
+)
 from study_anything.cbb.adoption.models import (
     AdoptionEvidenceClass,
     AdoptionMode,
@@ -54,6 +64,8 @@ def evaluate_controlled_adoption(
     expected_release_scope_commit: str,
     expected_conformance_pack_sha256: str,
     revoked_source_handles: set[str] | None = None,
+    external_attestation_expected_scope: ExternalAdoptionExpectedScopeV1 | None = None,
+    external_attestation_envelope: ExternalAdoptionAttestationEnvelopeV1 | None = None,
 ) -> ControlledAdoptionReceiptV1:
     """Evaluate one observation; adoption evidence can only maintain or reduce scope."""
 
@@ -64,6 +76,80 @@ def evaluate_controlled_adoption(
         package,
         now=case.observed_at,
         revoked_handles=revoked_handles,
+    )
+    attestation_context_complete = (
+        external_attestation_expected_scope is not None
+        and external_attestation_envelope is not None
+    )
+    attestation_context_absent = (
+        external_attestation_expected_scope is None
+        and external_attestation_envelope is None
+    )
+    external_attestation_receipt: ExternalAdoptionAttestationReceiptV1 | None = None
+    if attestation_context_complete:
+        assert external_attestation_expected_scope is not None
+        assert external_attestation_envelope is not None
+        external_attestation_receipt = evaluate_external_adoption_attestation(
+            external_attestation_expected_scope,
+            external_attestation_envelope,
+            evaluated_at=external_attestation_envelope.submitted_at,
+        )
+    case_digest = canonical_sha256(case.model_dump(mode="json"))
+    attestation_digest = (
+        canonical_sha256(external_attestation_receipt.model_dump(mode="json"))
+        if external_attestation_receipt is not None
+        else None
+    )
+    attestation_binding = (
+        external_attestation_receipt.binding
+        if external_attestation_receipt is not None
+        else None
+    )
+    attestation = (
+        external_attestation_envelope.attestation
+        if external_attestation_envelope is not None
+        else None
+    )
+    expected_outcome_ref = (
+        case.outcome_receipt.outcome_receipt_id
+        if case.outcome_receipt is not None
+        else None
+    )
+    external_attestation_valid = bool(
+        case.evidence_class == AdoptionEvidenceClass.EXTERNAL_ADOPTER
+        and case.real_adopter_evidence_claimed
+        and external_attestation_receipt is not None
+        and external_attestation_receipt.state
+        == AdoptionAttestationState.EXTERNAL_ATTESTATION_VERIFIED
+        and external_attestation_receipt.source_class
+        == AdoptionAttestationSourceClass.EXTERNAL_ATTESTATION
+        and external_attestation_receipt.real_adopter_evidence_accepted
+        and external_attestation_receipt.external_identity_attested
+        and external_attestation_receipt.signature_verified
+        and external_attestation_receipt.observation_execution_completed
+        and attestation_binding is not None
+        and attestation_binding.repository == "jzvcpe-goat/study-anything"
+        and attestation_binding.release_scope_commit
+        == expected_release_scope_commit
+        and attestation_binding.protocol_version == binding.protocol_version
+        and attestation_binding.conformance_pack_sha256
+        == expected_conformance_pack_sha256
+        and attestation_binding.source_package_digest_sha256
+        == binding.source_package_digest_sha256
+        and attestation_binding.source_delivery_receipt_ref
+        == binding.source_delivery_receipt_ref
+        and attestation_binding.source_clearance_revocation_handle
+        == binding.source_clearance_revocation_handle
+        and attestation_binding.source_approved_scope
+        == binding.source_approved_scope
+        and attestation_binding.adoption_case_id == case.case_id
+        and attestation_binding.adoption_case_sha256 == case_digest
+        and attestation is not None
+        and attestation.adoption_mode == case.adoption_mode
+        and attestation.observation_kind == case.observation_kind
+        and attestation.requested_scope == case.effect_boundary.requested_scope
+        and attestation.outcome_receipt_ref == expected_outcome_ref
+        and attestation.observation.observed_at == case.observed_at
     )
     checks = {
         "release_scope_commit_bound": (
@@ -122,8 +208,12 @@ def evaluate_controlled_adoption(
             )
         ),
         "external_adopter_attestation_supported": (
-            case.evidence_class != AdoptionEvidenceClass.EXTERNAL_ADOPTER
-            and not case.real_adopter_evidence_claimed
+            (
+                case.evidence_class != AdoptionEvidenceClass.EXTERNAL_ADOPTER
+                and not case.real_adopter_evidence_claimed
+                and attestation_context_absent
+            )
+            or (attestation_context_complete and external_attestation_valid)
         ),
         "no_production_mutation": (
             not case.effect_boundary.production_mutation_performed
@@ -227,14 +317,22 @@ def evaluate_controlled_adoption(
             ]
         )
     )
-    receipt_digest = canonical_sha256(
-        {
-            "case": case.model_dump(mode="json"),
-            "checks": checks,
-            "status": status.value,
-            "resulting_scope": resulting_scope.value,
-        }
-    )
+    receipt_material: dict[str, object] = {
+        "case": case.model_dump(mode="json"),
+        "checks": checks,
+        "status": status.value,
+        "resulting_scope": resulting_scope.value,
+    }
+    if external_attestation_receipt is not None:
+        receipt_material.update(
+            {
+                "external_attestation_receipt_ref": (
+                    external_attestation_receipt.receipt_id
+                ),
+                "external_attestation_receipt_sha256": attestation_digest,
+            }
+        )
+    receipt_digest = canonical_sha256(receipt_material)
     return ControlledAdoptionReceiptV1(
         schema_version="cbb.controlled-adoption-receipt.v1",
         receipt_id=f"controlled-adoption:{receipt_digest[:32]}",
@@ -249,10 +347,16 @@ def evaluate_controlled_adoption(
         outcome_receipt_ref=outcome_ref,
         outcome_status=outcome_status,
         trust_action=trust_action,
+        external_attestation_receipt_ref=(
+            external_attestation_receipt.receipt_id
+            if external_attestation_receipt is not None
+            else None
+        ),
+        external_attestation_receipt_sha256=attestation_digest,
         authorization_delta=authorization_delta,
         checks=checks,
         reasons=reasons,
-        real_adopter_evidence=False,
+        real_adopter_evidence=external_attestation_valid,
         customer_delivery_authorized=False,
         production_authorized=False,
         audit_completed=False,

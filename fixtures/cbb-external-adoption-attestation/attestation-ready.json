@@ -1,0 +1,302 @@
+{
+  "case_id": "attestation-ready",
+  "controlled_adoption_case": {
+    "adoption_mode": "canary",
+    "binding": {
+      "conformance_pack_sha256": "aa8c80e9cc71b08d08785e92c6d0be55935c4386b924b28c7de5a9aa8b6817fe",
+      "protocol_version": "1.0.0",
+      "release_scope_commit": "cc9a5aa1f5739cd667addfa774d6301f7873efda",
+      "source_approved_scope": "internal_handoff",
+      "source_clearance_revocation_handle": "cbb-revocation:cbb-decision:9253eb6f61145b82494f8594038b4a21",
+      "source_delivery_receipt_ref": "cbb-receipt:delivery-trust-receipt-demo-001",
+      "source_package_digest_sha256": "2ccaffefc82b48e8d209f37d27d89bfd37b9a407958fbc036a51c22be72c7b4c",
+      "source_package_ref": "cbb-offline-package:cbb-decision:9253eb6f61145b82494f8594038b4a21"
+    },
+    "case_id": "external-canary-observation",
+    "effect_boundary": {
+      "automatic_customer_send_performed": false,
+      "external_effect_observed": false,
+      "production_mutation_performed": false,
+      "real_user_exposure_observed": false,
+      "requested_scope": "internal_handoff"
+    },
+    "evidence_class": "external_adopter",
+    "observation_kind": "pass",
+    "observed_at": "2026-07-15T00:00:00Z",
+    "operator_reconstruction_present": true,
+    "outcome_receipt": {
+      "claim_boundary": {
+        "current_claim": "Bounded post-delivery evidence did not reduce the existing clearance ceiling.",
+        "maximum_scope": "internal_handoff",
+        "not_claimed": [
+          "customer outcome guarantee",
+          "global model correctness",
+          "production approval",
+          "legal or security certification",
+          "trust increase from elapsed time or accumulated pass count",
+          "automatic policy mutation"
+        ]
+      },
+      "events": [
+        {
+          "affected_party_refs": [],
+          "claim_boundary_violated": false,
+          "counter_evidence_refs": [],
+          "event_id": "outcome-event:monitored-no-adverse-signal",
+          "event_type": "delivery_observation",
+          "external_effect_observed": false,
+          "occurred_at": "2026-07-08T12:00:00Z",
+          "resolution_refs": [],
+          "severity": "info",
+          "source_refs": [
+            "outcome-evidence:monitored-no-adverse-signal"
+          ],
+          "status": "confirmed"
+        }
+      ],
+      "issued_at": "2026-07-11T00:00:00Z",
+      "outcome_provenance": {
+        "canonicalization": "cbb-json-c14n-v1",
+        "claim_boundary": {
+          "current_claim": "The local signature binds this deterministic post-delivery outcome receipt and cannot expand its resulting scope.",
+          "maximum_scope": "internal_handoff",
+          "not_claimed": [
+            "third-party signer identity",
+            "customer outcome guarantee",
+            "production approval",
+            "legal or security certification",
+            "global revocation status outside the supplied registry",
+            "scope beyond the deterministic outcome action"
+          ]
+        },
+        "created_at": "2026-07-11T00:00:00Z",
+        "expires_at": "2026-08-10T00:00:00Z",
+        "outcome_envelope_digest_sha256": "9483910030f6c580b0f5fdb131f12a5e0fea1da536e24c962361db9725a2b615",
+        "replay_nonce": "outcome-replay-nonce:monitored-no-adverse-signal",
+        "revocation": {
+          "handle": "cbb-outcome-revocation:cbb-outcome:2a80b4212c490d521ff7954919aed529",
+          "registry_ref": "outcome-revocation-registry.json"
+        },
+        "signature": "CQ9bWj-FmJQT-d_xGbGEziEwTyHqI2evCG4nMpHz_fo9jAmx7S2j99Xn6bPEsBCYLpigDnIrX_6ZOuMZPbHnCQ",
+        "signature_algorithm": "ed25519",
+        "signer": {
+          "identity_scope": "local_self_asserted",
+          "key_id": "fixture-outcome-ed25519-key-1",
+          "public_key": "iOhzLKl83V0lApsWThuKyhOi1i0GfUciD5f1RUobvB8",
+          "public_key_encoding": "ed25519-raw-base64url",
+          "public_key_fingerprint_sha256": "fb7a83680920c605157f8e6e0067f3e203a23bb4b7216ec742503e08a163801c",
+          "signer_id": "fixture-local-outcome-signer"
+        },
+        "signing_status": "locally_signed",
+        "source_package_digest_sha256": "2ccaffefc82b48e8d209f37d27d89bfd37b9a407958fbc036a51c22be72c7b4c",
+        "verifier": {
+          "verifier_digest_sha256": "5bcc084ebb7e5dc4ca67a8adb8bb901103ed930dca4bb1cd7336de8e4018f73e",
+          "verifier_id": "delivery-clearance-outcome-evaluator",
+          "verifier_version": "1"
+        }
+      },
+      "outcome_receipt_id": "cbb-outcome:2a80b4212c490d521ff7954919aed529",
+      "policy_ref": "cbb-policy:failure-contract-demo-001",
+      "privacy": {
+        "attention_stream_included": false,
+        "automatic_customer_send_performed": false,
+        "cookies_or_bearer_tokens_included": false,
+        "metadata_only": true,
+        "model_credentials_included": false,
+        "model_prompts_included": false,
+        "production_mutation_performed": false,
+        "raw_customer_payload_included": false,
+        "raw_report_text_included": false,
+        "raw_source_text_included": false,
+        "signed_urls_included": false
+      },
+      "rollback": {
+        "attempted": false,
+        "evidence_refs": [],
+        "required": false,
+        "status": "not_required"
+      },
+      "sampling": {
+        "coverage_complete": true,
+        "eligible_count": 4,
+        "limitations": [],
+        "sampled_count": 4,
+        "sampling_id": "outcome-sampling:monitored-no-adverse-signal",
+        "selection_ref": "sampling-plan:monitored-no-adverse-signal",
+        "strategy": "all_observed",
+        "window_ended_at": "2026-07-10T00:00:00Z",
+        "window_started_at": "2026-07-01T00:00:00Z"
+      },
+      "scenario_ref": "task:dual-loop-demo",
+      "schema_version": "cbb.delivery-outcome-receipt.v1",
+      "source_approved_scope": "internal_handoff",
+      "source_clearance_revocation_handle": "cbb-revocation:cbb-decision:9253eb6f61145b82494f8594038b4a21",
+      "source_delivery_receipt_digest_sha256": "a4cce47500154e32203d620c2a7136f368ddc557c554e593f81a15add991a04a",
+      "source_delivery_receipt_ref": "cbb-receipt:delivery-trust-receipt-demo-001",
+      "source_verification": {
+        "checks_passed": [
+          "decision_digest",
+          "deterministic_gate",
+          "embedded_provenance",
+          "evidence_digest",
+          "locally_signed",
+          "not_before",
+          "not_expired",
+          "not_revoked",
+          "package_digest",
+          "policy_digest",
+          "public_key_fingerprint",
+          "receipt_envelope_digest",
+          "receipt_scope",
+          "receipt_status",
+          "reconstruction_digest",
+          "replay_nonce_unused",
+          "safe_metadata",
+          "scope_not_expanded",
+          "signature",
+          "subject_digest",
+          "verifier_digest"
+        ],
+        "clearance_valid_at": "2026-06-28T00:00:00Z",
+        "local_self_asserted_signer_only": true,
+        "package_digest_sha256": "2ccaffefc82b48e8d209f37d27d89bfd37b9a407958fbc036a51c22be72c7b4c",
+        "package_ref": "cbb-offline-package:cbb-decision:9253eb6f61145b82494f8594038b4a21",
+        "verification_status": "pass",
+        "verified_at": "2026-07-11T00:00:00Z"
+      },
+      "status": "monitored",
+      "subject_ref": "artifact:metadata-only-demo-change",
+      "trust_update": {
+        "action": "maintain_current_ceiling",
+        "affected_party_follow_up_required": false,
+        "counter_evidence_refs": [],
+        "policy_reconstruction_required": false,
+        "previous_scope": "internal_handoff",
+        "reasons": [
+          "bounded_sample:no_adverse_signal_observed",
+          "trust_action:maintain_current_ceiling"
+        ],
+        "recipe_ref": "trust-recipe:metadata-only-demo",
+        "recipe_state": "active",
+        "replay_required": false,
+        "resulting_scope": "internal_handoff",
+        "revoked_clearance_handles": [],
+        "risk_owner_reacceptance_required": false,
+        "source_clearance_revoked": false,
+        "trust_increase_allowed": false
+      }
+    },
+    "privacy": {
+      "attention_stream_included": false,
+      "automatic_customer_send_performed": false,
+      "cookies_or_bearer_tokens_included": false,
+      "metadata_only": true,
+      "model_credentials_included": false,
+      "model_prompts_included": false,
+      "production_mutation_performed": false,
+      "raw_customer_payload_included": false,
+      "raw_report_text_included": false,
+      "raw_source_text_included": false,
+      "signed_urls_included": false
+    },
+    "real_adopter_evidence_claimed": true,
+    "reopen_requested": false,
+    "risk_owner_reacceptance_present": true,
+    "schema_version": "cbb.controlled-adoption-case.v1",
+    "source_revoked_before_observation": false
+  },
+  "envelope": null,
+  "expected": {
+    "observation_execution_completed": false,
+    "real_adopter_evidence_accepted": false,
+    "state": "attestation_ready"
+  },
+  "expected_scope": {
+    "binding": {
+      "adoption_case_id": "external-canary-observation",
+      "adoption_case_sha256": "2e1ad66987f1eb4fb8d90572dd6d6d8a7c83afd5fcb2a15cff7abf161db16a11",
+      "conformance_pack_sha256": "aa8c80e9cc71b08d08785e92c6d0be55935c4386b924b28c7de5a9aa8b6817fe",
+      "protocol_version": "1.0.0",
+      "release_scope_commit": "cc9a5aa1f5739cd667addfa774d6301f7873efda",
+      "repository": "jzvcpe-goat/study-anything",
+      "source_approved_scope": "internal_handoff",
+      "source_clearance_revocation_handle": "cbb-revocation:cbb-decision:9253eb6f61145b82494f8594038b4a21",
+      "source_delivery_receipt_ref": "cbb-receipt:delivery-trust-receipt-demo-001",
+      "source_package_digest_sha256": "2ccaffefc82b48e8d209f37d27d89bfd37b9a407958fbc036a51c22be72c7b4c"
+    },
+    "repository_actor_refs": [
+      "jzvcpe-goat",
+      "study-anything-maintainers",
+      "repository-maintainer"
+    ],
+    "trusted_adopters": []
+  },
+  "fixture_class": "no_external_attestation",
+  "receipt": {
+    "attestation_digest_sha256": null,
+    "audit_completed": false,
+    "binding": {
+      "adoption_case_id": "external-canary-observation",
+      "adoption_case_sha256": "2e1ad66987f1eb4fb8d90572dd6d6d8a7c83afd5fcb2a15cff7abf161db16a11",
+      "conformance_pack_sha256": "aa8c80e9cc71b08d08785e92c6d0be55935c4386b924b28c7de5a9aa8b6817fe",
+      "protocol_version": "1.0.0",
+      "release_scope_commit": "cc9a5aa1f5739cd667addfa774d6301f7873efda",
+      "repository": "jzvcpe-goat/study-anything",
+      "source_approved_scope": "internal_handoff",
+      "source_clearance_revocation_handle": "cbb-revocation:cbb-decision:9253eb6f61145b82494f8594038b4a21",
+      "source_delivery_receipt_ref": "cbb-receipt:delivery-trust-receipt-demo-001",
+      "source_package_digest_sha256": "2ccaffefc82b48e8d209f37d27d89bfd37b9a407958fbc036a51c22be72c7b4c"
+    },
+    "blocking_reasons": [
+      "external_signed_adoption_attestation_not_received"
+    ],
+    "checks": {
+      "external_attestation_present": false,
+      "pinned_scope_ready": true,
+      "trusted_external_adopter_present": false
+    },
+    "claim_boundary": {
+      "current_claim": "The exact controlled-adoption case is ready to receive an external adopter attestation.",
+      "maximum_scope": "blocked",
+      "not_claimed": [
+        "new delivery authority",
+        "production approval",
+        "automatic customer sending",
+        "general customer outcome",
+        "independent security audit completion",
+        "model correctness",
+        "external identity from signature possession alone",
+        "real adopter evidence from a synthetic fixture"
+      ]
+    },
+    "delivery_authority_granted": false,
+    "evaluated_at": "2026-07-15T03:00:00Z",
+    "external_identity_attested": false,
+    "next_required_actions": [
+      "identify an independent external adopter",
+      "pin the independently verified adopter identity and public-key fingerprint",
+      "return a signed attestation bound to the exact adoption case and release scope"
+    ],
+    "observation_execution_completed": false,
+    "privacy": {
+      "attention_stream_included": false,
+      "automatic_customer_send_performed": false,
+      "cookies_or_bearer_tokens_included": false,
+      "metadata_only": true,
+      "model_credentials_included": false,
+      "model_prompts_included": false,
+      "production_mutation_performed": false,
+      "raw_customer_payload_included": false,
+      "raw_report_text_included": false,
+      "raw_source_text_included": false,
+      "signed_urls_included": false
+    },
+    "production_authority_granted": false,
+    "real_adopter_evidence_accepted": false,
+    "receipt_id": "external-adoption-attestation:f6cf78bf6c08329f3f052f5cebde9050",
+    "schema_version": "cbb.external-adoption-attestation-receipt.v1",
+    "signature_verified": false,
+    "source_class": null,
+    "state": "attestation_ready"
+  }
+}

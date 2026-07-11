@@ -341,16 +341,20 @@ Gate:
 ```bash
 python3 scripts/verify_cbb_external_audit_intake.py --check
 python3 scripts/verify_cbb_controlled_adoption_outcomes.py --check
+python3 scripts/verify_cbb_external_adoption_attestation.py --check
 ```
 
 **Status:** implemented as a metadata-only intake and workflow skeleton. Seven
 controlled-adoption fixtures cover pass, block, incident, rollback, revocation, and
 reopen behavior without claiming a real adopter. Seven audit-intake fixtures prove
 state separation and reject wrong commits, invalid signatures, incomplete scope, and
-self-certification. The evaluator receives the expected release commit separately;
-external-adopter claims remain blocked pending an attestation contract. Audit identity
-also requires an actual-key fingerprint match and a fingerprint pre-pinned outside the
-submitted envelope. No fixture closes the external audit; issue #414 remains open.
+self-certification. Seven external-adopter attestation fixtures plus a hermetic
+integration path verify signature, identity, case-digest, package, receipt, revocation,
+commit, scope, and conformance bindings. The evaluator receives the expected release
+commit separately and accepts real-adopter evidence only from an independently pinned
+attestation receipt. Audit identity likewise requires an actual-key fingerprint match
+and a trust root pinned outside the submitted envelope. No fixture claims a real adopter
+or closes the external audit; issue #414 remains open.
 
 ## 7. Acceptance Matrix
 
@@ -415,10 +419,10 @@ Pause and require explicit human intervention when:
 - legal, regulated, safety-critical, or irreversible use is proposed;
 - external audit findings require risk acceptance rather than a clear remediation.
 
-## 11. Next Codex Goal
+## 11. Next External Goal
 
 ```text
-/goal Implement CBB Protocol v1 PR 8: controlled adoption and external audit intake.
+/goal Execute the first independent Delivery Clearance adoption or security audit.
 
 Source of truth:
 - README.md
@@ -429,25 +433,23 @@ Source of truth:
 - docs/cbb-protocol-v1-development-plan.md
 
 Objective:
-Exercise the completed Protocol v1 stack in bounded shadow and dogfood scenarios,
-while keeping independent audit intake and real-world outcomes distinct from local
-conformance evidence.
+Supply one real external evidence object to the completed intake channels without
+conflating repository fixtures, hermetic path tests, or self-asserted identities with
+independent execution.
 
 Required:
-1. Define metadata-only shadow and dogfood adoption receipts bound to exact Protocol v1
-   package and conformance digests.
-2. Add controlled pass, block, incident, rollback, revocation, and reopen fixtures.
-3. Add an external-audit report intake contract that rejects self-certification,
-   wrong commits, invalid signatures, incomplete scope, and open critical/high findings.
-4. Keep audit-ready, audit-received, remediation-pending, and audit-closed states
-   distinct; do not synthesize a passing external report.
-5. Prove adoption evidence cannot expand customer or production scope.
-6. Publish passes and failures with the same metadata-only outcome discipline.
-7. Wire adoption and audit-intake verifiers into release and distribution packs.
-8. Run the named Contract-First quality audit after implementation.
+1. Assign an independent external adopter or named human security auditor.
+2. Pin the actor's identity reference and Ed25519 public-key fingerprint outside the
+   submitted envelope.
+3. Execute only the exact pinned release scope and verify all published package hashes.
+4. Submit either a signed external-adoption attestation or signed audit report.
+5. Run the matching deterministic intake and preserve failures, incidents, findings,
+   remediation, and residual risk without widening scope.
+6. Keep the real-evidence count at zero until an independently supplied signature and
+   trust root both validate.
 
 Claim boundary:
-This PR may prove local shadow/dogfood workflow behavior and validate the structure of
-an independently signed audit report if one is supplied. It must not invent an auditor,
-claim the open audit is complete, authorize production, or generalize bounded outcomes.
+Repository automation may prepare expected scope and verify signed evidence. It must not
+invent an adopter or auditor, pin its own fixture key as an external trust root, claim
+the open audit is complete, authorize production, or generalize bounded outcomes.
 ```

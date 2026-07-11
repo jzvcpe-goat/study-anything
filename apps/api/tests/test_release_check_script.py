@@ -44,6 +44,7 @@ class ReleaseCheckScriptTests(unittest.TestCase):
         self.assertIn("verify_cbb_v1_external_consumer.py --check", script)
         self.assertIn("generate_cbb_adoption_audit_assets.py --check", script)
         self.assertIn("verify_cbb_controlled_adoption_outcomes.py --check", script)
+        self.assertIn("verify_cbb_external_adoption_attestation.py --check", script)
         self.assertIn("verify_cbb_external_audit_intake.py --check", script)
         self.assertIn('release_python_prefix="$("$python_bin" -c', script)
         self.assertIn('--venv "$release_python_prefix"', script)
@@ -91,6 +92,12 @@ class ReleaseCheckScriptTests(unittest.TestCase):
         self.assertFalse(receipt["cbb_v1_conformance_verifiers_passed_individually"])
         self.assertTrue(receipt["cbb_v1_adoption_audit_verifiers_integrated"])
         self.assertFalse(receipt["cbb_v1_adoption_audit_verifiers_passed_individually"])
+        self.assertTrue(
+            receipt["cbb_v1_external_adoption_attestation_verifier_integrated"]
+        )
+        self.assertFalse(
+            receipt["cbb_v1_external_adoption_attestation_verifier_passed"]
+        )
         self.assertTrue(receipt["partial_modes"]["dual_loop_only"])
         self.assertTrue(receipt["partial_modes"]["skip_clean_clone"])
         self.assertIn("do not claim full", receipt["claim_boundary"])

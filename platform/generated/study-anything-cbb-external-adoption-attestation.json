@@ -1,0 +1,96 @@
+{
+  "adoption": {
+    "coordination_issue_ref": null,
+    "external_signed_attestation_received": false,
+    "hermetic_external_path_contract_tested": true,
+    "independent_external_adopter_assigned": false,
+    "real_external_adopter_evidence_count": 0
+  },
+  "case_reports": [
+    {
+      "case_id": "attestation-ready",
+      "external_identity_attested": false,
+      "real_adopter_evidence_accepted": false,
+      "signature_verified": false,
+      "state": "attestation_ready"
+    },
+    {
+      "case_id": "invalid-signature",
+      "external_identity_attested": false,
+      "real_adopter_evidence_accepted": false,
+      "signature_verified": false,
+      "state": "rejected"
+    },
+    {
+      "case_id": "self-certified",
+      "external_identity_attested": false,
+      "real_adopter_evidence_accepted": false,
+      "signature_verified": true,
+      "state": "rejected"
+    },
+    {
+      "case_id": "synthetic-valid",
+      "external_identity_attested": false,
+      "real_adopter_evidence_accepted": false,
+      "signature_verified": true,
+      "state": "synthetic_validated"
+    },
+    {
+      "case_id": "untrusted-external",
+      "external_identity_attested": false,
+      "real_adopter_evidence_accepted": false,
+      "signature_verified": true,
+      "state": "rejected"
+    },
+    {
+      "case_id": "wrong-case-digest",
+      "external_identity_attested": false,
+      "real_adopter_evidence_accepted": false,
+      "signature_verified": true,
+      "state": "rejected"
+    },
+    {
+      "case_id": "wrong-commit",
+      "external_identity_attested": false,
+      "real_adopter_evidence_accepted": false,
+      "signature_verified": true,
+      "state": "rejected"
+    }
+  ],
+  "checks": {
+    "attestation_semantic_mismatch_blocks_controlled_adoption": true,
+    "attestation_states_remain_distinct": true,
+    "case_digest_mismatch_blocks_controlled_adoption": true,
+    "contradictory_observation_rejected": true,
+    "controlled_adoption_replays_envelope_not_receipt": true,
+    "controlled_receipt_binds_external_attestation": true,
+    "forged_public_key_fingerprint_rejected": true,
+    "generated_assets_current": true,
+    "hermetic_external_path_contract_passed": true,
+    "invalid_signature_rejected": true,
+    "known_fixture_public_key_rejected": true,
+    "missing_attestation_blocks_external_case": true,
+    "no_generated_fixture_claims_real_adopter_evidence": true,
+    "secret_like_metadata_rejected": true,
+    "self_certification_rejected": true,
+    "seven_attestation_cases_replayed": true,
+    "synthetic_to_external_source_forgery_rejected": true,
+    "untrusted_external_identity_rejected": true,
+    "wrong_case_digest_rejected": true,
+    "wrong_commit_rejected": true
+  },
+  "claim_boundary": "This verifies signature, identity, trust-root, case-binding, and Controlled Adoption integration behavior with synthetic fixtures and a hermetic path simulation. It does not identify an adopter, receive external evidence, authorize delivery, prove customer outcomes, or complete an independent audit.",
+  "failed_checks": [],
+  "privacy": {
+    "automatic_customer_send_performed": false,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "network_calls_performed": false,
+    "production_mutation_performed": false,
+    "raw_customer_payload_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false
+  },
+  "schema_version": "cbb-external-adoption-attestation-verification-v1",
+  "status": "pass"
+}

@@ -140,6 +140,16 @@ NODES: tuple[EvidenceNode, ...] = (
         dependencies=("cbb_adoption_audit_assets",),
     ),
     EvidenceNode(
+        "cbb_external_adoption_attestation",
+        "scripts/verify_cbb_external_adoption_attestation.py",
+        (),
+        ("--check",),
+        dependencies=(
+            "cbb_adoption_audit_assets",
+            "cbb_controlled_adoption_outcomes",
+        ),
+    ),
+    EvidenceNode(
         "cbb_external_audit_intake",
         "scripts/verify_cbb_external_audit_intake.py",
         (),
@@ -394,6 +404,7 @@ NODES: tuple[EvidenceNode, ...] = (
         ("--check",),
         dependencies=(
             "cbb_controlled_adoption_outcomes",
+            "cbb_external_adoption_attestation",
             "cbb_external_audit_intake",
         ),
     ),

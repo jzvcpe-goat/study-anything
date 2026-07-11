@@ -170,15 +170,28 @@ is bound to a named implementation version and pack digest. It is not certificat
 third-party endorsement, production safety, global revocation, customer outcome proof,
 or an independent human security audit. The protocol deliberately preserves that gap.
 
-## Controlled Adoption And External Audit Intake
+## Controlled Adoption, External Attestation, And Audit Intake
 
 Adoption evidence starts from an already verified source package. A shadow, dogfood, or
 canary observation can maintain or reduce that package's scope; it cannot create a new
 scope. Outcome Receipts make incident, rollback, revocation, and reopen states explicit.
 Repository fixtures are synthetic and claim zero real adopters. The evaluator compares
 the case commit with a separately supplied expected release commit. The
-`external_adopter` class is reserved and blocked until an independently verifiable
-adoption attestation exists; setting a class name or boolean cannot create evidence.
+`external_adopter` class is fail-closed unless a detached Ed25519 attestation is bound to
+the exact case digest, source package, Delivery Clearance receipt, revocation handle,
+scope, release commit, and conformance digest. Its organization, human-observer ref,
+fingerprint, and independence ref must match a trusted identity pinned outside the
+submitted envelope. Setting a class name, boolean, or self-declared trust record cannot
+create evidence. The deterministic fixture key is explicitly denied for external use.
+
+The external-adoption attestation receipt is an audit record, not a new clearance or a
+caller-controlled trust root. Controlled Adoption replays the original expected scope
+and signed envelope instead of trusting receipt booleans. Even a verified attestation
+grants no customer or production authority; the evaluator may only maintain or reduce
+the already approved source scope. The Controlled Adoption receipt id also binds the
+attestation receipt ref and digest. Repository fixtures and hermetic contract tests
+remain synthetic, so the public real-adopter count stays zero until an external actor
+supplies evidence.
 
 External audit intake is a separate state machine. Detached signature validity, exact
 package binding, auditor identity attestation, finding closure, and audit closure are

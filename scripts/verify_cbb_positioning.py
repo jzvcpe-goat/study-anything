@@ -64,7 +64,7 @@ REQUIRED_TEXT: dict[str, tuple[str, ...]] = {
         "Trust Growth And Degradation",
         "Cross-Implementation Conformance",
         "This is package-independent code, not an independent organization.",
-        "Controlled Adoption And External Audit Intake",
+        "Controlled Adoption, External Attestation, And Audit Intake",
     ),
     "docs/architecture.md": (
         "Delivery Clearance is protocol-first.",
@@ -92,7 +92,7 @@ REQUIRED_TEXT: dict[str, tuple[str, ...]] = {
         "Target V1 Schema Set",
         "PR 1: Canonical Models And Compatibility Map",
         "Quality Audit After Every PR",
-        "Next Codex Goal",
+        "Next External Goal",
     ),
     "docs/cbb-protocol-v1-scenarios-and-qualification.md": (
         "AI Delivery Clearance Protocol is the final open protocol before an AI delivery",
@@ -138,9 +138,15 @@ REQUIRED_TEXT: dict[str, tuple[str, ...]] = {
         "independent certification program",
     ),
     "docs/cbb-controlled-adoption.md": (
-        "real_adopter_evidence_count: 0",
+        "zero real adopter evidence",
         "No state may expand the source scope.",
         "do not prove external adoption",
+    ),
+    "docs/cbb-external-adoption-attestation.md": (
+        "optional Protocol v1 extension",
+        "Possession of a signing key is not external identity.",
+        "Controlled Adoption replays the envelope instead of trusting the intake receipt's",
+        "real-evidence count remains zero",
     ),
     "docs/cbb-external-audit-intake.md": (
         "The repository can prepare and verify the channel; it cannot manufacture the auditor",
@@ -167,6 +173,7 @@ REQUIRED_TEXT: dict[str, tuple[str, ...]] = {
         "scripts/verify_cbb_v1_external_consumer.py --check",
         "scripts/generate_cbb_adoption_audit_assets.py --check",
         "scripts/verify_cbb_controlled_adoption_outcomes.py --check",
+        "scripts/verify_cbb_external_adoption_attestation.py --check",
         "scripts/verify_cbb_external_audit_intake.py --check",
     ),
 }
