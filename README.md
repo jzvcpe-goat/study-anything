@@ -124,6 +124,9 @@ The current `main` line includes deterministic, metadata-only implementations fo
 - a deterministic Protocol v1 conformance pack and isolated second consumer that
   independently replay canonical bytes, gates, signatures, outcomes, evolution,
   version negotiation, extensions, and v0 migration without importing `study_anything`;
+- bounded shadow/dogfood/canary adoption receipts plus an externally signed audit-report
+  intake state machine that keeps synthetic fixtures, real adoption, remediation, and
+  audit closure as separate evidence classes;
 - delivery-class, scenario, external feedback, and controlled handoff evidence;
 - local API, Skill, platform-Agent, Docker, and static HTML artifact adapters;
 - local release, security, adoption, and external-audit preparation evidence.
@@ -170,6 +173,8 @@ From a prepared checkout:
 .venv/bin/python scripts/verify_cbb_v1_qualification.py --check
 .venv/bin/python scripts/generate_cbb_v1_conformance_pack.py --check
 .venv/bin/python scripts/verify_cbb_v1_external_consumer.py --check
+.venv/bin/python scripts/verify_cbb_controlled_adoption_outcomes.py --check
+.venv/bin/python scripts/verify_cbb_external_audit_intake.py --check
 ./scripts/release_check.sh --cbb-protocol-only
 ```
 
@@ -240,6 +245,8 @@ not an autonomous release decision.
 - [Protocol governance](docs/protocol-governance.md)
 - [Extensions and versioning](docs/extensions-and-versioning.md)
 - [Compatibility and trademark](docs/compatibility-and-trademark.md)
+- [Controlled adoption evidence](docs/cbb-controlled-adoption.md)
+- [External audit report intake](docs/cbb-external-audit-intake.md)
 - [Roadmap](docs/roadmap.md)
 - [Delivery Trust Receipt](docs/delivery-trust-receipt.md)
 - [Customer Handoff Package](docs/customer-handoff-package.md)

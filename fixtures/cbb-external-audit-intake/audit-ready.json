@@ -1,0 +1,94 @@
+{
+  "case_id": "audit-ready",
+  "envelope": null,
+  "expected": {
+    "audit_closure_accepted": false,
+    "report_execution_completed": false,
+    "state": "audit_ready"
+  },
+  "expected_scope": {
+    "audit_pack_sha256": "a511697dd3cdec593b71dfdc8968b39ae8ff3a373bb348337733374fac4bc0f5",
+    "audit_plan_sha256": "9fe349acd7409db8ad64132fb1cccffdb13ed2f13ccf2413ee1635ba228355f0",
+    "conformance_pack_sha256": "aa8c80e9cc71b08d08785e92c6d0be55935c4386b924b28c7de5a9aa8b6817fe",
+    "repository": "jzvcpe-goat/study-anything",
+    "repository_actor_refs": [
+      "jzvcpe-goat",
+      "study-anything-maintainers",
+      "repository-maintainer"
+    ],
+    "required_scope_areas": [
+      "oidc_and_tenant_authorization",
+      "api_container_and_filesystem",
+      "agent_egress_and_credentials",
+      "dependency_and_supply_chain",
+      "plugin_backup_sync_and_local_data",
+      "dual_loop_and_delivery_trust",
+      "ci_release_and_reliability"
+    ],
+    "scope_commit": "1ada8ffa6318b91e38ec69bc5cd14dc294950518",
+    "trusted_auditor_fingerprints": []
+  },
+  "fixture_class": "no_external_report",
+  "receipt": {
+    "audit_closure_accepted": false,
+    "blocking_reasons": [
+      "external_signed_report_not_received"
+    ],
+    "checks": {
+      "external_report_present": false,
+      "pinned_scope_ready": true
+    },
+    "claim_boundary": {
+      "current_claim": "The exact scope is ready to receive an external audit report.",
+      "maximum_scope": "blocked",
+      "not_claimed": [
+        "production approval",
+        "legal or compliance certification",
+        "general AI correctness",
+        "vulnerability-free software",
+        "external identity from signature possession alone",
+        "audit closure from a synthetic fixture",
+        "delivery authority"
+      ]
+    },
+    "decision": null,
+    "delivery_authority_granted": false,
+    "evaluated_at": "2026-07-14T00:00:00Z",
+    "external_identity_attested": false,
+    "finding_counts": {
+      "critical": 0,
+      "high": 0,
+      "informational": 0,
+      "low": 0,
+      "medium": 0
+    },
+    "next_required_actions": [
+      "assign an independent human auditor",
+      "pin the independently verified auditor public-key fingerprint",
+      "return a signed report bound to the pinned commit and package digests"
+    ],
+    "open_critical_high_count": 0,
+    "privacy": {
+      "attention_stream_included": false,
+      "automatic_customer_send_performed": false,
+      "cookies_or_bearer_tokens_included": false,
+      "metadata_only": true,
+      "model_credentials_included": false,
+      "model_prompts_included": false,
+      "production_mutation_performed": false,
+      "raw_customer_payload_included": false,
+      "raw_report_text_included": false,
+      "raw_source_text_included": false,
+      "signed_urls_included": false
+    },
+    "production_certification_granted": false,
+    "receipt_id": "external-audit-intake:7f1b3588afce874a69a2cf7395f893eb",
+    "report_digest_sha256": null,
+    "report_execution_completed": false,
+    "schema_version": "external-security-audit-intake-receipt-v1",
+    "scope_commit": "1ada8ffa6318b91e38ec69bc5cd14dc294950518",
+    "signature_verified": false,
+    "source_class": null,
+    "state": "audit_ready"
+  }
+}

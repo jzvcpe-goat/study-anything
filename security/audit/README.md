@@ -25,6 +25,22 @@ itself as the independent auditor or set the final audit decision.
    `platform/schemas/security/external-security-audit-report-v1.schema.json`.
 7. Apply `remediation-policy.md`; rerun affected tests after fixes.
 
+The repository can ingest a detached Ed25519 report envelope through
+`scripts/cbb_external_audit_intake.py`, but signature possession is not auditor
+identity. A real external report must also carry an independently attested trust
+record bound to the pinned repository, audit plan, audit pack, and conformance
+pack. Its actual public-key fingerprint must already be pinned in the expected
+scope outside the submitted envelope. Repository fixtures may validate shape and
+rejection behavior; they can never produce `audit_closed`.
+
+The machine states remain deliberately distinct:
+
+`audit_ready` -> `audit_received` -> `remediation_pending` -> `audit_closed`
+
+Wrong-commit, incomplete-scope, invalid-signature, and self-certified reports are
+`rejected`. Any open critical or high finding keeps the intake in
+`remediation_pending`.
+
 ## Boundary
 
 The distributable pack is metadata-only. It contains public documentation,

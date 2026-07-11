@@ -1,0 +1,86 @@
+{
+  "case_reports": [
+    {
+      "authorization_delta": "blocked",
+      "case_id": "canary-scope-expansion-blocked",
+      "requested_scope": "controlled_customer_handoff",
+      "resulting_scope": "blocked",
+      "status": "blocked"
+    },
+    {
+      "authorization_delta": "blocked",
+      "case_id": "claim-violation-revokes",
+      "requested_scope": "internal_handoff",
+      "resulting_scope": "blocked",
+      "status": "revoked"
+    },
+    {
+      "authorization_delta": "none",
+      "case_id": "dogfood-pass",
+      "requested_scope": "internal_handoff",
+      "resulting_scope": "internal_handoff",
+      "status": "observed"
+    },
+    {
+      "authorization_delta": "blocked",
+      "case_id": "incident-freezes",
+      "requested_scope": "internal_handoff",
+      "resulting_scope": "blocked",
+      "status": "incident_recorded"
+    },
+    {
+      "authorization_delta": "blocked",
+      "case_id": "reopen-requires-fresh-clearance",
+      "requested_scope": "internal_handoff",
+      "resulting_scope": "blocked",
+      "status": "reopen_required"
+    },
+    {
+      "authorization_delta": "narrowed",
+      "case_id": "rollback-narrows",
+      "requested_scope": "internal_handoff",
+      "resulting_scope": "sandbox_only",
+      "status": "rolled_back"
+    },
+    {
+      "authorization_delta": "none",
+      "case_id": "shadow-pass",
+      "requested_scope": "sandbox_only",
+      "resulting_scope": "sandbox_only",
+      "status": "observed"
+    }
+  ],
+  "checks": {
+    "canary_scope_inflation_blocked": true,
+    "conformance_digest_mismatch_blocked": true,
+    "generated_assets_current": true,
+    "incident_rollback_revocation_reopen_distinct": true,
+    "production_mutation_rejected": true,
+    "receipt_scope_inflation_rejected": true,
+    "release_commit_mismatch_blocked": true,
+    "secret_like_metadata_rejected": true,
+    "seven_state_cases_replayed": true,
+    "shadow_and_dogfood_pass_without_new_authority": true,
+    "synthetic_real_adopter_claim_rejected": true,
+    "unattested_external_adopter_blocked": true
+  },
+  "claim_boundary": "This proves deterministic local shadow, dogfood, canary, incident, rollback, revocation, and reopen behavior against synthetic metadata fixtures. It does not prove external adoption, customer outcomes, production safety, or audit completion.",
+  "evidence": {
+    "conformance_pack_sha256": "aa8c80e9cc71b08d08785e92c6d0be55935c4386b924b28c7de5a9aa8b6817fe",
+    "fixture_count": 7,
+    "real_adopter_evidence_count": 0,
+    "source_scope_commit": "1ada8ffa6318b91e38ec69bc5cd14dc294950518"
+  },
+  "failed_checks": [],
+  "privacy": {
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "network_calls_performed": false,
+    "production_mutation_performed": false,
+    "raw_customer_payload_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false
+  },
+  "schema_version": "cbb-controlled-adoption-verification-v1",
+  "status": "pass"
+}

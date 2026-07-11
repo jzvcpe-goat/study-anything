@@ -1,0 +1,200 @@
+{
+  "case_id": "invalid-signature",
+  "envelope": {
+    "auditor_trust": {
+      "fixture_only": true,
+      "identity_status": "synthetic_fixture",
+      "independence_attestation_ref": "fixture-only:no-external-identity",
+      "independent_from_repository": false,
+      "lead_human_reviewer": "fixture-human-reviewer",
+      "organization": "Synthetic Audit Fixture Lab",
+      "public_key_fingerprint_sha256": "089694835ee689284947bf1c2b11c6a425a32d39d2aa4ef2f140fdd603f719ed"
+    },
+    "detached_signature": {
+      "algorithm": "ed25519",
+      "public_key": "5znbSOfVu0j32Ka9i5-kZxk-l0AT_VxP2wUMKusNdIo",
+      "public_key_encoding": "ed25519-raw-base64url",
+      "public_key_fingerprint_sha256": "089694835ee689284947bf1c2b11c6a425a32d39d2aa4ef2f140fdd603f719ed",
+      "signature": "Aa6Q51f7Bn8D2vVURpIDmSfIj-qW51-Xy1D-_8SYRF-NNDvI38M_e3wTcDUvfzFzgZ9U12r3u93P2GDmzM1ACg",
+      "signed_payload_sha256": "1b814a0423ccecef3010715cd30b22f8563bd461e43b42a2562fe82f8a5e520b"
+    },
+    "envelope_id": "audit-intake-envelope:invalid-signature",
+    "findings": [],
+    "privacy": {
+      "attention_stream_included": false,
+      "automatic_customer_send_performed": false,
+      "cookies_or_bearer_tokens_included": false,
+      "metadata_only": true,
+      "model_credentials_included": false,
+      "model_prompts_included": false,
+      "production_mutation_performed": false,
+      "raw_customer_payload_included": false,
+      "raw_report_text_included": false,
+      "raw_source_text_included": false,
+      "signed_urls_included": false
+    },
+    "report": {
+      "audit_status": "completed_by_independent_auditor",
+      "auditor": {
+        "independence_attested": true,
+        "lead_human_reviewer": "fixture-human-reviewer",
+        "organization": "Synthetic Audit Fixture Lab"
+      },
+      "claim_boundary": {
+        "audit_completed": true,
+        "general_model_correctness": false,
+        "legal_certification": false,
+        "production_certification": false
+      },
+      "decision": "pass",
+      "evidence_bindings": {
+        "audit_pack_ref": "platform/generated/study-anything-external-security-audit-pack.zip",
+        "audit_pack_sha256": "a511697dd3cdec593b71dfdc8968b39ae8ff3a373bb348337733374fac4bc0f5",
+        "audit_plan_ref": "security/audit/audit-plan.json",
+        "audit_plan_sha256": "9fe349acd7409db8ad64132fb1cccffdb13ed2f13ccf2413ee1635ba228355f0",
+        "conformance_pack_ref": "platform/generated/study-anything-cbb-v1-conformance-pack.zip",
+        "conformance_pack_sha256": "aa8c80e9cc71b08d08785e92c6d0be55935c4386b924b28c7de5a9aa8b6817fe",
+        "protocol_version": "1.0.0"
+      },
+      "finding_counts": {
+        "critical": 0,
+        "high": 0,
+        "informational": 0,
+        "low": 0,
+        "medium": 0
+      },
+      "finding_refs": [],
+      "repository": "jzvcpe-goat/study-anything",
+      "review_period": {
+        "completed_at": "2026-07-13T00:00:00Z",
+        "started_at": "2026-07-12T00:00:00Z"
+      },
+      "schema_version": "external-security-audit-report-v1",
+      "scope_areas": [
+        "oidc_and_tenant_authorization",
+        "api_container_and_filesystem",
+        "agent_egress_and_credentials",
+        "dependency_and_supply_chain",
+        "plugin_backup_sync_and_local_data",
+        "dual_loop_and_delivery_trust",
+        "ci_release_and_reliability"
+      ],
+      "scope_commit": "1ada8ffa6318b91e38ec69bc5cd14dc294950518",
+      "signature": {
+        "method": "other",
+        "report_sha256": "1b814a0423ccecef3010715cd30b22f8563bd461e43b42a2562fe82f8a5e520b",
+        "signature_ref": "detached:audit-intake-envelope:invalid-signature"
+      }
+    },
+    "schema_version": "external-security-audit-intake-envelope-v1",
+    "source_class": "synthetic_fixture",
+    "submitted_at": "2026-07-13T12:00:00Z"
+  },
+  "expected": {
+    "audit_closure_accepted": false,
+    "report_execution_completed": false,
+    "state": "rejected"
+  },
+  "expected_scope": {
+    "audit_pack_sha256": "a511697dd3cdec593b71dfdc8968b39ae8ff3a373bb348337733374fac4bc0f5",
+    "audit_plan_sha256": "9fe349acd7409db8ad64132fb1cccffdb13ed2f13ccf2413ee1635ba228355f0",
+    "conformance_pack_sha256": "aa8c80e9cc71b08d08785e92c6d0be55935c4386b924b28c7de5a9aa8b6817fe",
+    "repository": "jzvcpe-goat/study-anything",
+    "repository_actor_refs": [
+      "jzvcpe-goat",
+      "study-anything-maintainers",
+      "repository-maintainer"
+    ],
+    "required_scope_areas": [
+      "oidc_and_tenant_authorization",
+      "api_container_and_filesystem",
+      "agent_egress_and_credentials",
+      "dependency_and_supply_chain",
+      "plugin_backup_sync_and_local_data",
+      "dual_loop_and_delivery_trust",
+      "ci_release_and_reliability"
+    ],
+    "scope_commit": "1ada8ffa6318b91e38ec69bc5cd14dc294950518",
+    "trusted_auditor_fingerprints": []
+  },
+  "fixture_class": "synthetic_signature_fixture",
+  "receipt": {
+    "audit_closure_accepted": false,
+    "blocking_reasons": [
+      "detached_signature_verified"
+    ],
+    "checks": {
+      "all_findings_closed": true,
+      "audit_pack_digest_matches": true,
+      "audit_plan_digest_matches": true,
+      "conformance_pack_digest_matches": true,
+      "critical_high_closed": true,
+      "decision_is_pass": true,
+      "detached_signature_verified": false,
+      "finding_counts_match": true,
+      "finding_refs_match": true,
+      "finding_scope_matches": true,
+      "public_key_fingerprint_valid": true,
+      "repository_matches": true,
+      "repository_self_certification_rejected": true,
+      "required_retests_passed": true,
+      "required_scope_complete": true,
+      "scope_commit_matches": true,
+      "signature_reference_matches": true,
+      "signer_fingerprint_matches": true,
+      "signer_trusted_for_source_class": true,
+      "source_identity_class_consistent": true,
+      "submitted_after_completion": true
+    },
+    "claim_boundary": {
+      "current_claim": "This receipt records whether an externally supplied audit report can enter the repository audit state machine.",
+      "maximum_scope": "blocked",
+      "not_claimed": [
+        "production approval",
+        "legal or compliance certification",
+        "general AI correctness",
+        "vulnerability-free software",
+        "external identity from signature possession alone",
+        "audit closure from a synthetic fixture",
+        "delivery authority"
+      ]
+    },
+    "decision": "pass",
+    "delivery_authority_granted": false,
+    "evaluated_at": "2026-07-14T00:00:00Z",
+    "external_identity_attested": false,
+    "finding_counts": {
+      "critical": 0,
+      "high": 0,
+      "informational": 0,
+      "low": 0,
+      "medium": 0
+    },
+    "next_required_actions": [
+      "correct rejected audit evidence and resubmit"
+    ],
+    "open_critical_high_count": 0,
+    "privacy": {
+      "attention_stream_included": false,
+      "automatic_customer_send_performed": false,
+      "cookies_or_bearer_tokens_included": false,
+      "metadata_only": true,
+      "model_credentials_included": false,
+      "model_prompts_included": false,
+      "production_mutation_performed": false,
+      "raw_customer_payload_included": false,
+      "raw_report_text_included": false,
+      "raw_source_text_included": false,
+      "signed_urls_included": false
+    },
+    "production_certification_granted": false,
+    "receipt_id": "external-audit-intake:efe82081ac0aded4e8e71940a033fd49",
+    "report_digest_sha256": "1b814a0423ccecef3010715cd30b22f8563bd461e43b42a2562fe82f8a5e520b",
+    "report_execution_completed": false,
+    "schema_version": "external-security-audit-intake-receipt-v1",
+    "scope_commit": "1ada8ffa6318b91e38ec69bc5cd14dc294950518",
+    "signature_verified": false,
+    "source_class": "synthetic_fixture",
+    "state": "rejected"
+  }
+}

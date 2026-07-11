@@ -12,7 +12,7 @@ from pathlib import Path
 import subprocess
 import sys
 import time
-from typing import Callable, Sequence
+from typing import Callable, Sequence, TypedDict
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -55,6 +55,19 @@ class NodeRun:
     status: str
     exit_code: int
     failure_kind: str | None
+    duration_ms: int
+
+
+class StageSummary(TypedDict):
+    executed: int
+    passed: int
+    failed_node_ids: list[str]
+
+
+class PassSummary(TypedDict):
+    pass_index: int
+    refresh: StageSummary
+    check: StageSummary
     duration_ms: int
 
 
@@ -114,10 +127,275 @@ NODES: tuple[EvidenceNode, ...] = (
         dependencies=("platform_plugin_packs",),
     ),
     EvidenceNode(
+        "cbb_adoption_audit_assets",
+        "scripts/generate_cbb_adoption_audit_assets.py",
+        ("--write",),
+        ("--check",),
+    ),
+    EvidenceNode(
+        "cbb_controlled_adoption_outcomes",
+        "scripts/verify_cbb_controlled_adoption_outcomes.py",
+        (),
+        ("--check",),
+        dependencies=("cbb_adoption_audit_assets",),
+    ),
+    EvidenceNode(
+        "cbb_external_audit_intake",
+        "scripts/verify_cbb_external_audit_intake.py",
+        (),
+        ("--check",),
+        dependencies=("cbb_adoption_audit_assets",),
+    ),
+    EvidenceNode(
+        "delivery_trust_case_pack",
+        "scripts/generate_delivery_trust_case_pack.py",
+        (),
+        ("--check",),
+    ),
+    EvidenceNode(
+        "delivery_trust_case_pack_consumer",
+        "scripts/verify_delivery_trust_case_pack_consumer_walkthrough.py",
+        ("--write",),
+        ("--check",),
+        dependencies=("delivery_trust_case_pack",),
+    ),
+    EvidenceNode(
+        "trust_evidence_handoff_pack",
+        "scripts/generate_trust_evidence_handoff_pack.py",
+        ("--write",),
+        ("--check",),
+        dependencies=("delivery_trust_case_pack_consumer",),
+    ),
+    EvidenceNode(
+        "trust_evidence_handoff_consumer",
+        "scripts/verify_trust_evidence_handoff_pack_consumer_walkthrough.py",
+        ("--write",),
+        ("--check",),
+        dependencies=("trust_evidence_handoff_pack",),
+    ),
+    EvidenceNode(
+        "trust_evidence_acceptance_drill",
+        "scripts/verify_trust_evidence_acceptance_drill.py",
+        ("--write",),
+        ("--check",),
+        dependencies=("trust_evidence_handoff_consumer",),
+    ),
+    EvidenceNode(
+        "controlled_handoff_runbook",
+        "scripts/verify_controlled_handoff_runbook.py",
+        ("--write",),
+        ("--check",),
+        dependencies=("trust_evidence_acceptance_drill",),
+    ),
+    EvidenceNode(
+        "customer_delivery_trust_envelope",
+        "scripts/verify_customer_delivery_trust_envelope.py",
+        ("--write",),
+        ("--check",),
+        dependencies=("controlled_handoff_runbook",),
+    ),
+    EvidenceNode(
+        "customer_delivery_rehearsal",
+        "scripts/verify_customer_delivery_rehearsal.py",
+        ("--write",),
+        ("--check",),
+        dependencies=("customer_delivery_trust_envelope",),
+    ),
+    EvidenceNode(
+        "code_review_operator_rehearsal",
+        "scripts/verify_code_review_operator_handoff_rehearsal.py",
+        ("--write",),
+        ("--check",),
+        dependencies=("customer_delivery_rehearsal",),
+    ),
+    EvidenceNode(
+        "client_report_operator_rehearsal",
+        "scripts/verify_client_report_operator_handoff_rehearsal.py",
+        ("--write",),
+        ("--check",),
+        dependencies=("customer_delivery_rehearsal",),
+    ),
+    EvidenceNode(
+        "support_response_operator_rehearsal",
+        "scripts/verify_support_response_operator_handoff_rehearsal.py",
+        ("--write",),
+        ("--check",),
+        dependencies=("customer_delivery_rehearsal",),
+    ),
+    EvidenceNode(
+        "operator_handoff_rehearsal_contract",
+        "scripts/verify_operator_handoff_rehearsal_contract.py",
+        ("--write",),
+        ("--check",),
+        dependencies=(
+            "code_review_operator_rehearsal",
+            "client_report_operator_rehearsal",
+            "support_response_operator_rehearsal",
+        ),
+    ),
+    EvidenceNode(
+        "external_feedback_receipt",
+        "scripts/verify_external_feedback_receipt.py",
+        ("--write",),
+        ("--check",),
+        dependencies=("operator_handoff_rehearsal_contract",),
+    ),
+    EvidenceNode(
+        "external_feedback_backlog",
+        "scripts/verify_external_feedback_backlog_bridge.py",
+        ("--write",),
+        ("--check",),
+        dependencies=("external_feedback_receipt",),
+    ),
+    EvidenceNode(
+        "product_owner_prioritization",
+        "scripts/verify_product_owner_prioritization_gate.py",
+        ("--write",),
+        ("--check",),
+        dependencies=("external_feedback_backlog",),
+    ),
+    EvidenceNode(
+        "product_spec_eval_authoring",
+        "scripts/verify_product_spec_eval_authoring_gate.py",
+        ("--write",),
+        ("--check",),
+        dependencies=("product_owner_prioritization",),
+    ),
+    EvidenceNode(
+        "product_loop_brief_intake",
+        "scripts/verify_product_loop_brief_intake.py",
+        ("--write",),
+        ("--check",),
+        dependencies=("product_spec_eval_authoring",),
+    ),
+    EvidenceNode(
+        "end_to_end_trust_chain",
+        "scripts/verify_end_to_end_trust_chain_harness.py",
+        ("--write",),
+        ("--check",),
+        dependencies=("product_loop_brief_intake",),
+    ),
+    EvidenceNode(
+        "real_adopter_scenario_import",
+        "scripts/verify_real_adopter_scenario_import.py",
+        ("--write",),
+        ("--check",),
+        dependencies=("end_to_end_trust_chain",),
+    ),
+    EvidenceNode(
+        "spec_eval_scenario_rehearsal",
+        "scripts/verify_spec_eval_scenario_execution_rehearsal.py",
+        ("--write",),
+        ("--check",),
+        dependencies=("real_adopter_scenario_import",),
+    ),
+    EvidenceNode(
+        "sandboxed_patch_proposal_rehearsal",
+        "scripts/verify_sandboxed_patch_proposal_rehearsal.py",
+        ("--write",),
+        ("--check",),
+        dependencies=("spec_eval_scenario_rehearsal",),
+    ),
+    EvidenceNode(
+        "patch_operator_handoff_bridge",
+        "scripts/verify_patch_proposal_operator_handoff_bridge.py",
+        ("--write",),
+        ("--check",),
+        dependencies=("sandboxed_patch_proposal_rehearsal",),
+    ),
+    EvidenceNode(
+        "patch_acceptance_drill",
+        "scripts/verify_patch_proposal_acceptance_drill.py",
+        ("--write",),
+        ("--check",),
+        dependencies=("patch_operator_handoff_bridge",),
+    ),
+    EvidenceNode(
+        "patch_external_work_order_pack",
+        "scripts/verify_patch_proposal_external_work_order_pack.py",
+        ("--write",),
+        ("--check",),
+        dependencies=("patch_acceptance_drill",),
+    ),
+    EvidenceNode(
+        "patch_external_operator_completion",
+        "scripts/verify_patch_proposal_external_operator_completion.py",
+        ("--write",),
+        ("--check",),
+        dependencies=("patch_external_work_order_pack",),
+    ),
+    EvidenceNode(
+        "patch_customer_handoff_boundary",
+        "scripts/verify_patch_proposal_customer_handoff_boundary_gate.py",
+        ("--write",),
+        ("--check",),
+        dependencies=("patch_external_operator_completion",),
+    ),
+    EvidenceNode(
+        "patch_customer_delivery_envelope",
+        "scripts/verify_patch_proposal_customer_delivery_envelope.py",
+        ("--write",),
+        ("--check",),
+        dependencies=("patch_customer_handoff_boundary",),
+    ),
+    EvidenceNode(
+        "patch_customer_delivery_rehearsal",
+        "scripts/verify_patch_proposal_customer_delivery_rehearsal.py",
+        ("--write",),
+        ("--check",),
+        dependencies=("patch_customer_delivery_envelope",),
+    ),
+    EvidenceNode(
+        "patch_customer_delivery_outcome",
+        "scripts/verify_patch_proposal_customer_delivery_outcome_receipt.py",
+        ("--write",),
+        ("--check",),
+        dependencies=("patch_customer_delivery_rehearsal",),
+    ),
+    EvidenceNode(
+        "patch_customer_feedback_intake",
+        "scripts/verify_patch_proposal_customer_feedback_intake_receipt.py",
+        ("--write",),
+        ("--check",),
+        dependencies=("patch_customer_delivery_outcome",),
+    ),
+    EvidenceNode(
+        "dual_loop_scenario_harness",
+        "scripts/verify_dual_loop_scenario_harness.py",
+        ("--write",),
+        ("--check",),
+        dependencies=("patch_customer_feedback_intake",),
+    ),
+    EvidenceNode(
+        "dual_loop_trust_scenario_pack",
+        "scripts/generate_dual_loop_trust_scenario_pack.py",
+        (),
+        ("--check",),
+        dependencies=("dual_loop_scenario_harness",),
+    ),
+    EvidenceNode(
+        "dual_loop_trust_scenario_pack_verification",
+        "scripts/verify_dual_loop_trust_scenario_pack.py",
+        ("--check",),
+        ("--check",),
+        dependencies=("dual_loop_trust_scenario_pack",),
+    ),
+    EvidenceNode(
+        "dual_loop_trust_pack_consumer",
+        "scripts/verify_dual_loop_trust_pack_consumer_walkthrough.py",
+        ("--write",),
+        ("--check",),
+        dependencies=("dual_loop_trust_scenario_pack_verification",),
+    ),
+    EvidenceNode(
         "external_security_audit_pack",
         "scripts/generate_external_security_audit_pack.py",
         (),
         ("--check",),
+        dependencies=(
+            "cbb_controlled_adoption_outcomes",
+            "cbb_external_audit_intake",
+        ),
     ),
     EvidenceNode(
         "platform_handoff_checklist",
@@ -140,6 +418,7 @@ NODES: tuple[EvidenceNode, ...] = (
             "release_cleanroom_bootstrap",
             "platform_handoff_checklist",
             "platform_plugin_downloads",
+            "dual_loop_trust_pack_consumer",
         ),
         feedback_dependencies=(
             "platform_operator_drill",
@@ -357,7 +636,11 @@ def run_stage(
     return results
 
 
-def summarize_pass(pass_index: int, refresh: Sequence[NodeRun], checks: Sequence[NodeRun]) -> dict[str, object]:
+def summarize_pass(
+    pass_index: int,
+    refresh: Sequence[NodeRun],
+    checks: Sequence[NodeRun],
+) -> PassSummary:
     return {
         "pass_index": pass_index,
         "refresh": {
@@ -385,7 +668,7 @@ def execute_topology(
 ) -> dict[str, object]:
     ordered = validate_and_order(nodes)
     started_at = utc_now()
-    pass_summaries: list[dict[str, object]] = []
+    pass_summaries: list[PassSummary] = []
     converged = False
 
     if mode == "check":
@@ -429,8 +712,10 @@ def execute_topology(
         {
             node_id
             for summary in pass_summaries[-1:]
-            for stage in ("refresh", "check")
-            for node_id in summary[stage]["failed_node_ids"]
+            for node_id in (
+                *summary["refresh"]["failed_node_ids"],
+                *summary["check"]["failed_node_ids"],
+            )
         }
     )
     return {

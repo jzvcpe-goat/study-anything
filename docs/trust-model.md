@@ -170,6 +170,24 @@ is bound to a named implementation version and pack digest. It is not certificat
 third-party endorsement, production safety, global revocation, customer outcome proof,
 or an independent human security audit. The protocol deliberately preserves that gap.
 
+## Controlled Adoption And External Audit Intake
+
+Adoption evidence starts from an already verified source package. A shadow, dogfood, or
+canary observation can maintain or reduce that package's scope; it cannot create a new
+scope. Outcome Receipts make incident, rollback, revocation, and reopen states explicit.
+Repository fixtures are synthetic and claim zero real adopters. The evaluator compares
+the case commit with a separately supplied expected release commit. The
+`external_adopter` class is reserved and blocked until an independently verifiable
+adoption attestation exists; setting a class name or boolean cannot create evidence.
+
+External audit intake is a separate state machine. Detached signature validity, exact
+package binding, auditor identity attestation, finding closure, and audit closure are
+different checks. A synthetic signature fixture can prove the verifier works but can
+never become `audit_received` or `audit_closed`. Repository CI and zero scanner alerts
+remain supporting evidence only. A real external identity additionally requires the
+actual public-key digest to match the report fingerprint and that fingerprint to be
+pre-pinned in the expected scope, outside the submitted envelope.
+
 ## Trust Growth And Degradation
 
 Repeated success can reduce friction only inside the same bounded scenario. A mature
@@ -247,6 +265,8 @@ python3 scripts/verify_cbb_memory_quarantine.py --check
 python3 scripts/verify_cbb_evolution_gate.py --check
 python3 scripts/generate_cbb_v1_conformance_pack.py --check
 python3 scripts/verify_cbb_v1_external_consumer.py --check
+python3 scripts/verify_cbb_controlled_adoption_outcomes.py --check
+python3 scripts/verify_cbb_external_audit_intake.py --check
 ```
 
 Passing these commands proves only their documented deterministic scope.

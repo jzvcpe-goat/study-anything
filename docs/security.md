@@ -193,6 +193,23 @@ contains only public metadata, schemas, hashes, and evidence. It requires an
 external human security reviewer and a signed report bound to an exact commit.
 Generating or verifying the pack does not complete the audit.
 
+The audit-intake verifier additionally binds the report to the audit pack,
+conformance pack, audit plan, exact commit, complete scope, findings, and detached
+Ed25519 signature. Signature possession is not external identity: a separately supplied
+auditor trust record must attest the organization and human reviewer, the declared
+fingerprint must match the actual public key, and that fingerprint must already be
+pinned in the expected scope outside the submitted envelope. Synthetic and
+external-shape fixtures can never close the audit. Open critical/high findings route to
+remediation. Issue #414 remains open until a real independently signed report is supplied.
+
+Controlled-adoption receipts use the same fail-closed boundary. Shadow and dogfood
+passes cannot expand the source Delivery Clearance scope; incidents, rollback,
+revocation, and reopen requirements move trust downward or keep it blocked. Current
+repository fixtures contain no real adopter evidence and authorize no customer send or
+production mutation. The expected release commit is an independent evaluator input, not
+a value trusted from the adoption case. The `external_adopter` evidence class remains
+fail-closed until an independently verifiable adoption-attestation contract exists.
+
 For a credentialed, read-only repository ledger check, run:
 
 ```bash
