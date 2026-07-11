@@ -156,14 +156,18 @@ the historically valid signed source clearance, bounded sample, adverse events,
 rollback result, replayed deterministic degradation action, and local revocation effect
 while forbidding trust inflation. The Agentic evidence layer now uses a typed tool
 allowlist, quarantined metadata memory, actor separation, deterministic replay, and a
-signed evolution receipt that grants neither automatic apply nor delivery scope.
+signed evolution receipt that grants neither automatic apply nor delivery scope. A
+deterministic conformance pack now publishes all eight schemas and bounded vectors. A
+second consumer under `conformance/` independently replays the fixture contract without
+importing the reference package.
 See
 [Protocol v1 Canonical Contracts](cbb-protocol-v1-contracts.md) and
 [Protocol v1 Deterministic Trust Kernel](cbb-protocol-v1-kernel.md), and
 [Protocol v1 Local Provenance](cbb-protocol-v1-provenance.md), and
 [Protocol v1 Scenarios And Qualification](cbb-protocol-v1-scenarios-and-qualification.md), and
 [Protocol v1 Outcomes And Trust Degradation](cbb-protocol-v1-outcomes.md), and
-[Protocol v1 Agentic Evidence And Evolution Gate](cbb-protocol-v1-agentic-evolution.md).
+[Protocol v1 Agentic Evidence And Evolution Gate](cbb-protocol-v1-agentic-evolution.md),
+and [Protocol v1 Conformance](cbb-protocol-v1-conformance.md).
 
 ## Current Verifier Commands
 
@@ -181,6 +185,8 @@ python3 scripts/verify_cbb_v1_outcomes.py --check
 python3 scripts/verify_cbb_agentic_tool_boundary.py --check
 python3 scripts/verify_cbb_memory_quarantine.py --check
 python3 scripts/verify_cbb_evolution_gate.py --check
+python3 scripts/generate_cbb_v1_conformance_pack.py --check
+python3 scripts/verify_cbb_v1_external_consumer.py --check
 python3 scripts/verify_cbb_protocol_contracts.py --check
 python3 scripts/verify_cbb_gate.py --check
 python3 scripts/verify_cbb_receipt_chain.py --check
@@ -194,3 +200,7 @@ release validation.
 
 The ordered work needed to converge the existing receipt family into Protocol v1 is
 defined in [Protocol v1 Development Plan](cbb-protocol-v1-development-plan.md).
+
+Fixture conformance is not certification. It proves local agreement with a named pack
+digest, not production safety, customer outcomes, global revocation, external signer
+identity, or independent audit completion.

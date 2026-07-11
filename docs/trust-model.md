@@ -156,6 +156,20 @@ signals, and counter-evidence; and the evolution receipt is recomputed by a fixe
 verifier. Six controls and distinct human actors are required before a candidate can
 reach `local_candidate`. That state grants no delivery scope and performs no apply.
 
+## Cross-Implementation Conformance
+
+The deterministic Protocol v1 conformance pack lets a consumer outside the
+`study_anything` package replay all eight canonical object classes, Trust Kernel
+decisions, provenance signatures, outcome degradation, Evolution Gate decisions,
+version negotiation, extension authority, privacy negatives, and v0 migration. The
+second consumer imports no reference package code and runs offline in isolated Python
+mode.
+
+This is package-independent code, not an independent organization. Fixture conformance
+is bound to a named implementation version and pack digest. It is not certification,
+third-party endorsement, production safety, global revocation, customer outcome proof,
+or an independent human security audit. The protocol deliberately preserves that gap.
+
 ## Trust Growth And Degradation
 
 Repeated success can reduce friction only inside the same bounded scenario. A mature
@@ -208,6 +222,10 @@ harness. It does not prove:
 - safe autonomous self-evolution;
 - hosted multi-tenant operational readiness.
 
+The repository additionally proves local, fixture-bounded cross-implementation
+agreement against the generated Protocol v1 conformance pack. That result does not
+change any item in the non-claim list above.
+
 ## Current Verification
 
 ```bash
@@ -227,6 +245,8 @@ python3 scripts/verify_cbb_v1_outcomes.py --check
 python3 scripts/verify_cbb_agentic_tool_boundary.py --check
 python3 scripts/verify_cbb_memory_quarantine.py --check
 python3 scripts/verify_cbb_evolution_gate.py --check
+python3 scripts/generate_cbb_v1_conformance_pack.py --check
+python3 scripts/verify_cbb_v1_external_consumer.py --check
 ```
 
 Passing these commands proves only their documented deterministic scope.

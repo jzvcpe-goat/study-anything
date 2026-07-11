@@ -62,6 +62,8 @@ REQUIRED_TEXT: dict[str, tuple[str, ...]] = {
         "Equal-Weight Dual Loop",
         "The protocol must distrust itself.",
         "Trust Growth And Degradation",
+        "Cross-Implementation Conformance",
+        "This is package-independent code, not an independent organization.",
     ),
     "docs/architecture.md": (
         "Delivery Clearance is protocol-first.",
@@ -112,6 +114,27 @@ REQUIRED_TEXT: dict[str, tuple[str, ...]] = {
         "approved_for_local_candidate",
         "automatic_apply_allowed = false",
     ),
+    "docs/cbb-protocol-v1-conformance.md": (
+        "Protocol v1 fixture-conformant",
+        "conformance/python/cbb_v1_consumer.py",
+        "The manifest is integrity metadata, not a third-party signature.",
+        "does not create a certification authority",
+    ),
+    "docs/protocol-governance.md": (
+        "Security Disclosure",
+        "may self-certify production trust",
+        "Independent audit status remains separate",
+    ),
+    "docs/extensions-and-versioning.md": (
+        "claims any authority fails closed.",
+        "Version Negotiation",
+        "Registration is not endorsement.",
+    ),
+    "docs/compatibility-and-trademark.md": (
+        "fixture-conformant",
+        "without implying endorsement",
+        "independent certification program",
+    ),
     "docs/adapters/study-anything.md": (
         "Human Reconstruction / Learning Adapter",
         "not the protocol, the Trust Kernel, or the top-level product identity.",
@@ -127,6 +150,8 @@ REQUIRED_TEXT: dict[str, tuple[str, ...]] = {
         "scripts/verify_cbb_agentic_tool_boundary.py --check",
         "scripts/verify_cbb_memory_quarantine.py --check",
         "scripts/verify_cbb_evolution_gate.py --check",
+        "scripts/generate_cbb_v1_conformance_pack.py --check",
+        "scripts/verify_cbb_v1_external_consumer.py --check",
     ),
 }
 

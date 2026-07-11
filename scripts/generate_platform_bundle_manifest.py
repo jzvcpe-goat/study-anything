@@ -1507,6 +1507,31 @@ FILES: list[tuple[str, str, str]] = [
         "Proposal-only deterministic evolution-gate report.",
     ),
     (
+        "platform/generated/study-anything-cbb-v1-conformance-pack.json",
+        "generated_asset",
+        "Deterministic Protocol v1 conformance pack manifest.",
+    ),
+    (
+        "platform/generated/study-anything-cbb-v1-conformance-pack.md",
+        "generated_asset",
+        "Human-readable Protocol v1 conformance pack summary.",
+    ),
+    (
+        "platform/generated/study-anything-cbb-v1-conformance-pack.zip",
+        "generated_asset",
+        "Portable offline Protocol v1 conformance pack archive.",
+    ),
+    (
+        "platform/generated/study-anything-cbb-v1-conformance-pack.sha256",
+        "generated_asset",
+        "Protocol v1 conformance pack archive checksum.",
+    ),
+    (
+        "platform/generated/study-anything-cbb-v1-external-consumer.json",
+        "generated_asset",
+        "Package-independent Protocol v1 consumer verification report.",
+    ),
+    (
         "platform/generated/study-anything-cbb-protocol-contracts.json",
         "generated_asset",
         "Cognitive Black Box protocol contract and privacy verification report.",
@@ -3295,6 +3320,26 @@ FILES: list[tuple[str, str, str]] = [
         "docs/cbb-protocol-v1-agentic-evolution.md",
         "operator_doc",
         "Typed Agentic tools, quarantined memory, and proposal-only evolution-gate guide.",
+    ),
+    (
+        "docs/cbb-protocol-v1-conformance.md",
+        "operator_doc",
+        "Protocol v1 offline fixture-conformance and second-consumer guide.",
+    ),
+    (
+        "docs/protocol-governance.md",
+        "operator_doc",
+        "Open protocol change, review, and security-disclosure governance.",
+    ),
+    (
+        "docs/extensions-and-versioning.md",
+        "operator_doc",
+        "Fail-closed extension authority and version-negotiation rules.",
+    ),
+    (
+        "docs/compatibility-and-trademark.md",
+        "operator_doc",
+        "Neutral compatibility language and non-certification boundary.",
     ),
     (
         "docs/delivery-trust-receipt.md",
@@ -5730,6 +5775,9 @@ FILES: list[tuple[str, str, str]] = [
     ("scripts/verify_cbb_agentic_tool_boundary.py", "verification", "Verify typed tool allowlisting and supporting-evidence-only authority."),
     ("scripts/verify_cbb_memory_quarantine.py", "verification", "Verify memory provenance, expiry, injection, and counter-evidence quarantine."),
     ("scripts/verify_cbb_evolution_gate.py", "verification", "Verify deterministic evolution replay, actor separation, and no automatic apply."),
+    ("conformance/python/cbb_v1_consumer.py", "conformance_consumer", "Package-independent offline Protocol v1 fixture consumer."),
+    ("scripts/generate_cbb_v1_conformance_pack.py", "generator", "Generate the deterministic Protocol v1 conformance archive."),
+    ("scripts/verify_cbb_v1_external_consumer.py", "verification", "Verify the isolated second consumer and fail-closed archive tamper behavior."),
     (
         "scripts/verify_cbb_positioning.py",
         "verification",
@@ -8068,6 +8116,8 @@ def build_manifest() -> dict[str, object]:
             "python3 scripts/verify_cbb_agentic_tool_boundary.py --check",
             "python3 scripts/verify_cbb_memory_quarantine.py --check",
             "python3 scripts/verify_cbb_evolution_gate.py --check",
+            "python3 scripts/generate_cbb_v1_conformance_pack.py --check",
+            "python3 scripts/verify_cbb_v1_external_consumer.py --check",
             "python3 scripts/verify_cbb_protocol_contracts.py --check",
             "python3 scripts/verify_cbb_gate.py --check",
             "python3 scripts/verify_cbb_receipt_chain.py --check",

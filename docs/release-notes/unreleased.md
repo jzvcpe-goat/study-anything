@@ -1,5 +1,20 @@
 # Unreleased Main Development Line
 
+## Protocol v1 Conformance And Open Governance
+
+- Added a deterministic conformance ZIP with all eight schemas, eight canonical
+  vectors, seven Trust Kernel vectors, twelve provenance vectors, five Outcome vectors,
+  six Evolution vectors, and version/extension/privacy/migration cases.
+- Added a second consumer under `conformance/` that imports no `study_anything` or
+  Pydantic code and independently replays the pack in isolated Python mode.
+- Added fail-closed tests for archive tamper, unknown authority extensions, unsupported
+  versions, privacy fields, scope ceilings, expiry, replay, revocation, degradation, and
+  protected Evolution decisions.
+- Added versioning, deprecation, extension, governance, security-disclosure, neutral
+  compatibility, and trademark-language documents.
+- This proves local fixture-bounded cross-implementation agreement. It is not
+  certification, production safety, third-party adoption, or independent audit completion.
+
 ## Agentic Evidence Isolation And Evolution Gate
 
 - Added `cbb.evolution-gate-receipt.v1` as the eighth canonical Protocol v1 schema.

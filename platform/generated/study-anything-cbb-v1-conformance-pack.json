@@ -1,0 +1,28 @@
+{
+  "archive_entry_count": 50,
+  "archive_sha256": "aa8c80e9cc71b08d08785e92c6d0be55935c4386b924b28c7de5a9aa8b6817fe",
+  "claim_boundary": "The pack proves local cross-implementation fixture conformance only. It is not certification, production approval, customer-outcome proof, global revocation, or an independent audit result.",
+  "declared_file_count": 49,
+  "independent_consumer": "consumer/python/cbb_v1_consumer.py",
+  "manifest_sha256": "79229e294f5d1f8674055a583f4ada8538d53f02567efe8b612436da4e3f8387",
+  "privacy": {
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "network_required": false,
+    "private_keys_included": false,
+    "production_mutation_performed": false,
+    "real_secrets_included": false
+  },
+  "protocol_version": "1.0.0",
+  "schema_count": 8,
+  "schema_version": "cbb-conformance-pack-artifact-v1",
+  "status": "ready_for_offline_conformance",
+  "study_anything_runtime_required_by_consumer": false,
+  "vector_counts": {
+    "canonical": 8,
+    "evolution": 6,
+    "kernel": 7,
+    "outcomes": 5,
+    "provenance": 12
+  }
+}

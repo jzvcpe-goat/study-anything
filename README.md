@@ -121,6 +121,9 @@ The current `main` line includes deterministic, metadata-only implementations fo
 - typed Agentic evidence tools, quarantined metadata memory, proposal/approver
   separation, and signed deterministic evolution-gate receipts that stop at a local
   candidate and never auto-apply;
+- a deterministic Protocol v1 conformance pack and isolated second consumer that
+  independently replay canonical bytes, gates, signatures, outcomes, evolution,
+  version negotiation, extensions, and v0 migration without importing `study_anything`;
 - delivery-class, scenario, external feedback, and controlled handoff evidence;
 - local API, Skill, platform-Agent, Docker, and static HTML artifact adapters;
 - local release, security, adoption, and external-audit preparation evidence.
@@ -165,6 +168,8 @@ From a prepared checkout:
 .venv/bin/python scripts/verify_cbb_delivery_harness.py --check
 .venv/bin/python scripts/verify_cbb_v1_scenarios.py --check
 .venv/bin/python scripts/verify_cbb_v1_qualification.py --check
+.venv/bin/python scripts/generate_cbb_v1_conformance_pack.py --check
+.venv/bin/python scripts/verify_cbb_v1_external_consumer.py --check
 ./scripts/release_check.sh --cbb-protocol-only
 ```
 
@@ -231,6 +236,10 @@ not an autonomous release decision.
 - [Protocol v1 scenarios and qualification](docs/cbb-protocol-v1-scenarios-and-qualification.md)
 - [Protocol v1 outcomes and trust degradation](docs/cbb-protocol-v1-outcomes.md)
 - [Protocol v1 Agentic evidence and evolution gate](docs/cbb-protocol-v1-agentic-evolution.md)
+- [Protocol v1 conformance](docs/cbb-protocol-v1-conformance.md)
+- [Protocol governance](docs/protocol-governance.md)
+- [Extensions and versioning](docs/extensions-and-versioning.md)
+- [Compatibility and trademark](docs/compatibility-and-trademark.md)
 - [Roadmap](docs/roadmap.md)
 - [Delivery Trust Receipt](docs/delivery-trust-receipt.md)
 - [Customer Handoff Package](docs/customer-handoff-package.md)

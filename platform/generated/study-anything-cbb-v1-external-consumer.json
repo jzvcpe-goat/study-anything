@@ -1,0 +1,67 @@
+{
+  "checks": {
+    "archive_digest_matches_summary": true,
+    "archive_paths_safe": true,
+    "archive_privacy_boundary": true,
+    "consumer_covers_eight_schemas": true,
+    "consumer_forbidden_imports_absent": true,
+    "consumer_negotiates_versions": true,
+    "consumer_outside_study_package": true,
+    "consumer_preserves_v0_as_compatibility_only": true,
+    "consumer_rejects_authority_extensions": true,
+    "consumer_rejects_privacy_negatives": true,
+    "consumer_replays_evolution_gate": true,
+    "consumer_replays_outcome_degradation": true,
+    "consumer_replays_trust_kernel": true,
+    "consumer_runs_in_isolated_python": true,
+    "consumer_stderr_clean": true,
+    "consumer_verifies_canonical_vectors": true,
+    "consumer_verifies_signatures_expiry_replay_revocation": true,
+    "pack_generated_current": true,
+    "tampered_pack_fails_closed": true
+  },
+  "claim_boundary": "This proves local cross-implementation conformance against published fixtures. It does not create a certification authority, prove production safety, establish global revocation, guarantee customer outcomes, or complete an independent security audit.",
+  "consumer": {
+    "implementation_id": "delivery-clearance-independent-python-consumer",
+    "imports": [
+      "__future__",
+      "argparse",
+      "base64",
+      "collections",
+      "cryptography",
+      "datetime",
+      "hashlib",
+      "json",
+      "pathlib",
+      "re",
+      "typing"
+    ],
+    "isolated_mode": true,
+    "language": "python",
+    "study_anything_imported": false
+  },
+  "failed_checks": [],
+  "package": {
+    "archive_entry_count": 50,
+    "archive_sha256": "aa8c80e9cc71b08d08785e92c6d0be55935c4386b924b28c7de5a9aa8b6817fe",
+    "declared_file_count": 49,
+    "schema_count": 8,
+    "vector_counts": {
+      "canonical": 8,
+      "evolution": 6,
+      "kernel": 7,
+      "outcomes": 5,
+      "provenance": 12
+    }
+  },
+  "privacy": {
+    "local_absolute_paths_included": false,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "network_calls_performed": false,
+    "private_keys_included": false,
+    "production_mutation_performed": false
+  },
+  "schema_version": "cbb-v1-external-consumer-verification-v1",
+  "status": "pass"
+}

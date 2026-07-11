@@ -114,8 +114,8 @@ Progress:
   static runtime-isolation gate, and v0 gate routing are implemented in PR 2;
 - the protocol CLI and independent conformance consumer remain later milestones.
 
-**Status:** implemented for the local deterministic reference harness; independent
-conformance remains M6.
+**Status:** implemented for the local deterministic reference harness and the bounded
+M6 cross-implementation conformance suite.
 
 Exit criteria:
 
@@ -254,6 +254,12 @@ Exit criteria:
 - spec changes include migration, negative fixtures, and an evolution receipt;
 - independent reviewers can reproduce the conformance result offline.
 
+**Status:** implemented as local fixture conformance. The deterministic ZIP contains all
+eight schemas and canonical, kernel, provenance, outcome, evolution, version, extension,
+privacy, and migration vectors. A second consumer outside the package imports no
+`study_anything` code and verifies the extracted pack in isolated mode. This is not an
+independent organization, certification program, production proof, or completed audit.
+
 ## M7: Controlled Real-World Adoption
 
 **Goal:** gather outcome-backed evidence without overstating production trust.
@@ -298,6 +304,6 @@ The PR-level implementation sequence, acceptance matrix, risk register, and next
 Codex goal are in [Protocol v1 Development Plan](cbb-protocol-v1-development-plan.md).
 
 Canonical contracts, the deterministic Trust Kernel, local provenance/signing,
-scenario/qualification policy, outcome-driven trust degradation, and isolated
-proposal-only Agentic evolution are implemented. The next ordered milestone is a
-vendor-neutral conformance pack and second independent implementation.
+scenario/qualification policy, outcome-driven trust degradation, isolated proposal-only
+Agentic evolution, and vendor-neutral fixture conformance are implemented. The next
+ordered milestone is controlled real-world adoption and independent-audit intake.
