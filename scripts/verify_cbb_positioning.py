@@ -35,7 +35,16 @@ REQUIRED_TEXT: dict[str, tuple[str, ...]] = {
         "Reconstruction / Learning Adapter. Cognitive Loop is an internal evidence",
         "Cognitive Loop is an internal evidence",
         "The repository and Python distribution retain the historical `study-anything` name,",
+        "## Audit Your Own Local Project",
+        "The only possible allowed scope is `personal_local`.",
         "scripts/verify_cbb_positioning.py --check",
+    ),
+    "docs/personal-clearance-mvp.md": (
+        "# Personal Local Clearance MVP",
+        "The maximum scope is always",
+        "responsibility I explicitly accepted for this run",
+        "It does not prove AI correctness, independent review, external delivery authority,",
+        "scripts/verify_personal_clearance_mvp.py --check",
     ),
     "docs/product-positioning.md": (
         "Delivery Clearance is the public product identity",
@@ -175,6 +184,7 @@ REQUIRED_TEXT: dict[str, tuple[str, ...]] = {
         "scripts/verify_cbb_controlled_adoption_outcomes.py --check",
         "scripts/verify_cbb_external_adoption_attestation.py --check",
         "scripts/verify_cbb_external_audit_intake.py --check",
+        "scripts/verify_personal_clearance_mvp.py --check",
     ),
 }
 

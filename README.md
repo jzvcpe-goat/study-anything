@@ -98,10 +98,40 @@ AI candidate
 - **Outcome Receipt** records bounded post-delivery evidence and can maintain, narrow,
   freeze, or revoke trust without ever increasing the source clearance scope.
 
+## Audit Your Own Local Project
+
+The first usable MVP is intentionally personal and local. It lets one operator constrain
+an AI-assisted development process without claiming independent audit or external delivery
+authority.
+
+```bash
+python3.11 -m venv .venv
+.venv/bin/python -m pip install -e .
+.venv/bin/delivery-clearance init --project /path/to/my-project
+# Edit /path/to/my-project/.delivery-clearance/personal-clearance.json
+.venv/bin/delivery-clearance audit \
+  --project /path/to/my-project \
+  --execute-checks \
+  --accept-responsibility
+.venv/bin/delivery-clearance verify --project /path/to/my-project
+```
+
+The generated receipt is bound to the exact Git-visible state, configured check results,
+active boundary reconstruction, and a short validity window. Any project-state or config
+change invalidates it. The only possible allowed scope is `personal_local`.
+
+Configured checks run with the current user's permissions and are not OS-sandboxed by this
+MVP. The receipt is self-attested, not independently reviewed. See
+[Personal Local Clearance MVP](docs/personal-clearance-mvp.md) for the contract, artifacts,
+exit codes, privacy boundary, and suggested pre-commit/pre-handoff use.
+
 ## Current Reference Implementation
 
 The current `main` line includes deterministic, metadata-only implementations for:
 
+- a one-command personal-local clearance workflow for arbitrary local Git projects,
+  with state-bound receipts, explicit per-run responsibility, configured check evidence,
+  mutation detection, expiry, tamper replay, and an HTML report;
 - controlled failure contracts and sandbox receipts;
 - attention reconstruction traces and summaries;
 - Dual-Loop gate receipts;
@@ -155,6 +185,8 @@ not:
 The generated external security audit pack is `ready_for_independent_audit`. It is
 not an audit report or certificate. The external-adopter attestation channel is
 implemented, but the repository still records zero real external adopter evidence.
+That external evidence is not a blocker for the personal-local MVP; it remains mandatory
+before broadening claims to independent, customer, production, or regulated use.
 
 当前实现是本地优先、确定性的参考实现，不是生产批准、法律或安全认证、客户结果保证、
 模型全局正确证明，也不代表独立人工安全审计已经完成。
@@ -177,6 +209,7 @@ From a prepared checkout:
 .venv/bin/python scripts/verify_cbb_controlled_adoption_outcomes.py --check
 .venv/bin/python scripts/verify_cbb_external_adoption_attestation.py --check
 .venv/bin/python scripts/verify_cbb_external_audit_intake.py --check
+.venv/bin/python scripts/verify_personal_clearance_mvp.py --check
 ./scripts/release_check.sh --cbb-protocol-only
 ```
 
@@ -203,7 +236,8 @@ already published image.
 Source build:
 
 ```bash
-./scripts/setup.sh
+python3.11 -m venv .venv
+.venv/bin/python -m pip install -e .
 docker compose --env-file .env -f infra/compose/docker-compose.yml up --build
 ```
 

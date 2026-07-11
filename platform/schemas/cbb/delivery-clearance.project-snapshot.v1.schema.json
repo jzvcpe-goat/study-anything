@@ -1,0 +1,137 @@
+{
+  "$id": "delivery-clearance.project-snapshot.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "artifact_directory_excluded": {
+      "const": ".delivery-clearance/artifacts",
+      "title": "Artifact Directory Excluded",
+      "type": "string"
+    },
+    "branch_ref_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Branch Ref Sha256",
+      "type": "string"
+    },
+    "captured_at": {
+      "maxLength": 64,
+      "minLength": 1,
+      "title": "Captured At",
+      "type": "string"
+    },
+    "config_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Config Digest Sha256",
+      "type": "string"
+    },
+    "dirty": {
+      "title": "Dirty",
+      "type": "boolean"
+    },
+    "head_commit": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{40,64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Head Commit"
+    },
+    "head_state": {
+      "enum": [
+        "committed",
+        "unborn"
+      ],
+      "title": "Head State",
+      "type": "string"
+    },
+    "project_ref": {
+      "maxLength": 160,
+      "minLength": 1,
+      "title": "Project Ref",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "delivery-clearance.project-snapshot.v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "staged_diff_bytes": {
+      "minimum": 0,
+      "title": "Staged Diff Bytes",
+      "type": "integer"
+    },
+    "staged_diff_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Staged Diff Sha256",
+      "type": "string"
+    },
+    "subject_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Subject Digest Sha256",
+      "type": "string"
+    },
+    "subject_ref": {
+      "maxLength": 160,
+      "minLength": 1,
+      "title": "Subject Ref",
+      "type": "string"
+    },
+    "submodule_state_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Submodule State Sha256",
+      "type": "string"
+    },
+    "unstaged_diff_bytes": {
+      "minimum": 0,
+      "title": "Unstaged Diff Bytes",
+      "type": "integer"
+    },
+    "unstaged_diff_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Unstaged Diff Sha256",
+      "type": "string"
+    },
+    "untracked_file_count": {
+      "minimum": 0,
+      "title": "Untracked File Count",
+      "type": "integer"
+    },
+    "untracked_manifest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Untracked Manifest Sha256",
+      "type": "string"
+    },
+    "untracked_total_bytes": {
+      "minimum": 0,
+      "title": "Untracked Total Bytes",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "schema_version",
+    "project_ref",
+    "subject_ref",
+    "subject_digest_sha256",
+    "config_digest_sha256",
+    "head_state",
+    "branch_ref_sha256",
+    "staged_diff_sha256",
+    "staged_diff_bytes",
+    "unstaged_diff_sha256",
+    "unstaged_diff_bytes",
+    "untracked_manifest_sha256",
+    "untracked_file_count",
+    "untracked_total_bytes",
+    "submodule_state_sha256",
+    "dirty",
+    "captured_at",
+    "artifact_directory_excluded"
+  ],
+  "title": "PersonalProjectSnapshotV1",
+  "type": "object"
+}

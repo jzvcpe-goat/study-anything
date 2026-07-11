@@ -12,10 +12,10 @@
     "open_high_findings_allowed": 0
   },
   "archive": {
-    "bytes": 617614,
+    "bytes": 618150,
     "path": "platform/generated/study-anything-external-security-audit-pack.zip",
     "root": "study-anything-external-security-audit-pack",
-    "sha256": "58135a6172caf779709c973d03e5940955e6df1bce9490431a97d91f3c5aff40"
+    "sha256": "4743662de5d4ae57521b1550f2f2b722a8aa8c7e9ddc5c1b7c9e849f32e3a197"
   },
   "claim_boundary": {
     "current_claim": "The repository is packaged and ready for an independent security audit at a pinned commit.",
@@ -111,11 +111,11 @@
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/security.md",
-      "bytes": 14282,
+      "bytes": 15704,
       "path": "docs/security.md",
       "purpose": "Local-first security and privacy boundary.",
       "role": "security_doc",
-      "sha256": "611426953593706674b61f3d4b7f8bd950e4e261285af4891b8c1659946f2c8f"
+      "sha256": "5204737a88ca6f21888056933e9560a18bf54e573c4301d7d84fc912a79b02de"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/security-baseline.md",
@@ -279,11 +279,11 @@
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/release-checklist.md",
-      "bytes": 37065,
+      "bytes": 37183,
       "path": "docs/release-checklist.md",
       "purpose": "Release acceptance and claim-boundary checklist.",
       "role": "release_doc",
-      "sha256": "03feddb939fd15c91142762fb09a03fc67b9a256f438cdeaf7fdc0d4cdb78d74"
+      "sha256": "a9cb26ef85fecb30a4b90b46b5a59ac595002f6a74d24f2e8b6f170d5d924959"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/quality-audits/phase-23-repository-security-remediation.md",
@@ -371,7 +371,7 @@
       "path": "platform/generated/study-anything-python-supply-chain.json",
       "purpose": "Lock, hash export, and SBOM receipt.",
       "role": "generated_evidence",
-      "sha256": "74d1cb9a59326991a1e8a718126ded85702830dd64dea23597c0ece5390ba8cc"
+      "sha256": "a2f71c59bde8692d8a7268d44c44ebd486bf3eeae8d03d1a0ea5ec332eddde69"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/platform/generated/study-anything-python-sbom.cdx.json",

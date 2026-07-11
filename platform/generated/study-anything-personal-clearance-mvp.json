@@ -1,0 +1,45 @@
+{
+  "case_count": 14,
+  "cases": {
+    "artifacts_do_not_disclose_local_absolute_path": true,
+    "check_mutation_is_hard_deny": true,
+    "complete_self_audit_allows_personal_local": true,
+    "installed_console_entrypoint_declared": true,
+    "missing_run_specific_responsibility_blocks": true,
+    "personal_config_is_metadata_safe": true,
+    "personal_receipt_disclaims_independent_review": true,
+    "public_cli_rejects_time_override": true,
+    "receipt_tamper_is_rejected": true,
+    "repository_cli_help_succeeds": true,
+    "scope_expansion_is_schema_rejected": true,
+    "secret_like_config_is_rejected": true,
+    "state_change_invalidates_receipt": true,
+    "unexecuted_checks_block": true
+  },
+  "claim_boundary": "This proves a deterministic, state-bound personal self-audit workflow. It does not prove AI correctness, independent review, external delivery authority, production approval, or OS-level containment of configured child checks.",
+  "compatibility_entrypoint": "python3 scripts/personal_clearance.py",
+  "contracts": [
+    "delivery-clearance.personal-boundary-reconstruction.v1",
+    "delivery-clearance.personal-check-run.v1",
+    "delivery-clearance.personal-config.v1",
+    "delivery-clearance.personal-receipt.v1",
+    "delivery-clearance.project-snapshot.v1"
+  ],
+  "entrypoint": "delivery-clearance",
+  "maximum_scope": "personal_local",
+  "privacy": {
+    "automatic_external_delivery_performed": false,
+    "local_absolute_paths_included": false,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "raw_check_output_included": false,
+    "raw_source_text_included": false
+  },
+  "schema_version": "delivery-clearance.personal-mvp-verification.v1",
+  "status": "pass",
+  "workflow": [
+    "init",
+    "audit",
+    "verify"
+  ]
+}

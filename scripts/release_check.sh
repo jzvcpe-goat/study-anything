@@ -44,6 +44,8 @@ cbb_v1_adoption_audit_verifiers_integrated="true"
 cbb_v1_adoption_audit_verifiers_passed_individually="false"
 cbb_v1_external_adoption_attestation_verifier_integrated="true"
 cbb_v1_external_adoption_attestation_verifier_passed="false"
+personal_clearance_verifier_integrated="true"
+personal_clearance_verifier_passed="false"
 known_issue="none"
 claim_boundary="Full release validation has not completed yet."
 PIP_INSTALL_TIMEOUT_SECONDS="${PIP_INSTALL_TIMEOUT_SECONDS:-900}"
@@ -212,6 +214,8 @@ payload = {
     "cbb_v1_adoption_audit_verifiers_passed_individually": $(json_bool "$cbb_v1_adoption_audit_verifiers_passed_individually"),
     "cbb_v1_external_adoption_attestation_verifier_integrated": $(json_bool "$cbb_v1_external_adoption_attestation_verifier_integrated"),
     "cbb_v1_external_adoption_attestation_verifier_passed": $(json_bool "$cbb_v1_external_adoption_attestation_verifier_passed"),
+    "personal_clearance_verifier_integrated": $(json_bool "$personal_clearance_verifier_integrated"),
+    "personal_clearance_verifier_passed": $(json_bool "$personal_clearance_verifier_passed"),
     "partial_modes": {
         "dual_loop_only": $(json_bool "$dual_loop_only_enabled"),
         "cbb_protocol_only": $(json_bool "$cbb_protocol_only_enabled"),
@@ -332,6 +336,7 @@ run_cbb_protocol_verifier_gates() {
     "$python_bin" scripts/verify_cbb_controlled_adoption_outcomes.py --check
     "$python_bin" scripts/verify_cbb_external_adoption_attestation.py --check
     "$python_bin" scripts/verify_cbb_external_audit_intake.py --check
+    "$python_bin" scripts/verify_personal_clearance_mvp.py --check
     cbb_v1_contract_verifiers_passed_individually="true"
     cbb_v1_kernel_verifiers_passed_individually="true"
     cbb_v1_provenance_verifiers_passed_individually="true"
@@ -342,6 +347,7 @@ run_cbb_protocol_verifier_gates() {
     cbb_v1_conformance_verifiers_passed_individually="true"
     cbb_v1_adoption_audit_verifiers_passed_individually="true"
     cbb_v1_external_adoption_attestation_verifier_passed="true"
+    personal_clearance_verifier_passed="true"
   else
     printf "skip  CBB v1 contract, kernel, provenance, scenario, qualification, outcome, Agentic evolution, conformance, adoption, external-adopter attestation, and audit-intake verifiers require project dependencies; dual-loop-only does not claim they passed.\n"
   fi

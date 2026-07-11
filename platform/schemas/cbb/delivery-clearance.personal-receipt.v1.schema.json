@@ -1,0 +1,299 @@
+{
+  "$defs": {
+    "ClaimBoundaryV1": {
+      "additionalProperties": false,
+      "properties": {
+        "current_claim": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Current Claim",
+          "type": "string"
+        },
+        "maximum_scope": {
+          "$ref": "#/$defs/DeliveryScope"
+        },
+        "not_claimed": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Not Claimed",
+          "type": "array"
+        }
+      },
+      "required": [
+        "current_claim",
+        "maximum_scope",
+        "not_claimed"
+      ],
+      "title": "ClaimBoundaryV1",
+      "type": "object"
+    },
+    "DeliveryScope": {
+      "description": "Ordered scopes from no release authority to a production candidate.",
+      "enum": [
+        "blocked",
+        "personal_local",
+        "sandbox_only",
+        "public_demo",
+        "internal_handoff",
+        "controlled_customer_handoff",
+        "limited_beta",
+        "production_candidate"
+      ],
+      "title": "DeliveryScope",
+      "type": "string"
+    },
+    "PrivacyBoundaryV1": {
+      "additionalProperties": false,
+      "properties": {
+        "attention_stream_included": {
+          "const": false,
+          "title": "Attention Stream Included",
+          "type": "boolean"
+        },
+        "automatic_customer_send_performed": {
+          "const": false,
+          "title": "Automatic Customer Send Performed",
+          "type": "boolean"
+        },
+        "cookies_or_bearer_tokens_included": {
+          "const": false,
+          "title": "Cookies Or Bearer Tokens Included",
+          "type": "boolean"
+        },
+        "metadata_only": {
+          "const": true,
+          "title": "Metadata Only",
+          "type": "boolean"
+        },
+        "model_credentials_included": {
+          "const": false,
+          "title": "Model Credentials Included",
+          "type": "boolean"
+        },
+        "model_prompts_included": {
+          "const": false,
+          "title": "Model Prompts Included",
+          "type": "boolean"
+        },
+        "production_mutation_performed": {
+          "const": false,
+          "title": "Production Mutation Performed",
+          "type": "boolean"
+        },
+        "raw_customer_payload_included": {
+          "const": false,
+          "title": "Raw Customer Payload Included",
+          "type": "boolean"
+        },
+        "raw_report_text_included": {
+          "const": false,
+          "title": "Raw Report Text Included",
+          "type": "boolean"
+        },
+        "raw_source_text_included": {
+          "const": false,
+          "title": "Raw Source Text Included",
+          "type": "boolean"
+        },
+        "signed_urls_included": {
+          "const": false,
+          "title": "Signed Urls Included",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "metadata_only",
+        "raw_source_text_included",
+        "raw_report_text_included",
+        "raw_customer_payload_included",
+        "attention_stream_included",
+        "model_prompts_included",
+        "model_credentials_included",
+        "cookies_or_bearer_tokens_included",
+        "signed_urls_included",
+        "production_mutation_performed",
+        "automatic_customer_send_performed"
+      ],
+      "title": "PrivacyBoundaryV1",
+      "type": "object"
+    }
+  },
+  "$id": "delivery-clearance.personal-receipt.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "all_required_checks_passed": {
+      "title": "All Required Checks Passed",
+      "type": "boolean"
+    },
+    "approved_scope": {
+      "$ref": "#/$defs/DeliveryScope"
+    },
+    "boundary_reconstruction_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Boundary Reconstruction Digest Sha256",
+      "type": "string"
+    },
+    "check_run_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Check Run Digest Sha256",
+      "type": "string"
+    },
+    "claim_boundary": {
+      "$ref": "#/$defs/ClaimBoundaryV1"
+    },
+    "config_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Config Digest Sha256",
+      "type": "string"
+    },
+    "configured_check_count": {
+      "minimum": 1,
+      "title": "Configured Check Count",
+      "type": "integer"
+    },
+    "evidence_bundle_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Evidence Bundle Digest Sha256",
+      "type": "string"
+    },
+    "expires_at": {
+      "maxLength": 64,
+      "minLength": 1,
+      "title": "Expires At",
+      "type": "string"
+    },
+    "gate_decision_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Gate Decision Digest Sha256",
+      "type": "string"
+    },
+    "gate_decision_ref": {
+      "maxLength": 160,
+      "minLength": 1,
+      "title": "Gate Decision Ref",
+      "type": "string"
+    },
+    "independent_review_performed": {
+      "const": false,
+      "title": "Independent Review Performed",
+      "type": "boolean"
+    },
+    "issued_at": {
+      "maxLength": 64,
+      "minLength": 1,
+      "title": "Issued At",
+      "type": "string"
+    },
+    "missing_evidence_types": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Missing Evidence Types",
+      "type": "array"
+    },
+    "policy_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Policy Digest Sha256",
+      "type": "string"
+    },
+    "privacy": {
+      "$ref": "#/$defs/PrivacyBoundaryV1"
+    },
+    "project_ref": {
+      "maxLength": 160,
+      "minLength": 1,
+      "title": "Project Ref",
+      "type": "string"
+    },
+    "project_state_mutated_during_checks": {
+      "title": "Project State Mutated During Checks",
+      "type": "boolean"
+    },
+    "qualified_reconstruction_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Qualified Reconstruction Digest Sha256",
+      "type": "string"
+    },
+    "reasons": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Reasons",
+      "type": "array"
+    },
+    "receipt_id": {
+      "maxLength": 160,
+      "minLength": 1,
+      "title": "Receipt Id",
+      "type": "string"
+    },
+    "responsibility_accepted_for_this_run": {
+      "title": "Responsibility Accepted For This Run",
+      "type": "boolean"
+    },
+    "schema_version": {
+      "const": "delivery-clearance.personal-receipt.v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "snapshot_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Snapshot Digest Sha256",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "allow",
+        "block",
+        "needs_evidence"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "subject_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Subject Digest Sha256",
+      "type": "string"
+    },
+    "subject_ref": {
+      "maxLength": 160,
+      "minLength": 1,
+      "title": "Subject Ref",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "receipt_id",
+    "project_ref",
+    "subject_ref",
+    "subject_digest_sha256",
+    "config_digest_sha256",
+    "snapshot_digest_sha256",
+    "check_run_digest_sha256",
+    "boundary_reconstruction_digest_sha256",
+    "policy_digest_sha256",
+    "evidence_bundle_digest_sha256",
+    "qualified_reconstruction_digest_sha256",
+    "gate_decision_digest_sha256",
+    "gate_decision_ref",
+    "status",
+    "approved_scope",
+    "reasons",
+    "missing_evidence_types",
+    "responsibility_accepted_for_this_run",
+    "independent_review_performed",
+    "configured_check_count",
+    "all_required_checks_passed",
+    "project_state_mutated_during_checks",
+    "issued_at",
+    "expires_at",
+    "claim_boundary",
+    "privacy"
+  ],
+  "title": "PersonalClearanceReceiptV1",
+  "type": "object"
+}

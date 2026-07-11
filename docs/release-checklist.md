@@ -23,6 +23,8 @@
 - [ ] `.venv/bin/python scripts/verify_dual_loop_gate.py --check`
 - [ ] `.venv/bin/python scripts/verify_delivery_trust_receipt.py --check`
 - [ ] `.venv/bin/python scripts/verify_customer_handoff_package.py --check`
+- [ ] `.venv/bin/python scripts/verify_personal_clearance_mvp.py --check`
+- [ ] `.venv/bin/delivery-clearance --help`
 - [ ] `.venv/bin/python scripts/verify_cognitive_loop_artifact_doctor.py --check`
 - [ ] `.venv/bin/python scripts/verify_cognitive_loop_repair_plan.py --check`
 - [ ] `.venv/bin/python scripts/verify_cognitive_loop_artifact_index.py --check`

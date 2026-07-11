@@ -6,9 +6,9 @@
   },
   "archive": {
     "archive_root": "study-anything-release-asset-adoption",
-    "bytes": 141779,
+    "bytes": 142825,
     "path": "platform/generated/study-anything-release-asset-adoption.zip",
-    "sha256": "cb569f8e4b772811a711da829f0925c40de208b77e776a98524c450250bf98a4",
+    "sha256": "aa1845218b92d547b2121cbeb1186731acfe52ea432ac80b498af066bc0e68a0",
     "sha256_path": "platform/generated/study-anything-release-asset-adoption.sha256"
   },
   "classification_matrix": [
@@ -93,9 +93,9 @@
   },
   "public_asset_refs": [
     {
-      "bytes": 12688,
+      "bytes": 14402,
       "path": "README.md",
-      "sha256": "abacff074b89f8fd0b7701dc5f52dff6e312bc8b2d44d82b87b2757d8f99bda3"
+      "sha256": "59af849f7bb522e87fce6b98ff311108a2ee9e061d9de06799cb458288685bb3"
     },
     {
       "bytes": 19503,
@@ -103,9 +103,9 @@
       "sha256": "93235158fa8a8372a66117d387387aca617fce186a5e4f81733032f66f84b9e6"
     },
     {
-      "bytes": 12976,
+      "bytes": 13959,
       "path": "docs/github-launch.md",
-      "sha256": "3e8798aa800af69c5295a1a351c0e56d90f0076104ca04fe3acc56f6e8668e22"
+      "sha256": "aebaac49d11ec8dad51a9204a6d39990746d94e45a2828618043f16f408319a2"
     },
     {
       "bytes": 12500,
@@ -133,9 +133,9 @@
       "sha256": "26f6d7fc79505f562d67ff695bc8163e644bf3520597fabfcfe85215a1c005a7"
     },
     {
-      "bytes": 37065,
+      "bytes": 37183,
       "path": "docs/release-checklist.md",
-      "sha256": "03feddb939fd15c91142762fb09a03fc67b9a256f438cdeaf7fdc0d4cdb78d74"
+      "sha256": "a9cb26ef85fecb30a4b90b46b5a59ac595002f6a74d24f2e8b6f170d5d924959"
     },
     {
       "bytes": 13946,
@@ -150,12 +150,12 @@
     {
       "bytes": 11248,
       "path": "platform/generated/study-anything-published-image-evidence.json",
-      "sha256": "2857cbe155de873e3706606a893067fb34f805e54d651152567040afae5f424a"
+      "sha256": "b96863bad529a2bcc6aab7a5a2e0d17385cabab613c6e536429bb63231f44809"
     },
     {
       "bytes": 14256,
       "path": "platform/generated/study-anything-platform-plugin-downloads.json",
-      "sha256": "e70e917d4b26974a856137755adb6f0b748f1e7f1c37a72e3626271ba5d41a60"
+      "sha256": "94545a6a1dd6d73e0a1242ae7eb07ba9144e068803a55c699202f45a79e076f3"
     },
     {
       "bytes": 1764,
