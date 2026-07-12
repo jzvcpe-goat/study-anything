@@ -20,7 +20,7 @@
     "raw_source_text_included": false,
     "secrets_included": false
   },
-  "pyproject_sha256": "3d8e7cd7f6dc23dcfc128fef43fb833669b3ea86c464c052e3d3f47ee971f505",
+  "pyproject_sha256": "b5b369fe543c87501fceccc94e59fe036ed1ef0c9d2fa114b578b8c5dcef2cc8",
   "python_support": ">=3.11,<3.13",
   "requirements": [
     {

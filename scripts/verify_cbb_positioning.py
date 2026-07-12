@@ -37,6 +37,7 @@ REQUIRED_TEXT: dict[str, tuple[str, ...]] = {
         "The repository and Python distribution retain the historical `study-anything` name,",
         "## Audit Your Own Local Project",
         "The only possible allowed scope is `personal_local`.",
+        "Plugin Evidence Adapter v0.1",
         "scripts/verify_cbb_positioning.py --check",
     ),
     "docs/personal-clearance-mvp.md": (
@@ -45,6 +46,15 @@ REQUIRED_TEXT: dict[str, tuple[str, ...]] = {
         "responsibility I explicitly accepted for this run",
         "It does not prove AI correctness, independent review, external delivery authority,",
         "scripts/verify_personal_clearance_mvp.py --check",
+    ),
+    "docs/plugin-evidence-adapter.md": (
+        "# Plugin Evidence Adapter v0.1",
+        "It cannot authorize customer delivery, production use, future external actions",
+        "Manifest-only evidence",
+        "external_write",
+        "professional_judgment",
+        "delivery-clearance-plugin-evidence",
+        "scripts/verify_plugin_evidence_adapter.py --check",
     ),
     "docs/product-positioning.md": (
         "Delivery Clearance is the public product identity",
@@ -185,6 +195,7 @@ REQUIRED_TEXT: dict[str, tuple[str, ...]] = {
         "scripts/verify_cbb_external_adoption_attestation.py --check",
         "scripts/verify_cbb_external_audit_intake.py --check",
         "scripts/verify_personal_clearance_mvp.py --check",
+        "scripts/verify_plugin_evidence_adapter.py --check",
     ),
 }
 

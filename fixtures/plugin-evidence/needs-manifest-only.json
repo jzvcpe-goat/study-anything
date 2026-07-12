@@ -1,0 +1,80 @@
+{
+  "capabilities": [
+    "local_read"
+  ],
+  "checks": [
+    {
+      "check_id": "check:native-plugin-suite",
+      "observed_at": null,
+      "required": true,
+      "result_digest_sha256": null,
+      "status": "not_run"
+    }
+  ],
+  "domain_evidence": {
+    "domain_profile_digest_sha256": null,
+    "domain_profile_ref": null,
+    "evaluator_digest_sha256": null,
+    "qualified_reconstruction": "not_applicable",
+    "status": "not_applicable"
+  },
+  "effects": {
+    "credentials_used": false,
+    "external_mutation_observed": false,
+    "network_access_observed": false,
+    "post_run_subject_digest_sha256": null,
+    "project_git_mutation_observed": false,
+    "project_mutation_bound_to_subject_digest": false
+  },
+  "evidence_id": "plugin-evidence:manifest-only",
+  "inputs": [
+    {
+      "content_digest_sha256": null,
+      "input_id": "input:git-snapshot",
+      "observed_at": "2026-07-11T12:00:00Z",
+      "source_class": "local_unbound",
+      "valid_until": null
+    }
+  ],
+  "native_verification": {
+    "observed_at": null,
+    "status": "not_applicable",
+    "verification_digest_sha256": null,
+    "verifier_kind": null
+  },
+  "observed_at": "2026-07-11T12:00:00Z",
+  "plugin": {
+    "manifest_digest_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "package_digest_sha256": null,
+    "plugin_id": "example-readonly",
+    "plugin_version": "0.1.0"
+  },
+  "privacy": {
+    "external_input_content_included": false,
+    "local_absolute_paths_included": false,
+    "plugin_source_included": false,
+    "protocol_boundary": {
+      "attention_stream_included": false,
+      "automatic_customer_send_performed": false,
+      "cookies_or_bearer_tokens_included": false,
+      "metadata_only": true,
+      "model_credentials_included": false,
+      "model_prompts_included": false,
+      "production_mutation_performed": false,
+      "raw_customer_payload_included": false,
+      "raw_report_text_included": false,
+      "raw_source_text_included": false,
+      "signed_urls_included": false
+    },
+    "raw_check_output_included": false
+  },
+  "requested_scope": "personal_local",
+  "runtime": {
+    "dependency_check": "missing",
+    "execution_digest_sha256": null,
+    "observed_at": null,
+    "status": "not_run"
+  },
+  "schema_version": "delivery-clearance.plugin-evidence.v1",
+  "valid_until": "2026-07-12T12:00:00Z"
+}

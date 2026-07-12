@@ -106,6 +106,21 @@ python3 scripts/generate_platform_adoption_pack.py --check
 quarantine-first trust policy is intact, platform packs include the plugin evidence command, and no
 plugin entrypoint is executed during validation.
 
+## Delivery Clearance Evidence
+
+Manifest validation, registry signatures, package digests, quarantine, and installation are
+software intake controls. They are not evidence that a plugin-assisted delivery is ready.
+
+[Plugin Evidence Adapter v0.1](plugin-evidence-adapter.md) adds a separate, metadata-only
+delivery-evidence step for the Personal Local Clearance MVP. It evaluates runtime readiness,
+input binding and freshness, observed effects, required checks, native UI verification, and
+professional-domain evidence. Its maximum possible result is `personal_local`.
+
+The adapter never executes or installs a plugin. `external_write`, observed external mutation,
+and credential use hard-block. Interactive outputs require native verification; professional
+judgment requires a domain profile, domain evaluator, and qualified reconstruction. A manifest
+or install receipt alone returns `needs_evidence`.
+
 ## Importer SDK Shape
 
 Importer plugins should produce a Learning Context Package rather than mutating Study Anything state
