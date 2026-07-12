@@ -1,0 +1,71 @@
+name: delivery-clearance-personal-release
+
+on:
+  push:
+    tags: ["v0.3.32-alpha"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  personal-local-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+      - uses: astral-sh/setup-uv@11f9893b081a58869d3b5fccaea48c9e9e46f990 # v8.3.2
+        with:
+          version: "0.11.18"
+          enable-cache: false
+      - name: Install locked release dependencies
+        run: uv sync --frozen --extra dev --group build
+      - name: Verify personal-local release boundary
+        run: |
+          uv run python scripts/generate_python_supply_chain.py --check --timeout-seconds 120
+          uv run python scripts/verify_cbb_positioning.py --check
+          uv run python scripts/verify_personal_clearance_mvp.py --check
+          uv run python scripts/verify_plugin_evidence_adapter.py --check
+          uv run python scripts/verify_personal_local_release.py --check
+          uv run python -m unittest discover apps/api/tests
+      - name: Build wheel
+        run: uv build --wheel --out-dir dist
+      - name: Install and exercise public CLI entrypoints
+        run: |
+          uv venv /tmp/delivery-clearance-release-venv --python 3.11
+          uv pip install --python /tmp/delivery-clearance-release-venv/bin/python dist/*.whl
+          cd /tmp
+          /tmp/delivery-clearance-release-venv/bin/delivery-clearance --help
+          /tmp/delivery-clearance-release-venv/bin/delivery-clearance-plugin-evidence --help
+          /tmp/delivery-clearance-release-venv/bin/delivery-clearance-plugin-evidence \
+            "$GITHUB_WORKSPACE/fixtures/plugin-evidence/pass-local-read.json" \
+            --output /tmp/plugin-evidence-pass.json
+          set +e
+          /tmp/delivery-clearance-release-venv/bin/delivery-clearance-plugin-evidence \
+            "$GITHUB_WORKSPACE/fixtures/plugin-evidence/block-external-write.json" \
+            --output /tmp/plugin-evidence-block.json
+          block_exit="$?"
+          set -e
+          test "$block_exit" -eq 4
+      - name: Create release checksums
+        run: sha256sum dist/*.whl > dist/SHA256SUMS
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: delivery-clearance-personal-local-alpha
+          if-no-files-found: error
+          path: |
+            dist/*.whl
+            dist/SHA256SUMS
+            platform/generated/delivery-clearance-personal-local-release.json
+      - name: Create Delivery Clearance GitHub prerelease
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            --verify-tag \
+            --prerelease \
+            --title "Delivery Clearance Personal Local Alpha $GITHUB_REF_NAME" \
+            --notes-file docs/release-notes/v0.3.32-alpha.md \
+            dist/*.whl \
+            dist/SHA256SUMS \
+            platform/generated/delivery-clearance-personal-local-release.json

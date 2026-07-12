@@ -34,7 +34,42 @@ Run one disposable end-to-end project and verify that:
 - the HTML report includes the responsibility and claim boundaries;
 - no independent-audit, customer-delivery, production, or AI-correctness claim is made.
 
-## Before Publishing A Release
+## Personal Local Alpha Release Profile
+
+The `v0.3.32-alpha` release is intentionally narrower than the historical full reference-harness
+release train. Its public title is **Delivery Clearance Personal Local Alpha**. It distributes the
+two local CLI entrypoints and a machine-readable release receipt; it does not claim a new hosted,
+customer, production, platform-pack, or published-image release.
+
+Before tagging, run:
+
+```bash
+.venv/bin/python scripts/verify_cbb_positioning.py --check
+.venv/bin/python scripts/verify_personal_clearance_mvp.py --check
+.venv/bin/python scripts/verify_plugin_evidence_adapter.py --check
+.venv/bin/python scripts/verify_personal_local_release.py --check
+.venv/bin/python -m unittest discover apps/api/tests
+uv build --wheel --out-dir dist
+./scripts/release_check.sh
+```
+
+The exact merge commit must produce a complete clean-clone release receipt before the maintainer
+pushes `v0.3.32-alpha`. The tag workflow builds the wheel again, installs it into a disposable
+environment, invokes both public CLIs, and creates a GitHub prerelease with the release receipt and
+SHA-256 sidecar. A partial `--skip-clean-clone`, `--cbb-protocol-only`, or `--dual-loop-only` receipt
+cannot authorize the tag.
+
+## Historical Full Reference-Harness Release
+
+The broader checklist below remains for compatibility platform packs, self-hosting, published
+images, and the historical Study Anything adapter release train. It is not required to broaden the
+claim boundary of the Personal Local Alpha.
+
+### Before Publishing A Release
+
+This compatibility heading is retained for existing launch verifiers. In this section, "release"
+means the broader full reference-harness release described immediately above, not the narrower
+Personal Local Alpha profile.
 
 Run:
 

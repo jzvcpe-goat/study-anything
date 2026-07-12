@@ -115,6 +115,12 @@ ai-agents
 human-reconstruction
 ```
 
+For the `v0.3.32-alpha` Personal Local Alpha, the GitHub release title is
+`Delivery Clearance Personal Local Alpha`. The repository slug and Python distribution retain
+`study-anything` as compatibility identifiers. A later repository-slug migration must first
+preserve the existing GHCR package path and release-asset URLs; it is not bundled into this
+personal-local release.
+
 ## Enforcement
 
 Run:

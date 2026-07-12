@@ -48,6 +48,8 @@ personal_clearance_verifier_integrated="true"
 personal_clearance_verifier_passed="false"
 plugin_evidence_verifier_integrated="true"
 plugin_evidence_verifier_passed="false"
+personal_local_release_verifier_integrated="true"
+personal_local_release_verifier_passed="false"
 known_issue="none"
 claim_boundary="Full release validation has not completed yet."
 PIP_INSTALL_TIMEOUT_SECONDS="${PIP_INSTALL_TIMEOUT_SECONDS:-900}"
@@ -220,6 +222,8 @@ payload = {
     "personal_clearance_verifier_passed": $(json_bool "$personal_clearance_verifier_passed"),
     "plugin_evidence_verifier_integrated": $(json_bool "$plugin_evidence_verifier_integrated"),
     "plugin_evidence_verifier_passed": $(json_bool "$plugin_evidence_verifier_passed"),
+    "personal_local_release_verifier_integrated": $(json_bool "$personal_local_release_verifier_integrated"),
+    "personal_local_release_verifier_passed": $(json_bool "$personal_local_release_verifier_passed"),
     "partial_modes": {
         "dual_loop_only": $(json_bool "$dual_loop_only_enabled"),
         "cbb_protocol_only": $(json_bool "$cbb_protocol_only_enabled"),
@@ -342,6 +346,7 @@ run_cbb_protocol_verifier_gates() {
     "$python_bin" scripts/verify_cbb_external_audit_intake.py --check
     "$python_bin" scripts/verify_personal_clearance_mvp.py --check
     "$python_bin" scripts/verify_plugin_evidence_adapter.py --check
+    "$python_bin" scripts/verify_personal_local_release.py --check
     cbb_v1_contract_verifiers_passed_individually="true"
     cbb_v1_kernel_verifiers_passed_individually="true"
     cbb_v1_provenance_verifiers_passed_individually="true"
@@ -354,8 +359,9 @@ run_cbb_protocol_verifier_gates() {
     cbb_v1_external_adoption_attestation_verifier_passed="true"
     personal_clearance_verifier_passed="true"
     plugin_evidence_verifier_passed="true"
+    personal_local_release_verifier_passed="true"
   else
-    printf "skip  CBB v1 contract, kernel, provenance, scenario, qualification, outcome, Agentic evolution, conformance, adoption, external-adopter attestation, audit-intake, personal-clearance, and plugin-evidence verifiers require project dependencies; dual-loop-only does not claim they passed.\n"
+    printf "skip  CBB v1 contract, kernel, provenance, scenario, qualification, outcome, Agentic evolution, conformance, adoption, external-adopter attestation, audit-intake, personal-clearance, plugin-evidence, and personal-local-release verifiers require project dependencies; dual-loop-only does not claim they passed.\n"
   fi
   "$python_bin" scripts/verify_cbb_protocol_contracts.py --check
   "$python_bin" scripts/verify_cbb_gate.py --check
@@ -584,6 +590,8 @@ phase "existing release gates"
 personal_clearance_verifier_passed="true"
 "$python_bin" scripts/verify_plugin_evidence_adapter.py --check
 plugin_evidence_verifier_passed="true"
+"$python_bin" scripts/verify_personal_local_release.py --check
+personal_local_release_verifier_passed="true"
 "$python_bin" scripts/verify_delivery_trust_receipt.py --check
 "$python_bin" scripts/verify_customer_handoff_package.py --check
 "$python_bin" scripts/verify_product_loop_harness.py --check

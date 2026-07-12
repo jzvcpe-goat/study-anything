@@ -1,0 +1,66 @@
+{
+  "checks": {
+    "compatibility_distribution_preserved": true,
+    "github_guide_requires_full_clean_clone": true,
+    "package_version_matches": true,
+    "personal_cli_declared": true,
+    "plugin_evidence_cli_declared": true,
+    "readme_uses_delivery_clearance_identity": true,
+    "release_checklist_covers_both_clis": true,
+    "release_gate_runs_personal_release_verifier": true,
+    "release_notes_are_claim_bounded": true,
+    "repository_slug_is_documented_as_compatibility": true,
+    "tag_workflow_is_bounded": true
+  },
+  "claim_boundary": {
+    "customer_delivery_authorized": false,
+    "external_write_authorized": false,
+    "independent_audit_completed": false,
+    "maximum_scope": "personal_local",
+    "not_claimed": [
+      "AI or plugin correctness",
+      "independent review",
+      "customer delivery authority",
+      "production approval",
+      "external write authority",
+      "legal, security, compliance, or professional-domain certification",
+      "OS-level containment of configured project checks",
+      "a new published-image release line"
+    ],
+    "production_authorized": false,
+    "published_image_claimed": false,
+    "self_attested": true
+  },
+  "entrypoints": [
+    "delivery-clearance",
+    "delivery-clearance-plugin-evidence"
+  ],
+  "identity": {
+    "package_version": "0.3.32-alpha",
+    "product_name": "Delivery Clearance",
+    "protocol_name": "AI Delivery Clearance Protocol",
+    "python_distribution": "study-anything",
+    "release_title": "Delivery Clearance Personal Local Alpha",
+    "repository_slug_compatibility": "study-anything",
+    "tag": "v0.3.32-alpha",
+    "wheel_filename": "study_anything-0.3.32a0-py3-none-any.whl"
+  },
+  "privacy": {
+    "automatic_external_delivery_performed": false,
+    "local_absolute_paths_included": false,
+    "metadata_only": true,
+    "model_credentials_included": false,
+    "raw_check_output_included": false,
+    "raw_source_text_included": false
+  },
+  "required_before_tag": [
+    "merge release candidate to main",
+    "all required GitHub checks pass",
+    "full release_check.sh completes on the exact merge commit",
+    "clean_clone_completed is true",
+    "dependency_install_completed is true",
+    "wheel installs and both public CLIs run outside the checkout"
+  ],
+  "schema_version": "delivery-clearance.personal-local-release-v1",
+  "status": "pass"
+}

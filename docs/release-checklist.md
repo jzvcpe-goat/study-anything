@@ -1,6 +1,28 @@
 # Release Checklist
 
-## v0.3.31-alpha
+## Delivery Clearance Personal Local Alpha v0.3.32-alpha
+
+- [ ] PR is merged to `main` and all required GitHub checks are green.
+- [ ] `python3 scripts/generate_python_supply_chain.py --check` passes.
+- [ ] `.venv/bin/python scripts/verify_cbb_positioning.py --check` passes.
+- [ ] `.venv/bin/python scripts/verify_personal_clearance_mvp.py --check` passes.
+- [ ] `.venv/bin/python scripts/verify_plugin_evidence_adapter.py --check` passes.
+- [ ] `.venv/bin/python scripts/verify_personal_local_release.py --check` passes.
+- [ ] `.venv/bin/python -m unittest discover apps/api/tests` passes.
+- [ ] `uv build --wheel --out-dir dist` builds `study_anything-0.3.32a0-py3-none-any.whl`.
+- [ ] Install the wheel into a disposable environment and run both
+  `delivery-clearance --help` and `delivery-clearance-plugin-evidence --help` outside the checkout.
+- [ ] Run one allow fixture and one external-write block fixture through the installed plugin
+  evidence CLI; require `personal_local` and exit code `4`, respectively.
+- [ ] `./scripts/release_check.sh` completes on the exact merge commit with
+  `full_release_check_completed=true` and `clean_clone_completed=true`.
+- [ ] Create tag `v0.3.32-alpha`; verify the tag workflow creates the prerelease titled
+  `Delivery Clearance Personal Local Alpha v0.3.32-alpha` and attaches the wheel, SHA-256 sidecar,
+  and `delivery-clearance-personal-local-release-v1` receipt.
+- [ ] Do not claim customer delivery, production approval, independent audit, professional-domain
+  certification, external-write authority, or a new published-image line.
+
+## Historical Full Reference Harness v0.3.31-alpha
 
 - [ ] Create `.venv` with Python 3.11 or 3.12, install
   `requirements/locked-dev-full.txt` with `--require-hashes`, then install the local package with

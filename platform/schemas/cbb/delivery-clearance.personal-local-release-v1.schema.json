@@ -1,0 +1,179 @@
+{
+  "$defs": {
+    "ReleaseClaimBoundary": {
+      "additionalProperties": false,
+      "properties": {
+        "customer_delivery_authorized": {
+          "const": false,
+          "default": false,
+          "title": "Customer Delivery Authorized",
+          "type": "boolean"
+        },
+        "external_write_authorized": {
+          "const": false,
+          "default": false,
+          "title": "External Write Authorized",
+          "type": "boolean"
+        },
+        "independent_audit_completed": {
+          "const": false,
+          "default": false,
+          "title": "Independent Audit Completed",
+          "type": "boolean"
+        },
+        "maximum_scope": {
+          "const": "personal_local",
+          "default": "personal_local",
+          "title": "Maximum Scope",
+          "type": "string"
+        },
+        "not_claimed": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Not Claimed",
+          "type": "array"
+        },
+        "production_authorized": {
+          "const": false,
+          "default": false,
+          "title": "Production Authorized",
+          "type": "boolean"
+        },
+        "published_image_claimed": {
+          "const": false,
+          "default": false,
+          "title": "Published Image Claimed",
+          "type": "boolean"
+        },
+        "self_attested": {
+          "const": true,
+          "default": true,
+          "title": "Self Attested",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "not_claimed"
+      ],
+      "title": "ReleaseClaimBoundary",
+      "type": "object"
+    },
+    "ReleaseIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "package_version": {
+          "const": "0.3.32-alpha",
+          "default": "0.3.32-alpha",
+          "title": "Package Version",
+          "type": "string"
+        },
+        "product_name": {
+          "const": "Delivery Clearance",
+          "default": "Delivery Clearance",
+          "title": "Product Name",
+          "type": "string"
+        },
+        "protocol_name": {
+          "const": "AI Delivery Clearance Protocol",
+          "default": "AI Delivery Clearance Protocol",
+          "title": "Protocol Name",
+          "type": "string"
+        },
+        "python_distribution": {
+          "const": "study-anything",
+          "default": "study-anything",
+          "title": "Python Distribution",
+          "type": "string"
+        },
+        "release_title": {
+          "const": "Delivery Clearance Personal Local Alpha",
+          "default": "Delivery Clearance Personal Local Alpha",
+          "title": "Release Title",
+          "type": "string"
+        },
+        "repository_slug_compatibility": {
+          "const": "study-anything",
+          "default": "study-anything",
+          "title": "Repository Slug Compatibility",
+          "type": "string"
+        },
+        "tag": {
+          "const": "v0.3.32-alpha",
+          "default": "v0.3.32-alpha",
+          "title": "Tag",
+          "type": "string"
+        },
+        "wheel_filename": {
+          "const": "study_anything-0.3.32a0-py3-none-any.whl",
+          "default": "study_anything-0.3.32a0-py3-none-any.whl",
+          "title": "Wheel Filename",
+          "type": "string"
+        }
+      },
+      "title": "ReleaseIdentity",
+      "type": "object"
+    }
+  },
+  "$id": "",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "checks": {
+      "additionalProperties": {
+        "type": "boolean"
+      },
+      "title": "Checks",
+      "type": "object"
+    },
+    "claim_boundary": {
+      "$ref": "#/$defs/ReleaseClaimBoundary"
+    },
+    "entrypoints": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Entrypoints",
+      "type": "array"
+    },
+    "identity": {
+      "$ref": "#/$defs/ReleaseIdentity"
+    },
+    "privacy": {
+      "additionalProperties": {
+        "type": "boolean"
+      },
+      "title": "Privacy",
+      "type": "object"
+    },
+    "required_before_tag": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Required Before Tag",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "delivery-clearance.personal-local-release-v1",
+      "default": "delivery-clearance.personal-local-release-v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "const": "pass",
+      "default": "pass",
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "identity",
+    "entrypoints",
+    "checks",
+    "required_before_tag",
+    "claim_boundary",
+    "privacy"
+  ],
+  "title": "PersonalLocalReleaseReceipt",
+  "type": "object"
+}
