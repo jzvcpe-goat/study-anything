@@ -2,10 +2,10 @@
 
 - Schema: `external-security-audit-pack-v1`
 - Status: `ready_for_independent_audit`
-- Version: `v0.3.31-alpha`
+- Version: `v0.3.32-alpha`
 - Scope areas: `7`
 - Source/evidence files: `167`
-- Archive SHA-256: `9e02577c38649f8dbeb40c517708e802f09552f2f02da00455410502e2eb0a0d`
+- Archive SHA-256: `5dbe5671d8430effe78b836943958b3cdf55404a4c698ea1c113a6bd8313cfb6`
 
 This pack is ready for an external human-led security audit at a pinned commit.
 It does not claim that an audit, penetration test, or production certification

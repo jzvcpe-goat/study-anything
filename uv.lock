@@ -1304,7 +1304,7 @@ wheels = [
 
 [[package]]
 name = "study-anything"
-version = "0.3.31a0"
+version = "0.3.32a0"
 source = { editable = "." }
 dependencies = [
     { name = "fastapi" },

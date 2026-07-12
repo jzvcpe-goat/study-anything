@@ -8,7 +8,7 @@
   "lock": {
     "package_count": 93,
     "path": "uv.lock",
-    "sha256": "fcbf062d8776f7b6d68a3b0595c5339a5bcd17e74aba7baa2f43f5849e412834",
+    "sha256": "50db12c0cf4217507385a39587316154eaf8605abc80ddaf311884afd5bd3439",
     "universal_cross_platform": true
   },
   "privacy": {
@@ -20,7 +20,7 @@
     "raw_source_text_included": false,
     "secrets_included": false
   },
-  "pyproject_sha256": "b5b369fe543c87501fceccc94e59fe036ed1ef0c9d2fa114b578b8c5dcef2cc8",
+  "pyproject_sha256": "e8030103de10c84b05fcb4f7a326ef94e5438d520c2729426a175bf006113634",
   "python_support": ">=3.11,<3.13",
   "requirements": [
     {
@@ -52,7 +52,7 @@
     "component_count": 92,
     "format": "CycloneDX",
     "path": "platform/generated/study-anything-python-sbom.cdx.json",
-    "sha256": "1f5ef29770932cd84a05ae584e1ff36e11c1a07182f0aba38c4372c66fe60d53",
+    "sha256": "3780c06640da3497b65e091bb925be9fe866af61abd4c169fa88b7e2fa15bd66",
     "spec_version": "1.5"
   },
   "schema_version": "python-supply-chain-receipt-v1",

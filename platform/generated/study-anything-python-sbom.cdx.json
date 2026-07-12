@@ -1192,7 +1192,7 @@
         "setuptools-75@80.10.2",
         "uvicorn-87@0.51.0"
       ],
-      "ref": "study-anything-1@0.3.31a0"
+      "ref": "study-anything-1@0.3.32a0"
     },
     {
       "ref": "tenacity-79@9.1.4"
@@ -1261,7 +1261,7 @@
   ],
   "metadata": {
     "component": {
-      "bom-ref": "study-anything-1@0.3.31a0",
+      "bom-ref": "study-anything-1@0.3.32a0",
       "name": "study-anything",
       "properties": [
         {
@@ -1270,7 +1270,7 @@
         }
       ],
       "type": "library",
-      "version": "0.3.31a0"
+      "version": "0.3.32a0"
     },
     "tools": [
       {

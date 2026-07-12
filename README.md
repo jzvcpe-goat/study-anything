@@ -135,6 +135,21 @@ deterministic pre-check for Personal Clearance. It requires runtime, input, effe
 domain evidence according to the plugin's capability class. It never grants more than
 `personal_local`; external writes, credential use, and observed external mutation hard-block.
 
+## Personal Local Alpha Release
+
+`v0.3.32-alpha` is the first GitHub prerelease candidate led publicly by the
+**Delivery Clearance** identity. Its deliberately narrow release surface is:
+
+- `delivery-clearance init/audit/verify`;
+- `delivery-clearance-plugin-evidence` as a supporting evidence pre-check;
+- state-bound, self-attested receipts with a maximum scope of `personal_local`;
+- no customer delivery, production approval, external write authority, or independent-audit claim.
+
+The GitHub release title is **Delivery Clearance Personal Local Alpha**. The wheel retains the
+historical `study-anything` distribution name for compatibility; that package name is not the
+public product identity. See [GitHub Release Guide](docs/github-launch.md) and
+[v0.3.32-alpha release notes](docs/release-notes/v0.3.32-alpha.md).
+
 ## Current Reference Implementation
 
 The current `main` line includes deterministic, metadata-only implementations for:
@@ -242,9 +257,10 @@ To launch the local API:
 
 ## Self-Host And Published Images
 
-The latest tagged binary/image line remains `v0.3.31-alpha` until a new tag is cut.
-Current `main` contains later reference-harness work and must not be described as an
-already published image.
+The latest published compatibility image line remains `v0.3.31-alpha` until a new image tag is
+verified. The `v0.3.32-alpha` Personal Local Alpha is a CLI/wheel release candidate and does not
+claim a new published-image line. Current `main` must not be described as an already published
+image.
 
 Source build:
 

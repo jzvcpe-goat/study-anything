@@ -38,6 +38,7 @@ REQUIRED_TEXT: dict[str, tuple[str, ...]] = {
         "## Audit Your Own Local Project",
         "The only possible allowed scope is `personal_local`.",
         "Plugin Evidence Adapter v0.1",
+        "Delivery Clearance Personal Local Alpha",
         "scripts/verify_cbb_positioning.py --check",
     ),
     "docs/personal-clearance-mvp.md": (
@@ -55,6 +56,19 @@ REQUIRED_TEXT: dict[str, tuple[str, ...]] = {
         "professional_judgment",
         "delivery-clearance-plugin-evidence",
         "scripts/verify_plugin_evidence_adapter.py --check",
+    ),
+    "docs/release-notes/v0.3.32-alpha.md": (
+        "# Delivery Clearance Personal Local Alpha v0.3.32-alpha",
+        PUBLIC_SLOGAN,
+        "maximum clearance scope is `personal_local`",
+        "does not authorize external writes",
+    ),
+    ".github/workflows/delivery-clearance-personal-release.yml": (
+        "delivery-clearance-personal-release",
+        "v0.3.32-alpha",
+        "Delivery Clearance Personal Local Alpha",
+        "scripts/verify_personal_local_release.py --check",
+        "delivery-clearance-plugin-evidence --help",
     ),
     "docs/product-positioning.md": (
         "Delivery Clearance is the public product identity",
@@ -196,6 +210,7 @@ REQUIRED_TEXT: dict[str, tuple[str, ...]] = {
         "scripts/verify_cbb_external_audit_intake.py --check",
         "scripts/verify_personal_clearance_mvp.py --check",
         "scripts/verify_plugin_evidence_adapter.py --check",
+        "scripts/verify_personal_local_release.py --check",
     ),
 }
 
@@ -297,9 +312,7 @@ def verify_public_first_view() -> dict[str, Any]:
     )
     findings = [term for term in obsolete_first_view if term in first_view]
     if findings:
-        raise PositioningError(
-            f"README first view leaks obsolete product framing: {findings}"
-        )
+        raise PositioningError(f"README first view leaks obsolete product framing: {findings}")
     return {
         "line_window": 27,
         "delivery_clearance_definition_present": True,
@@ -348,10 +361,12 @@ def verify_package_metadata() -> dict[str, Any]:
     api_source = read_text("apps/api/study_anything/api/main.py")
     api_title = "Delivery Clearance: Study Anything Adapter"
     if api_title not in api_source:
-        raise PositioningError("FastAPI title does not expose Delivery Clearance plus adapter boundary.")
+        raise PositioningError(
+            "FastAPI title does not expose Delivery Clearance plus adapter boundary."
+        )
 
     artifact_source = read_text("apps/api/study_anything/core/cognitive_loop_contracts.py")
-    if "<h1 class=\"brand\">Delivery Clearance</h1>" not in artifact_source:
+    if '<h1 class="brand">Delivery Clearance</h1>' not in artifact_source:
         raise PositioningError("Generated artifact branding is not Delivery Clearance.")
 
     return {

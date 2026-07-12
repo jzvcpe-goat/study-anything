@@ -48,6 +48,7 @@ class ReleaseCheckScriptTests(unittest.TestCase):
         self.assertIn("verify_cbb_external_audit_intake.py --check", script)
         self.assertIn("verify_personal_clearance_mvp.py --check", script)
         self.assertIn("verify_plugin_evidence_adapter.py --check", script)
+        self.assertIn("verify_personal_local_release.py --check", script)
         self.assertIn('release_python_prefix="$("$python_bin" -c', script)
         self.assertIn('--venv "$release_python_prefix"', script)
 
@@ -94,16 +95,14 @@ class ReleaseCheckScriptTests(unittest.TestCase):
         self.assertFalse(receipt["cbb_v1_conformance_verifiers_passed_individually"])
         self.assertTrue(receipt["cbb_v1_adoption_audit_verifiers_integrated"])
         self.assertFalse(receipt["cbb_v1_adoption_audit_verifiers_passed_individually"])
-        self.assertTrue(
-            receipt["cbb_v1_external_adoption_attestation_verifier_integrated"]
-        )
-        self.assertFalse(
-            receipt["cbb_v1_external_adoption_attestation_verifier_passed"]
-        )
+        self.assertTrue(receipt["cbb_v1_external_adoption_attestation_verifier_integrated"])
+        self.assertFalse(receipt["cbb_v1_external_adoption_attestation_verifier_passed"])
         self.assertTrue(receipt["personal_clearance_verifier_integrated"])
         self.assertFalse(receipt["personal_clearance_verifier_passed"])
         self.assertTrue(receipt["plugin_evidence_verifier_integrated"])
         self.assertFalse(receipt["plugin_evidence_verifier_passed"])
+        self.assertTrue(receipt["personal_local_release_verifier_integrated"])
+        self.assertFalse(receipt["personal_local_release_verifier_passed"])
         self.assertTrue(receipt["partial_modes"]["dual_loop_only"])
         self.assertTrue(receipt["partial_modes"]["skip_clean_clone"])
         self.assertIn("do not claim full", receipt["claim_boundary"])

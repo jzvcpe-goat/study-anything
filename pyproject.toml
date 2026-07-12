@@ -1,6 +1,6 @@
 [project]
 name = "study-anything"
-version = "0.3.31-alpha"
+version = "0.3.32-alpha"
 description = "Delivery Clearance: open, local-first AI Delivery Clearance Protocol and reference harness."
 readme = "README.md"
 requires-python = ">=3.11,<3.13"

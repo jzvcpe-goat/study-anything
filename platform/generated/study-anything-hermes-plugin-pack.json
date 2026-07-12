@@ -1,9 +1,9 @@
 {
   "archive": {
-    "bytes": 138568,
+    "bytes": 138836,
     "path": "platform/generated/study-anything-hermes-plugin-pack.zip",
     "root": "study-anything-hermes-plugin-pack",
-    "sha256": "5ecc0a9b97338b04347d1b8071d6bafeed98d5b64f14886f917c1fb7d1ab9cdd"
+    "sha256": "4ca52c7b472b415549f027fba69f24f318b91bde7327705f738bea55d8425422"
   },
   "entrypoints": {
     "direct_skill_install": "https://raw.githubusercontent.com/jzvcpe-goat/study-anything/main/skills/study-anything/SKILL.md",
@@ -16,11 +16,11 @@
   "files": [
     {
       "archive_path": "study-anything-hermes-plugin-pack/README.md",
-      "bytes": 15308,
+      "bytes": 16230,
       "kind": "root_doc",
       "path": "README.md",
       "purpose": "Project positioning and local-first adoption overview.",
-      "sha256": "ec5d1c31d313974064934b823bf811aaff06ff2357e5e090424f7b07c89f5d58"
+      "sha256": "a132a4fa3c1e465648395d9e88e5defb1eb4087cfdd1686b41f120b7a2be9a88"
     },
     {
       "archive_path": "study-anything-hermes-plugin-pack/QUICKSTART.md",

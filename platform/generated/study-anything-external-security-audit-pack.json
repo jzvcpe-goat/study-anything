@@ -12,10 +12,10 @@
     "open_high_findings_allowed": 0
   },
   "archive": {
-    "bytes": 618147,
+    "bytes": 618623,
     "path": "platform/generated/study-anything-external-security-audit-pack.zip",
     "root": "study-anything-external-security-audit-pack",
-    "sha256": "9e02577c38649f8dbeb40c517708e802f09552f2f02da00455410502e2eb0a0d"
+    "sha256": "5dbe5671d8430effe78b836943958b3cdf55404a4c698ea1c113a6bd8313cfb6"
   },
   "claim_boundary": {
     "current_claim": "The repository is packaged and ready for an independent security audit at a pinned commit.",
@@ -279,11 +279,11 @@
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/release-checklist.md",
-      "bytes": 37183,
+      "bytes": 38805,
       "path": "docs/release-checklist.md",
       "purpose": "Release acceptance and claim-boundary checklist.",
       "role": "release_doc",
-      "sha256": "a9cb26ef85fecb30a4b90b46b5a59ac595002f6a74d24f2e8b6f170d5d924959"
+      "sha256": "bd73da5afbf5a5cefaa8c43809784634f681fe339912632ff2ad1bd30f4fb5bc"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/quality-audits/phase-23-repository-security-remediation.md",
@@ -371,7 +371,7 @@
       "path": "platform/generated/study-anything-python-supply-chain.json",
       "purpose": "Lock, hash export, and SBOM receipt.",
       "role": "generated_evidence",
-      "sha256": "f52ab53a1ec056d458e6ea48ffb14ba93666f9ca4ac092f803a755cdf9050bb8"
+      "sha256": "02802bec7781af10e6f8db7feba601b91424b8b47cf36cedcbba16bab9d09722"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/platform/generated/study-anything-python-sbom.cdx.json",
@@ -379,7 +379,7 @@
       "path": "platform/generated/study-anything-python-sbom.cdx.json",
       "purpose": "CycloneDX Python dependency inventory.",
       "role": "generated_evidence",
-      "sha256": "1f5ef29770932cd84a05ae584e1ff36e11c1a07182f0aba38c4372c66fe60d53"
+      "sha256": "3780c06640da3497b65e091bb925be9fe866af61abd4c169fa88b7e2fa15bd66"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/platform/generated/study-anything-strict-reliability-acceptance.json",
@@ -1424,5 +1424,5 @@
     "python3 scripts/generate_external_security_audit_pack.py --check",
     "python3 scripts/verify_external_security_audit_pack.py --check"
   ],
-  "version": "v0.3.31-alpha"
+  "version": "v0.3.32-alpha"
 }

@@ -24,7 +24,7 @@ def _resolve_version() -> str:
     try:
         return version("study-anything")
     except PackageNotFoundError:
-        return "0.3.31-alpha"
+        return "0.3.32-alpha"
 
 
 __version__ = _resolve_version()
