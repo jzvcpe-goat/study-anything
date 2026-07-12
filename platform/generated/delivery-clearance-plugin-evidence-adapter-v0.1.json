@@ -1,0 +1,148 @@
+{
+  "case_results": {
+    "all_decisions_disclaim_customer_and_production_authority": true,
+    "allowed_cases_stop_at_personal_local": true,
+    "bound_external_read_can_support_personal_use": true,
+    "bound_local_write_can_support_resulting_git_state": true,
+    "cli_help_succeeds": true,
+    "credentials_hard_block": true,
+    "external_write_capability_hard_blocks": true,
+    "fixture_statuses_match": true,
+    "installed_cli_entrypoint_declared": true,
+    "interactive_ui_requires_native_verification": true,
+    "local_absolute_paths_are_rejected": true,
+    "manifest_only_is_not_runtime_evidence": true,
+    "mutable_external_input_expires": true,
+    "non_allowed_cases_grant_no_scope": true,
+    "observed_external_mutation_hard_blocks": true,
+    "professional_judgment_requires_domain_evidence": true,
+    "runtime_failure_is_not_relabelled_as_missing": true,
+    "scope_expansion_is_schema_rejected": true,
+    "secret_like_metadata_is_rejected": true
+  },
+  "claim_boundary": "Plugin Evidence Adapter v0.1 does not run or approve plugins. It converts bounded runtime, input, effect, native-verification, and domain evidence into supporting evidence for one personal-local candidate only.",
+  "fixture_decisions": {
+    "block-credential-use": {
+      "approved_scope": "blocked",
+      "missing_evidence": [],
+      "reasons": [
+        "hard_deny:credentials_used"
+      ],
+      "status": "block"
+    },
+    "block-external-mutation": {
+      "approved_scope": "blocked",
+      "missing_evidence": [],
+      "reasons": [
+        "hard_deny:external_mutation_observed"
+      ],
+      "status": "block"
+    },
+    "block-external-write": {
+      "approved_scope": "blocked",
+      "missing_evidence": [],
+      "reasons": [
+        "hard_deny:external_write_capability"
+      ],
+      "status": "block"
+    },
+    "block-runtime-failure": {
+      "approved_scope": "blocked",
+      "missing_evidence": [],
+      "reasons": [
+        "hard_deny:required_check_failure",
+        "hard_deny:runtime_failed"
+      ],
+      "status": "block"
+    },
+    "needs-domain-evidence": {
+      "approved_scope": "blocked",
+      "missing_evidence": [
+        "domain_evidence_and_qualified_reconstruction"
+      ],
+      "reasons": [
+        "missing:domain_evidence_and_qualified_reconstruction"
+      ],
+      "status": "needs_evidence"
+    },
+    "needs-fresh-external-input": {
+      "approved_scope": "blocked",
+      "missing_evidence": [
+        "external_input_freshness"
+      ],
+      "reasons": [
+        "missing:external_input_freshness"
+      ],
+      "status": "needs_evidence"
+    },
+    "needs-manifest-only": {
+      "approved_scope": "blocked",
+      "missing_evidence": [
+        "input_binding",
+        "package_digest",
+        "required_check_execution",
+        "runtime_dependency_check",
+        "runtime_execution"
+      ],
+      "reasons": [
+        "missing:input_binding",
+        "missing:package_digest",
+        "missing:required_check_execution",
+        "missing:runtime_dependency_check",
+        "missing:runtime_execution"
+      ],
+      "status": "needs_evidence"
+    },
+    "needs-native-verification": {
+      "approved_scope": "blocked",
+      "missing_evidence": [
+        "native_verification"
+      ],
+      "reasons": [
+        "missing:native_verification"
+      ],
+      "status": "needs_evidence"
+    },
+    "needs-unbound-input": {
+      "approved_scope": "blocked",
+      "missing_evidence": [
+        "input_binding"
+      ],
+      "reasons": [
+        "missing:input_binding"
+      ],
+      "status": "needs_evidence"
+    },
+    "pass-bound-external-read": {
+      "approved_scope": "personal_local",
+      "missing_evidence": [],
+      "reasons": [],
+      "status": "allow_personal_local"
+    },
+    "pass-bound-local-write": {
+      "approved_scope": "personal_local",
+      "missing_evidence": [],
+      "reasons": [],
+      "status": "allow_personal_local"
+    },
+    "pass-local-read": {
+      "approved_scope": "personal_local",
+      "missing_evidence": [],
+      "reasons": [],
+      "status": "allow_personal_local"
+    }
+  },
+  "maximum_allowed_scope": "personal_local",
+  "privacy": {
+    "external_actions_performed": false,
+    "external_input_content_included": false,
+    "local_absolute_paths_included": false,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "plugin_execution_performed_by_verifier": false,
+    "plugin_source_included": false,
+    "raw_check_output_included": false
+  },
+  "schema_version": "plugin-evidence-adapter-verification-v1",
+  "status": "pass"
+}

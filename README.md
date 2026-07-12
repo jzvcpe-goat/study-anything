@@ -125,6 +125,16 @@ MVP. The receipt is self-attested, not independently reviewed. See
 [Personal Local Clearance MVP](docs/personal-clearance-mvp.md) for the contract, artifacts,
 exit codes, privacy boundary, and suggested pre-commit/pre-handoff use.
 
+Installed plugin metadata is not runtime, semantic, or side-effect evidence. The
+[real installed-plugin boundary study](docs/quality-audits/phase-42-real-plugin-boundary-study.md)
+shows which narrow checks can support personal use and which plugin capabilities remain
+ineligible for delivery clearance.
+
+[Plugin Evidence Adapter v0.1](docs/plugin-evidence-adapter.md) turns those boundaries into a
+deterministic pre-check for Personal Clearance. It requires runtime, input, effect, native, and
+domain evidence according to the plugin's capability class. It never grants more than
+`personal_local`; external writes, credential use, and observed external mutation hard-block.
+
 ## Current Reference Implementation
 
 The current `main` line includes deterministic, metadata-only implementations for:
@@ -132,6 +142,9 @@ The current `main` line includes deterministic, metadata-only implementations fo
 - a one-command personal-local clearance workflow for arbitrary local Git projects,
   with state-bound receipts, explicit per-run responsibility, configured check evidence,
   mutation detection, expiry, tamper replay, and an HTML report;
+- a Plugin Evidence Adapter that keeps install metadata separate from runtime evidence and
+  fails closed on external writes, credential use, unbound inputs, missing native checks, and
+  missing professional-domain reconstruction;
 - controlled failure contracts and sandbox receipts;
 - attention reconstruction traces and summaries;
 - Dual-Loop gate receipts;

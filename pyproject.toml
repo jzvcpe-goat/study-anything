@@ -15,6 +15,7 @@ dependencies = [
 
 [project.scripts]
 delivery-clearance = "study_anything.cbb.personal.cli:main"
+delivery-clearance-plugin-evidence = "study_anything.cbb.plugin_evidence.cli:main"
 
 [project.optional-dependencies]
 skill = []

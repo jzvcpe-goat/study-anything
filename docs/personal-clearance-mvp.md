@@ -166,6 +166,18 @@ production approval, professional qualification, or legal/security/compliance
 certification. External or customer-facing claims still require a separate qualified
 reviewer, risk owner, provenance, and target-scope receipt.
 
+An installed plugin is not clearance evidence by itself. A real local plugin study found
+that manifest parsing can pass while the plugin runtime, native browser surface, dependency
+loader, or full regression suite remains unavailable. It also confirmed that project-external
+side effects and mutable external inputs are not observed by the Git snapshot. See
+[Phase 42 Real Installed-Plugin Boundary Study](quality-audits/phase-42-real-plugin-boundary-study.md)
+for the executed cases, timings, and the explicit list of capabilities this MVP cannot clear.
+
+For plugin-assisted work, run [Plugin Evidence Adapter v0.1](plugin-evidence-adapter.md) as a
+required configured check. The adapter does not run the plugin and cannot expand scope; it
+turns bounded runtime, input, effect, native-verification, and domain evidence into a zero-exit
+precondition for the final personal audit.
+
 ## Verify The MVP Itself
 
 ```bash

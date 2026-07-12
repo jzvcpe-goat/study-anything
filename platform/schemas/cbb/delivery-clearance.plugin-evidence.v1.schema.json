@@ -1,0 +1,617 @@
+{
+  "$defs": {
+    "PluginCapability": {
+      "enum": [
+        "local_read",
+        "local_write",
+        "external_read",
+        "external_write",
+        "interactive_ui",
+        "professional_judgment"
+      ],
+      "title": "PluginCapability",
+      "type": "string"
+    },
+    "PluginCheckEvidenceV1": {
+      "additionalProperties": false,
+      "properties": {
+        "check_id": {
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+          "title": "Check Id",
+          "type": "string"
+        },
+        "observed_at": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Observed At"
+        },
+        "required": {
+          "const": true,
+          "default": true,
+          "title": "Required",
+          "type": "boolean"
+        },
+        "result_digest_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Result Digest Sha256"
+        },
+        "status": {
+          "$ref": "#/$defs/PluginCheckStatus"
+        }
+      },
+      "required": [
+        "check_id",
+        "status"
+      ],
+      "title": "PluginCheckEvidenceV1",
+      "type": "object"
+    },
+    "PluginCheckStatus": {
+      "enum": [
+        "passed",
+        "failed",
+        "error",
+        "timeout",
+        "not_run"
+      ],
+      "title": "PluginCheckStatus",
+      "type": "string"
+    },
+    "PluginDomainEvidenceV1": {
+      "additionalProperties": false,
+      "properties": {
+        "domain_profile_digest_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Domain Profile Digest Sha256"
+        },
+        "domain_profile_ref": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Domain Profile Ref"
+        },
+        "evaluator_digest_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Evaluator Digest Sha256"
+        },
+        "qualified_reconstruction": {
+          "$ref": "#/$defs/PluginEvidenceStatus"
+        },
+        "status": {
+          "$ref": "#/$defs/PluginEvidenceStatus"
+        }
+      },
+      "required": [
+        "status",
+        "qualified_reconstruction"
+      ],
+      "title": "PluginDomainEvidenceV1",
+      "type": "object"
+    },
+    "PluginEffectEvidenceV1": {
+      "additionalProperties": false,
+      "properties": {
+        "credentials_used": {
+          "title": "Credentials Used",
+          "type": "boolean"
+        },
+        "external_mutation_observed": {
+          "title": "External Mutation Observed",
+          "type": "boolean"
+        },
+        "network_access_observed": {
+          "title": "Network Access Observed",
+          "type": "boolean"
+        },
+        "post_run_subject_digest_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Post Run Subject Digest Sha256"
+        },
+        "project_git_mutation_observed": {
+          "title": "Project Git Mutation Observed",
+          "type": "boolean"
+        },
+        "project_mutation_bound_to_subject_digest": {
+          "title": "Project Mutation Bound To Subject Digest",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "project_git_mutation_observed",
+        "project_mutation_bound_to_subject_digest",
+        "network_access_observed",
+        "external_mutation_observed",
+        "credentials_used"
+      ],
+      "title": "PluginEffectEvidenceV1",
+      "type": "object"
+    },
+    "PluginEvidencePrivacyV1": {
+      "additionalProperties": false,
+      "properties": {
+        "external_input_content_included": {
+          "const": false,
+          "title": "External Input Content Included",
+          "type": "boolean"
+        },
+        "local_absolute_paths_included": {
+          "const": false,
+          "title": "Local Absolute Paths Included",
+          "type": "boolean"
+        },
+        "plugin_source_included": {
+          "const": false,
+          "title": "Plugin Source Included",
+          "type": "boolean"
+        },
+        "protocol_boundary": {
+          "$ref": "#/$defs/PrivacyBoundaryV1"
+        },
+        "raw_check_output_included": {
+          "const": false,
+          "title": "Raw Check Output Included",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "protocol_boundary",
+        "plugin_source_included",
+        "raw_check_output_included",
+        "external_input_content_included",
+        "local_absolute_paths_included"
+      ],
+      "title": "PluginEvidencePrivacyV1",
+      "type": "object"
+    },
+    "PluginEvidenceStatus": {
+      "enum": [
+        "passed",
+        "failed",
+        "missing",
+        "not_applicable"
+      ],
+      "title": "PluginEvidenceStatus",
+      "type": "string"
+    },
+    "PluginInputEvidenceV1": {
+      "additionalProperties": false,
+      "properties": {
+        "content_digest_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Content Digest Sha256"
+        },
+        "input_id": {
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+          "title": "Input Id",
+          "type": "string"
+        },
+        "observed_at": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Observed At",
+          "type": "string"
+        },
+        "source_class": {
+          "$ref": "#/$defs/PluginInputSourceClass"
+        },
+        "valid_until": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Valid Until"
+        }
+      },
+      "required": [
+        "input_id",
+        "source_class",
+        "observed_at"
+      ],
+      "title": "PluginInputEvidenceV1",
+      "type": "object"
+    },
+    "PluginInputSourceClass": {
+      "enum": [
+        "git_bound",
+        "local_unbound",
+        "external_mutable"
+      ],
+      "title": "PluginInputSourceClass",
+      "type": "string"
+    },
+    "PluginNativeVerificationV1": {
+      "additionalProperties": false,
+      "properties": {
+        "observed_at": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Observed At"
+        },
+        "status": {
+          "$ref": "#/$defs/PluginEvidenceStatus"
+        },
+        "verification_digest_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Verification Digest Sha256"
+        },
+        "verifier_kind": {
+          "anyOf": [
+            {
+              "maxLength": 120,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Verifier Kind"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "title": "PluginNativeVerificationV1",
+      "type": "object"
+    },
+    "PluginPackageEvidenceV1": {
+      "additionalProperties": false,
+      "properties": {
+        "manifest_digest_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Manifest Digest Sha256"
+        },
+        "package_digest_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Package Digest Sha256"
+        },
+        "plugin_id": {
+          "pattern": "^[a-z0-9][a-z0-9._-]{0,119}$",
+          "title": "Plugin Id",
+          "type": "string"
+        },
+        "plugin_version": {
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Plugin Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "plugin_id",
+        "plugin_version"
+      ],
+      "title": "PluginPackageEvidenceV1",
+      "type": "object"
+    },
+    "PluginRuntimeEvidenceV1": {
+      "additionalProperties": false,
+      "properties": {
+        "dependency_check": {
+          "$ref": "#/$defs/PluginEvidenceStatus"
+        },
+        "execution_digest_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Execution Digest Sha256"
+        },
+        "observed_at": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Observed At"
+        },
+        "status": {
+          "$ref": "#/$defs/PluginRuntimeStatus"
+        }
+      },
+      "required": [
+        "status",
+        "dependency_check"
+      ],
+      "title": "PluginRuntimeEvidenceV1",
+      "type": "object"
+    },
+    "PluginRuntimeStatus": {
+      "enum": [
+        "ready",
+        "failed",
+        "timeout",
+        "not_run"
+      ],
+      "title": "PluginRuntimeStatus",
+      "type": "string"
+    },
+    "PrivacyBoundaryV1": {
+      "additionalProperties": false,
+      "properties": {
+        "attention_stream_included": {
+          "const": false,
+          "title": "Attention Stream Included",
+          "type": "boolean"
+        },
+        "automatic_customer_send_performed": {
+          "const": false,
+          "title": "Automatic Customer Send Performed",
+          "type": "boolean"
+        },
+        "cookies_or_bearer_tokens_included": {
+          "const": false,
+          "title": "Cookies Or Bearer Tokens Included",
+          "type": "boolean"
+        },
+        "metadata_only": {
+          "const": true,
+          "title": "Metadata Only",
+          "type": "boolean"
+        },
+        "model_credentials_included": {
+          "const": false,
+          "title": "Model Credentials Included",
+          "type": "boolean"
+        },
+        "model_prompts_included": {
+          "const": false,
+          "title": "Model Prompts Included",
+          "type": "boolean"
+        },
+        "production_mutation_performed": {
+          "const": false,
+          "title": "Production Mutation Performed",
+          "type": "boolean"
+        },
+        "raw_customer_payload_included": {
+          "const": false,
+          "title": "Raw Customer Payload Included",
+          "type": "boolean"
+        },
+        "raw_report_text_included": {
+          "const": false,
+          "title": "Raw Report Text Included",
+          "type": "boolean"
+        },
+        "raw_source_text_included": {
+          "const": false,
+          "title": "Raw Source Text Included",
+          "type": "boolean"
+        },
+        "signed_urls_included": {
+          "const": false,
+          "title": "Signed Urls Included",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "metadata_only",
+        "raw_source_text_included",
+        "raw_report_text_included",
+        "raw_customer_payload_included",
+        "attention_stream_included",
+        "model_prompts_included",
+        "model_credentials_included",
+        "cookies_or_bearer_tokens_included",
+        "signed_urls_included",
+        "production_mutation_performed",
+        "automatic_customer_send_performed"
+      ],
+      "title": "PrivacyBoundaryV1",
+      "type": "object"
+    }
+  },
+  "$id": "delivery-clearance.plugin-evidence.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "capabilities": {
+      "items": {
+        "$ref": "#/$defs/PluginCapability"
+      },
+      "maxItems": 12,
+      "minItems": 1,
+      "title": "Capabilities",
+      "type": "array"
+    },
+    "checks": {
+      "items": {
+        "$ref": "#/$defs/PluginCheckEvidenceV1"
+      },
+      "maxItems": 100,
+      "minItems": 1,
+      "title": "Checks",
+      "type": "array"
+    },
+    "domain_evidence": {
+      "$ref": "#/$defs/PluginDomainEvidenceV1"
+    },
+    "effects": {
+      "$ref": "#/$defs/PluginEffectEvidenceV1"
+    },
+    "evidence_id": {
+      "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+      "title": "Evidence Id",
+      "type": "string"
+    },
+    "inputs": {
+      "items": {
+        "$ref": "#/$defs/PluginInputEvidenceV1"
+      },
+      "maxItems": 100,
+      "title": "Inputs",
+      "type": "array"
+    },
+    "native_verification": {
+      "$ref": "#/$defs/PluginNativeVerificationV1"
+    },
+    "observed_at": {
+      "maxLength": 64,
+      "minLength": 1,
+      "title": "Observed At",
+      "type": "string"
+    },
+    "plugin": {
+      "$ref": "#/$defs/PluginPackageEvidenceV1"
+    },
+    "privacy": {
+      "$ref": "#/$defs/PluginEvidencePrivacyV1"
+    },
+    "requested_scope": {
+      "const": "personal_local",
+      "default": "personal_local",
+      "title": "Requested Scope",
+      "type": "string"
+    },
+    "runtime": {
+      "$ref": "#/$defs/PluginRuntimeEvidenceV1"
+    },
+    "schema_version": {
+      "const": "delivery-clearance.plugin-evidence.v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "valid_until": {
+      "maxLength": 64,
+      "minLength": 1,
+      "title": "Valid Until",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "evidence_id",
+    "plugin",
+    "capabilities",
+    "runtime",
+    "inputs",
+    "effects",
+    "checks",
+    "native_verification",
+    "domain_evidence",
+    "observed_at",
+    "valid_until",
+    "privacy"
+  ],
+  "title": "PluginEvidenceBundleV1",
+  "type": "object"
+}
