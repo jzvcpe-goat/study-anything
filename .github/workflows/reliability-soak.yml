@@ -61,7 +61,7 @@ jobs:
       MIN_SUCCESS_RATIO: ${{ inputs.min_success_ratio || '0.99' }}
       MAX_CONSECUTIVE_FAILURES: ${{ inputs.max_consecutive_failures || '8' }}
     steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: "3.12"
@@ -104,7 +104,7 @@ jobs:
     needs: reliability-soak
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - name: Resolve evidence source
         id: evidence
         env:
