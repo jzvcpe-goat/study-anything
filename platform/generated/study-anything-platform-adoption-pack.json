@@ -97,19 +97,19 @@
     "proof_schema": "adoption-proof-v1",
     "target_minutes": 15
   },
-  "archive_bytes": 8109577,
+  "archive_bytes": 8109838,
   "archive_name": "study-anything-platform-adoption-pack.zip",
   "archive_root": "study-anything-platform-adoption-pack",
-  "archive_sha256": "6dad431f02a762fd8832ab93916b3435866b10b0be8729b24f7b7a6663ca8d1a",
+  "archive_sha256": "8eddd4d14a84a64ef5068b9bb59fc10cdcfb71dd3d33bd532fdbbb1c282d3529",
   "description": "Copy-ready CBB reference-harness adapter pack for Kimi Work, Codex, WorkBuddy-style HTTP workspaces, Hermes Agent, NotebookLM/Obsidian handoff, and external Agent eval proof.",
   "files": [
     {
       "archive_path": "study-anything-platform-adoption-pack/README.md",
-      "bytes": 18911,
+      "bytes": 19681,
       "kind": "root_doc",
       "path": "README.md",
       "purpose": "Repository overview and local-first launch entrypoint.",
-      "sha256": "9a5b43f6b11748cdd498a06ca3f58cbbb3a418da1ad68b4720341f22b1c57eb2"
+      "sha256": "baf77551c14ac9bf74bd97dc8079efe968c2f450ed87347f133f113832783dc1"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/QUICKSTART.md",
