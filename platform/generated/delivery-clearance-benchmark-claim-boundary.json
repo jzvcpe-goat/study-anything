@@ -3,10 +3,28 @@
   "checks": {
     "confirmatory_significance_not_claimed": true,
     "customer_and_production_not_claimed": true,
+    "human_protocol_claims_no_independence_or_effectiveness": true,
+    "human_protocol_remains_personal_local": true,
+    "human_protocol_schema_is_v1": true,
+    "human_protocol_stores_no_disallowed_review_signals": true,
+    "human_protocol_uses_replacement_boundary_seed": true,
     "maximum_scope_is_personal_local": true,
     "mechanism_banner_is_prominent": true,
     "mechanism_status_is_not_pilot_complete": true,
-    "observed_decisions_without_human_and_ablation_are_incomplete": true
+    "methodology_commands_use_only_canonical_seeds": true,
+    "observed_decisions_without_human_and_ablation_are_incomplete": true,
+    "retired_boundary_seed_is_not_active": true
+  },
+  "human_protocol": {
+    "active_order_seed_digests_sha256": {
+      "blinded_adjudication": "a9294d1e0f2cf7b9eb5d85b0c51e89b1f47a8bf92db50f17e5b7887725284043",
+      "boundary_reconstruction": "900022cf5f0844cab94e208aaed16169394ad0cf72f75c4d54e62d7417a43d21",
+      "full_review_reference": "9d656ed61241122e09db4831ebec6c60530f4469735ea82c316879d7f925a0b5"
+    },
+    "maximum_scope": "personal_local",
+    "protocol_deviation_count": 1,
+    "raw_answers_included": false,
+    "schema_version": "benchmark-human-protocol-v1"
   },
   "negative_checks": {
     "fixture_cannot_be_relabelled_pilot_complete": true

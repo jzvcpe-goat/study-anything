@@ -541,6 +541,10 @@ blinded accuracy evidence. The replacement seed above was frozen before data
 collection; answer examples must not be shown alongside a live item. This
 deviation and corrective action are recorded in
 [`pilot-v0.1-protocol-deviations.json`](pilot-v0.1-protocol-deviations.json).
+The canonical packet paths, output paths, roles, seeds, and batch cap are
+registered in
+[`pilot-v0.1-human-protocol.json`](pilot-v0.1-human-protocol.json); prose examples
+must match that machine-readable record.
 
 For a personal-local pilot, one person may fill multiple roles only when that
 limitation is disclosed. A stronger confirmatory study requires independently
@@ -705,7 +709,7 @@ interruption:
   --packet-dir .delivery-clearance/benchmarks/pilot-v0.1-observed-assembly-v2/reviewer-packets \
   --review-mode boundary_reconstruction \
   --reviewer-role local-project-owner \
-  --order-seed pilot-v0.1-human-review-a \
+  --order-seed pilot-v0.1-boundary-frozen-v2 \
   --output .delivery-clearance/benchmarks/pilot-v0.1-observed-human-sessions.jsonl \
   --max-items 10 \
   --resume
@@ -726,7 +730,7 @@ the candidate and official scorer but never the four arm identities or decisions
 .venv/bin/python scripts/delivery_clearance_benchmark.py adjudicate-batch \
   --packet-dir .delivery-clearance/benchmarks/pilot-v0.1-observed-assembly-v2/adjudication-packets \
   --adjudicator-role independent-local-reviewer \
-  --order-seed pilot-v0.1-adjudication-a \
+  --order-seed pilot-v0.1-adjudication-frozen \
   --output .delivery-clearance/benchmarks/pilot-v0.1-observed-adjudications.jsonl \
   --max-items 10 \
   --resume
