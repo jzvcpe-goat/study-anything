@@ -19,7 +19,7 @@
   "blinded_adjudication": {
     "packet_dir": ".delivery-clearance/benchmarks/pilot-v0.1-observed-assembly-v2/adjudication-packets",
     "output": ".delivery-clearance/benchmarks/pilot-v0.1-observed-adjudications.jsonl",
-    "adjudicator_role": "independent-personal-local-adjudicator",
+    "adjudicator_role": "local-project-owner-adjudicator",
     "order_seed": "pilot-v0.1-adjudication-frozen",
     "max_items_per_batch": 10
   },

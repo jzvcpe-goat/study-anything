@@ -2084,6 +2084,73 @@ print(json.dumps({"type": "turn.completed", "usage": {
                 "local_project_owner",
             )
 
+    def test_canonical_human_pilot_launcher_is_bound_and_non_overclaiming(self) -> None:
+        protocol_path = (
+            ROOT / "docs" / "evaluation" / "pilot-v0.1-human-protocol.json"
+        )
+        protocol = json.loads(protocol_path.read_text())
+        packet_dir = ROOT / protocol["boundary_reconstruction"]["packet_dir"]
+        dry_run = subprocess.run(
+            [
+                sys.executable,
+                str(CLI),
+                "pilot-human-review",
+                "--mode",
+                "boundary_reconstruction",
+                "--max-items",
+                "1",
+                "--dry-run",
+            ],
+            cwd=ROOT,
+            text=True,
+            capture_output=True,
+        )
+        self.assertEqual(dry_run.returncode, 0 if packet_dir.is_dir() else 2)
+        launch = json.loads(dry_run.stdout)
+        self.assertEqual(launch["mode"], "boundary_reconstruction")
+        self.assertEqual(launch["maximum_scope"], "personal_local")
+        self.assertEqual(launch["role"], "local-project-owner")
+        self.assertFalse(launch["independent_reviewer_claimed"])
+        self.assertFalse(launch["raw_answers_included"])
+        self.assertTrue(launch["dry_run"])
+
+        over_cap = subprocess.run(
+            [
+                sys.executable,
+                str(CLI),
+                "pilot-human-review",
+                "--mode",
+                "boundary_reconstruction",
+                "--max-items",
+                "11",
+                "--dry-run",
+            ],
+            cwd=ROOT,
+            text=True,
+            capture_output=True,
+        )
+        self.assertEqual(over_cap.returncode, 2)
+        self.assertIn("canonical human protocol cap of 10", over_cap.stderr)
+
+        if packet_dir.is_dir():
+            piped = subprocess.run(
+                [
+                    sys.executable,
+                    str(CLI),
+                    "pilot-human-review",
+                    "--mode",
+                    "boundary_reconstruction",
+                    "--max-items",
+                    "1",
+                ],
+                cwd=ROOT,
+                text=True,
+                input="u\n" * 5,
+                capture_output=True,
+            )
+            self.assertEqual(piped.returncode, 2)
+            self.assertIn("requires an interactive TTY", piped.stderr)
+
     def test_batch_review_is_blinded_aggregate_only_and_resumable(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)

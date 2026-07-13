@@ -525,7 +525,7 @@ append-only records so the same batch can continue with `--resume`:
 
 .venv/bin/python scripts/delivery_clearance_benchmark.py adjudicate-batch \
   --packet-dir .delivery-clearance/benchmarks/pilot-v0.1-observed-assembly-v2/adjudication-packets \
-  --adjudicator-role independent-personal-local-adjudicator \
+  --adjudicator-role local-project-owner-adjudicator \
   --order-seed pilot-v0.1-adjudication-frozen \
   --output .delivery-clearance/benchmarks/pilot-v0.1-observed-adjudications.jsonl \
   --max-items 10 \
@@ -545,6 +545,22 @@ The canonical packet paths, output paths, roles, seeds, and batch cap are
 registered in
 [`pilot-v0.1-human-protocol.json`](pilot-v0.1-human-protocol.json); prose examples
 must match that machine-readable record.
+
+The recommended entrypoint reads that record directly, forbids path, role, and
+seed overrides, caps each batch, resumes append-only output, and rejects
+non-TTY input so a model or fixture cannot pipe answers into the canonical
+personal pilot:
+
+```bash
+.venv/bin/python scripts/delivery_clearance_benchmark.py pilot-human-review \
+  --mode boundary_reconstruction \
+  --max-items 1 \
+  --dry-run
+
+.venv/bin/python scripts/delivery_clearance_benchmark.py pilot-human-review \
+  --mode boundary_reconstruction \
+  --max-items 1
+```
 
 For a personal-local pilot, one person may fill multiple roles only when that
 limitation is disclosed. A stronger confirmatory study requires independently
@@ -729,7 +745,7 @@ the candidate and official scorer but never the four arm identities or decisions
 ```bash
 .venv/bin/python scripts/delivery_clearance_benchmark.py adjudicate-batch \
   --packet-dir .delivery-clearance/benchmarks/pilot-v0.1-observed-assembly-v2/adjudication-packets \
-  --adjudicator-role independent-local-reviewer \
+  --adjudicator-role local-project-owner-adjudicator \
   --order-seed pilot-v0.1-adjudication-frozen \
   --output .delivery-clearance/benchmarks/pilot-v0.1-observed-adjudications.jsonl \
   --max-items 10 \

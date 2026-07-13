@@ -15,6 +15,9 @@ from typing import Literal
 
 ROOT = Path(__file__).resolve().parents[1]
 API_ROOT = ROOT / "apps" / "api"
+HUMAN_PROTOCOL_PATH = (
+    ROOT / "docs" / "evaluation" / "pilot-v0.1-human-protocol.json"
+)
 if str(API_ROOT) not in sys.path:
     sys.path.insert(0, str(API_ROOT))
 
@@ -549,6 +552,114 @@ def _materialize_observed_oracle(args: argparse.Namespace) -> int:
     return 0
 
 
+def _human_protocol_repo_path(value: object, *, field: str) -> Path:
+    if not isinstance(value, str) or not value or Path(value).is_absolute():
+        raise BenchmarkRunnerError(f"human protocol {field} must be a repo-relative path")
+    resolved = (ROOT / value).resolve()
+    if ROOT.resolve() not in resolved.parents:
+        raise BenchmarkRunnerError(f"human protocol {field} escapes the repository")
+    return resolved
+
+
+def _load_human_protocol() -> dict[str, object]:
+    payload = json.loads(HUMAN_PROTOCOL_PATH.read_text(encoding="utf-8"))
+    assert_safe_metadata(payload, label="canonical human benchmark protocol")
+    if payload.get("schema_version") != "benchmark-human-protocol-v1":
+        raise BenchmarkRunnerError("unsupported canonical human protocol version")
+    claim_boundary = payload.get("claim_boundary")
+    if (
+        not isinstance(claim_boundary, dict)
+        or claim_boundary.get("maximum_scope") != "personal_local"
+    ):
+        raise BenchmarkRunnerError("canonical human protocol must remain personal_local")
+    if claim_boundary.get("independent_reviewer_claimed") is not False:
+        raise BenchmarkRunnerError("canonical personal pilot cannot claim reviewer independence")
+    return payload
+
+
+def _pilot_human_review(args: argparse.Namespace) -> int:
+    protocol = _load_human_protocol()
+    mode = str(args.mode)
+    mode_config = protocol.get(mode)
+    if not isinstance(mode_config, dict):
+        raise BenchmarkRunnerError(f"canonical human protocol has no mode: {mode}")
+    canonical_cap = mode_config.get("max_items_per_batch")
+    if not isinstance(canonical_cap, int) or canonical_cap < 1:
+        raise BenchmarkRunnerError("canonical human protocol batch cap is invalid")
+    if args.max_items > canonical_cap:
+        raise BenchmarkRunnerError(
+            f"max-items exceeds the canonical human protocol cap of {canonical_cap}"
+        )
+    packet_dir = _human_protocol_repo_path(
+        mode_config.get("packet_dir"), field="packet_dir"
+    )
+    output = _human_protocol_repo_path(mode_config.get("output"), field="output")
+    order_seed = mode_config.get("order_seed")
+    if not isinstance(order_seed, str) or not order_seed:
+        raise BenchmarkRunnerError("canonical human protocol order seed is invalid")
+    role_field = (
+        "adjudicator_role" if mode == "blinded_adjudication" else "reviewer_role"
+    )
+    role = mode_config.get(role_field)
+    if not isinstance(role, str) or not role:
+        raise BenchmarkRunnerError(f"canonical human protocol {role_field} is invalid")
+
+    launch_receipt = {
+        "schema_version": "canonical-human-pilot-launch-v1",
+        "status": "ready" if packet_dir.is_dir() else "blocked",
+        "mode": mode,
+        "protocol_digest_sha256": canonical_sha256(protocol),
+        "order_seed_digest_sha256": sha256(order_seed.encode("utf-8")).hexdigest(),
+        "packet_directory_present": packet_dir.is_dir(),
+        "max_items": args.max_items,
+        "canonical_batch_cap": canonical_cap,
+        "resume": True,
+        "role": role,
+        "maximum_scope": "personal_local",
+        "raw_answers_included": False,
+        "independent_reviewer_claimed": False,
+        "dry_run": bool(args.dry_run),
+    }
+    assert_safe_metadata(launch_receipt, label="canonical human pilot launch receipt")
+    if args.dry_run:
+        print(json.dumps(launch_receipt, ensure_ascii=False, indent=2, sort_keys=True))
+        return 0 if packet_dir.is_dir() else 2
+    if not packet_dir.is_dir():
+        raise BenchmarkRunnerError("canonical human protocol packet directory is missing")
+    if not sys.stdin.isatty() or not sys.stdout.isatty():
+        raise BenchmarkRunnerError(
+            "canonical human pilot collection requires an interactive TTY; "
+            "model- or fixture-piped answers are not accepted"
+        )
+
+    if mode == "blinded_adjudication":
+        return _adjudicate_batch(
+            argparse.Namespace(
+                packet_dir=[str(packet_dir)],
+                case_id=None,
+                adjudicator_role=role,
+                output=str(output),
+                order_seed=order_seed,
+                max_items=args.max_items,
+                resume=True,
+            )
+        )
+    return _review_batch(
+        argparse.Namespace(
+            packet_dir=[str(packet_dir)],
+            case_id=None,
+            trial_index=0,
+            review_mode=mode,
+            reviewer_role=role,
+            output=str(output),
+            order_seed=order_seed,
+            nasa_tlx=None,
+            max_items=args.max_items,
+            resume=True,
+        )
+    )
+
+
 def _build_observed_ablation(args: argparse.Namespace) -> int:
     manifest = build_observed_ablation(
         Path(args.assembly),
@@ -987,6 +1098,27 @@ def main() -> int:
     )
     batch_review_parser.add_argument("--resume", action="store_true")
     batch_review_parser.set_defaults(func=_review_batch)
+
+    pilot_human_parser = subparsers.add_parser(
+        "pilot-human-review",
+        help="launch one canonical, TTY-only human pilot batch from the frozen protocol",
+    )
+    pilot_human_parser.add_argument(
+        "--mode",
+        choices=(
+            "boundary_reconstruction",
+            "full_review_reference",
+            "blinded_adjudication",
+        ),
+        required=True,
+    )
+    pilot_human_parser.add_argument("--max-items", type=_positive_int, default=1)
+    pilot_human_parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="validate and summarize the frozen launch without collecting answers",
+    )
+    pilot_human_parser.set_defaults(func=_pilot_human_review)
 
     human_status_parser = subparsers.add_parser(
         "human-evidence-status",

@@ -13,6 +13,7 @@
     "mechanism_status_is_not_pilot_complete": true,
     "methodology_commands_use_only_canonical_seeds": true,
     "observed_decisions_without_human_and_ablation_are_incomplete": true,
+    "personal_pilot_adjudicator_role_does_not_claim_independence": true,
     "retired_boundary_seed_is_not_active": true
   },
   "human_protocol": {

@@ -50,6 +50,11 @@ def _build_report() -> dict[str, object]:
             "boundary_reconstruction"
         ]
         == deviation.get("replacement_order_seed"),
+        "personal_pilot_adjudicator_role_does_not_claim_independence": human_protocol[
+            "blinded_adjudication"
+        ].get("adjudicator_role")
+        == "local-project-owner-adjudicator"
+        and "--adjudicator-role independent-" not in methodology,
         "retired_boundary_seed_is_not_active": deviation.get("retired_order_seed")
         not in active_seeds.values(),
         "methodology_commands_use_only_canonical_seeds": documented_command_seeds
