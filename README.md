@@ -135,6 +135,13 @@ deterministic pre-check for Personal Clearance. It requires runtime, input, effe
 domain evidence according to the plugin's capability class. It never grants more than
 `personal_local`; external writes, credential use, and observed external mutation hard-block.
 
+## Validation
+- The Personal Clearance MVP has a reproducible 14-case verifier and 12 focused tests covering normal clearance, stale state, config drift, expiry, tamper, missing evidence, replay, failed checks, and explicit human responsibility.
+- Passing evidence is bound only to the exact Git-visible state and `personal_local` scope.
+- Current results validate prototype mechanisms, not user value, AI correctness, customer delivery, production safety, or professional certification.
+- Reproduce with `.venv/bin/python scripts/verify_personal_clearance_mvp.py --check` and the focused unittest command in the validation chapter.
+- See [Validation](docs/VALIDATION.md) for hypotheses, the test matrix, evidence paths, findings, limitations, and the next user study.
+
 ## Evaluate The Protocol, Not The Story
 
 The repository includes the public, paired **Native Agent vs Delivery Clearance
