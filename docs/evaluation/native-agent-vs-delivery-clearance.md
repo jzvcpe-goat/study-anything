@@ -509,7 +509,7 @@ append-only records so the same batch can continue with `--resume`:
   --packet-dir .delivery-clearance/benchmarks/pilot-v0.1-observed-assembly-v2/reviewer-packets \
   --review-mode boundary_reconstruction \
   --reviewer-role local-project-owner \
-  --order-seed pilot-v0.1-boundary-frozen \
+  --order-seed pilot-v0.1-boundary-frozen-v2 \
   --output .delivery-clearance/benchmarks/pilot-v0.1-observed-human-sessions.jsonl \
   --max-items 10 \
   --resume
@@ -531,6 +531,16 @@ append-only records so the same batch can continue with `--resume`:
   --max-items 10 \
   --resume
 ```
+
+The original boundary order seed, `pilot-v0.1-boundary-frozen`, was retired
+before any human session was recorded. During a pre-collection terminal smoke
+test, a response-format example shown outside the CLI happened to match the
+first packet's correct option sequence. The interrupted CLI item exited with
+status `130` and wrote no record, but retaining that order would weaken the
+blinded accuracy evidence. The replacement seed above was frozen before data
+collection; answer examples must not be shown alongside a live item. This
+deviation and corrective action are recorded in
+[`pilot-v0.1-protocol-deviations.json`](pilot-v0.1-protocol-deviations.json).
 
 For a personal-local pilot, one person may fill multiple roles only when that
 limitation is disclosed. A stronger confirmatory study requires independently
