@@ -1,0 +1,375 @@
+{
+  "$defs": {
+    "BenchmarkSource": {
+      "enum": [
+        "swe-bench-live",
+        "tua-bench",
+        "tau-bench",
+        "agentdojo"
+      ],
+      "title": "BenchmarkSource",
+      "type": "string"
+    },
+    "CaseClass": {
+      "enum": [
+        "safe",
+        "dangerous"
+      ],
+      "title": "CaseClass",
+      "type": "string"
+    },
+    "ClearanceDisposition": {
+      "enum": [
+        "cleared",
+        "restricted",
+        "held",
+        "denied"
+      ],
+      "title": "ClearanceDisposition",
+      "type": "string"
+    },
+    "DeliveryScope": {
+      "description": "Ordered scopes from no release authority to a production candidate.",
+      "enum": [
+        "blocked",
+        "personal_local",
+        "sandbox_only",
+        "public_demo",
+        "internal_handoff",
+        "controlled_customer_handoff",
+        "limited_beta",
+        "production_candidate"
+      ],
+      "title": "DeliveryScope",
+      "type": "string"
+    },
+    "ReferenceDecisionV1": {
+      "additionalProperties": false,
+      "properties": {
+        "adjudication_basis": {
+          "enum": [
+            "synthetic_scorer_fixture_plus_frozen_clearance_policy",
+            "observed_official_scorer_plus_blinded_clearance_adjudication"
+          ],
+          "title": "Adjudication Basis",
+          "type": "string"
+        },
+        "adjudication_trace_digest_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Adjudication Trace Digest Sha256"
+        },
+        "disposition": {
+          "$ref": "#/$defs/ClearanceDisposition"
+        },
+        "maximum_scope": {
+          "$ref": "#/$defs/DeliveryScope"
+        },
+        "rationale_codes": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 20,
+          "minItems": 1,
+          "title": "Rationale Codes",
+          "type": "array"
+        },
+        "release_authorized": {
+          "title": "Release Authorized",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "disposition",
+        "release_authorized",
+        "maximum_scope",
+        "rationale_codes",
+        "adjudication_basis"
+      ],
+      "title": "ReferenceDecisionV1",
+      "type": "object"
+    },
+    "UpstreamSourceV1": {
+      "additionalProperties": false,
+      "properties": {
+        "benchmark_id": {
+          "$ref": "#/$defs/BenchmarkSource"
+        },
+        "benchmark_version": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Benchmark Version",
+          "type": "string"
+        },
+        "digest_basis": {
+          "enum": [
+            "source_revision_plus_task_identity",
+            "task_data_plus_scorer_identity"
+          ],
+          "title": "Digest Basis",
+          "type": "string"
+        },
+        "environment_digest_basis": {
+          "enum": [
+            "declared_source_identities",
+            "acquired_artifact_digests"
+          ],
+          "title": "Environment Digest Basis",
+          "type": "string"
+        },
+        "environment_digest_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Environment Digest Sha256",
+          "type": "string"
+        },
+        "license_id": {
+          "enum": [
+            "MIT",
+            "CC-BY-NC-4.0"
+          ],
+          "title": "License Id",
+          "type": "string"
+        },
+        "license_uri": {
+          "maxLength": 1000,
+          "pattern": "^https://",
+          "title": "License Uri",
+          "type": "string"
+        },
+        "license_use_scope": {
+          "enum": [
+            "permissive",
+            "personal_noncommercial"
+          ],
+          "title": "License Use Scope",
+          "type": "string"
+        },
+        "official_scorer_ref": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Official Scorer Ref",
+          "type": "string"
+        },
+        "scorer_source_revision": {
+          "pattern": "^[0-9a-f]{40,64}$",
+          "title": "Scorer Source Revision",
+          "type": "string"
+        },
+        "scorer_source_uri": {
+          "maxLength": 1000,
+          "pattern": "^https://",
+          "title": "Scorer Source Uri",
+          "type": "string"
+        },
+        "source_path": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Source Path",
+          "type": "string"
+        },
+        "source_revision": {
+          "pattern": "^[0-9a-f]{40,64}$",
+          "title": "Source Revision",
+          "type": "string"
+        },
+        "source_uri": {
+          "maxLength": 1000,
+          "pattern": "^https://",
+          "title": "Source Uri",
+          "type": "string"
+        },
+        "task_snapshot_ref": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Task Snapshot Ref",
+          "type": "string"
+        },
+        "third_party_asset_terms_reviewed": {
+          "title": "Third Party Asset Terms Reviewed",
+          "type": "boolean"
+        },
+        "upstream_payload_vendored": {
+          "const": false,
+          "default": false,
+          "title": "Upstream Payload Vendored",
+          "type": "boolean"
+        },
+        "upstream_task_id": {
+          "maxLength": 240,
+          "minLength": 1,
+          "title": "Upstream Task Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "benchmark_id",
+        "benchmark_version",
+        "upstream_task_id",
+        "source_uri",
+        "source_revision",
+        "scorer_source_uri",
+        "scorer_source_revision",
+        "source_path",
+        "task_snapshot_ref",
+        "environment_digest_sha256",
+        "digest_basis",
+        "environment_digest_basis",
+        "official_scorer_ref",
+        "license_id",
+        "license_uri",
+        "license_use_scope",
+        "third_party_asset_terms_reviewed"
+      ],
+      "title": "UpstreamSourceV1",
+      "type": "object"
+    }
+  },
+  "$id": "benchmark-case-v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "candidate_assignment": {
+      "enum": [
+        "known_safe_control",
+        "precommitted_dangerous_variant"
+      ],
+      "title": "Candidate Assignment",
+      "type": "string"
+    },
+    "candidate_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Candidate Digest Sha256",
+      "type": "string"
+    },
+    "candidate_recipe_code": {
+      "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+      "title": "Candidate Recipe Code",
+      "type": "string"
+    },
+    "candidate_recipe_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Candidate Recipe Digest Sha256",
+      "type": "string"
+    },
+    "candidate_ref": {
+      "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+      "title": "Candidate Ref",
+      "type": "string"
+    },
+    "case_class": {
+      "$ref": "#/$defs/CaseClass"
+    },
+    "case_id": {
+      "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+      "title": "Case Id",
+      "type": "string"
+    },
+    "impact_severity": {
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "title": "Impact Severity",
+      "type": "string"
+    },
+    "license_review_complete": {
+      "const": true,
+      "default": true,
+      "title": "License Review Complete",
+      "type": "boolean"
+    },
+    "reference": {
+      "$ref": "#/$defs/ReferenceDecisionV1"
+    },
+    "reference_hidden_from_reviewers": {
+      "const": true,
+      "default": true,
+      "title": "Reference Hidden From Reviewers",
+      "type": "boolean"
+    },
+    "schema_version": {
+      "const": "benchmark-case-v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "selection_amendment_digest_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Selection Amendment Digest Sha256"
+    },
+    "selection_amendment_ref": {
+      "anyOf": [
+        {
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Selection Amendment Ref"
+    },
+    "selection_locked_at": {
+      "maxLength": 64,
+      "minLength": 1,
+      "title": "Selection Locked At",
+      "type": "string"
+    },
+    "selection_protocol_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Selection Protocol Digest Sha256",
+      "type": "string"
+    },
+    "source": {
+      "$ref": "#/$defs/UpstreamSourceV1"
+    },
+    "suite_id": {
+      "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+      "title": "Suite Id",
+      "type": "string"
+    },
+    "target_scope": {
+      "const": "personal_local",
+      "title": "Target Scope",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "suite_id",
+    "case_id",
+    "case_class",
+    "impact_severity",
+    "target_scope",
+    "source",
+    "candidate_ref",
+    "candidate_digest_sha256",
+    "candidate_assignment",
+    "candidate_recipe_code",
+    "candidate_recipe_digest_sha256",
+    "selection_protocol_digest_sha256",
+    "selection_locked_at",
+    "reference"
+  ],
+  "title": "BenchmarkCaseV1",
+  "type": "object"
+}

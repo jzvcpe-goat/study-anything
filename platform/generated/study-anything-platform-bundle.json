@@ -1681,7 +1681,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-maintainer-acceptance-ledger.json",
       "purpose": "Cognitive Loop maintainer go/no-go acceptance ledger verification report.",
-      "sha256": "eef4872e99c677dabb7c7bf47e198ec6569f7bce03abf5622067678dd336c266"
+      "sha256": "258ac1399322218b3dca773949cab8a39f025fd3cd5c7a525b677c1138a47a6f"
     },
     {
       "bytes": 3786,
@@ -2108,112 +2108,112 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-published-image-evidence.json",
       "purpose": "Published-image evidence JSON.",
-      "sha256": "3dea523d8ca6fb22dbf933e0d55a380f0deb925dfee0397db4875f5adeaea792"
+      "sha256": "0e8bc047fab4c5031624d3f978c1df2628c83c754e98cd009a0c41f5b89c862b"
     },
     {
       "bytes": 3442,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-published-image-evidence.md",
       "purpose": "Published-image evidence Markdown.",
-      "sha256": "c6c0d3243ec47953826c58b5e492e2e2e3ad2622ca477d22f9c45160690e33e3"
+      "sha256": "2148d267d36b0ed973d63ef89f57e6dd6f76de7f880e4641aacdbf69476d7b19"
     },
     {
-      "bytes": 122785,
+      "bytes": 124149,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-published-image-evidence.zip",
       "purpose": "Published-image evidence package.",
-      "sha256": "a55a8ff628dbe491cfb4011f0d01682defa86cfa48f22d04537662690ffc88d8"
+      "sha256": "ae2eb8e192da18a7519eb6ba55eb6ff079fd6927de6e6c7fe7fde268692be5a0"
     },
     {
       "bytes": 110,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-published-image-evidence.sha256",
       "purpose": "Published-image evidence checksum.",
-      "sha256": "08003ce3de7200b78a7e5a867643e548f158141aa4f467f84810af7be3de2174"
+      "sha256": "7bbeeb5e2e6d828913eae3e546d96821793f3454b96b3624f5a3168810e76371"
     },
     {
       "bytes": 13000,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.json",
       "purpose": "External adopter evidence archive JSON.",
-      "sha256": "38a29c8be58c6f476a4a4972574511ae1205190e7035c74545d105c3f99013f5"
+      "sha256": "ccc997f0dc34ac7abd8b37cebb0cbe700773b9a073a325886c254e46df327876"
     },
     {
       "bytes": 2424,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.md",
       "purpose": "External adopter evidence archive Markdown.",
-      "sha256": "3c9b72dbd9761b201ca54281d1de70e378d7553c0b256b6f9393996e7de57f3b"
+      "sha256": "02e3132b3f79bb0d3ec695c8b2eee5d22334dda21f76722d9b61873de7eac452"
     },
     {
-      "bytes": 232157,
+      "bytes": 234924,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.zip",
       "purpose": "External adopter evidence archive package.",
-      "sha256": "2d0fe81b29d32a71d009658b665b14c0c13102b8a2d2697e64edd31438865003"
+      "sha256": "ea7f6a6c9f187f4d8d58b1d14ed5653e15c4044a868d71d0c9bb99318f2d8eaa"
     },
     {
       "bytes": 110,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.sha256",
       "purpose": "External adopter evidence archive checksum.",
-      "sha256": "1d1dd6c9375b12947672f0c5324d99d2c6a23f44c3027bdfe8c4d8ace5e2195d"
+      "sha256": "69d4acdb11d18b5db4d3a09fcd2ac551be78115a5049a56a45ae33a876f6416e"
     },
     {
       "bytes": 10417,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-adoption.json",
       "purpose": "GitHub Release asset adoption replay evidence JSON.",
-      "sha256": "3c116643fef77e0bcc33cc528e6e16f4dd28d238a2a234f3343ec43283165c74"
+      "sha256": "5f052ac4ebda26af84b0d2f3b57f48f63fc807f92796d398e4d75df9f60ac609"
     },
     {
       "bytes": 2392,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-adoption.md",
       "purpose": "GitHub Release asset adoption replay evidence Markdown.",
-      "sha256": "3739aaa86ca9300a0630a0e115d3a7d53abf19245da7b9bfd256dee0fefa8a4d"
+      "sha256": "67569a5571a9f608a6e2eee98d4b18242d0871f9b87f25f44fe027b718996b51"
     },
     {
-      "bytes": 143161,
+      "bytes": 144521,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-adoption.zip",
       "purpose": "GitHub Release asset adoption replay evidence archive.",
-      "sha256": "976d22bcc2b28fe3a95f7269fb5dfd558e20534c4561ce1bbb428c2bf02b7d52"
+      "sha256": "dfe02fddc0129fd0b80fe835fb3280fbbbebbc789b77ca11dc7fa408c0f37529"
     },
     {
       "bytes": 108,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-adoption.sha256",
       "purpose": "GitHub Release asset adoption replay evidence checksum.",
-      "sha256": "27611bc96aef48c38be6cee3f2499f9c8535647f737ea88684d48ef221a1d851"
+      "sha256": "95743e47df5124dc7555a707b7565e936719a21b80c420a9625e37ca12456d2c"
     },
     {
       "bytes": 8886,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-bootstrap.json",
       "purpose": "GitHub Release asset bootstrap evidence JSON.",
-      "sha256": "99d341c1c5dc61f4ffec28b07613c58f7113d194ef0710ee2c60a7c0d323140a"
+      "sha256": "cf4c9439bbfb3e4ebeef958d2cabe8c6ccfcd11c4db5e4e411b99d882a476871"
     },
     {
       "bytes": 2706,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-bootstrap.md",
       "purpose": "GitHub Release asset bootstrap evidence Markdown.",
-      "sha256": "a710bdc8537c635fb284ad10d494763a2266ec38ef72c7fd44aa682f6573b0fd"
+      "sha256": "2ce63789610d987943c18097b4bc7b306b14551ffb00af812033d6047dc19b34"
     },
     {
-      "bytes": 91470,
+      "bytes": 91467,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-bootstrap.zip",
       "purpose": "GitHub Release asset bootstrap evidence archive.",
-      "sha256": "bd777ce952fc3e895c5423b2e14e50cc688d6d98d2c78d31bedb99a53f2671d4"
+      "sha256": "9dddc59cb2e8e80a64452e2a1cfad8e38e1a1b5e9069c62052dac4828e591d8e"
     },
     {
       "bytes": 109,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-bootstrap.sha256",
       "purpose": "GitHub Release asset bootstrap evidence checksum.",
-      "sha256": "4633363126fed73a0147175dd9fcfcd12f383dd6bf1917a5352c3b37d23eaa36"
+      "sha256": "a282f4380eca631f51be772c59988f790296041e2b1c469bc1a36cb495c6244f"
     },
     {
       "bytes": 7890,
@@ -2276,91 +2276,91 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-codex-plugin-pack.json",
       "purpose": "Codex downloadable plugin pack sidecar manifest.",
-      "sha256": "4f60b5ada72c61dc9208b99cf943faa3c6cae9cc8583b8887dffc40d5e67391d"
+      "sha256": "2f799ade502f2b448dfaa74e111e233f3a8aeb7927e894eb5a8df2997661c68a"
     },
     {
-      "bytes": 124267,
+      "bytes": 125629,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-codex-plugin-pack.zip",
       "purpose": "Codex downloadable plugin pack archive.",
-      "sha256": "998b9b3b168f977afbb198fd2dee36fca9c091d2925bcedda42fe8e5a1a1c6a2"
+      "sha256": "d8ae68232e854c4c032217b9699e28115fca51920ebdc9d0d423cbf4be45dfb0"
     },
     {
       "bytes": 103,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-codex-plugin-pack.sha256",
       "purpose": "Codex downloadable plugin pack checksum.",
-      "sha256": "9eaf417b8ef10c2bdefa371746710f62485607e29e90b45f02b93827e9788b9f"
+      "sha256": "321f909635ea79f6d386e4d71b5adff8ac7fa513b9deea55decfc44edecccf3a"
     },
     {
       "bytes": 10599,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-kimi-plugin-pack.json",
       "purpose": "Kimi downloadable plugin pack sidecar manifest.",
-      "sha256": "24a8504bf653327e195d2759f0e84c8165ff3f1745120d5d3b92b711fc29cceb"
+      "sha256": "bff7f17c83fa6cbbee4931145e61966eeab18acf669ebfae247dc16975459bbf"
     },
     {
-      "bytes": 148486,
+      "bytes": 149850,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-kimi-plugin-pack.zip",
       "purpose": "Kimi downloadable plugin pack archive.",
-      "sha256": "730e144dfa55d9e3ede45378a33d30652362f99f05620bda22c2a5980c6dd12d"
+      "sha256": "62eed1833d601a63bbd24ae416b67a7e53792282bf4a40c1d0e51094f7b5f4b9"
     },
     {
       "bytes": 102,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-kimi-plugin-pack.sha256",
       "purpose": "Kimi downloadable plugin pack checksum.",
-      "sha256": "026d717761c29552960fbe52d58429e8503b24c76d5b46d3648fc378408dc175"
+      "sha256": "8eb6b7fdf7473111287504384815dec4323542345e15a75335b80a404b340cc7"
     },
     {
       "bytes": 13551,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-workbuddy-plugin-pack.json",
       "purpose": "WorkBuddy downloadable plugin pack sidecar manifest.",
-      "sha256": "98b69cd3a227b7afde070e5570038d63a957069c5153e11caad8d2227938de00"
+      "sha256": "80b0b4015f9f02cbe2c75cfb8d91ae101442d6a653fea2ccf0ca86911467bb72"
     },
     {
-      "bytes": 150603,
+      "bytes": 151965,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-workbuddy-plugin-pack.zip",
       "purpose": "WorkBuddy downloadable plugin pack archive.",
-      "sha256": "b328b1fbbec7866e0e0e1e2bf453c1a306504f4a3206c350a5045e0f0bf088f0"
+      "sha256": "c66e1a8dca71f0d6feb5585bbd87bd875766ac6072ed0700806c13cc471797c4"
     },
     {
       "bytes": 107,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-workbuddy-plugin-pack.sha256",
       "purpose": "WorkBuddy downloadable plugin pack checksum.",
-      "sha256": "ea86ef3a9b265d3c423948c01305fe4890ea3d4dbb6b08b8eab99a8765edb5b8"
+      "sha256": "e67ae88ff83062c1027072937b283e3f452f31ab68fe897e886068053fcca725"
     },
     {
       "bytes": 10362,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-hermes-plugin-pack.json",
       "purpose": "Hermes downloadable plugin pack sidecar manifest.",
-      "sha256": "b17668ec9d799725496bffcf04c27dbf18032b7829f1fce8de564adf95955a24"
+      "sha256": "fa964fba3d55702d87a94c7a7cec3ed5a158190707f5727bdcf7725124dc394c"
     },
     {
-      "bytes": 138568,
+      "bytes": 139930,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-hermes-plugin-pack.zip",
       "purpose": "Hermes downloadable plugin pack archive.",
-      "sha256": "5ecc0a9b97338b04347d1b8071d6bafeed98d5b64f14886f917c1fb7d1ab9cdd"
+      "sha256": "2380fa97be481a3da3cee0380027046b6390dddd2c31f112a74bd5d2d4cddcf3"
     },
     {
       "bytes": 104,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-hermes-plugin-pack.sha256",
       "purpose": "Hermes downloadable plugin pack checksum.",
-      "sha256": "13bf257402ad71dccb7536b8d06da1e7746c853e9e781cdeaa4fbbd84949c381"
+      "sha256": "2ebb3ed303081abc067a5a36916d825cc67ddebeac34d1213bc95776ee625003"
     },
     {
       "bytes": 14256,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-plugin-downloads.json",
       "purpose": "Public GitHub Release download index for platform plugin packs.",
-      "sha256": "c13075b9c573000ad72c942b9dd3cab8932cf6211f83d289078c96b9aa5aebd8"
+      "sha256": "ef2653c89ecdf30ca5c9f408397ca1ab82b6a4b97f646d4face4e7cf311c76a8"
     },
     {
       "bytes": 1764,

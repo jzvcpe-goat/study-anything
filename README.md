@@ -135,9 +135,67 @@ deterministic pre-check for Personal Clearance. It requires runtime, input, effe
 domain evidence according to the plugin's capability class. It never grants more than
 `personal_local`; external writes, credential use, and observed external mutation hard-block.
 
+## Evaluate The Protocol, Not The Story
+
+The repository includes the public, paired **Native Agent vs Delivery Clearance
+Benchmark v0.1 harness** and a frozen 40-case mechanism rehearsal. The observed
+pilot is still in progress. The harness compares the same candidate, model/version,
+context, tools, permissions, and budget across four arms: native Agent, strengthened
+native Agent, an internal Delivery Clearance checklist, and an independent
+non-waivable clearance gate.
+
+```bash
+.venv/bin/python scripts/delivery_clearance_benchmark.py run \
+  --suite pilot-v0.1 \
+  --arms native,strengthened,internal-checklist,external-clearance \
+  --out .delivery-clearance/benchmarks/pilot-v0.1
+```
+
+The bundled 40-case run is a deterministic **mechanism rehearsal**, not evidence
+that Delivery Clearance is effective. Its public task identities come from
+SWE-bench-Live, TUA-Bench, tau-bench, and AgentDojo, but its balanced pass/fail
+variants are synthetic and explicitly record that official scorers were not run.
+An observed pilot requires scored candidates, blinded adjudication, per-decision
+tool traces, real human-review sessions, and six observed ablations before it may
+emit `pilot_complete`.
+
+The benchmark now embeds a preregistered incremental review-economic plan and a
+real-human evidence workflow. It compares each Agent baseline with independent
+clearance and separately compares boundary reconstruction with blinded full
+review. Missing reviewer-time or delay valuations remain unpriced resource use;
+the system does not invent a cost-effectiveness result. Use
+`human-evidence-status` to see which boundary, full-review, or adjudication
+receipts are still missing.
+
+The optional `capture` command runs pinned real Codex reviewer arms in ephemeral
+read-only workspaces. It withholds scorer outcomes and hidden labels, records only
+metadata digests and usage, and remains incomplete until independent scorer,
+adjudication, and human-reconstruction evidence is supplied.
+
+The optional `preflight` command verifies pinned public source/scorer revisions,
+selected task identities, license constraints, and local runtime prerequisites.
+It emits a blocked prerequisite receipt when Docker, task data, asset review, or
+an observed adapter is missing; it never treats source availability as scorer
+execution or effectiveness evidence.
+
+An AgentDojo fixed-candidate scorer bridge is included for bounded smoke tests.
+It records utility/security receipts and hashed trajectory-boundary evidence,
+but it remains separate from the 40-case observed pilot and cannot establish an
+effectiveness claim by itself.
+
+A tau-bench bridge also runs the pinned official deterministic environment
+evaluator over preregistered fixed trajectories. It records five passing controls
+and five policy-violation variants without exposing task payloads. This bridge uses
+`EvaluationType.ENV`; it excludes natural-language judging and is not a full
+tau-bench Agent-performance result.
+
+See [Native Agent vs Delivery Clearance Benchmark v0.1](docs/evaluation/native-agent-vs-delivery-clearance.md)
+for source revisions, license boundaries, methodology, statistics, artifacts,
+and prohibited claims.
+
 ## Current Reference Implementation
 
-The current `main` line includes deterministic, metadata-only implementations for:
+The current reference implementation includes deterministic, metadata-only components for:
 
 - a one-command personal-local clearance workflow for arbitrary local Git projects,
   with state-bound receipts, explicit per-run responsibility, configured check evidence,
@@ -145,6 +203,12 @@ The current `main` line includes deterministic, metadata-only implementations fo
 - a Plugin Evidence Adapter that keeps install metadata separate from runtime evidence and
   fails closed on external writes, credential use, unbound inputs, missing native checks, and
   missing professional-domain reconstruction;
+- a four-arm paired benchmark harness with public-source task identities, frozen
+  label isolation, metadata-only tool traces, human review-load measurement,
+  exact paired statistics, incremental review-economic evaluation, six ablations,
+  and claim-bounded mechanism/observed states;
+  the observed 40-case pilot is not complete until the required real human sessions
+  and blinded adjudications have been recorded;
 - controlled failure contracts and sandbox receipts;
 - attention reconstruction traces and summaries;
 - Dual-Loop gate receipts;

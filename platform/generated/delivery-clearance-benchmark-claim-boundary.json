@@ -1,0 +1,17 @@
+{
+  "allowed_v0_1_statement": "The benchmark harness completed a reproducible 40-case mechanism rehearsal. Observed effect estimates remain pending.",
+  "checks": {
+    "confirmatory_significance_not_claimed": true,
+    "customer_and_production_not_claimed": true,
+    "maximum_scope_is_personal_local": true,
+    "mechanism_banner_is_prominent": true,
+    "mechanism_status_is_not_pilot_complete": true,
+    "observed_decisions_without_human_and_ablation_are_incomplete": true
+  },
+  "negative_checks": {
+    "fixture_cannot_be_relabelled_pilot_complete": true
+  },
+  "prohibited_statement": "Delivery Clearance is proven effective for all AI delivery.",
+  "schema_version": "benchmark-claim-boundary-verification-v1",
+  "status": "pass"
+}

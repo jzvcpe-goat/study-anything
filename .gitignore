@@ -1,6 +1,7 @@
 .DS_Store
 .codex/
 .cognitive-loop/artifacts/
+.delivery-clearance/benchmarks/
 .env
 .venv/
 __pycache__/

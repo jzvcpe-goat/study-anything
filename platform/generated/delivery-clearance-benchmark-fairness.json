@@ -1,0 +1,22 @@
+{
+  "checks": {
+    "all_40_cases_have_four_arms": true,
+    "fixed_seed_where_supported": true,
+    "native_control_not_weakened": true,
+    "same_budget": true,
+    "same_candidate_digest": true,
+    "same_context": true,
+    "same_model_and_version": true,
+    "same_tool_permissions": true
+  },
+  "claim_boundary": "Fairness validation proves parity of recorded inputs, not efficacy.",
+  "negative_checks": {
+    "budget_drift_rejected": true,
+    "context_drift_rejected": true,
+    "model_drift_rejected": true,
+    "tool_drift_rejected": true
+  },
+  "paired_run_count": 40,
+  "schema_version": "benchmark-fairness-verification-v1",
+  "status": "pass"
+}

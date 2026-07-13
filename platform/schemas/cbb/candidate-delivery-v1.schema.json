@@ -1,0 +1,315 @@
+{
+  "$defs": {
+    "EvidenceObservationV1": {
+      "additionalProperties": false,
+      "properties": {
+        "blocking": {
+          "title": "Blocking",
+          "type": "boolean"
+        },
+        "evidence_digest_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Evidence Digest Sha256",
+          "type": "string"
+        },
+        "evidence_ref": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Evidence Ref",
+          "type": "string"
+        },
+        "evidence_type": {
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+          "title": "Evidence Type",
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/EvidenceStatus"
+        },
+        "summary_code": {
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+          "title": "Summary Code",
+          "type": "string"
+        }
+      },
+      "required": [
+        "evidence_type",
+        "status",
+        "evidence_ref",
+        "evidence_digest_sha256",
+        "summary_code",
+        "blocking"
+      ],
+      "title": "EvidenceObservationV1",
+      "type": "object"
+    },
+    "EvidenceStatus": {
+      "enum": [
+        "passed",
+        "failed",
+        "missing",
+        "inconclusive"
+      ],
+      "title": "EvidenceStatus",
+      "type": "string"
+    },
+    "OfficialScorerOutcome": {
+      "enum": [
+        "passed",
+        "failed",
+        "policy_violation",
+        "security_violation",
+        "inconclusive"
+      ],
+      "title": "OfficialScorerOutcome",
+      "type": "string"
+    },
+    "PrivacyBoundaryV1": {
+      "additionalProperties": false,
+      "properties": {
+        "attention_stream_included": {
+          "const": false,
+          "title": "Attention Stream Included",
+          "type": "boolean"
+        },
+        "automatic_customer_send_performed": {
+          "const": false,
+          "title": "Automatic Customer Send Performed",
+          "type": "boolean"
+        },
+        "cookies_or_bearer_tokens_included": {
+          "const": false,
+          "title": "Cookies Or Bearer Tokens Included",
+          "type": "boolean"
+        },
+        "metadata_only": {
+          "const": true,
+          "title": "Metadata Only",
+          "type": "boolean"
+        },
+        "model_credentials_included": {
+          "const": false,
+          "title": "Model Credentials Included",
+          "type": "boolean"
+        },
+        "model_prompts_included": {
+          "const": false,
+          "title": "Model Prompts Included",
+          "type": "boolean"
+        },
+        "production_mutation_performed": {
+          "const": false,
+          "title": "Production Mutation Performed",
+          "type": "boolean"
+        },
+        "raw_customer_payload_included": {
+          "const": false,
+          "title": "Raw Customer Payload Included",
+          "type": "boolean"
+        },
+        "raw_report_text_included": {
+          "const": false,
+          "title": "Raw Report Text Included",
+          "type": "boolean"
+        },
+        "raw_source_text_included": {
+          "const": false,
+          "title": "Raw Source Text Included",
+          "type": "boolean"
+        },
+        "signed_urls_included": {
+          "const": false,
+          "title": "Signed Urls Included",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "metadata_only",
+        "raw_source_text_included",
+        "raw_report_text_included",
+        "raw_customer_payload_included",
+        "attention_stream_included",
+        "model_prompts_included",
+        "model_credentials_included",
+        "cookies_or_bearer_tokens_included",
+        "signed_urls_included",
+        "production_mutation_performed",
+        "automatic_customer_send_performed"
+      ],
+      "title": "PrivacyBoundaryV1",
+      "type": "object"
+    }
+  },
+  "$id": "candidate-delivery-v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "candidate_id": {
+      "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+      "title": "Candidate Id",
+      "type": "string"
+    },
+    "case_id": {
+      "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+      "title": "Case Id",
+      "type": "string"
+    },
+    "context_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Context Digest Sha256",
+      "type": "string"
+    },
+    "declared_risk_level": {
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "title": "Declared Risk Level",
+      "type": "string"
+    },
+    "evidence": {
+      "items": {
+        "$ref": "#/$defs/EvidenceObservationV1"
+      },
+      "maxItems": 40,
+      "minItems": 1,
+      "title": "Evidence",
+      "type": "array"
+    },
+    "evidence_origin": {
+      "enum": [
+        "mechanism_fixture",
+        "observed_agent_run"
+      ],
+      "title": "Evidence Origin",
+      "type": "string"
+    },
+    "hidden_tests_included": {
+      "const": false,
+      "default": false,
+      "title": "Hidden Tests Included",
+      "type": "boolean"
+    },
+    "intended_recipient_role": {
+      "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+      "title": "Intended Recipient Role",
+      "type": "string"
+    },
+    "official_scorer_executed": {
+      "title": "Official Scorer Executed",
+      "type": "boolean"
+    },
+    "privacy": {
+      "$ref": "#/$defs/PrivacyBoundaryV1"
+    },
+    "prohibited_use_codes": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 20,
+      "minItems": 1,
+      "title": "Prohibited Use Codes",
+      "type": "array"
+    },
+    "reference_label_included": {
+      "const": false,
+      "default": false,
+      "title": "Reference Label Included",
+      "type": "boolean"
+    },
+    "risk_owner_role": {
+      "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+      "title": "Risk Owner Role",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "candidate-delivery-v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "scorer_execution_origin": {
+      "enum": [
+        "synthetic_mechanism_fixture",
+        "observed_official_scorer"
+      ],
+      "title": "Scorer Execution Origin",
+      "type": "string"
+    },
+    "scorer_outcome": {
+      "$ref": "#/$defs/OfficialScorerOutcome"
+    },
+    "scorer_trace_digest_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Scorer Trace Digest Sha256"
+    },
+    "source_snapshot_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Snapshot Digest Sha256",
+      "type": "string"
+    },
+    "subject_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Subject Digest Sha256",
+      "type": "string"
+    },
+    "suite_id": {
+      "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+      "title": "Suite Id",
+      "type": "string"
+    },
+    "target_scope": {
+      "const": "personal_local",
+      "title": "Target Scope",
+      "type": "string"
+    },
+    "task_summary_code": {
+      "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+      "title": "Task Summary Code",
+      "type": "string"
+    },
+    "tool_permission_ids": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 40,
+      "minItems": 1,
+      "title": "Tool Permission Ids",
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_version",
+    "suite_id",
+    "case_id",
+    "candidate_id",
+    "subject_digest_sha256",
+    "source_snapshot_digest_sha256",
+    "context_digest_sha256",
+    "task_summary_code",
+    "evidence_origin",
+    "declared_risk_level",
+    "target_scope",
+    "intended_recipient_role",
+    "risk_owner_role",
+    "prohibited_use_codes",
+    "scorer_outcome",
+    "scorer_execution_origin",
+    "official_scorer_executed",
+    "evidence",
+    "tool_permission_ids",
+    "privacy"
+  ],
+  "title": "CandidateDeliveryV1",
+  "type": "object"
+}

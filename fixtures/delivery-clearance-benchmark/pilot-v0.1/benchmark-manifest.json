@@ -1,0 +1,520 @@
+{
+  "case_count": 40,
+  "cases": [
+    {
+      "benchmark_id": "swe-bench-live",
+      "candidate_digest_sha256": "645ac1418d96fd8c0c96d0a149005c0c179d893238fa51db7538e2c192657325",
+      "candidate_ref": "candidates/swe-01.json",
+      "case_id": "swe-01",
+      "oracle_digest_sha256": "8d16812dc4559d151a8b6ea73705fec347b7838f4f06aff0b5aa641fa4588296",
+      "oracle_ref": "oracle/swe-01.json",
+      "reference_hidden_from_reviewers": true,
+      "upstream_task_id": "MultiQC__MultiQC-3300"
+    },
+    {
+      "benchmark_id": "swe-bench-live",
+      "candidate_digest_sha256": "bd083be69ed088cf2e55a45868cf2dbc376ee346ef511a861e54f2ce7c149a3e",
+      "candidate_ref": "candidates/swe-02.json",
+      "case_id": "swe-02",
+      "oracle_digest_sha256": "b7e5ac5376d09ca32718198c9205bedecb1dfbb1a6da1ba3fd398be998d06b5f",
+      "oracle_ref": "oracle/swe-02.json",
+      "reference_hidden_from_reviewers": true,
+      "upstream_task_id": "MultiQC__MultiQC-3242"
+    },
+    {
+      "benchmark_id": "swe-bench-live",
+      "candidate_digest_sha256": "9afeda2c297823ad455c2a0cf41766b4c5b9ba0bdfc9a06a7fc099ef062f91e7",
+      "candidate_ref": "candidates/swe-03.json",
+      "case_id": "swe-03",
+      "oracle_digest_sha256": "5b76772b9999d018eac182fa6b368f79f488137d9e1089515305a33a045a6a57",
+      "oracle_ref": "oracle/swe-03.json",
+      "reference_hidden_from_reviewers": true,
+      "upstream_task_id": "sveltejs__svelte-16466"
+    },
+    {
+      "benchmark_id": "swe-bench-live",
+      "candidate_digest_sha256": "1420f0edf6dd7ecaf0e61fe14b0ac3308b9d440b29ab6becf662d7ea58ea4cbc",
+      "candidate_ref": "candidates/swe-04.json",
+      "case_id": "swe-04",
+      "oracle_digest_sha256": "915cd96d73f9a201996e78344979205ffe46392b2b275b3e7dde4923fe6c3874",
+      "oracle_ref": "oracle/swe-04.json",
+      "reference_hidden_from_reviewers": true,
+      "upstream_task_id": "sveltejs__svelte-16309"
+    },
+    {
+      "benchmark_id": "swe-bench-live",
+      "candidate_digest_sha256": "c3e9ddc8738463c725ff55f87d60809d83f1e20954afb3caa9be893db6953c74",
+      "candidate_ref": "candidates/swe-05.json",
+      "case_id": "swe-05",
+      "oracle_digest_sha256": "fe0f2928264d6fd01d8b0b7d9ee201d622aa0accfb4985f684e7c5ce0247e9ae",
+      "oracle_ref": "oracle/swe-05.json",
+      "reference_hidden_from_reviewers": true,
+      "upstream_task_id": "sveltejs__svelte-16542"
+    },
+    {
+      "benchmark_id": "swe-bench-live",
+      "candidate_digest_sha256": "ac9267db7a822ccd2d698a570707cbda6dd18c7589226f5067031fdd2419a6ec",
+      "candidate_ref": "candidates/swe-06.json",
+      "case_id": "swe-06",
+      "oracle_digest_sha256": "61650314d8bea910b659474864206e83a39757eb8abc27d7653de16d92eb68e1",
+      "oracle_ref": "oracle/swe-06.json",
+      "reference_hidden_from_reviewers": true,
+      "upstream_task_id": "sveltejs__svelte-16509"
+    },
+    {
+      "benchmark_id": "swe-bench-live",
+      "candidate_digest_sha256": "4752ad40c8c481358709de547dbd2b18b8d51441de6f9c7bf3e531ca0208c879",
+      "candidate_ref": "candidates/swe-07.json",
+      "case_id": "swe-07",
+      "oracle_digest_sha256": "7c4de1d9946058ac04050b53a912c5a961668f2916fe3258614385af73810242",
+      "oracle_ref": "oracle/swe-07.json",
+      "reference_hidden_from_reviewers": true,
+      "upstream_task_id": "grommet__grommet-7718"
+    },
+    {
+      "benchmark_id": "swe-bench-live",
+      "candidate_digest_sha256": "0a11b631744a846ab9b10dc9db56145c461e13835683fa751ebf17b9bf808c23",
+      "candidate_ref": "candidates/swe-08.json",
+      "case_id": "swe-08",
+      "oracle_digest_sha256": "0406e46c35185672ee0a32f034a63b013230406aa056c262f5959e87d44ef891",
+      "oracle_ref": "oracle/swe-08.json",
+      "reference_hidden_from_reviewers": true,
+      "upstream_task_id": "sveltejs__svelte-16417"
+    },
+    {
+      "benchmark_id": "swe-bench-live",
+      "candidate_digest_sha256": "81929eec91b24ec41a9cbecb37a87655729575f6093e523bb315f30ec75063dc",
+      "candidate_ref": "candidates/swe-09.json",
+      "case_id": "swe-09",
+      "oracle_digest_sha256": "343f017daae4cde10dc974b7c2c8bdb4de038f5d0237845da35845b792b61173",
+      "oracle_ref": "oracle/swe-09.json",
+      "reference_hidden_from_reviewers": true,
+      "upstream_task_id": "sveltejs__svelte-16504"
+    },
+    {
+      "benchmark_id": "swe-bench-live",
+      "candidate_digest_sha256": "a91b9cc94b2ad2417eb8b3c78a5a56f057dadb6e4a749f61e181a514c6ceedaa",
+      "candidate_ref": "candidates/swe-10.json",
+      "case_id": "swe-10",
+      "oracle_digest_sha256": "6fbcc856313c2e07c756744e903406f6323054ecc0723e234d6e4f5b59caa37d",
+      "oracle_ref": "oracle/swe-10.json",
+      "reference_hidden_from_reviewers": true,
+      "upstream_task_id": "sveltejs__svelte-16405"
+    },
+    {
+      "benchmark_id": "swe-bench-live",
+      "candidate_digest_sha256": "e53ef1476f112e209749897f6c2eea3e6fdcb31673a00ad420093900a058eed0",
+      "candidate_ref": "candidates/swe-11.json",
+      "case_id": "swe-11",
+      "oracle_digest_sha256": "9a695ca904e23b22b9c472973cff7fd527845c623295c8020b1297af45ab6d8c",
+      "oracle_ref": "oracle/swe-11.json",
+      "reference_hidden_from_reviewers": true,
+      "upstream_task_id": "less__less.js-4349"
+    },
+    {
+      "benchmark_id": "swe-bench-live",
+      "candidate_digest_sha256": "f17195e3436f20b057437cf0d526965a69c8115bbf56b18020d401fa2c3f4178",
+      "candidate_ref": "candidates/swe-12.json",
+      "case_id": "swe-12",
+      "oracle_digest_sha256": "830da508d8c9308ee58d4108e6721ee051f8ee82d8d9ca6198b9d9a9b9ade615",
+      "oracle_ref": "oracle/swe-12.json",
+      "reference_hidden_from_reviewers": true,
+      "upstream_task_id": "codeceptjs__CodeceptJS-5106"
+    },
+    {
+      "benchmark_id": "tua-bench",
+      "candidate_digest_sha256": "e93a25a1f5e48375104a6cfb3a4c889d79ec0b5248b3eb0b528b6ac5c8d48743",
+      "candidate_ref": "candidates/tua-01.json",
+      "case_id": "tua-01",
+      "oracle_digest_sha256": "4c6fee38399f8874ff78ebe1fee13a71085e088aabbc4a5155c6cb65dbbbca41",
+      "oracle_ref": "oracle/tua-01.json",
+      "reference_hidden_from_reviewers": true,
+      "upstream_task_id": "010-pivot-product-revenue"
+    },
+    {
+      "benchmark_id": "tua-bench",
+      "candidate_digest_sha256": "40d2333baefb66750612a9e7b5e63c8b2d3f5509fa3a189315ed5bb60703a439",
+      "candidate_ref": "candidates/tua-02.json",
+      "case_id": "tua-02",
+      "oracle_digest_sha256": "973e626ea88e8fbd30a44b14113fbb0b1d718a603794d38774afa08a6f2b66bd",
+      "oracle_ref": "oracle/tua-02.json",
+      "reference_hidden_from_reviewers": true,
+      "upstream_task_id": "012-hide-na-budget-values"
+    },
+    {
+      "benchmark_id": "tua-bench",
+      "candidate_digest_sha256": "170cf509fb7533caaa168e48ad88001e8bc78d3ab4d40126624c5beee8bc36b3",
+      "candidate_ref": "candidates/tua-03.json",
+      "case_id": "tua-03",
+      "oracle_digest_sha256": "68d4d5745a207bf9919a1e31dfe04534584dc11f6d9a81621b557cd90eb6ad18",
+      "oracle_ref": "oracle/tua-03.json",
+      "reference_hidden_from_reviewers": true,
+      "upstream_task_id": "002-count-enter-key-presses"
+    },
+    {
+      "benchmark_id": "tua-bench",
+      "candidate_digest_sha256": "a082da621a76723c449ca536780359523da78f987edb46c4a42697b25e6f175f",
+      "candidate_ref": "candidates/tua-04.json",
+      "case_id": "tua-04",
+      "oracle_digest_sha256": "46d65b4352b23ec9ae79db26be2cb4ac45b95e319568cc67a7969bcc884cfb07",
+      "oracle_ref": "oracle/tua-04.json",
+      "reference_hidden_from_reviewers": true,
+      "upstream_task_id": "013-format-demographic-sheet"
+    },
+    {
+      "benchmark_id": "tua-bench",
+      "candidate_digest_sha256": "c433f5d1a5d96755c79b7437ad4d419cd6a76d057735ef33e1558359d21de47b",
+      "candidate_ref": "candidates/tua-05.json",
+      "case_id": "tua-05",
+      "oracle_digest_sha256": "56a1d32df555653ab8066ab5c8df31808b0e2eb68ce008ecfcbc6b626a511ece",
+      "oracle_ref": "oracle/tua-05.json",
+      "reference_hidden_from_reviewers": true,
+      "upstream_task_id": "014-pivot-promo-revenue"
+    },
+    {
+      "benchmark_id": "tua-bench",
+      "candidate_digest_sha256": "67fbc9a6cc4e286e1c318dcd96eef2b9b1d0ef7df0d7e752af9c97ff852056a6",
+      "candidate_ref": "candidates/tua-06.json",
+      "case_id": "tua-06",
+      "oracle_digest_sha256": "97ab9a552c57cbe4b01ed096ee42e13b5989ea9d23b1dffe532a52bc33007390",
+      "oracle_ref": "oracle/tua-06.json",
+      "reference_hidden_from_reviewers": true,
+      "upstream_task_id": "005-optimize-cold-plate"
+    },
+    {
+      "benchmark_id": "tua-bench",
+      "candidate_digest_sha256": "25059bbb69c84563769f187fa98e77f7f30771182f8d1efa5c3dcc44d8bfc40a",
+      "candidate_ref": "candidates/tua-07.json",
+      "case_id": "tua-07",
+      "oracle_digest_sha256": "b3d5646a6573b36fb2f7b23a536efa300b60696af53d87b0ae2f9a34679f39d3",
+      "oracle_ref": "oracle/tua-07.json",
+      "reference_hidden_from_reviewers": true,
+      "upstream_task_id": "006-extract-gym-auditorium"
+    },
+    {
+      "benchmark_id": "tua-bench",
+      "candidate_digest_sha256": "5372bdb18e0e60dc7e8ee5b60806cdf0ad26b51766206629530167e1c6858f16",
+      "candidate_ref": "candidates/tua-08.json",
+      "case_id": "tua-08",
+      "oracle_digest_sha256": "388eebbd1d72fd69b848d5adab4699fa8d39bb667b816df289b3c522fa3c2d8b",
+      "oracle_ref": "oracle/tua-08.json",
+      "reference_hidden_from_reviewers": true,
+      "upstream_task_id": "007-reconstruct-prostate-obj"
+    },
+    {
+      "benchmark_id": "tua-bench",
+      "candidate_digest_sha256": "183f90476a6586cdf53b8201d144f30dc1e7d8d439b0215a8975dce72d1eddf7",
+      "candidate_ref": "candidates/tua-09.json",
+      "case_id": "tua-09",
+      "oracle_digest_sha256": "086f982e67953a3bb3bda4e95c7b75007d05cb1ea20b43d2e11e770bfd2abb1c",
+      "oracle_ref": "oracle/tua-09.json",
+      "reference_hidden_from_reviewers": true,
+      "upstream_task_id": "008-find-bird-chase-frames"
+    },
+    {
+      "benchmark_id": "tua-bench",
+      "candidate_digest_sha256": "77be6e2bd840918e673febe3f87916d1a503aba2d3d8b335890a8f691260628c",
+      "candidate_ref": "candidates/tua-10.json",
+      "case_id": "tua-10",
+      "oracle_digest_sha256": "913ac87c379c597b75e7258ec325636c3c22ab000b3c13b22879d69786ded886",
+      "oracle_ref": "oracle/tua-10.json",
+      "reference_hidden_from_reviewers": true,
+      "upstream_task_id": "009-repair-org-chart-layout"
+    },
+    {
+      "benchmark_id": "tau-bench",
+      "candidate_digest_sha256": "ce5b15b25a746e62bfe3b1c4c968feda3f473b18d41155cb7dffc3898a4cc3bc",
+      "candidate_ref": "candidates/tau-01.json",
+      "case_id": "tau-01",
+      "oracle_digest_sha256": "13e16e2142004f1535053449f0b6c6cc12558fc3207732265b137fe1d235023f",
+      "oracle_ref": "oracle/tau-01.json",
+      "reference_hidden_from_reviewers": true,
+      "upstream_task_id": "retail:0"
+    },
+    {
+      "benchmark_id": "tau-bench",
+      "candidate_digest_sha256": "3313912caf0ece96d9d36a1205f0d5be208203346eb37ac2c33a75fffc77bf55",
+      "candidate_ref": "candidates/tau-02.json",
+      "case_id": "tau-02",
+      "oracle_digest_sha256": "f5e19e4d44a08f58eb1da6f6c2ed05722dd2f01d6b7b6ed7be11b14d58f8470e",
+      "oracle_ref": "oracle/tau-02.json",
+      "reference_hidden_from_reviewers": true,
+      "upstream_task_id": "retail:1"
+    },
+    {
+      "benchmark_id": "tau-bench",
+      "candidate_digest_sha256": "256613e37cc3c2e4c2cf17fb3e42ff5c14dc26eb42c1971432f56d2b556a5f84",
+      "candidate_ref": "candidates/tau-03.json",
+      "case_id": "tau-03",
+      "oracle_digest_sha256": "092f694b042d124579df61c7360b150623f995e611ea6e7672528604a8ef85db",
+      "oracle_ref": "oracle/tau-03.json",
+      "reference_hidden_from_reviewers": true,
+      "upstream_task_id": "retail:2"
+    },
+    {
+      "benchmark_id": "tau-bench",
+      "candidate_digest_sha256": "9ef0484ae8d5303564d39f19f17a7a3cda62e181fb0de0a47c00cd3495bf66c3",
+      "candidate_ref": "candidates/tau-04.json",
+      "case_id": "tau-04",
+      "oracle_digest_sha256": "6d50c14cf33bfebad86da4418580cfb64ba7903c2deaf701bfd99c4dcfc71a0b",
+      "oracle_ref": "oracle/tau-04.json",
+      "reference_hidden_from_reviewers": true,
+      "upstream_task_id": "retail:3"
+    },
+    {
+      "benchmark_id": "tau-bench",
+      "candidate_digest_sha256": "1b4aae920a595220771d0b20b80467388c565a30eea5639345e90db63fc40397",
+      "candidate_ref": "candidates/tau-05.json",
+      "case_id": "tau-05",
+      "oracle_digest_sha256": "44fb5128c50b1903b12c697e9aecceca205d831d32abe2d74801974a63cccba9",
+      "oracle_ref": "oracle/tau-05.json",
+      "reference_hidden_from_reviewers": true,
+      "upstream_task_id": "retail:4"
+    },
+    {
+      "benchmark_id": "tau-bench",
+      "candidate_digest_sha256": "404396b10b56c89d44b5dff1777933ce00327eb86cad040ac96b2b950d9bc61d",
+      "candidate_ref": "candidates/tau-06.json",
+      "case_id": "tau-06",
+      "oracle_digest_sha256": "b103495daeb924b3d7205203c33a0aa4534c814a89ed1db5e7dcbbf71267ce8b",
+      "oracle_ref": "oracle/tau-06.json",
+      "reference_hidden_from_reviewers": true,
+      "upstream_task_id": "retail:5"
+    },
+    {
+      "benchmark_id": "tau-bench",
+      "candidate_digest_sha256": "1243b8a76af5a69f8a705b7099f4a8dc732644d375558253f9e92cd419d355ad",
+      "candidate_ref": "candidates/tau-07.json",
+      "case_id": "tau-07",
+      "oracle_digest_sha256": "4e4643f7f6f611abca0d8d98d1acc52918a2c81b1d552c4dd0c5d3e2b133addc",
+      "oracle_ref": "oracle/tau-07.json",
+      "reference_hidden_from_reviewers": true,
+      "upstream_task_id": "retail:6"
+    },
+    {
+      "benchmark_id": "tau-bench",
+      "candidate_digest_sha256": "9daa5c12e32a4074f21c672b48e3129518db9bc66f1bc7c3dea17964bc340b46",
+      "candidate_ref": "candidates/tau-08.json",
+      "case_id": "tau-08",
+      "oracle_digest_sha256": "4c1862445f6f29f103492303ab1988a006c97cd48a55526b0b35f2b2f048ce98",
+      "oracle_ref": "oracle/tau-08.json",
+      "reference_hidden_from_reviewers": true,
+      "upstream_task_id": "retail:7"
+    },
+    {
+      "benchmark_id": "tau-bench",
+      "candidate_digest_sha256": "1db8aec9d8b28f0037ac9188f7a4dd21650912c186855f02051c57bd25ad3369",
+      "candidate_ref": "candidates/tau-09.json",
+      "case_id": "tau-09",
+      "oracle_digest_sha256": "596b6c6bcbd0c3f90814e3193b182b894413ff4e25f1ad0375f137e616e51435",
+      "oracle_ref": "oracle/tau-09.json",
+      "reference_hidden_from_reviewers": true,
+      "upstream_task_id": "retail:8"
+    },
+    {
+      "benchmark_id": "tau-bench",
+      "candidate_digest_sha256": "c7039e3f6ba2c07c19c6d525885b9ff531abbfb109c9e7d94205f7a0231d90d6",
+      "candidate_ref": "candidates/tau-10.json",
+      "case_id": "tau-10",
+      "oracle_digest_sha256": "c63a2d54a4173180d85e1d452aa7a01820e0e0c935d61eced64ac104d0ffcd70",
+      "oracle_ref": "oracle/tau-10.json",
+      "reference_hidden_from_reviewers": true,
+      "upstream_task_id": "retail:9"
+    },
+    {
+      "benchmark_id": "agentdojo",
+      "candidate_digest_sha256": "62d63f7021e39cdcdd6264f0f798944d58b859f111257139094074f26f14c94a",
+      "candidate_ref": "candidates/dojo-01.json",
+      "case_id": "dojo-01",
+      "oracle_digest_sha256": "3e0da6aed3f77daddee8296d5bb00b2affa86ce5031b93322ff5a0f297639209",
+      "oracle_ref": "oracle/dojo-01.json",
+      "reference_hidden_from_reviewers": true,
+      "upstream_task_id": "workspace:user_task_0:clean"
+    },
+    {
+      "benchmark_id": "agentdojo",
+      "candidate_digest_sha256": "d89436d9149c9f64eec65af76c47dd6b7a0529632435192c8a0f4c973a2db87b",
+      "candidate_ref": "candidates/dojo-02.json",
+      "case_id": "dojo-02",
+      "oracle_digest_sha256": "13e40e9f290e57913b97d5b6cd9d4f1ddee8df14d1790d0a4b2a3e5d32562c2b",
+      "oracle_ref": "oracle/dojo-02.json",
+      "reference_hidden_from_reviewers": true,
+      "upstream_task_id": "workspace:user_task_1:clean"
+    },
+    {
+      "benchmark_id": "agentdojo",
+      "candidate_digest_sha256": "7f1ac755ec553b18fc1f7286123a0dae126da9f098e0023f0c98b226ab484333",
+      "candidate_ref": "candidates/dojo-03.json",
+      "case_id": "dojo-03",
+      "oracle_digest_sha256": "37c16dfc2806b0e9bbb09653c8fcb18784e6858c1037a99fa00a85d17d0ca905",
+      "oracle_ref": "oracle/dojo-03.json",
+      "reference_hidden_from_reviewers": true,
+      "upstream_task_id": "workspace:user_task_2:clean"
+    },
+    {
+      "benchmark_id": "agentdojo",
+      "candidate_digest_sha256": "c139499c4aeae44d2614d893be00ce9c81dce12cd70b910a670b57766dc3b607",
+      "candidate_ref": "candidates/dojo-04.json",
+      "case_id": "dojo-04",
+      "oracle_digest_sha256": "7efd4c18e840a7dc01f5622a4228f7f5f6e89216ac108eb143a268b2c9b6af24",
+      "oracle_ref": "oracle/dojo-04.json",
+      "reference_hidden_from_reviewers": true,
+      "upstream_task_id": "workspace:user_task_3:clean"
+    },
+    {
+      "benchmark_id": "agentdojo",
+      "candidate_digest_sha256": "b7fbaa3d5a1e435a8e1996d98efdf16c967fb48383817cb857da788fd62478f3",
+      "candidate_ref": "candidates/dojo-05.json",
+      "case_id": "dojo-05",
+      "oracle_digest_sha256": "0064550cd74ff266da886dd1fe3bcdcc513343ce68dca02329ef00bc2e528e60",
+      "oracle_ref": "oracle/dojo-05.json",
+      "reference_hidden_from_reviewers": true,
+      "upstream_task_id": "workspace:user_task_4:injection_task_0"
+    },
+    {
+      "benchmark_id": "agentdojo",
+      "candidate_digest_sha256": "361184f156fefcf9856a07ce0df3996c25ae1cb20eb2296e24b3754dd4323946",
+      "candidate_ref": "candidates/dojo-06.json",
+      "case_id": "dojo-06",
+      "oracle_digest_sha256": "9a904c164b05ea01523ace6c2520217a59ecd9c9e910f5b099e8dc553174181b",
+      "oracle_ref": "oracle/dojo-06.json",
+      "reference_hidden_from_reviewers": true,
+      "upstream_task_id": "workspace:user_task_5:injection_task_1"
+    },
+    {
+      "benchmark_id": "agentdojo",
+      "candidate_digest_sha256": "7679151cb0148412a2940d6e9946622aefe86324898b56d83024afa524f528be",
+      "candidate_ref": "candidates/dojo-07.json",
+      "case_id": "dojo-07",
+      "oracle_digest_sha256": "a9bbc56b2133719d59980b72c0e44b810383d125f702ed503387c7c1b2641101",
+      "oracle_ref": "oracle/dojo-07.json",
+      "reference_hidden_from_reviewers": true,
+      "upstream_task_id": "workspace:user_task_6:injection_task_2"
+    },
+    {
+      "benchmark_id": "agentdojo",
+      "candidate_digest_sha256": "9d0bc29e49a877a5056c4fcb54be4849d85d4a68bf14a1d8b157e65218c87709",
+      "candidate_ref": "candidates/dojo-08.json",
+      "case_id": "dojo-08",
+      "oracle_digest_sha256": "72625b90abcf7b474ded184b0cdf5b9a9495a5bd8a783f9ac3bafe1e668b1e5c",
+      "oracle_ref": "oracle/dojo-08.json",
+      "reference_hidden_from_reviewers": true,
+      "upstream_task_id": "workspace:user_task_7:injection_task_3"
+    }
+  ],
+  "claim_boundary": {
+    "current_claim": "The public-source mechanism fixtures are ready to exercise the paired benchmark contracts and runner.",
+    "maximum_scope": "personal_local",
+    "not_claimed": [
+      "observed model effectiveness",
+      "statistical significance",
+      "customer delivery validation",
+      "production approval",
+      "professional-domain certification"
+    ]
+  },
+  "dangerous_case_count": 20,
+  "evidence_basis": "mechanism_fixture",
+  "privacy": {
+    "local_absolute_paths_included": false,
+    "metadata_only": true,
+    "model_credentials_included": false,
+    "production_mutation_performed": false,
+    "raw_model_prompts_included": false,
+    "upstream_task_payloads_included": false
+  },
+  "runtime_isolation": {
+    "candidate_directory_read_only": true,
+    "oracle_directory_passed_to_reviewers": false,
+    "temporary_workspaces_required": true,
+    "upstream_sources_read_only": true
+  },
+  "safe_case_count": 20,
+  "schema_version": "benchmark-manifest-v1",
+  "selection_amendments": [
+    {
+      "amendment_digest_sha256": "eabb8c67bd9bdc92f4ae5c40f03c294d5c1e6fe92b2dd75c9353fbf29bb67595",
+      "amendment_path": "selection-amendments/swe-source-feasibility-1.json",
+      "amendment_ref": "selection-amendment:swe-source-feasibility-1",
+      "model_arm_outcomes_used": false,
+      "replacement_count": 3,
+      "safe_dangerous_balance_changed": false
+    },
+    {
+      "amendment_digest_sha256": "cf703488cd25639a16e44461d529562579a282525cbde14d342da425e53011cd",
+      "amendment_path": "selection-amendments/swe-source-feasibility-2.json",
+      "amendment_ref": "selection-amendment:swe-source-feasibility-2",
+      "model_arm_outcomes_used": false,
+      "replacement_count": 1,
+      "safe_dangerous_balance_changed": false
+    },
+    {
+      "amendment_digest_sha256": "5f73008f015def4ed9dd53431bd465d969c62f6445579dc0a23edff9dcbce9cf",
+      "amendment_path": "selection-amendments/swe-source-feasibility-3.json",
+      "amendment_ref": "selection-amendment:swe-source-feasibility-3",
+      "model_arm_outcomes_used": false,
+      "replacement_count": 1,
+      "safe_dangerous_balance_changed": false
+    },
+    {
+      "amendment_digest_sha256": "1a019f294385dc02dbb68445e8282d5d20cf2e011794c969ca3c5472ecb88acb",
+      "amendment_path": "selection-amendments/tua-source-feasibility-1.json",
+      "amendment_ref": "selection-amendment:tua-source-feasibility-1",
+      "model_arm_outcomes_used": false,
+      "replacement_count": 4,
+      "safe_dangerous_balance_changed": false
+    }
+  ],
+  "sources": [
+    {
+      "benchmark_id": "swe-bench-live",
+      "benchmark_version": "multilang-js-2026-07-12",
+      "license_id": "MIT",
+      "license_uri": "https://github.com/microsoft/SWE-bench-Live/blob/70ec57e852e3f2d195790fe71f553e272c691833/LICENSE",
+      "license_use_scope": "permissive",
+      "scorer_source_revision": "70ec57e852e3f2d195790fe71f553e272c691833",
+      "scorer_source_uri": "https://github.com/microsoft/SWE-bench-Live",
+      "task_data_revision": "608f7ae9ab8ea1f9f0d030fe04562cf6bd1a0c8b",
+      "third_party_asset_terms_reviewed": true,
+      "upstream_payload_vendored": false
+    },
+    {
+      "benchmark_id": "tua-bench",
+      "benchmark_version": "2026-07-12",
+      "license_id": "CC-BY-NC-4.0",
+      "license_uri": "https://github.com/facebookresearch/TUA-Bench/blob/3497fd320abcafaf4797424192c891a593fd7964/LICENSE",
+      "license_use_scope": "personal_noncommercial",
+      "scorer_source_revision": "3497fd320abcafaf4797424192c891a593fd7964",
+      "scorer_source_uri": "https://github.com/facebookresearch/TUA-Bench",
+      "task_data_revision": "3497fd320abcafaf4797424192c891a593fd7964",
+      "third_party_asset_terms_reviewed": false,
+      "upstream_payload_vendored": false
+    },
+    {
+      "benchmark_id": "tau-bench",
+      "benchmark_version": "tau3-base-2026-07-12",
+      "license_id": "MIT",
+      "license_uri": "https://github.com/sierra-research/tau2-bench/blob/1901a301961cbbe3fd11f3e84a2a376530c759e3/LICENSE",
+      "license_use_scope": "permissive",
+      "scorer_source_revision": "1901a301961cbbe3fd11f3e84a2a376530c759e3",
+      "scorer_source_uri": "https://github.com/sierra-research/tau2-bench",
+      "task_data_revision": "1901a301961cbbe3fd11f3e84a2a376530c759e3",
+      "third_party_asset_terms_reviewed": true,
+      "upstream_payload_vendored": false
+    },
+    {
+      "benchmark_id": "agentdojo",
+      "benchmark_version": "v1.2.2",
+      "license_id": "MIT",
+      "license_uri": "https://github.com/ethz-spylab/agentdojo/blob/089ed468cf3ed0322acc66b0211f26d9d90dbf60/LICENSE",
+      "license_use_scope": "permissive",
+      "scorer_source_revision": "089ed468cf3ed0322acc66b0211f26d9d90dbf60",
+      "scorer_source_uri": "https://github.com/ethz-spylab/agentdojo",
+      "task_data_revision": "089ed468cf3ed0322acc66b0211f26d9d90dbf60",
+      "third_party_asset_terms_reviewed": true,
+      "upstream_payload_vendored": false
+    }
+  ],
+  "status": "mechanism_fixture_ready",
+  "suite_id": "pilot-v0.1"
+}

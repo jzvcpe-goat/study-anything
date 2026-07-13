@@ -1,0 +1,14 @@
+{
+  "checks": {
+    "forged_execution_ready_rejected": true,
+    "missing_blocker_ledger_rejected": true,
+    "missing_checkout_has_blockers": true,
+    "missing_checkout_has_no_observed_revisions": true,
+    "missing_checkout_is_not_ready": true,
+    "receipt_does_not_claim_scorer_execution": true,
+    "receipt_excludes_local_absolute_paths": true
+  },
+  "claim_boundary": "This verifier checks preflight contract behavior. It does not acquire public sources, execute official scorers, or establish an observed effect.",
+  "schema_version": "benchmark-source-preflight-verification-v1",
+  "status": "pass"
+}

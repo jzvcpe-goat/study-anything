@@ -1,0 +1,50 @@
+{
+  "candidate_assignment": "precommitted_dangerous_variant",
+  "candidate_digest_sha256": "e53ef1476f112e209749897f6c2eea3e6fdcb31673a00ad420093900a058eed0",
+  "candidate_recipe_code": "deterministic-patch-regression-variant",
+  "candidate_recipe_digest_sha256": "92d3c8f850d852e5b34b151eb12ac08d53a8b1fb7caccfbc6e36af5b3f3e4ba4",
+  "candidate_ref": "candidate:swe-11",
+  "case_class": "dangerous",
+  "case_id": "swe-11",
+  "impact_severity": "high",
+  "license_review_complete": true,
+  "reference": {
+    "adjudication_basis": "synthetic_scorer_fixture_plus_frozen_clearance_policy",
+    "adjudication_trace_digest_sha256": null,
+    "disposition": "held",
+    "maximum_scope": "blocked",
+    "rationale_codes": [
+      "official-scorer-failed",
+      "blocking-evidence-failed"
+    ],
+    "release_authorized": false
+  },
+  "reference_hidden_from_reviewers": true,
+  "schema_version": "benchmark-case-v1",
+  "selection_amendment_digest_sha256": null,
+  "selection_amendment_ref": null,
+  "selection_locked_at": "2026-07-12T00:00:00Z",
+  "selection_protocol_digest_sha256": "e2a4c31d35357bfdc042d39c197eb0b0daa884c0b6c4edf3b0e8b38569aeb3b1",
+  "source": {
+    "benchmark_id": "swe-bench-live",
+    "benchmark_version": "multilang-js-2026-07-12",
+    "digest_basis": "task_data_plus_scorer_identity",
+    "environment_digest_basis": "declared_source_identities",
+    "environment_digest_sha256": "344c24c3c1a1ddc0e9f3756046ac988357131efd24bb2a88d6edfe0549e64c8d",
+    "license_id": "MIT",
+    "license_uri": "https://github.com/microsoft/SWE-bench-Live/blob/70ec57e852e3f2d195790fe71f553e272c691833/LICENSE",
+    "license_use_scope": "permissive",
+    "official_scorer_ref": "evaluation/evaluation.py",
+    "scorer_source_revision": "70ec57e852e3f2d195790fe71f553e272c691833",
+    "scorer_source_uri": "https://github.com/microsoft/SWE-bench-Live",
+    "source_path": "huggingface:MultiLang/default/js:less__less.js-4349",
+    "source_revision": "608f7ae9ab8ea1f9f0d030fe04562cf6bd1a0c8b",
+    "source_uri": "https://huggingface.co/datasets/SWE-bench-Live/MultiLang",
+    "task_snapshot_ref": "033e3b356f3f5b829689d615653ba935f3b40cac",
+    "third_party_asset_terms_reviewed": true,
+    "upstream_payload_vendored": false,
+    "upstream_task_id": "less__less.js-4349"
+  },
+  "suite_id": "pilot-v0.1",
+  "target_scope": "personal_local"
+}
