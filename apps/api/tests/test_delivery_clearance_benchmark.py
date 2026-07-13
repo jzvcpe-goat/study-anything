@@ -2109,6 +2109,18 @@ print(json.dumps({"type": "turn.completed", "usage": {
                 "--max-items",
                 "1",
             ]
+            interrupted = subprocess.run(
+                command,
+                cwd=ROOT,
+                text=True,
+                input="",
+                capture_output=True,
+            )
+            self.assertEqual(interrupted.returncode, 130)
+            self.assertIn("benchmark paused", interrupted.stderr)
+            self.assertNotIn("Traceback", interrupted.stderr)
+            self.assertFalse(sessions.exists())
+
             completed = subprocess.run(
                 command,
                 cwd=ROOT,
@@ -2260,6 +2272,18 @@ print(json.dumps({"type": "turn.completed", "usage": {
                 "--max-items",
                 "1",
             ]
+            interrupted = subprocess.run(
+                command,
+                cwd=ROOT,
+                text=True,
+                input="",
+                capture_output=True,
+            )
+            self.assertEqual(interrupted.returncode, 130)
+            self.assertIn("benchmark paused", interrupted.stderr)
+            self.assertNotIn("Traceback", interrupted.stderr)
+            self.assertFalse(receipts.exists())
+
             completed = subprocess.run(
                 command,
                 cwd=ROOT,

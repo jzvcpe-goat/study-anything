@@ -1223,6 +1223,13 @@ def main() -> int:
     args = parser.parse_args()
     try:
         return int(args.func(args))
+    except (KeyboardInterrupt, EOFError):
+        print(
+            "\nbenchmark paused: the in-progress item was not recorded; "
+            "rerun the command and use --resume for batch flows.",
+            file=sys.stderr,
+        )
+        return 130
     except (
         argparse.ArgumentTypeError,
         AgentDojoScorerError,
