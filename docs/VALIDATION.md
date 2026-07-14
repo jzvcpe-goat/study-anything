@@ -203,6 +203,26 @@ printf 'changed after clearance\n' > "$TARGET/changed-after-clearance.txt"
 
 当前仓库没有替操作者填写这些真人 session，因此仍不能报告复核时间差或认知负担变化。
 
+### 6.6 在真实 Agent 补丁上运行真人对照复核
+
+先按
+[`real-agent-delivery-benchmark.zh-CN.md`](evaluation/real-agent-delivery-benchmark.zh-CN.md)
+生成本地原始 issue 和 patch，再启动审核台：
+
+```bash
+.venv/bin/delivery-clearance-review \
+  --protocol docs/evaluation/real-agent-v0.1-human-protocol.json \
+  --max-items 12
+```
+
+`boundary_reconstruction` 只使用已提交的 metadata packet；
+`full_review_reference` 额外从 Git 忽略的本地目录读取原始 issue 与 patch。
+原始材料必须匹配 packet 中的补丁和组合材料 SHA-256，且只能通过同源、
+token 保护的 localhost 端点临时显示。审核 session 不保存原始材料或选项序列。
+
+当前状态是“可开始真人复核”，不是“真人复核已完成”。仓库不代替操作者作出
+真人判断，因此仍不报告效果量、显著性或真人独立性。
+
 ## 7. Evidence Inventory
 
 | 证据 | 用途 | 仓库路径 | 当前状态 |
@@ -228,6 +248,8 @@ printf 'changed after clearance\n' > "$TARGET/changed-after-clearance.txt"
 | Real-Agent source fetcher | 按固定提交从 GitHub Contents API 获取原始字节和 issue/PR 快照 | `scripts/fetch_real_agent_case_sources.py` | 已完成公开来源重放；凭证不入库 |
 | Real-Agent verifier | 离线检查已提交资产，并可对公开来源执行完整重建和摘要比对 | `scripts/verify_real_agent_case_set.py` | 12/12 通过；完整来源重放通过 |
 | Real-Agent evidence | 12 个仓库的 6 个公开功能通过和 6 个公开功能失败候选、盲化 packet 与隔离 oracle | `validation/results/real-agent-v0.1/` | 已提交 metadata-only 输入集；本机 scorer 与真人裁决未完成 |
+| Real-Agent human protocol | 在同一候选上分离边界重构和全文参考复核，并限定本地原始材料访问 | `docs/evaluation/real-agent-v0.1-human-protocol.json` | 协议已验证；真人 session 未完成 |
+| Digest-bound full review | 对本地 issue/patch 重算 digest，拒绝越界、符号链接、缺失、篡改和无授权读取 | `apps/api/study_anything/cbb/benchmark/review_cockpit.py` | 已实现；聚焦正反测试通过 |
 
 仓库没有提交可独立复验的 Personal Clearance 截图文件，因此本文不把截图作为当前证据。
 HTML 报告由机器 artifact 确定性重建，`verify` 会检查
@@ -302,10 +324,17 @@ HTML 报告由机器 artifact 确定性重建，`verify` 会检查
 - **当前结果**：预测文件、结果文件和 12 个 issue/PR 快照均可按固定提交重放；任何字节漂移
   都会失败关闭。
 
+### 8.8 全文基线必须真正看到候选物，但不能污染边界重构
+
+- **原设计问题**：`full_review_reference` 与边界重构都只看 metadata，无法构成真实全文复核基线。
+- **发现**：如果两种模式使用相同信息，时间和认知成本差异没有可解释性；若把原文放进共享 packet，又会破坏盲化边界。
+- **调整**：只允许全文模式通过独立 localhost 端点读取 Git 忽略的原始材料，并在返回前校验路径、类型、大小和 digest。
+- **当前结果**：边界模式的原文端点始终拒绝；补丁篡改会失败关闭；完成 session 不包含 issue、patch 或原始答案。
+
 ## 9. Current Limitations
 
 - **真实用户价值**：暂无真实用户样本、访谈、再次使用意愿或实际交付结果。
-- **审核效率**：暂无可比较的全文复核时间、边界重构时间或认知负担结果。
+- **审核效率**：对照交互入口已实现，但暂无已完成的全文复核和边界重构 session，因此没有可比较的时间或认知负担结果。
 - **决策质量**：暂无完成的真实人类参考标签，因此不能报告误放行率、误阻断率、严重
   错误逃逸率或人工推翻率。
 - **跨项目适配**：真实项目回放目前只有本仓库的一条四提交事故链，Phase 42 也只提供

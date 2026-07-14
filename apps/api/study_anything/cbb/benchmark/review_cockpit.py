@@ -50,13 +50,52 @@ ReviewMode = Literal[
 ]
 
 MODE_LABELS: dict[ReviewMode, str] = {
-    "boundary_reconstruction": "Boundary reconstruction",
-    "full_review_reference": "Full review reference",
-    "blinded_adjudication": "Blinded adjudication",
+    "boundary_reconstruction": "边界重构",
+    "full_review_reference": "全文参考复核",
+    "blinded_adjudication": "盲法裁决",
 }
 
 DEFAULT_PROTOCOL_PATH = Path("docs/evaluation/pilot-v0.1-human-protocol.json")
 DEFAULT_PORT = 8765
+MAX_LOCAL_ISSUE_BYTES = 1_000_000
+MAX_LOCAL_PATCH_BYTES = 5_000_000
+
+QUESTION_PROMPTS_ZH = {
+    "delivery-scope": "该审核包最多支持到哪一级交付范围？",
+    "recipient-and-responsibility": "谁接收这份结果，谁承担剩余风险？",
+    "visible-failure-boundary": "当前最重要的可见失败边界是什么？",
+    "recovery-boundary": "当前声明了哪项恢复或遏制证据？",
+    "prohibited-use-boundary": "即使该候选物获得放行，哪些用途仍然被禁止？",
+}
+OPTION_LABELS_ZH = {
+    "customer-scope": "客户交接",
+    "production-scope": "生产执行",
+    "model-responsibility": "由生成模型承担责任",
+    "no-responsibility": "未声明任何责任主体",
+    "hidden-scorer": "假设被隐藏的 scorer 已经通过",
+    "global-correctness": "该交付物在所有场景中都正确",
+    "automatic-production-rollback": "生产环境自动回滚",
+    "no-recovery-needed": "不需要任何恢复措施",
+    "unrestricted-use": "不再有任何禁止用途",
+    "global-release": "不生成新收据就全局发布",
+    "no-visible-blocker": "可见证据中没有出现阻断性失败",
+}
+
+
+def _localized_question_view(question: Any) -> dict[str, Any]:
+    option_labels: list[str] = []
+    for option in question.options:
+        label = OPTION_LABELS_ZH.get(option.code, option.label)
+        if option.code == "declared-responsibility":
+            label = label.replace("recipient=", "接收者=").replace(
+                "; risk owner=", "；剩余风险责任人="
+            )
+        option_labels.append(label)
+    return {
+        "question_id": question.question_id,
+        "prompt": QUESTION_PROMPTS_ZH.get(question.question_id, question.prompt),
+        "options": option_labels,
+    }
 
 
 class ReviewCockpitError(RuntimeError):
@@ -83,6 +122,7 @@ class ModeConfig:
     role: str
     order_seed: str
     max_items: int
+    local_material_dir: Path | None = None
 
 
 @dataclass
@@ -166,6 +206,20 @@ def load_canonical_mode_configs(
             raise ReviewCockpitError(f"canonical {role_field} is invalid for {mode}")
         if not isinstance(order_seed, str) or not order_seed:
             raise ReviewCockpitError(f"canonical order seed is invalid for {mode}")
+        local_material_value = mode_payload.get("local_material_dir")
+        if local_material_value is not None and mode != "full_review_reference":
+            raise ReviewCockpitError(
+                "local review material is allowed only for full_review_reference"
+            )
+        local_material_dir = (
+            _repo_path(
+                repo_root,
+                local_material_value,
+                field="local_material_dir",
+            )
+            if local_material_value is not None
+            else None
+        )
         configs[mode] = ModeConfig(
             mode=mode,
             packet_dir=_repo_path(repo_root, mode_payload.get("packet_dir"), field="packet_dir"),
@@ -173,6 +227,7 @@ def load_canonical_mode_configs(
             role=role,
             order_seed=order_seed,
             max_items=max_items,
+            local_material_dir=local_material_dir,
         )
     if not configs:
         raise ReviewCockpitError("canonical human protocol enables no review modes")
@@ -328,6 +383,89 @@ class ReviewQueue:
             ],
         }
 
+    def _read_local_material(
+        self,
+        *,
+        case_id: str,
+        packet: dict[str, Any],
+    ) -> dict[str, Any]:
+        material_root = self.config.local_material_dir
+        if self.config.mode != "full_review_reference" or material_root is None:
+            raise ReviewCockpitError("local candidate material is unavailable for this mode")
+        if not case_id or Path(case_id).name != case_id:
+            raise ReviewCockpitError("local candidate material case ID is invalid")
+        if material_root.is_symlink():
+            raise ReviewCockpitError("local candidate material must not use symbolic links")
+        root = material_root.resolve()
+        case_entry = root / case_id
+        if case_entry.is_symlink():
+            raise ReviewCockpitError("local candidate material must not use symbolic links")
+        case_dir = case_entry.resolve()
+        if root not in case_dir.parents:
+            raise ReviewCockpitError("local candidate material escapes its configured directory")
+        issue_path = case_dir / "issue.md"
+        patch_path = case_dir / "candidate.patch"
+        if issue_path.is_symlink() or patch_path.is_symlink():
+            raise ReviewCockpitError("local candidate material must not use symbolic links")
+        if not issue_path.is_file() or not patch_path.is_file():
+            raise ReviewCockpitError("local candidate material is incomplete")
+        try:
+            issue_bytes = issue_path.read_bytes()
+            patch_bytes = patch_path.read_bytes()
+        except OSError as exc:
+            raise ReviewCockpitError("could not read local candidate material") from exc
+        if len(issue_bytes) > MAX_LOCAL_ISSUE_BYTES:
+            raise ReviewCockpitError("local issue material exceeds the size limit")
+        if len(patch_bytes) > MAX_LOCAL_PATCH_BYTES:
+            raise ReviewCockpitError("local patch material exceeds the size limit")
+        try:
+            issue_markdown = issue_bytes.decode("utf-8")
+            candidate_patch = patch_bytes.decode("utf-8")
+        except UnicodeDecodeError as exc:
+            raise ReviewCockpitError("local candidate material must be UTF-8") from exc
+
+        candidate = packet.get("candidate")
+        if not isinstance(candidate, dict):
+            raise ReviewCockpitError("active packet is missing its candidate")
+        expected_patch_digest = candidate.get("candidate_digest_sha256")
+        expected_material_digest = packet.get(
+            "review_material_digest_sha256",
+            candidate.get("review_material_digest_sha256"),
+        )
+        patch_digest = sha256(patch_bytes).hexdigest()
+        material_digest = sha256(issue_bytes + b"\0" + patch_bytes).hexdigest()
+        if not isinstance(expected_patch_digest, str) or patch_digest != expected_patch_digest:
+            raise ReviewCockpitError("local candidate patch digest does not match the packet")
+        if (
+            not isinstance(expected_material_digest, str)
+            or material_digest != expected_material_digest
+        ):
+            raise ReviewCockpitError("local review material digest does not match the packet")
+        return {
+            "schema_version": "delivery-clearance.local-review-material.v1",
+            "issue_markdown": issue_markdown,
+            "candidate_patch": candidate_patch,
+            "issue_bytes": len(issue_bytes),
+            "patch_bytes": len(patch_bytes),
+            "candidate_patch_digest_sha256": patch_digest,
+            "review_material_digest_sha256": material_digest,
+            "persisted_to_human_session": False,
+            "official_scorer_result_included": False,
+            "reference_label_included": False,
+        }
+
+    def local_material(self, *, item_token: str) -> dict[str, Any]:
+        with self.lock:
+            active = self._ensure_active()
+            if active is None:
+                raise ReviewCockpitError("this review batch is already complete")
+            if not secrets.compare_digest(item_token, active.token):
+                raise ReviewCockpitError("review item token is stale")
+            return self._read_local_material(
+                case_id=active.case_id,
+                packet=self.packets[active.case_id],
+            )
+
     def state(self, *, review_token: str) -> dict[str, Any]:
         with self.lock:
             active = self._ensure_active()
@@ -353,9 +491,7 @@ class ReviewQueue:
                 raise ReviewCockpitError("active packet is missing its candidate")
             base.update(
                 {
-                    "display_label": (
-                        f"Blinded item {self.completed_this_run + 1} of {self.batch_total}"
-                    ),
+                    "display_label": (f"盲化项 {self.completed_this_run + 1} / {self.batch_total}"),
                     "item_token": active.token,
                     "candidate": self._candidate_summary(candidate),
                 }
@@ -365,16 +501,15 @@ class ReviewQueue:
                 "full_review_reference",
             }:
                 questions = boundary_questions(packet)
-                base["questions"] = [
-                    {
-                        "question_id": question.question_id,
-                        "prompt": question.prompt,
-                        "options": [option.label for option in question.options],
-                    }
-                    for question in questions
-                ]
+                base["questions"] = [_localized_question_view(question) for question in questions]
                 if self.config.mode == "full_review_reference":
                     base["full_review_material"] = full_review_material(packet)
+                    base["local_material"] = {
+                        "available": self.config.local_material_dir is not None,
+                        "persisted_to_human_session": False,
+                        "official_scorer_result_included": False,
+                        "reference_label_included": False,
+                    }
             else:
                 scorer = ScorerExecutionReceiptV1.model_validate(packet.get("scorer_receipt"))
                 base["official_scorer"] = {
@@ -383,10 +518,10 @@ class ReviewQueue:
                     "benchmark_id": scorer.benchmark_id,
                 }
                 base["dispositions"] = [
-                    {"value": "cleared", "label": "Clear"},
-                    {"value": "restricted", "label": "Restrict"},
-                    {"value": "held", "label": "Hold"},
-                    {"value": "denied", "label": "Deny"},
+                    {"value": "cleared", "label": "放行"},
+                    {"value": "restricted", "label": "限定范围"},
+                    {"value": "held", "label": "暂停"},
+                    {"value": "denied", "label": "拒绝"},
                 ]
             assert_safe_metadata(base, label="review cockpit state")
             return base
@@ -519,6 +654,11 @@ class ReviewCockpit:
             review_token=self.review_token,
         )
 
+    def material(self, mode: ReviewMode, *, item_token: str) -> dict[str, Any]:
+        if mode != "full_review_reference" or mode not in self.queues:
+            raise ReviewCockpitError("local candidate material is available only in full review")
+        return self.queues[mode].local_material(item_token=item_token)
+
 
 def _allowed_origin(request: Request) -> bool:
     origin = request.headers.get("origin")
@@ -579,6 +719,25 @@ def create_review_cockpit_app(cockpit: ReviewCockpit) -> FastAPI:
             return JSONResponse(cockpit.state(mode))
         except ReviewCockpitError as exc:
             raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+    @app.get("/api/review/{mode}/material")
+    def current_material(
+        mode: ReviewMode,
+        item_token: str,
+        request: Request,
+        x_review_token: str | None = Header(default=None),
+    ) -> JSONResponse:
+        if not _allowed_origin(request):
+            raise HTTPException(status_code=403, detail="cross-origin material access denied")
+        if x_review_token is None or not secrets.compare_digest(
+            x_review_token,
+            cockpit.review_token,
+        ):
+            raise HTTPException(status_code=403, detail="review token is missing or invalid")
+        try:
+            return JSONResponse(cockpit.material(mode, item_token=item_token))
+        except ReviewCockpitError as exc:
+            raise HTTPException(status_code=409, detail=str(exc)) from exc
 
     @app.post("/api/review/submit")
     def submit(
@@ -671,11 +830,11 @@ def main() -> int:
 
 
 REVIEW_COCKPIT_HTML = r"""<!doctype html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Delivery Clearance - Human Review Cockpit</title>
+  <title>Delivery Clearance - 真人审核台 / Human Review Cockpit</title>
   <style>
     :root {
       color-scheme: light;
@@ -772,6 +931,11 @@ REVIEW_COCKPIT_HTML = r"""<!doctype html>
     .material-row { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 14px; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
     .material-row span:first-child { color: var(--muted); }
     .material-row span:last-child { overflow-wrap: anywhere; }
+    .raw-review { display: grid; gap: 18px; margin: 0 0 26px; }
+    .raw-panel { min-width: 0; border: 1px solid var(--line); background: var(--surface); }
+    .raw-panel h3 { margin: 0; padding: 10px 12px; border-bottom: 1px solid var(--line); background: #eef2ef; }
+    .raw-panel pre { max-height: 420px; margin: 0; padding: 14px; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; font: 12px/1.55 ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .raw-meta { color: var(--muted); padding: 8px 12px; border-top: 1px solid var(--line); font-size: 11px; }
     .decision-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid var(--line); border-radius: 5px; overflow: hidden; }
     .decision-grid label { position: relative; border-right: 1px solid var(--line); }
     .decision-grid label:last-child { border-right: 0; }
@@ -829,21 +993,21 @@ REVIEW_COCKPIT_HTML = r"""<!doctype html>
 </head>
 <body>
   <header class="topbar">
-    <div class="brand"><strong>Delivery Clearance</strong><span>Human Review Cockpit</span></div>
-    <div class="scope">personal_local / no independent-review claim</div>
+    <div class="brand"><strong>Delivery Clearance</strong><span>真人审核台</span></div>
+    <div class="scope">personal_local / 不声明独立审核</div>
   </header>
-  <nav class="modebar" aria-label="Review mode">
+  <nav class="modebar" aria-label="审核模式">
     <!-- REVIEW_MODE_BUTTONS -->
   </nav>
   <div class="progress-wrap">
-    <div class="progress-meta"><span id="progress-label">Loading review state</span><span id="active-time">00:00 active</span></div>
+    <div class="progress-meta"><span id="progress-label">正在载入审核状态</span><span id="active-time">00:00 主动复核</span></div>
     <div class="progress-track" aria-hidden="true"><div class="progress-fill" id="progress-fill" style="width:0"></div></div>
   </div>
   <main class="layout">
-    <aside class="context" id="context"><div class="loading">Loading boundary evidence...</div></aside>
+    <aside class="context" id="context"><div class="loading">正在载入边界证据...</div></aside>
     <section class="workspace">
       <div class="error" id="error" role="alert"></div>
-      <div id="workspace"><div class="loading">Loading review item...</div></div>
+      <div id="workspace"><div class="loading">正在载入审核项...</div></div>
     </section>
   </main>
   <script>
@@ -883,7 +1047,7 @@ REVIEW_COCKPIT_HTML = r"""<!doctype html>
     }
     function renderTime() {
       const seconds = Math.floor(currentActiveMs() / 1000);
-      activeTime.textContent = `${String(Math.floor(seconds / 60)).padStart(2,'0')}:${String(seconds % 60).padStart(2,'0')} active`;
+      activeTime.textContent = `${String(Math.floor(seconds / 60)).padStart(2,'0')}:${String(seconds % 60).padStart(2,'0')} 主动复核`;
     }
     document.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'hidden' && visibleSince !== null) {
@@ -905,23 +1069,42 @@ REVIEW_COCKPIT_HTML = r"""<!doctype html>
       return `<div class="chip-list">${(values || []).map(value => `<span class="chip">${esc(value)}</span>`).join('')}</div>`;
     }
     function evidenceTable(items) {
-      return `<table class="evidence-table"><thead><tr><th>Evidence</th><th>Status</th><th>Summary</th></tr></thead><tbody>${(items || []).map(item => `<tr><td>${esc(item.evidence_type)}</td><td class="status-${esc(item.status)}">${esc(item.status)}</td><td>${esc(item.summary_code)}</td></tr>`).join('')}</tbody></table>`;
+      return `<table class="evidence-table"><thead><tr><th>证据</th><th>状态</th><th>摘要</th></tr></thead><tbody>${(items || []).map(item => `<tr><td>${esc(item.evidence_type)}</td><td class="status-${esc(item.status)}">${esc(item.status)}</td><td>${esc(item.summary_code)}</td></tr>`).join('')}</tbody></table>`;
     }
     function renderContext() {
       const c = state.candidate;
-      context.innerHTML = `<div class="eyebrow">${esc(state.display_label)}</div><h2>Delivery boundary</h2><dl class="boundary-grid"><dt>Task</dt><dd>${esc(c.task_summary_code)}</dd><dt>Risk</dt><dd>${esc(c.declared_risk_level)}</dd><dt>Scope</dt><dd>${esc(c.target_scope)}</dd><dt>Recipient</dt><dd>${esc(c.intended_recipient_role)}</dd><dt>Risk owner</dt><dd>${esc(c.risk_owner_role)}</dd></dl><h3>Prohibited use</h3>${chips(c.prohibited_use_codes)}<h3>Visible evidence</h3>${evidenceTable(c.visible_evidence)}`;
+      context.innerHTML = `<div class="eyebrow">${esc(state.display_label)}</div><h2>交付边界</h2><dl class="boundary-grid"><dt>任务</dt><dd>${esc(c.task_summary_code)}</dd><dt>风险</dt><dd>${esc(c.declared_risk_level)}</dd><dt>范围</dt><dd>${esc(c.target_scope)}</dd><dt>接收者</dt><dd>${esc(c.intended_recipient_role)}</dd><dt>责任人</dt><dd>${esc(c.risk_owner_role)}</dd></dl><h3>禁止用途</h3>${chips(c.prohibited_use_codes)}<h3>可见证据</h3>${evidenceTable(c.visible_evidence)}`;
     }
     function questionMarkup(question, index) {
       const name = `q-${index}`;
       const options = question.options.map((label, optionIndex) => `<label class="option"><input type="radio" name="${name}" value="${optionIndex + 1}"><span>${esc(label)}</span></label>`).join('');
-      return `<div class="question"><p class="question-title">${index + 1}. ${esc(question.prompt)}</p>${options}<label class="option"><input type="radio" name="${name}" value="u"><span>Unresolved / needs more evidence</span></label></div>`;
+      return `<div class="question"><p class="question-title">${index + 1}. ${esc(question.prompt)}</p>${options}<label class="option"><input type="radio" name="${name}" value="u"><span>尚未解决 / 需要更多证据</span></label></div>`;
     }
     function materialMarkup(material) {
       const omit = new Set(['visible_evidence', 'schema_version']);
       return `<div class="full-material">${Object.entries(material).filter(([key]) => !omit.has(key)).map(([key, value]) => `<div class="material-row"><span>${esc(key)}</span><span>${esc(Array.isArray(value) ? value.join(', ') : value)}</span></div>`).join('')}</div>`;
     }
+    function rawMaterialMarkup(material) {
+      return `<div class="raw-review"><section class="raw-panel"><h3>原始任务 / Issue</h3><pre>${esc(material.issue_markdown)}</pre><div class="raw-meta">${esc(material.issue_bytes)} bytes</div></section><section class="raw-panel"><h3>真实 Agent 补丁</h3><pre>${esc(material.candidate_patch)}</pre><div class="raw-meta">${esc(material.patch_bytes)} bytes / digest ${esc(material.candidate_patch_digest_sha256)}</div></section></div>`;
+    }
+    async function loadLocalMaterial() {
+      const container = document.getElementById('local-material');
+      if (!container) return;
+      try {
+        const query = encodeURIComponent(state.item_token);
+        const response = await fetch(`/api/review/full_review_reference/material?item_token=${query}`, {
+          cache: 'no-store',
+          headers: {'X-Review-Token': state.review_token}
+        });
+        const material = await response.json();
+        if (!response.ok) throw new Error(material.detail || `本地材料载入失败 (${response.status})`);
+        container.innerHTML = rawMaterialMarkup(material);
+      } catch (error) {
+        container.innerHTML = `<div class="notice">${esc(error.message)}</div>`;
+      }
+    }
     function workloadMarkup() {
-      return `<div class="field"><label for="workload">Mental workload (optional)</label><div class="range-row"><input id="workload" type="range" min="0" max="100" step="1" value="50"><span class="range-value" id="workload-value">not set</span></div></div>`;
+      return `<div class="field"><label for="workload">主观认知负担（可选）</label><div class="range-row"><input id="workload" type="range" min="0" max="100" step="1" value="50"><span class="range-value" id="workload-value">未设置</span></div></div>`;
     }
     function bindWorkload() {
       const input = document.getElementById('workload');
@@ -930,30 +1113,33 @@ REVIEW_COCKPIT_HTML = r"""<!doctype html>
       let touched = false;
       input.addEventListener('input', () => { touched = true; output.textContent = input.value; input.dataset.touched = 'true'; });
       input.addEventListener('change', () => { touched = true; output.textContent = input.value; input.dataset.touched = 'true'; });
-      if (!touched) output.textContent = 'not set';
+      if (!touched) output.textContent = '未设置';
     }
     function renderReview() {
-      const full = state.mode === 'full_review_reference' ? `<div class="notice">Arm decisions, reference labels, and hidden scorer material remain unavailable.</div><h2>Full metadata review</h2>${materialMarkup(state.full_review_material)}<h2>Boundary questions</h2>` : `<h1>Reconstruct the delivery boundary</h1>`;
-      workspace.innerHTML = `${full}${state.questions.map(questionMarkup).join('')}${workloadMarkup()}<div class="actionbar"><span class="privacy">Only aggregate correctness, unresolved count, active time, and optional workload are stored.</span><button class="primary" id="submit">Record review</button></div>`;
+      const hasLocalMaterial = state.mode === 'full_review_reference' && state.local_material?.available;
+      const raw = hasLocalMaterial ? `<h2>本地原始候选</h2><div id="local-material" class="loading">正在校验并载入本地任务与补丁...</div>` : '';
+      const full = state.mode === 'full_review_reference' ? `<div class="notice">实验臂决策、参考标签和隐藏 scorer 保持不可见。原始材料只在本机临时显示，不写入审核 session。</div><h1>全文参考复核</h1>${raw}<h2>交付元数据</h2>${materialMarkup(state.full_review_material)}<h2>边界问题</h2>` : `<h1>重构交付边界</h1>`;
+      workspace.innerHTML = `${full}${state.questions.map(questionMarkup).join('')}${workloadMarkup()}<div class="actionbar"><span class="privacy">仅保存汇总正确性、未解决数、主动复核时间和可选负担评分。</span><button class="primary" id="submit">记录本次复核</button></div>`;
       bindWorkload();
       document.getElementById('submit').addEventListener('click', submitReview);
+      if (hasLocalMaterial) loadLocalMaterial();
     }
     function renderAdjudication() {
       const scorer = state.official_scorer;
-      workspace.innerHTML = `<h1>Make the blinded clearance decision</h1><div class="notice">Official scorer: ${esc(scorer.outcome)}. Scorer evidence is supporting, not sufficient. Experimental arm identities and decisions remain hidden.</div><div class="decision-grid">${state.dispositions.map(item => `<label><input type="radio" name="disposition" value="${esc(item.value)}"><span>${esc(item.label)}</span></label>`).join('')}</div><div class="field"><label for="rationale">Rationale codes</label><input id="rationale" type="text" autocomplete="off" placeholder="scorer-passed, scope-bounded"></div><div class="actionbar"><span class="privacy">Free-form notes are not retained. Use bounded lowercase identifiers.</span><button class="primary" id="submit">Record decision</button></div>`;
+      workspace.innerHTML = `<h1>作出盲法放行判断</h1><div class="notice">官方 scorer：${esc(scorer.outcome)}。Scorer 证据只是支持证据，不能单独决定放行。实验臂身份和决定保持隐藏。</div><div class="decision-grid">${state.dispositions.map(item => `<label><input type="radio" name="disposition" value="${esc(item.value)}"><span>${esc(item.label)}</span></label>`).join('')}</div><div class="field"><label for="rationale">理由代码</label><input id="rationale" type="text" autocomplete="off" placeholder="scorer-passed, scope-bounded"></div><div class="actionbar"><span class="privacy">不保留自由文本备注；请使用有限、小写的理由标识。</span><button class="primary" id="submit">记录判断</button></div>`;
       document.getElementById('submit').addEventListener('click', submitAdjudication);
     }
     function renderComplete() {
       stopTimer();
-      context.innerHTML = `<div class="eyebrow">Batch complete</div><h2>${esc(state.mode_label)}</h2><dl class="boundary-grid"><dt>Recorded now</dt><dd>${state.completed_this_run}</dd><dt>Existing</dt><dd>${state.completed_before_run}</dd><dt>Scope</dt><dd>${esc(state.maximum_scope)}</dd></dl>`;
-      workspace.innerHTML = `<div class="complete"><h1>Review batch complete</h1><p>The append-only receipts were written locally. No raw answers, screenshots, keystrokes, biometric data, or model-generated responses were stored.</p></div>`;
+      context.innerHTML = `<div class="eyebrow">本批已完成</div><h2>${esc(state.mode_label)}</h2><dl class="boundary-grid"><dt>本次记录</dt><dd>${state.completed_this_run}</dd><dt>已有记录</dt><dd>${state.completed_before_run}</dd><dt>最大范围</dt><dd>${esc(state.maximum_scope)}</dd></dl>`;
+      workspace.innerHTML = `<div class="complete"><h1>审核批次已完成</h1><p>追加式收据已写入本地。系统未保存原始答案、截图、按键、生物识别数据或模型生成回答。</p></div>`;
     }
     function render() {
       clearError();
       modes.forEach(button => button.setAttribute('aria-selected', String(button.dataset.mode === mode)));
       const done = state.completed_this_run;
       const total = state.batch_total;
-      progressLabel.textContent = `${state.mode_label} / ${done} of ${total} recorded this run`;
+      progressLabel.textContent = `${state.mode_label} / 本次已记录 ${done} / ${total}`;
       progressFill.style.width = `${total ? Math.round((done / total) * 100) : 100}%`;
       if (state.status === 'complete') { renderComplete(); return; }
       renderContext();
@@ -963,11 +1149,11 @@ REVIEW_COCKPIT_HTML = r"""<!doctype html>
     async function load(nextMode) {
       stopTimer();
       mode = nextMode;
-      context.innerHTML = '<div class="loading">Loading boundary evidence...</div>';
-      workspace.innerHTML = '<div class="loading">Loading review item...</div>';
+      context.innerHTML = '<div class="loading">正在载入边界证据...</div>';
+      workspace.innerHTML = '<div class="loading">正在载入审核项...</div>';
       try {
         const response = await fetch(`/api/review/${mode}`, {cache: 'no-store'});
-        if (!response.ok) throw new Error(`Review state failed (${response.status})`);
+        if (!response.ok) throw new Error(`审核状态载入失败 (${response.status})`);
         state = await response.json();
         render();
       } catch (error) { showError(error.message); }
@@ -987,7 +1173,7 @@ REVIEW_COCKPIT_HTML = r"""<!doctype html>
           body: JSON.stringify(payload)
         });
         const data = await response.json();
-        if (!response.ok) throw new Error(data.detail || `Submission failed (${response.status})`);
+        if (!response.ok) throw new Error(data.detail || `提交失败 (${response.status})`);
         timingByToken.delete(payload.item_token);
         state = data;
         render();
@@ -1003,14 +1189,14 @@ REVIEW_COCKPIT_HTML = r"""<!doctype html>
     }
     async function submitReview() {
       const answers = reviewAnswers();
-      if (answers.some(answer => answer === null)) { showError('Answer every boundary question or mark it unresolved.'); return; }
+      if (answers.some(answer => answer === null)) { showError('请回答每个边界问题，或标记为尚未解决。'); return; }
       await post({mode, item_token: state.item_token, answers, active_review_ms: currentActiveMs(), nasa_tlx_score: workloadValue()});
     }
     async function submitAdjudication() {
       const disposition = document.querySelector('input[name="disposition"]:checked')?.value;
       const rationaleCodes = document.getElementById('rationale').value.split(',').map(value => value.trim()).filter(Boolean);
-      if (!disposition) { showError('Choose a clearance disposition.'); return; }
-      if (!rationaleCodes.length) { showError('Provide at least one bounded rationale code.'); return; }
+      if (!disposition) { showError('请选择一个放行处置。'); return; }
+      if (!rationaleCodes.length) { showError('请至少填写一个有限的理由代码。'); return; }
       await post({mode, item_token: state.item_token, disposition, rationale_codes: rationaleCodes});
     }
     modes.forEach(button => button.addEventListener('click', () => load(button.dataset.mode)));

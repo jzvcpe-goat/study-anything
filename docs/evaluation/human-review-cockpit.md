@@ -43,6 +43,20 @@ pilot, use its bounded two-mode protocol:
 That protocol enables boundary reconstruction and the full-review reference only. It does
 not invent a blinded adjudicator or turn a machine-ready state into a release authorization.
 
+To review the frozen real-Agent patch set, first generate its ignored local reviewer
+materials, then run:
+
+```bash
+.venv/bin/delivery-clearance-review \
+  --protocol docs/evaluation/real-agent-v0.1-human-protocol.json \
+  --max-items 12
+```
+
+For this protocol, boundary reconstruction remains metadata-only. Full review reads the
+actual issue and Agent patch from the Git-ignored local material directory. The server
+checks both the patch digest and combined review-material digest before showing either
+document. Raw material is never appended to the human-session JSONL.
+
 ## Three Physically Separate Review Tasks
 
 The top segmented control switches between three local queues. Switching the
@@ -85,6 +99,9 @@ The local service:
 - binds only to `127.0.0.1`;
 - accepts only trusted local host headers and same-origin JSON submissions;
 - requires a per-process review token and per-item token;
+- permits raw local candidate material only in `full_review_reference`, rejects symbolic
+  links and repository escape, and fails closed on missing, oversized, non-UTF-8, or
+  digest-mismatched material;
 - sends no CORS permission and disables caching and framing;
 - tracks only aggregate active-visible milliseconds in the browser;
 - stores no raw answer sequence, attention stream, screenshot, keystroke,

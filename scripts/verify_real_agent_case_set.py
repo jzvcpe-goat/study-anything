@@ -31,6 +31,7 @@ from study_anything.cbb.protocol.canonical import (  # noqa: E402
 
 
 PROTOCOL_PATH = ROOT / "docs" / "evaluation" / "real-agent-v0.1-protocol.json"
+HUMAN_PROTOCOL_PATH = ROOT / "docs" / "evaluation" / "real-agent-v0.1-human-protocol.json"
 RESULT_ROOT = ROOT / "validation" / "results" / "real-agent-v0.1"
 
 
@@ -60,6 +61,7 @@ def verify(
         )
 
     protocol = load_real_agent_protocol(PROTOCOL_PATH)
+    human_protocol = _read_json(HUMAN_PROTOCOL_PATH)
     case_set = RealAgentCaseSetV1.model_validate(_read_json(RESULT_ROOT / "case-set.json"))
     result = _read_json(RESULT_ROOT / "result.json")
     if case_set.protocol_digest_sha256 != canonical_sha256(protocol):
@@ -75,6 +77,43 @@ def verify(
         raise RuntimeError("real-Agent case set source identity drifted")
 
     expected_count = protocol.passed_case_count + protocol.failed_case_count
+    expected_packet_dir = "validation/results/real-agent-v0.1/reviewer-packets"
+    expected_session_output = ".delivery-clearance/benchmarks/real-agent-v0.1-human-sessions.jsonl"
+    boundary_mode = human_protocol.get("boundary_reconstruction")
+    full_mode = human_protocol.get("full_review_reference")
+    human_privacy = human_protocol.get("privacy")
+    human_claim = human_protocol.get("claim_boundary")
+    if (
+        human_protocol.get("schema_version") != "benchmark-human-protocol-v1"
+        or human_protocol.get("study_id") != "delivery-clearance-real-agent-v0.1"
+        or human_protocol.get("assembly") != "validation/results/real-agent-v0.1"
+        or not isinstance(boundary_mode, dict)
+        or not isinstance(full_mode, dict)
+        or boundary_mode.get("packet_dir") != expected_packet_dir
+        or full_mode.get("packet_dir") != expected_packet_dir
+        or boundary_mode.get("output") != expected_session_output
+        or full_mode.get("output") != expected_session_output
+        or boundary_mode.get("max_items_per_batch") != expected_count
+        or full_mode.get("max_items_per_batch") != expected_count
+        or boundary_mode.get("local_material_dir") is not None
+        or full_mode.get("local_material_dir")
+        != ".delivery-clearance/benchmarks/real-agent-v0.1/reviewer-materials"
+        or not isinstance(human_privacy, dict)
+        or human_privacy.get("raw_answers_included") is not False
+        or human_privacy.get("attention_stream_included") is not False
+        or human_privacy.get("screenshots_included") is not False
+        or human_privacy.get("keystrokes_included") is not False
+        or human_privacy.get("biometrics_included") is not False
+        or human_privacy.get("raw_candidate_material_persisted") is not False
+        or not isinstance(human_claim, dict)
+        or human_claim.get("maximum_scope") != "personal_local"
+        or human_claim.get("one_person_multiple_roles_must_be_disclosed") is not True
+        or human_claim.get("independent_reviewer_claimed") is not False
+        or human_claim.get("delivery_clearance_effectiveness_claimed") is not False
+        or human_claim.get("customer_delivery_validation_claimed") is not False
+        or human_claim.get("production_approval_claimed") is not False
+    ):
+        raise RuntimeError("real-Agent human review protocol drifted")
     if len(case_set.cases) != expected_count:
         raise RuntimeError("real-Agent case count drifted")
     outcomes = [case.published_functional_outcome for case in case_set.cases]
@@ -181,6 +220,8 @@ def verify(
         "published_failed_count": protocol.failed_case_count,
         "distinct_repository_count": len({case.repository.lower() for case in case_set.cases}),
         "source_replay_performed": source_replay_performed,
+        "human_review_protocol_ready": True,
+        "full_review_local_material_digest_required": True,
         "raw_review_material_committed": False,
         "local_official_scorer_reexecuted": False,
         "paired_agent_review_completed": False,
