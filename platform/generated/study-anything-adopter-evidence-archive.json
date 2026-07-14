@@ -7,9 +7,9 @@
   },
   "archive": {
     "archive_root": "study-anything-adopter-evidence-archive",
-    "bytes": 236072,
+    "bytes": 236101,
     "path": "platform/generated/study-anything-adopter-evidence-archive.zip",
-    "sha256": "057b8a76413be9872151736cd5b0e107840d7606a16ea305f2a3588d2a122c2c",
+    "sha256": "2f5030e3f0710bc25f0d15139567e620a7cf9ea06b631e14e2682651e110d5cf",
     "sha256_path": "platform/generated/study-anything-adopter-evidence-archive.sha256"
   },
   "ci_evidence": {
@@ -129,9 +129,9 @@
   },
   "public_asset_refs": [
     {
-      "bytes": 20444,
+      "bytes": 20505,
       "path": "README.md",
-      "sha256": "88f47fb1aa6861014acf645eb05ce12500dce1bd99522ce6ecf11d375101a527"
+      "sha256": "64269b1af230cc2e8e82df2369ca8f67efbf25ffa6ccb7256110262ba50fd896"
     },
     {
       "bytes": 19503,
@@ -211,22 +211,22 @@
     {
       "bytes": 11248,
       "path": "platform/generated/study-anything-published-image-evidence.json",
-      "sha256": "ef566bafd4493ba67f2020723d31ae130006288a33180df3bf121ec6c431e9be"
+      "sha256": "7aaa00c056460fb786caf0104317944dd877a19c454726eabb64afd83bbedef2"
     },
     {
       "bytes": 3442,
       "path": "platform/generated/study-anything-published-image-evidence.md",
-      "sha256": "4339d22588595e660002cc0ad4a52faa140ea41f239b2bc093664bec671feb92"
+      "sha256": "e6dabfefa887132a4c33677bc7f39b65f31718139eea88bdfd0a04aeeb0a56dc"
     },
     {
-      "bytes": 124715,
+      "bytes": 124732,
       "path": "platform/generated/study-anything-published-image-evidence.zip",
-      "sha256": "3fb019a1cbf2f0dd6b6094de8ad3fb586313137f56c2168f8632f8439f326b42"
+      "sha256": "5a546547d2da18aecb76ded124edddb8c2b92e990829770d09b59417edc63ffa"
     },
     {
       "bytes": 110,
       "path": "platform/generated/study-anything-published-image-evidence.sha256",
-      "sha256": "00d04ae31e40a62fc08ea578fa9feafd46eb77a34df7418f81ff86ffb2c4fc39"
+      "sha256": "f9bf5bd0305a47f2f5124c88fc618ae14e0c68b77cf0a92ad97becb08bcce62e"
     },
     {
       "bytes": 133499,
@@ -298,7 +298,7 @@
       "ref": {
         "bytes": 11248,
         "path": "platform/generated/study-anything-published-image-evidence.json",
-        "sha256": "ef566bafd4493ba67f2020723d31ae130006288a33180df3bf121ec6c431e9be"
+        "sha256": "7aaa00c056460fb786caf0104317944dd877a19c454726eabb64afd83bbedef2"
       },
       "schema_version": "published-image-evidence-v1",
       "verification_command": "python3 scripts/verify_published_image_evidence.py --check"

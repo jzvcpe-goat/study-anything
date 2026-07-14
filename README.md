@@ -186,8 +186,9 @@ The Cockpit binds only to `127.0.0.1`, keeps the three roles separate, hides
 labels and Agent decisions, and stores aggregate receipts instead of raw answers.
 
 For a concrete project workflow rather than public benchmark fixtures, replay the
-[four-state real-project evaluation](docs/evaluation/real-project-validation.md), then
-open its two-mode boundary-vs-full-review protocol in the same Cockpit.
+[four-state real-project evaluation](docs/evaluation/real-project-validation.md)
+([中文](docs/evaluation/real-project-validation.zh-CN.md)), then open its two-mode
+boundary-vs-full-review protocol in the same Cockpit.
 
 The optional `capture` command runs pinned real Codex reviewer arms in ephemeral
 read-only workspaces. It withholds scorer outcomes and hidden labels, records only

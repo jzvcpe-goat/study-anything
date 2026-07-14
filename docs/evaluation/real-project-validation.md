@@ -1,5 +1,7 @@
 # Real Project Delivery Evaluation v0.1
 
+Chinese version: [真实项目交付评测 v0.1](real-project-validation.zh-CN.md)
+
 ## Why This Exists
 
 The protocol is not useful if it can only classify invented fixtures. This evaluation
