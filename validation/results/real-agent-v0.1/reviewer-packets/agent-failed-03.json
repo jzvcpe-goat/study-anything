@@ -1,0 +1,79 @@
+{
+  "candidate": {
+    "added_line_count": 25,
+    "candidate_digest_sha256": "af8f83c8b80ecf0379782fa4cf48ed1d4507df21a7109ac9f4a3d41168430e71",
+    "candidate_id": "candidate:agent-failed-03",
+    "changed_file_count": 2,
+    "context_digest_sha256": "d0e5ce49d5771f54dd2b57e3efe8c4f6fb60a58e3d8bca4b8b88ff333c09f96a",
+    "declared_risk_level": "high",
+    "deleted_line_count": 1,
+    "intended_recipient_role": "local-project-owner",
+    "issue_title": "feat(react-langchain): add useLangChainState hook",
+    "prohibited_use_codes": [
+      "customer-handoff",
+      "production-execution",
+      "public-release"
+    ],
+    "review_material_digest_sha256": "d0e5ce49d5771f54dd2b57e3efe8c4f6fb60a58e3d8bca4b8b88ff333c09f96a",
+    "risk_owner_role": "local-project-owner",
+    "source_snapshot_digest_sha256": "0b3f522e11013af4e6cda57c96e4b9aee06f180d9b0eccc1d34ec285aa6e5cf7",
+    "subject_digest_sha256": "af8f83c8b80ecf0379782fa4cf48ed1d4507df21a7109ac9f4a3d41168430e71",
+    "target_scope": "personal_local",
+    "task_summary_code": "real-github-agent-generated-patch",
+    "tool_permission_ids": [
+      "read-local-review-material"
+    ],
+    "visible_evidence": [
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "4a6ef73b36cac0b3500e0726bdd4b7a54b335e141e912036a9c83ab3c5c77d0b",
+        "evidence_ref": "real-agent:agent-failed-03:source-provenance",
+        "evidence_type": "source-provenance",
+        "status": "passed",
+        "summary_code": "public-submission-and-task-snapshot-bound"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "6edbe6779459746817712bd7cc8b52b9e66dc74c4e6bee6e435d23d40bc094c8",
+        "evidence_ref": "real-agent:agent-failed-03:candidate-material",
+        "evidence_type": "candidate-material",
+        "status": "passed",
+        "summary_code": "real-agent-patch-available-for-review"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "373cdbe625845f7d60cf99aa2e468ad3153b062fee2b29beca64aef81f7e3cff",
+        "evidence_ref": "real-agent:agent-failed-03:scorer-result",
+        "evidence_type": "scorer-result",
+        "status": "missing",
+        "summary_code": "official-result-withheld-for-blinded-review"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "a29b4659fe5da73173bd980193f0288f75c8adc775c7e989a45b6e1fbb01c48b",
+        "evidence_ref": "real-agent:agent-failed-03:rollback-or-containment",
+        "evidence_type": "rollback-or-containment",
+        "status": "passed",
+        "summary_code": "patch-can-be-reverted-before-release"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "5b7fd2cd10b7fb739770a7d18bfd6cad2ea8ea647a01e5c9d3f524ed73379da7",
+        "evidence_ref": "real-agent:agent-failed-03:responsibility-boundary",
+        "evidence_type": "responsibility-boundary",
+        "status": "passed",
+        "summary_code": "local-project-owner-retains-final-responsibility"
+      }
+    ]
+  },
+  "case_id": "agent-failed-03",
+  "hidden_tests_included": false,
+  "official_scorer_result_included": false,
+  "raw_candidate_payload_included": false,
+  "raw_issue_body_included": false,
+  "reference_label_included": false,
+  "review_material_available_locally": true,
+  "review_material_digest_sha256": "d0e5ce49d5771f54dd2b57e3efe8c4f6fb60a58e3d8bca4b8b88ff333c09f96a",
+  "schema_version": "reviewer-case-packet-v1",
+  "suite_id": "real-agent-delivery-v0.1"
+}

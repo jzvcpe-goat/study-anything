@@ -57,6 +57,7 @@ class ReleaseCheckScriptTests(unittest.TestCase):
         self.assertIn("verify_benchmark_claim_boundary.py --check", script)
         self.assertIn("verify_benchmark_source_preflight.py --check", script)
         self.assertIn("verify_real_project_scenario_evidence.py --check", script)
+        self.assertIn("verify_real_agent_case_set.py --check", script)
         self.assertIn('release_python_prefix="$("$python_bin" -c', script)
         self.assertIn('--venv "$release_python_prefix"', script)
 

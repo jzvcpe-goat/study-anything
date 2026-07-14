@@ -1,0 +1,79 @@
+{
+  "candidate": {
+    "added_line_count": 30,
+    "candidate_digest_sha256": "fd53ffd63fb627a571243e2a071327ee8b64d20b6ffbcbc3893b06f3a00b5a57",
+    "candidate_id": "candidate:agent-passed-05",
+    "changed_file_count": 2,
+    "context_digest_sha256": "cf081f31c9e495a0d4aeb804c1d8292398b3a704560af0c9ed4aa238ef8994fa",
+    "declared_risk_level": "high",
+    "deleted_line_count": 4,
+    "intended_recipient_role": "local-project-owner",
+    "issue_title": "🐛 fix interpolation of irregular time intervals.",
+    "prohibited_use_codes": [
+      "customer-handoff",
+      "production-execution",
+      "public-release"
+    ],
+    "review_material_digest_sha256": "cf081f31c9e495a0d4aeb804c1d8292398b3a704560af0c9ed4aa238ef8994fa",
+    "risk_owner_role": "local-project-owner",
+    "source_snapshot_digest_sha256": "6bb9d6327b154ca8398fc35e554dc2ab51d708365c645dffc327b5e2b58474a8",
+    "subject_digest_sha256": "fd53ffd63fb627a571243e2a071327ee8b64d20b6ffbcbc3893b06f3a00b5a57",
+    "target_scope": "personal_local",
+    "task_summary_code": "real-github-agent-generated-patch",
+    "tool_permission_ids": [
+      "read-local-review-material"
+    ],
+    "visible_evidence": [
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "c4a9956ff2459d94ee6e02c164676f77e398f36fae0188e89c9b320a35b980d4",
+        "evidence_ref": "real-agent:agent-passed-05:source-provenance",
+        "evidence_type": "source-provenance",
+        "status": "passed",
+        "summary_code": "public-submission-and-task-snapshot-bound"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "b28f45350f98e30b6ab187d8c3ccb322fdecb465af015d08516c6a5d91a85680",
+        "evidence_ref": "real-agent:agent-passed-05:candidate-material",
+        "evidence_type": "candidate-material",
+        "status": "passed",
+        "summary_code": "real-agent-patch-available-for-review"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "24f3480d3a7ab7372110e1da52b15550057965a7fd68bcbba2312eff46fc834e",
+        "evidence_ref": "real-agent:agent-passed-05:scorer-result",
+        "evidence_type": "scorer-result",
+        "status": "missing",
+        "summary_code": "official-result-withheld-for-blinded-review"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "749b510a6ab1182b1963f9395642d01bdcc043b350544126694c5cb3863516f8",
+        "evidence_ref": "real-agent:agent-passed-05:rollback-or-containment",
+        "evidence_type": "rollback-or-containment",
+        "status": "passed",
+        "summary_code": "patch-can-be-reverted-before-release"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "baccf9d26c17f7258ffba1325749d7b3781a9c7c08d11378f4edf800d1eabafc",
+        "evidence_ref": "real-agent:agent-passed-05:responsibility-boundary",
+        "evidence_type": "responsibility-boundary",
+        "status": "passed",
+        "summary_code": "local-project-owner-retains-final-responsibility"
+      }
+    ]
+  },
+  "case_id": "agent-passed-05",
+  "hidden_tests_included": false,
+  "official_scorer_result_included": false,
+  "raw_candidate_payload_included": false,
+  "raw_issue_body_included": false,
+  "reference_label_included": false,
+  "review_material_available_locally": true,
+  "review_material_digest_sha256": "cf081f31c9e495a0d4aeb804c1d8292398b3a704560af0c9ed4aa238ef8994fa",
+  "schema_version": "reviewer-case-packet-v1",
+  "suite_id": "real-agent-delivery-v0.1"
+}

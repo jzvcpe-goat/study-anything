@@ -138,10 +138,11 @@ domain evidence according to the plugin's capability class. It never grants more
 ## Validation
 - The Personal Clearance MVP has a reproducible 14-case verifier and 12 focused tests covering normal clearance, stale state, config drift, expiry, tamper, missing evidence, replay, failed checks, and explicit human responsibility.
 - A four-state real-project replay blocks three historical incomplete delivery states and moves only the converged 59/59 evidence state to human review; it authorizes no release by itself.
+- A frozen 12-case real-Agent set now binds public GitHub tasks, non-empty Agent-generated patches, and published SWE-bench-Live outcomes across 12 repositories; it is an evaluation input, not an effectiveness result.
 - Passing evidence is bound only to the exact Git-visible state and `personal_local` scope.
 - Current results validate prototype mechanisms, not user value, AI correctness, customer delivery, production safety, or professional certification.
 - Reproduce the real sequence with `.venv/bin/python scripts/delivery_clearance_project_scenarios.py --replace`.
-- See [Validation](docs/VALIDATION.md) for hypotheses, the test matrix, evidence paths, findings, limitations, and the next user study.
+- See [Validation](docs/VALIDATION.md) and the [real-Agent benchmark (中文)](docs/evaluation/real-agent-delivery-benchmark.zh-CN.md) for evidence, limitations, and the paired study still required.
 
 ## Evaluate The Protocol, Not The Story
 
@@ -166,6 +167,15 @@ variants are synthetic and explicitly record that official scorers were not run.
 An observed pilot requires scored candidates, blinded adjudication, per-decision
 tool traces, real human-review sessions, and six observed ablations before it may
 emit `pilot_complete`.
+
+To move beyond gold/empty/nop controls, the repository also freezes a
+[12-case real-Agent delivery set](docs/evaluation/real-agent-delivery-benchmark.zh-CN.md)
+from an accepted SWE-bench-Live submission. It uses real public tasks and real
+Agent patches, balanced across six published functional passes and six failures.
+The raw review material stays local; committed assets contain only source
+identity, digests, statistics, blinded packets, and an isolated functional
+oracle. Paired Agent review, local scorer replay, human adjudication, and cost
+measurement are still incomplete, so no effectiveness claim is allowed.
 
 The benchmark now embeds a preregistered incremental review-economic plan and a
 real-human evidence workflow. It compares each Agent baseline with independent

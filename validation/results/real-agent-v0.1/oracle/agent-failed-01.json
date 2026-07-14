@@ -1,0 +1,13 @@
+{
+  "candidate_patch_digest_sha256": "f1405749868aef28e3eeb9d0bad12603f4c86b3cfb95382e5aca11d22f7c9664",
+  "case_id": "agent-failed-01",
+  "clearance_reference_status": "pending_blinded_human_adjudication",
+  "local_official_scorer_reexecuted": false,
+  "published_functional_outcome": "failed",
+  "published_result_digest_sha256": "691e7a47b20615672d5e3f8ba4f4d59d6365fe04c7cd3d41d2a1bbacdb164ddb",
+  "published_result_ref": "https://github.com/SWE-bench-Live/submission/blob/894eaa94d702e39cda24beaf464df687e50736ad/submissions/multilang/js_ts/20260629-sapient-slingshot-gpt-5.5/ts/results.json",
+  "raw_candidate_payload_included": false,
+  "raw_hidden_tests_included": false,
+  "schema_version": "real-agent-functional-oracle-v1",
+  "suite_id": "real-agent-delivery-v0.1"
+}

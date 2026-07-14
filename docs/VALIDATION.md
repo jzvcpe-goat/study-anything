@@ -223,6 +223,11 @@ printf 'changed after clearance\n' > "$TARGET/changed-after-clearance.txt"
 | Real-project scenario set | 四个真实提交、预冻结检查和 oracle | `docs/evaluation/real-project-v0.1-scenarios.json` | 已实现并 4/4 回放匹配 |
 | Real-project replay engine | 隔离 clone、只读检查、mutation 检测和 reviewer packet 生成 | `apps/api/study_anything/cbb/benchmark/project_scenarios.py`；`scripts/delivery_clearance_project_scenarios.py` | 已实现并聚焦测试通过 |
 | Real-project evidence | 4 个 check receipt、4 个 reviewer packet 和聚合结果 | `validation/results/real-project-v0.1/` | 已提交 metadata-only 结果；真人 session 未完成 |
+| Real-Agent selection protocol | 冻结公开来源、哈希、分层规则、seed、每仓库上限和声明边界 | `docs/evaluation/real-agent-v0.1-protocol.json` | 已实现；来源按原始字节校验 |
+| Real-Agent case builder | 从真实任务、非空 Agent 补丁和公开功能结果生成盲化评审包 | `apps/api/study_anything/cbb/benchmark/real_agent_cases.py`；`scripts/delivery_clearance_real_agent_cases.py` | 已实现并聚焦测试通过 |
+| Real-Agent source fetcher | 按固定提交从 GitHub Contents API 获取原始字节和 issue/PR 快照 | `scripts/fetch_real_agent_case_sources.py` | 已完成公开来源重放；凭证不入库 |
+| Real-Agent verifier | 离线检查已提交资产，并可对公开来源执行完整重建和摘要比对 | `scripts/verify_real_agent_case_set.py` | 12/12 通过；完整来源重放通过 |
+| Real-Agent evidence | 12 个仓库的 6 个公开功能通过和 6 个公开功能失败候选、盲化 packet 与隔离 oracle | `validation/results/real-agent-v0.1/` | 已提交 metadata-only 输入集；本机 scorer 与真人裁决未完成 |
 
 仓库没有提交可独立复验的 Personal Clearance 截图文件，因此本文不把截图作为当前证据。
 HTML 报告由机器 artifact 确定性重建，`verify` 会检查
@@ -275,6 +280,28 @@ HTML 报告由机器 artifact 确定性重建，`verify` 会检查
   检查，并把结果转换为真人边界重构 packet。
 - **当前结果**：4/4 状态与 oracle 一致；前三例阻断，最后一例只进入真人审核，没有自动放行。
 
+### 8.6 机制用例不能替代真实 Agent 候选
+
+- **原设计问题**：40 例配对 pilot 的候选主要由 gold、empty、nop 和预配置安全/危险
+  trajectory 构成，适合验证 scorer 与标签隔离，但不足以代表真实 Agent 生成的复杂补丁。
+- **发现**：若候选本身不是 Agent 在真实 GitHub issue 上产生的非空改动，就无法检验
+  Delivery Clearance 面对“看起来合理但实际通过或失败”的交付物时是否有额外价值。
+- **调整**：冻结 SWE-bench-Live 官方提交仓库中的一个已接受 TypeScript submission，按固定
+  seed 从公开功能通过和失败结果中各选 6 例，并限制每仓库、每分层最多 1 例；原始 issue
+  与补丁只进入本地忽略目录，仓库仅保存摘要、哈希、盲化 packet 和隔离 oracle。
+- **当前结果**：已形成覆盖 12 个真实仓库的 12 个候选，公开来源重放可精确重建同一
+  `case_set_digest_sha256`。这只证明评测输入可复现，不证明 CBB 有效。
+
+### 8.7 来源获取必须保持原始字节
+
+- **原设计问题**：最初通过终端重定向保存 GitHub API 响应。
+- **发现**：一个补丁中的 ANSI escape 字节在终端输出链路中发生表示转换，导致冻结文件
+  摘要与远端原始对象不一致。
+- **调整**：source fetcher 改为读取 GitHub Contents API 的 base64 内容并直接写入原始字节，
+  随后再校验协议中冻结的 SHA-256。
+- **当前结果**：预测文件、结果文件和 12 个 issue/PR 快照均可按固定提交重放；任何字节漂移
+  都会失败关闭。
+
 ## 9. Current Limitations
 
 - **真实用户价值**：暂无真实用户样本、访谈、再次使用意愿或实际交付结果。
@@ -290,6 +317,10 @@ HTML 报告由机器 artifact 确定性重建，`verify` 会检查
 - **交付范围**：允许结果最多为 `personal_local`；客户、生产、监管和不可逆动作仍阻断。
 - **统计效果**：配对 benchmark 已有 40 例机制演练和观察性运行框架，但真实人类重构、
   全文参考复核和盲法裁决尚未完成，因此不能声称 Delivery Clearance 已被证明有效。
+- **真实 Agent 结果复验**：12 例真实 Agent 输入集使用上游已发布功能结果作为隔离 oracle，
+  当前尚未在本机逐例重跑 SWE-bench-Live 官方 scorer；公开结果不是本项目独立复验结果。
+- **真实 Agent 增量效果**：尚未让原生 Agent、强化 Agent、模型内 checklist 与独立 CBB Gate
+  在同一 12 个候选上完成配对判断，也未完成盲法真人参考裁决，因此暂无 CBB 相对优势数据。
 
 ## 10. Next-stage User Validation Plan
 
@@ -316,6 +347,11 @@ HTML 报告由机器 artifact 确定性重建，`verify` 会检查
 5. 同时报告效应量、不确定性、失败和缺失数据，不因单个 p 值宣称成功；
 6. 只有在真实证据完整后再做 power analysis，设计新的确认性样本；
 7. 若结果显示代价大于收益或无改善，保留该结论，不改变 Gate 规则迎合指标。
+
+首轮真实候选研究将使用 `validation/results/real-agent-v0.1/` 的 12 个盲化 packet：先由四个
+Agent 对照臂在相同模型、上下文、工具和预算下独立作出交付判断，再由真人完成边界重构、
+全文参考复核和盲法裁决。上游功能结果只在裁决后解盲，用于分析功能正确性与交付放行判断
+之间的关系；它不能替代人的责任边界判断。
 
 在完成上述用户验证前，允许的表述仅为：仓库已实现并场景验证一个确定性、状态绑定、
 失败关闭的 `personal_local` 审核原型。不得写成“显著降低审核成本”或“已证明有效”。

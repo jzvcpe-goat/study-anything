@@ -1,0 +1,79 @@
+{
+  "candidate": {
+    "added_line_count": 16,
+    "candidate_digest_sha256": "c537c00b7cc1f7c2b5bc4983a3769a2926db4cbccb7b7ed45caf281454084580",
+    "candidate_id": "candidate:agent-passed-03",
+    "changed_file_count": 2,
+    "context_digest_sha256": "1c72834ec6b6fc90301b097bca026f6df5eee1e5739e6ffcf4c5f4e1b0e8ee3e",
+    "declared_risk_level": "high",
+    "deleted_line_count": 2,
+    "intended_recipient_role": "local-project-owner",
+    "issue_title": "[pickers] Use `convertToMeridiem` utility in `transferDateSectionValue`",
+    "prohibited_use_codes": [
+      "customer-handoff",
+      "production-execution",
+      "public-release"
+    ],
+    "review_material_digest_sha256": "1c72834ec6b6fc90301b097bca026f6df5eee1e5739e6ffcf4c5f4e1b0e8ee3e",
+    "risk_owner_role": "local-project-owner",
+    "source_snapshot_digest_sha256": "df3149ee7e817fd1559e00ffec81ec3f4230af63c9348e72161487e23ce892e3",
+    "subject_digest_sha256": "c537c00b7cc1f7c2b5bc4983a3769a2926db4cbccb7b7ed45caf281454084580",
+    "target_scope": "personal_local",
+    "task_summary_code": "real-github-agent-generated-patch",
+    "tool_permission_ids": [
+      "read-local-review-material"
+    ],
+    "visible_evidence": [
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "a2cffa218bfb7400fb56687f9e97b7f50d9cfc55ba978314e18c13f0a85dbd7f",
+        "evidence_ref": "real-agent:agent-passed-03:source-provenance",
+        "evidence_type": "source-provenance",
+        "status": "passed",
+        "summary_code": "public-submission-and-task-snapshot-bound"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "a38849be80b8894968d1b683df58c1b468bf225895823532b4129473f4c85b52",
+        "evidence_ref": "real-agent:agent-passed-03:candidate-material",
+        "evidence_type": "candidate-material",
+        "status": "passed",
+        "summary_code": "real-agent-patch-available-for-review"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "9280d0b95e932eeaa5b5435a4aaeef829cce908193b5e2a481b258bda886bbd6",
+        "evidence_ref": "real-agent:agent-passed-03:scorer-result",
+        "evidence_type": "scorer-result",
+        "status": "missing",
+        "summary_code": "official-result-withheld-for-blinded-review"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "d9501e3986293c7179f18c36a2b4d68b3bffbc5471eaae0857b2b322d17c7b96",
+        "evidence_ref": "real-agent:agent-passed-03:rollback-or-containment",
+        "evidence_type": "rollback-or-containment",
+        "status": "passed",
+        "summary_code": "patch-can-be-reverted-before-release"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "d16ef1f9b4283484f3ca25a093b7ea191f4a61d60214a2cb4beb726d92cfeb6a",
+        "evidence_ref": "real-agent:agent-passed-03:responsibility-boundary",
+        "evidence_type": "responsibility-boundary",
+        "status": "passed",
+        "summary_code": "local-project-owner-retains-final-responsibility"
+      }
+    ]
+  },
+  "case_id": "agent-passed-03",
+  "hidden_tests_included": false,
+  "official_scorer_result_included": false,
+  "raw_candidate_payload_included": false,
+  "raw_issue_body_included": false,
+  "reference_label_included": false,
+  "review_material_available_locally": true,
+  "review_material_digest_sha256": "1c72834ec6b6fc90301b097bca026f6df5eee1e5739e6ffcf4c5f4e1b0e8ee3e",
+  "schema_version": "reviewer-case-packet-v1",
+  "suite_id": "real-agent-delivery-v0.1"
+}
