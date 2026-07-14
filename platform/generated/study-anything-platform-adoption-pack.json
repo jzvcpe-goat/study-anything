@@ -97,19 +97,19 @@
     "proof_schema": "adoption-proof-v1",
     "target_minutes": 15
   },
-  "archive_bytes": 8111947,
+  "archive_bytes": 8112098,
   "archive_name": "study-anything-platform-adoption-pack.zip",
   "archive_root": "study-anything-platform-adoption-pack",
-  "archive_sha256": "ae8bb3cabfad13a5b15fb30fcdb0825925929da292dd3585d35656d6a6ccfe3d",
+  "archive_sha256": "d5707144ba9a7988c62bf99c0512361514f51348a9d08ccc43de3d52d5a6ffdd",
   "description": "Copy-ready CBB reference-harness adapter pack for Kimi Work, Codex, WorkBuddy-style HTTP workspaces, Hermes Agent, NotebookLM/Obsidian handoff, and external Agent eval proof.",
   "files": [
     {
       "archive_path": "study-anything-platform-adoption-pack/README.md",
-      "bytes": 19681,
+      "bytes": 20045,
       "kind": "root_doc",
       "path": "README.md",
       "purpose": "Repository overview and local-first launch entrypoint.",
-      "sha256": "baf77551c14ac9bf74bd97dc8079efe968c2f450ed87347f133f113832783dc1"
+      "sha256": "7c1b6c52cad769dee6bf1fef270fd146e0b97736031ddedb6022c4d8276e441f"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/QUICKSTART.md",
@@ -2637,7 +2637,7 @@
       "kind": "security_audit_pack",
       "path": "platform/generated/study-anything-external-security-audit-pack.json",
       "purpose": "Machine-readable external security audit preparation manifest.",
-      "sha256": "cbe518bd72cabba022196ca5ca3e344bee094d9c51650842f287f4c6af29e170"
+      "sha256": "b63317ae38016af5bf0c586f728f79c8738f8a888abc992e4b2951b5721a9680"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-external-security-audit-pack.md",
@@ -2645,15 +2645,15 @@
       "kind": "security_audit_pack",
       "path": "platform/generated/study-anything-external-security-audit-pack.md",
       "purpose": "Human-readable external security audit preparation summary.",
-      "sha256": "1e0ebff751fc0dd952c18e06976cfdc9b7a45b6b3f61973d352272d7086519f2"
+      "sha256": "089e8054d5e38363a7c0c1ca9f145b487db9643e95acab520eb3bb5459039d3f"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-external-security-audit-pack.zip",
-      "bytes": 618147,
+      "bytes": 618149,
       "kind": "security_audit_pack",
       "path": "platform/generated/study-anything-external-security-audit-pack.zip",
       "purpose": "Portable metadata-only external security audit preparation archive.",
-      "sha256": "9e02577c38649f8dbeb40c517708e802f09552f2f02da00455410502e2eb0a0d"
+      "sha256": "93094f171bd381206dd315b6091d4fcb25654bad7eb2deee0a632362754250c0"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-external-security-audit-pack.sha256",
@@ -2661,7 +2661,7 @@
       "kind": "security_audit_pack",
       "path": "platform/generated/study-anything-external-security-audit-pack.sha256",
       "purpose": "External security audit preparation archive checksum.",
-      "sha256": "4677e810cb3ad316f6e465e1de9bc1570657c18666361935b206646d1c5072b6"
+      "sha256": "7bfb9925b7b03fa6ca65970c98b0e03546178699179823ef77df4e249accd3af"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-dual-loop-trust-pack-consumer-walkthrough.json",

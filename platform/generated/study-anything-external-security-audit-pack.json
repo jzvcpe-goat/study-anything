@@ -12,10 +12,10 @@
     "open_high_findings_allowed": 0
   },
   "archive": {
-    "bytes": 618147,
+    "bytes": 618149,
     "path": "platform/generated/study-anything-external-security-audit-pack.zip",
     "root": "study-anything-external-security-audit-pack",
-    "sha256": "9e02577c38649f8dbeb40c517708e802f09552f2f02da00455410502e2eb0a0d"
+    "sha256": "93094f171bd381206dd315b6091d4fcb25654bad7eb2deee0a632362754250c0"
   },
   "claim_boundary": {
     "current_claim": "The repository is packaged and ready for an independent security audit at a pinned commit.",
@@ -371,7 +371,7 @@
       "path": "platform/generated/study-anything-python-supply-chain.json",
       "purpose": "Lock, hash export, and SBOM receipt.",
       "role": "generated_evidence",
-      "sha256": "f52ab53a1ec056d458e6ea48ffb14ba93666f9ca4ac092f803a755cdf9050bb8"
+      "sha256": "d7b6fb278ac6ebca43629cd68ff9e7b082ae54fbac675c8934f992c5f3436502"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/platform/generated/study-anything-python-sbom.cdx.json",
