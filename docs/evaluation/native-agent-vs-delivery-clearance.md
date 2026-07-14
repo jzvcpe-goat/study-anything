@@ -582,6 +582,26 @@ full-review reference, and one arm-blinded adjudication for every frozen case.
 The status artifact stores no raw answers and does not infer reviewer identity or
 independence from a role label.
 
+### Local browser review cockpit
+
+The preferred human interaction surface is the local browser Cockpit. It uses
+the same canonical protocol, frozen order seeds, packets, roles, and append-only
+receipt files as the TTY commands:
+
+```bash
+.venv/bin/delivery-clearance-review --max-items 5
+```
+
+It serves only `http://127.0.0.1:8765` and provides separate views for boundary
+reconstruction, full-review reference, and blinded adjudication. Browser state
+does not expose case IDs, expected answers, reference labels, hidden tests, or
+experimental arm decisions. Only aggregate correctness, unresolved count,
+active-visible time, optional workload, or bounded adjudication codes are stored.
+
+See [Human Review Cockpit](human-review-cockpit.md) for the interaction, receipt,
+privacy, and verification contract. The TTY commands remain a compatible
+recovery path.
+
 ## Primary and Guardrail Metrics
 
 Primary endpoint:

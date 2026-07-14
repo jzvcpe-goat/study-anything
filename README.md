@@ -174,6 +174,16 @@ the system does not invent a cost-effectiveness result. Use
 `human-evidence-status` to see which boundary, full-review, or adjudication
 receipts are still missing.
 
+Human reviewers can complete all three observed tasks in the local browser
+[Human Review Cockpit](docs/evaluation/human-review-cockpit.md):
+
+```bash
+.venv/bin/delivery-clearance-review --max-items 5
+```
+
+The Cockpit binds only to `127.0.0.1`, keeps the three roles separate, hides
+labels and Agent decisions, and stores aggregate receipts instead of raw answers.
+
 The optional `capture` command runs pinned real Codex reviewer arms in ephemeral
 read-only workspaces. It withholds scorer outcomes and hidden labels, records only
 metadata digests and usage, and remains incomplete until independent scorer,
