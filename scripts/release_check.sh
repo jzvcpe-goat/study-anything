@@ -428,6 +428,7 @@ run_benchmark_verifier_gates() {
   "$python_bin" scripts/verify_benchmark_reproducibility.py --check
   "$python_bin" scripts/verify_benchmark_claim_boundary.py --check
   "$python_bin" scripts/verify_benchmark_source_preflight.py --check
+  "$python_bin" scripts/verify_real_project_scenario_evidence.py --check
   benchmark_verifiers_passed_individually="true"
 }
 

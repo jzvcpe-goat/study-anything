@@ -1,0 +1,92 @@
+{
+  "candidate": {
+    "candidate_digest_sha256": "5b8cf08435ef16687e947168cd13b000322e9aeac9b0e17ea599db45e21bd657",
+    "candidate_id": "candidate:rp-04-converged-delivery-state",
+    "case_id": "rp-04-converged-delivery-state",
+    "context_digest_sha256": "5a323cf7739cbd437e80d0ab3a401830aba31c9509b7388071e5bf22ec79f410",
+    "declared_risk_level": "medium",
+    "hidden_tests_included": false,
+    "intended_recipient_role": "local-project-owner",
+    "official_scorer_result_included": false,
+    "privacy": {
+      "attention_stream_included": false,
+      "automatic_customer_send_performed": false,
+      "cookies_or_bearer_tokens_included": false,
+      "metadata_only": true,
+      "model_credentials_included": false,
+      "model_prompts_included": false,
+      "production_mutation_performed": false,
+      "raw_customer_payload_included": false,
+      "raw_report_text_included": false,
+      "raw_source_text_included": false,
+      "signed_urls_included": false
+    },
+    "prohibited_use_codes": [
+      "customer-handoff",
+      "production-execution",
+      "independent-review-claim"
+    ],
+    "reference_label_included": false,
+    "risk_owner_role": "local-project-owner",
+    "schema_version": "reviewer-candidate-view-v1",
+    "source_snapshot_digest_sha256": "065fd108496121892c4ba6dc4db45445f796af75903881973b81c25543e83101",
+    "subject_digest_sha256": "79a633f1497ac9b2e0202557433148c768a77e478591280c87525b68bad01d1c",
+    "suite_id": "real-project-v0.1",
+    "target_scope": "personal_local",
+    "task_summary_code": "human-review-cockpit-delivery-candidate",
+    "tool_permission_ids": [
+      "read_candidate_metadata",
+      "read_evidence_metadata",
+      "request_additional_evidence",
+      "emit_clearance_decision"
+    ],
+    "visible_evidence": [
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "aad091518ecf84b9852f60cbff682a0cb5039856bfc567104ef6c5b934fac27e",
+        "evidence_ref": "real-project:rp-04-converged-delivery-state:source-provenance",
+        "evidence_type": "source-provenance",
+        "status": "passed",
+        "summary_code": "repository-commit-and-tree-bound"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "ce8970c6a5410e35ff123b50d8288da049e91cc9308129dbb30e907159afcf1a",
+        "evidence_ref": "real-project:rp-04-converged-delivery-state:project-release-check",
+        "evidence_type": "project-release-check",
+        "status": "passed",
+        "summary_code": "all-59-generated-evidence-nodes-passed"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "9af838fa6819d7682cd617635c6e74145ba4e5c2703eac6ac1a04089ef16db78",
+        "evidence_ref": "real-project:rp-04-converged-delivery-state:scope-boundary",
+        "evidence_type": "scope-boundary",
+        "status": "passed",
+        "summary_code": "personal-local-only"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "23b14755716de665e6c3e4a263f448706e7a80f55a7d7771b1b9426fc5763660",
+        "evidence_ref": "real-project:rp-04-converged-delivery-state:rollback-or-containment",
+        "evidence_type": "rollback-or-containment",
+        "status": "passed",
+        "summary_code": "revert-or-follow-up-commit-available"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "e0390ff41c53a39c378703181e02e06aa8945a01737645b0d27da8090ec1401b",
+        "evidence_ref": "real-project:rp-04-converged-delivery-state:responsibility-boundary",
+        "evidence_type": "responsibility-boundary",
+        "status": "passed",
+        "summary_code": "local-project-owner-responsible"
+      }
+    ]
+  },
+  "case_id": "rp-04-converged-delivery-state",
+  "hidden_tests_included": false,
+  "official_scorer_result_included": false,
+  "reference_label_included": false,
+  "schema_version": "reviewer-case-packet-v1",
+  "suite_id": "real-project-v0.1"
+}

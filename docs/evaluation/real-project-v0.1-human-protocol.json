@@ -1,0 +1,35 @@
+{
+  "schema_version": "benchmark-human-protocol-v1",
+  "study_id": "delivery-clearance-real-project-v0.1",
+  "assembly": "validation/results/real-project-v0.1",
+  "boundary_reconstruction": {
+    "packet_dir": "validation/results/real-project-v0.1/reviewer-packets",
+    "output": ".delivery-clearance/benchmarks/real-project-v0.1-human-sessions.jsonl",
+    "reviewer_role": "local-project-owner",
+    "order_seed": "real-project-v0.1-boundary-frozen",
+    "max_items_per_batch": 4
+  },
+  "full_review_reference": {
+    "packet_dir": "validation/results/real-project-v0.1/reviewer-packets",
+    "output": ".delivery-clearance/benchmarks/real-project-v0.1-human-sessions.jsonl",
+    "reviewer_role": "local-project-owner",
+    "order_seed": "real-project-v0.1-full-review-frozen",
+    "max_items_per_batch": 4
+  },
+  "privacy": {
+    "raw_answers_included": false,
+    "reviewer_identity_required": false,
+    "attention_stream_included": false,
+    "screenshots_included": false,
+    "keystrokes_included": false,
+    "biometrics_included": false
+  },
+  "claim_boundary": {
+    "maximum_scope": "personal_local",
+    "one_person_multiple_roles_must_be_disclosed": true,
+    "independent_reviewer_claimed": false,
+    "delivery_clearance_effectiveness_claimed": false,
+    "customer_delivery_validation_claimed": false,
+    "production_approval_claimed": false
+  }
+}

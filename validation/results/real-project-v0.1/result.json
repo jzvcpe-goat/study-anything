@@ -1,0 +1,81 @@
+{
+  "blocked_case_count": 3,
+  "case_count": 4,
+  "cases": [
+    {
+      "case_id": "rp-01-supply-chain-drift",
+      "expected_machine_status": "blocked",
+      "maximum_scope_without_human_review": "blocked",
+      "observed_machine_status": "blocked",
+      "oracle_match": true,
+      "receipt_digest_sha256": "f3972212cfa67c5a99248020703ca1639c539976668c02a3e801db06bf96effe",
+      "recommended_disposition": "held",
+      "release_authorized": false,
+      "reviewer_packet_digest_sha256": "90e12c0ed218865f0876ce08c005f4523834308a8f63f6acee0830750f4f544c",
+      "scenario_type": "supply-chain-receipt-drift",
+      "source_commit_sha": "ac5f995ac3d28933c375f030f572eb554a3d7b89"
+    },
+    {
+      "case_id": "rp-02-downstream-evidence-drift",
+      "expected_machine_status": "blocked",
+      "maximum_scope_without_human_review": "blocked",
+      "observed_machine_status": "blocked",
+      "oracle_match": true,
+      "receipt_digest_sha256": "64a5f058053550fdb72fc40e3720c604be7dd9a9d1323292065fc02de268e8a6",
+      "recommended_disposition": "held",
+      "release_authorized": false,
+      "reviewer_packet_digest_sha256": "2abfea37ee77642d998a154dec8ce6257c7e59687ca99b248faf4736c5e724af",
+      "scenario_type": "downstream-generated-evidence-drift",
+      "source_commit_sha": "f65542b3717cbaf6ccf8e4bc629bc966bcefd28a"
+    },
+    {
+      "case_id": "rp-03-partial-topology-refresh",
+      "expected_machine_status": "blocked",
+      "maximum_scope_without_human_review": "blocked",
+      "observed_machine_status": "blocked",
+      "oracle_match": true,
+      "receipt_digest_sha256": "722ad5c3743896c7d6715ced37423ec52dc5d8baff58cdfaa4dcf8bbcc2ece45",
+      "recommended_disposition": "held",
+      "release_authorized": false,
+      "reviewer_packet_digest_sha256": "b8e2cfe3c3b60880da5ecfdbfdc8233bbde0c904931368ce4e5c08b015df99cd",
+      "scenario_type": "partial-evidence-topology-refresh",
+      "source_commit_sha": "7e126bb75df03f63a137c630ef155fb9fd9b9a13"
+    },
+    {
+      "case_id": "rp-04-converged-delivery-state",
+      "expected_machine_status": "ready_for_human_review",
+      "maximum_scope_without_human_review": "blocked",
+      "observed_machine_status": "ready_for_human_review",
+      "oracle_match": true,
+      "receipt_digest_sha256": "139a7478c3725032523119a1a92e921704240400a2dfe33f4037b2e392beda27",
+      "recommended_disposition": "restricted",
+      "release_authorized": false,
+      "reviewer_packet_digest_sha256": "30175ea6ad0c33ec778e6836f484c7e4f4f235b4c789ee29d2671bad2ba68138",
+      "scenario_type": "converged-release-evidence",
+      "source_commit_sha": "432c282a91f020e86183f306672eafeea2a6990f"
+    }
+  ],
+  "claim_boundary": "This four-state replay proves only that the declared repository checks distinguish three historical incomplete delivery states from one machine-ready state on this project and environment. A machine-ready state still requires human boundary reconstruction and responsibility acceptance. It does not prove general Delivery Clearance effectiveness, production safety, customer readiness, or independent review.",
+  "execution_environment": {
+    "platform_machine": "arm64",
+    "platform_system": "Darwin",
+    "python_version": "3.12.13"
+  },
+  "human_review_completed": false,
+  "maximum_scope_without_human_review": "blocked",
+  "privacy": {
+    "local_absolute_paths_included": false,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "production_mutation_performed": false,
+    "raw_check_output_included": false,
+    "raw_source_text_included": false
+  },
+  "ready_for_human_review_count": 1,
+  "release_authorized": false,
+  "scenario_set_digest_sha256": "27bcda483e9f57f083c15ca45e9dd4142d83ff3578ef425c0d89768e7ca0e836",
+  "schema_version": "real-project-scenario-result-v1",
+  "source_repository": "https://github.com/jzvcpe-goat/study-anything.git",
+  "status": "pass",
+  "suite_id": "real-project-v0.1"
+}

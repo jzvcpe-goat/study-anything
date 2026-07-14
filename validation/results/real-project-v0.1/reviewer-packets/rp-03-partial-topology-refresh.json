@@ -1,0 +1,92 @@
+{
+  "candidate": {
+    "candidate_digest_sha256": "a24ada234bbdb4d672628c4f8c3ed0e5538777e285e422d743d302f3e7eb53ce",
+    "candidate_id": "candidate:rp-03-partial-topology-refresh",
+    "case_id": "rp-03-partial-topology-refresh",
+    "context_digest_sha256": "e12df90e489fd8a2f1468e985a64b0226ba2c8f1de3460900024562deb122709",
+    "declared_risk_level": "medium",
+    "hidden_tests_included": false,
+    "intended_recipient_role": "local-project-owner",
+    "official_scorer_result_included": false,
+    "privacy": {
+      "attention_stream_included": false,
+      "automatic_customer_send_performed": false,
+      "cookies_or_bearer_tokens_included": false,
+      "metadata_only": true,
+      "model_credentials_included": false,
+      "model_prompts_included": false,
+      "production_mutation_performed": false,
+      "raw_customer_payload_included": false,
+      "raw_report_text_included": false,
+      "raw_source_text_included": false,
+      "signed_urls_included": false
+    },
+    "prohibited_use_codes": [
+      "customer-handoff",
+      "production-execution",
+      "claim-release-evidence-complete"
+    ],
+    "reference_label_included": false,
+    "risk_owner_role": "local-project-owner",
+    "schema_version": "reviewer-candidate-view-v1",
+    "source_snapshot_digest_sha256": "806d13ea7ab064782f1981ef9a64753e0fd8fb4a83479b5d83fbdc31a1002598",
+    "subject_digest_sha256": "838cd6c4c5a967287363fe53bd98ccdaff1eb8628bf3d74bcb58d19bdaa8fb6e",
+    "suite_id": "real-project-v0.1",
+    "target_scope": "personal_local",
+    "task_summary_code": "downstream-pack-refresh-change",
+    "tool_permission_ids": [
+      "read_candidate_metadata",
+      "read_evidence_metadata",
+      "request_additional_evidence",
+      "emit_clearance_decision"
+    ],
+    "visible_evidence": [
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "db4ddce727cb998b75ce4946b839863b11d44fb1cabe61ffac3524f64b123460",
+        "evidence_ref": "real-project:rp-03-partial-topology-refresh:source-provenance",
+        "evidence_type": "source-provenance",
+        "status": "passed",
+        "summary_code": "repository-commit-and-tree-bound"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "f8c07bc0238ad5cc13ef18490e2eab9eed6f9b807e748f4481b7a187dc061d99",
+        "evidence_ref": "real-project:rp-03-partial-topology-refresh:project-release-check",
+        "evidence_type": "project-release-check",
+        "status": "failed",
+        "summary_code": "five-evidence-topology-nodes-stale"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "b28551b9b6b98047002152a95324b2fda6eaf42a0be6b0943935db520e83bb29",
+        "evidence_ref": "real-project:rp-03-partial-topology-refresh:scope-boundary",
+        "evidence_type": "scope-boundary",
+        "status": "passed",
+        "summary_code": "personal-local-only"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "387b2e1526fd13cc7e30e1cb4ea57f171ee8dd45b0824ba533993cefb4905db8",
+        "evidence_ref": "real-project:rp-03-partial-topology-refresh:rollback-or-containment",
+        "evidence_type": "rollback-or-containment",
+        "status": "passed",
+        "summary_code": "revert-or-converge-full-topology"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "5aebaa007e5caf97cd16855fbf46382b4f0ab244f6bc7cbb0c9215d924860442",
+        "evidence_ref": "real-project:rp-03-partial-topology-refresh:responsibility-boundary",
+        "evidence_type": "responsibility-boundary",
+        "status": "passed",
+        "summary_code": "local-project-owner-responsible"
+      }
+    ]
+  },
+  "case_id": "rp-03-partial-topology-refresh",
+  "hidden_tests_included": false,
+  "official_scorer_result_included": false,
+  "reference_label_included": false,
+  "schema_version": "reviewer-case-packet-v1",
+  "suite_id": "real-project-v0.1"
+}

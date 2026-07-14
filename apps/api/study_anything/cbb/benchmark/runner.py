@@ -561,8 +561,7 @@ def _validate_execution_provenance_coverage(
     if len({receipt.provider_thread_id_digest_sha256 for receipt in receipts}) != len(receipts):
         return False
     if any(
-        receipt.provider_thread_id_digest_sha256 == sha256(b"").hexdigest()
-        for receipt in receipts
+        receipt.provider_thread_id_digest_sha256 == sha256(b"").hexdigest() for receipt in receipts
     ):
         return False
     for decision in decisions:
@@ -606,9 +605,7 @@ def load_observed_assets(
             "observed case and candidate directories must contain exactly the frozen 40 IDs"
         )
     scorers_by_case = {receipt.case_id: receipt for receipt in scorer_receipts}
-    adjudications_by_case = {
-        receipt.case_id: receipt for receipt in adjudication_receipts
-    }
+    adjudications_by_case = {receipt.case_id: receipt for receipt in adjudication_receipts}
     if (
         len(scorers_by_case) != len(scorer_receipts)
         or len(adjudications_by_case) != len(adjudication_receipts)
@@ -631,10 +628,8 @@ def load_observed_assets(
         if (
             case.candidate_assignment != expected.candidate_assignment
             or case.candidate_recipe_code != expected.candidate_recipe_code
-            or case.candidate_recipe_digest_sha256
-            != expected.candidate_recipe_digest_sha256
-            or case.selection_protocol_digest_sha256
-            != expected.selection_protocol_digest_sha256
+            or case.candidate_recipe_digest_sha256 != expected.candidate_recipe_digest_sha256
+            or case.selection_protocol_digest_sha256 != expected.selection_protocol_digest_sha256
             or case.selection_locked_at != expected.selection_locked_at
         ):
             raise BenchmarkRunnerError(
@@ -656,9 +651,7 @@ def load_observed_assets(
             expected.source.third_party_asset_terms_reviewed
             and not case.source.third_party_asset_terms_reviewed
         ):
-            raise BenchmarkRunnerError(
-                f"observed source lost third-party asset review: {case_id}"
-            )
+            raise BenchmarkRunnerError(f"observed source lost third-party asset review: {case_id}")
         if candidate.source_snapshot_digest_sha256 != case.source.environment_digest_sha256:
             raise BenchmarkRunnerError(
                 f"observed candidate source snapshot is not bound: {case_id}"
@@ -680,8 +673,7 @@ def load_observed_assets(
             or scorer.benchmark_id != case.source.benchmark_id
             or scorer.upstream_task_id != case.source.upstream_task_id
             or scorer.subject_digest_sha256 != candidate.subject_digest_sha256
-            or scorer.source_environment_digest_sha256
-            != case.source.environment_digest_sha256
+            or scorer.source_environment_digest_sha256 != case.source.environment_digest_sha256
             or scorer.scorer_source_uri != case.source.scorer_source_uri
             or scorer.scorer_source_revision != case.source.scorer_source_revision
             or scorer.official_scorer_ref != case.source.official_scorer_ref
@@ -702,9 +694,7 @@ def load_observed_assets(
         adjudication_payload = adjudication.model_dump(mode="json")
         adjudication_payload.pop("trace_digest_sha256")
         if adjudication.trace_digest_sha256 != canonical_sha256(adjudication_payload):
-            raise BenchmarkRunnerError(
-                f"observed adjudication receipt digest mismatch: {case_id}"
-            )
+            raise BenchmarkRunnerError(f"observed adjudication receipt digest mismatch: {case_id}")
         if (
             adjudication.suite_id != case.suite_id
             or adjudication.candidate_digest_sha256 != canonical_sha256(candidate)
@@ -713,12 +703,9 @@ def load_observed_assets(
             or adjudication.release_authorized != case.reference.release_authorized
             or adjudication.maximum_scope != case.reference.maximum_scope
             or adjudication.rationale_codes != case.reference.rationale_codes
-            or case.reference.adjudication_trace_digest_sha256
-            != adjudication.trace_digest_sha256
+            or case.reference.adjudication_trace_digest_sha256 != adjudication.trace_digest_sha256
         ):
-            raise BenchmarkRunnerError(
-                f"observed adjudication receipt binding failed: {case_id}"
-            )
+            raise BenchmarkRunnerError(f"observed adjudication receipt binding failed: {case_id}")
         assets.append((case, candidate))
     validate_pilot_assets(assets)
     return assets
@@ -819,8 +806,7 @@ def _validate_human_session_binding(
             or external.human_reconstruction != session.measurement
             or (
                 session.evidence_origin == "observed_human_session"
-                and session.candidate_digest_sha256
-                != external.candidate_digest_sha256
+                and session.candidate_digest_sha256 != external.candidate_digest_sha256
             )
         ):
             return False
@@ -1020,9 +1006,7 @@ def run_benchmark(
         adjudication_receipts_by_id = _trace_bound_receipts(
             observed_adjudication_receipts_path, BlindedAdjudicationReceiptV1
         )
-        scorer_receipts = sorted(
-            scorer_receipts_by_id.values(), key=lambda item: item.case_id
-        )
+        scorer_receipts = sorted(scorer_receipts_by_id.values(), key=lambda item: item.case_id)
         adjudication_receipts = sorted(
             adjudication_receipts_by_id.values(), key=lambda item: item.case_id
         )
@@ -1168,16 +1152,10 @@ def run_benchmark(
         traces = sorted(observed_traces.values(), key=lambda item: item.decision_id)
     _write_jsonl(output_dir / "tool-call-traces.jsonl", traces)
     tool_trace_coverage = _validate_tool_trace_coverage(runs, traces)
-    execution_provenance = sorted(
-        observed_provenance.values(), key=lambda item: item.decision_id
-    )
-    _write_jsonl(
-        output_dir / "review-execution-provenance.jsonl", execution_provenance
-    )
+    execution_provenance = sorted(observed_provenance.values(), key=lambda item: item.decision_id)
+    _write_jsonl(output_dir / "review-execution-provenance.jsonl", execution_provenance)
     _write_jsonl(output_dir / "scorer-execution-receipts.jsonl", scorer_receipts)
-    _write_jsonl(
-        output_dir / "blinded-adjudication-receipts.jsonl", adjudication_receipts
-    )
+    _write_jsonl(output_dir / "blinded-adjudication-receipts.jsonl", adjudication_receipts)
     execution_provenance_coverage = (
         mode == "mechanism-fixture"
         or _validate_execution_provenance_coverage(runs, execution_provenance)
@@ -1231,9 +1209,7 @@ def run_benchmark(
         ablation_variant_count=(len(AblationVariant) if ablation_coverage else 0),
         ablation_complete=ablation_coverage,
         tool_trace_count=len(traces),
-        tool_trace_coverage_complete=(
-            tool_trace_coverage and execution_provenance_coverage
-        ),
+        tool_trace_coverage_complete=(tool_trace_coverage and execution_provenance_coverage),
         manifest_digest_sha256=manifest_digest,
         paired_runs_digest_sha256=paired_runs_digest,
         generated_at=generated_at,
@@ -1429,6 +1405,7 @@ def run_benchmark(
 
 def record_human_review_session(
     *,
+    suite_id: str = PILOT_SUITE_ID,
     case_id: str,
     trial_index: int,
     review_mode: Literal["full_review_reference", "boundary_reconstruction"],
@@ -1461,7 +1438,7 @@ def record_human_review_session(
     return HumanReviewSessionV1(
         schema_version="human-review-session-v1",
         session_id=f"review:{case_id}:{trial_index}:{review_mode}",
-        suite_id=PILOT_SUITE_ID,
+        suite_id=suite_id,
         case_id=case_id,
         trial_index=trial_index,
         review_mode=review_mode,

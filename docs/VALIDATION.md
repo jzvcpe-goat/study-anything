@@ -14,6 +14,11 @@ Current validated scope: `personal_local`
 的 12 个场景全部通过。该结果只能证明原型的确定性机制按当前测试工作；仓库暂无真实
 用户审核时间、误放行率、误阻断率、生产事故率或企业采用证据。
 
+仓库随后增加了一个真实项目回放层：同一 PR 的四个历史提交分别代表供应链收据失效、
+下游证据失效、部分拓扑刷新和最终 59/59 证据节点收敛。隔离回放观察到前三个状态被
+阻断，最终状态只进入 `ready_for_human_review`；四例均匹配预冻结 oracle，且没有任何一例
+在缺少真人重构时获得 release authorization。这是单项目机制证据，不是效果量或统计显著性证据。
+
 证据成熟度在本文中严格分为三层：
 
 - **已实现**：代码、契约或命令存在；
@@ -98,6 +103,10 @@ Current validated scope: `personal_local`
 | VAL-10 | 确定性检查失败 | 必需命令返回非零 | 执行 `audit` | `block`，包含 `evidence_failed:configured_checks` | PASS | `test_failed_check_blocks` | 已知检查异常直接进入人工处理 |
 | VAL-11 | 审核检查改变项目 | 检查写入 Git 可见文件 | 执行 `audit` | `block`，触发 `hard_deny:audit_check_mutated_project` | PASS | `test_check_that_mutates_project_is_a_hard_deny`；`check_mutation_is_hard_deny` | 检查过程污染被硬阻断 |
 | VAL-12 | 试图扩大交付范围 | 将 config 的 `maximum_scope` 改成 customer handoff | 加载 Pydantic 契约 | schema 拒绝 | PASS | `test_tamper_and_scope_expansion_are_rejected`；`scope_expansion_is_schema_rejected` | Personal MVP 不能自我升级权限 |
+| VAL-13 | 真实供应链收据漂移 | 历史提交 `ac5f995a` | 在隔离 clone 运行 supply-chain check | `blocked` | PASS | `validation/results/real-project-v0.1/check-receipts/rp-01-supply-chain-drift.json` | 功能测试通过不能覆盖陈旧供应链证据 |
+| VAL-14 | 真实下游证据漂移 | 历史提交 `f65542b3` | 运行 59 节点 evidence topology check | `blocked`，6 个节点失效 | PASS | `rp-02-downstream-evidence-drift.json` | 修一层收据不足以宣称完整交付 |
+| VAL-15 | 真实部分刷新 | 历史提交 `7e126bb7` | 重放 evidence topology | `blocked`，5 个节点失效 | PASS | `rp-03-partial-topology-refresh.json` | 部分刷新仍须继续阻断 |
+| VAL-16 | 真实收敛状态 | 历史提交 `432c282a` | 重放 evidence topology | `ready_for_human_review`，不自动 release | PASS | `rp-04-converged-delivery-state.json`；`result.json` | 机器证据收敛只缩小真人审核范围 |
 
 状态流转如下：
 
@@ -174,6 +183,26 @@ printf 'changed after clearance\n' > "$TARGET/changed-after-clearance.txt"
 过期测试通过测试专用 Python 参数使用固定时间复现。公共 CLI 故意不暴露时间覆盖参数，
 以避免操作者人为绕过有效期。
 
+### 6.5 重放真实项目交付序列
+
+```bash
+.venv/bin/python scripts/delivery_clearance_project_scenarios.py --replace
+```
+
+该命令为每个历史提交创建独立临时 clone，执行预冻结的只读检查，并重建
+`validation/results/real-project-v0.1/`。输出状态必须为 `pass`、`case_count: 4`、
+`blocked_case_count: 3`、`ready_for_human_review_count: 1`、`release_authorized: false`。
+
+真人随后可在同一批真实 packet 上分别完成边界重构和全文参考复核：
+
+```bash
+.venv/bin/delivery-clearance-review \
+  --protocol docs/evaluation/real-project-v0.1-human-protocol.json \
+  --max-items 4
+```
+
+当前仓库没有替操作者填写这些真人 session，因此仍不能报告复核时间差或认知负担变化。
+
 ## 7. Evidence Inventory
 
 | 证据 | 用途 | 仓库路径 | 当前状态 |
@@ -191,6 +220,9 @@ printf 'changed after clearance\n' > "$TARGET/changed-after-clearance.txt"
 | MVP audit record | S0-S15 产品、安全、CLI、移动报告和 release 边界 | `docs/quality-audits/phase-41-personal-clearance-mvp.md` | 历史验证记录 |
 | Real plugin boundary study | 外部副作用、可变来源、专业语义和运行时边界 | `docs/quality-audits/phase-42-real-plugin-boundary-study.md` | 已执行的本机样本，不可泛化 |
 | Benchmark method | 原生 Agent、强化 Agent、内部 checklist 和独立 Gate 的配对评价方法 | `docs/evaluation/native-agent-vs-delivery-clearance.md` | 机制与流程已实现，真实人类证据未完成 |
+| Real-project scenario set | 四个真实提交、预冻结检查和 oracle | `docs/evaluation/real-project-v0.1-scenarios.json` | 已实现并 4/4 回放匹配 |
+| Real-project replay engine | 隔离 clone、只读检查、mutation 检测和 reviewer packet 生成 | `apps/api/study_anything/cbb/benchmark/project_scenarios.py`；`scripts/delivery_clearance_project_scenarios.py` | 已实现并聚焦测试通过 |
+| Real-project evidence | 4 个 check receipt、4 个 reviewer packet 和聚合结果 | `validation/results/real-project-v0.1/` | 已提交 metadata-only 结果；真人 session 未完成 |
 
 仓库没有提交可独立复验的 Personal Clearance 截图文件，因此本文不把截图作为当前证据。
 HTML 报告由机器 artifact 确定性重建，`verify` 会检查
@@ -233,14 +265,24 @@ HTML 报告由机器 artifact 确定性重建，`verify` 会检查
   已完成记录可用 `--resume` 继续。
 - **当前结果**：回归测试和真实 PTY 中断测试均通过；正式人类证据仍未填写。
 
+### 8.5 评测必须从真实交付状态开始
+
+- **原设计问题**：单元测试和公开 benchmark 可以验证机制，却不能说明该工具是否能约束
+  自己的日常开发流程。
+- **发现**：Human Review Cockpit 这次开发本身经历了三次真实的证据失效，直到第四个
+  提交才完全收敛；这形成了天然的时间序列 oracle。
+- **调整**：新增 `real-project-v0.1`，按完整 commit SHA 在隔离 clone 中重放当时的 release
+  检查，并把结果转换为真人边界重构 packet。
+- **当前结果**：4/4 状态与 oracle 一致；前三例阻断，最后一例只进入真人审核，没有自动放行。
+
 ## 9. Current Limitations
 
 - **真实用户价值**：暂无真实用户样本、访谈、再次使用意愿或实际交付结果。
 - **审核效率**：暂无可比较的全文复核时间、边界重构时间或认知负担结果。
 - **决策质量**：暂无完成的真实人类参考标签，因此不能报告误放行率、误阻断率、严重
   错误逃逸率或人工推翻率。
-- **跨项目适配**：Phase 42 只提供本机插件和有限项目形状样本，不能代表大型 monorepo、
-  网络文件系统或全部工具链。
+- **跨项目适配**：真实项目回放目前只有本仓库的一条四提交事故链，Phase 42 也只提供
+  本机插件和有限项目形状样本；不能代表大型 monorepo、网络文件系统或全部工具链。
 - **外部状态**：`verify` 不重新运行检查，也不绑定未快照化的市场数据、网页、SaaS、
   数据库、浏览器或远端仓库状态。
 - **执行隔离**：配置检查继承当前用户权限和环境，没有 OS 沙箱或网络 egress 控制。

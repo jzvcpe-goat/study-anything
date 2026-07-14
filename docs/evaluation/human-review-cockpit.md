@@ -31,6 +31,18 @@ Before opening the UI, verify all three frozen queues without writing evidence:
 .venv/bin/delivery-clearance-review --max-items 5 --dry-run
 ```
 
+To review the committed real-project delivery sequence instead of the public benchmark
+pilot, use its bounded two-mode protocol:
+
+```bash
+.venv/bin/delivery-clearance-review \
+  --protocol docs/evaluation/real-project-v0.1-human-protocol.json \
+  --max-items 4
+```
+
+That protocol enables boundary reconstruction and the full-review reference only. It does
+not invent a blinded adjudicator or turn a machine-ready state into a release authorization.
+
 ## Three Physically Separate Review Tasks
 
 The top segmented control switches between three local queues. Switching the

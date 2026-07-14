@@ -1,9 +1,9 @@
 {
   "archive": {
-    "bytes": 152382,
+    "bytes": 152530,
     "path": "platform/generated/study-anything-workbuddy-plugin-pack.zip",
     "root": "study-anything-workbuddy-plugin-pack",
-    "sha256": "faa1b9f90f58a9a572862e005364b1f89876e482f337eb890068f8c23d0546eb"
+    "sha256": "ffecd96ba58fdc9c4af06cb990e7a35a3060e8750f10ab8dc28f8158280905cf"
   },
   "entrypoints": {
     "api_docs": "docs/api.md",
@@ -17,11 +17,11 @@
   "files": [
     {
       "archive_path": "study-anything-workbuddy-plugin-pack/README.md",
-      "bytes": 20045,
+      "bytes": 20444,
       "kind": "root_doc",
       "path": "README.md",
       "purpose": "Project positioning and local-first adoption overview.",
-      "sha256": "7c1b6c52cad769dee6bf1fef270fd146e0b97736031ddedb6022c4d8276e441f"
+      "sha256": "88f47fb1aa6861014acf645eb05ce12500dce1bd99522ce6ecf11d375101a527"
     },
     {
       "archive_path": "study-anything-workbuddy-plugin-pack/QUICKSTART.md",

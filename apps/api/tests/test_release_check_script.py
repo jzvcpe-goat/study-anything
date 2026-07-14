@@ -56,6 +56,7 @@ class ReleaseCheckScriptTests(unittest.TestCase):
         self.assertIn("verify_benchmark_reproducibility.py --check", script)
         self.assertIn("verify_benchmark_claim_boundary.py --check", script)
         self.assertIn("verify_benchmark_source_preflight.py --check", script)
+        self.assertIn("verify_real_project_scenario_evidence.py --check", script)
         self.assertIn('release_python_prefix="$("$python_bin" -c', script)
         self.assertIn('--venv "$release_python_prefix"', script)
 
@@ -106,12 +107,8 @@ class ReleaseCheckScriptTests(unittest.TestCase):
         self.assertFalse(receipt["cbb_v1_conformance_verifiers_passed_individually"])
         self.assertTrue(receipt["cbb_v1_adoption_audit_verifiers_integrated"])
         self.assertFalse(receipt["cbb_v1_adoption_audit_verifiers_passed_individually"])
-        self.assertTrue(
-            receipt["cbb_v1_external_adoption_attestation_verifier_integrated"]
-        )
-        self.assertFalse(
-            receipt["cbb_v1_external_adoption_attestation_verifier_passed"]
-        )
+        self.assertTrue(receipt["cbb_v1_external_adoption_attestation_verifier_integrated"])
+        self.assertFalse(receipt["cbb_v1_external_adoption_attestation_verifier_passed"])
         self.assertTrue(receipt["personal_clearance_verifier_integrated"])
         self.assertFalse(receipt["personal_clearance_verifier_passed"])
         self.assertTrue(receipt["plugin_evidence_verifier_integrated"])

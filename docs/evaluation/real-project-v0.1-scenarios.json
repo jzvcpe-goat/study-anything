@@ -1,0 +1,179 @@
+{
+  "schema_version": "real-project-scenario-set-v1",
+  "suite_id": "real-project-v0.1",
+  "source_repository": "https://github.com/jzvcpe-goat/study-anything.git",
+  "evaluation_perspective": "local_project_owner",
+  "cases": [
+    {
+      "schema_version": "real-project-scenario-v1",
+      "case_id": "rp-01-supply-chain-drift",
+      "source_commit_sha": "ac5f995ac3d28933c375f030f572eb554a3d7b89",
+      "scenario_type": "supply-chain-receipt-drift",
+      "task_summary_code": "human-review-cockpit-change",
+      "declared_risk_level": "medium",
+      "target_scope": "personal_local",
+      "intended_recipient_role": "local-project-owner",
+      "risk_owner_role": "local-project-owner",
+      "prohibited_use_codes": [
+        "customer-handoff",
+        "production-execution",
+        "claim-full-release-green"
+      ],
+      "rollback_summary_code": "revert-or-follow-up-commit-available",
+      "check": {
+        "check_id": "python-supply-chain-check",
+        "argv": [
+          "{python}",
+          "scripts/generate_python_supply_chain.py",
+          "--check",
+          "--timeout-seconds",
+          "60"
+        ],
+        "timeout_seconds": 90,
+        "expected_exit_code": 1,
+        "expected_output_markers": [
+          "Generated artifact is stale: platform/generated/study-anything-python-supply-chain.json"
+        ],
+        "expected_failed_node_ids": []
+      },
+      "expected_machine_status": "blocked",
+      "pass_summary_code": "python-supply-chain-current",
+      "failure_summary_code": "python-supply-chain-receipt-stale",
+      "historical_evidence": [
+        "commit:ac5f995a-add-local-human-review-cockpit",
+        "follow-up:f65542b3-refresh-python-supply-chain-receipt"
+      ]
+    },
+    {
+      "schema_version": "real-project-scenario-v1",
+      "case_id": "rp-02-downstream-evidence-drift",
+      "source_commit_sha": "f65542b3717cbaf6ccf8e4bc629bc966bcefd28a",
+      "scenario_type": "downstream-generated-evidence-drift",
+      "task_summary_code": "supply-chain-follow-up-change",
+      "declared_risk_level": "medium",
+      "target_scope": "personal_local",
+      "intended_recipient_role": "local-project-owner",
+      "risk_owner_role": "local-project-owner",
+      "prohibited_use_codes": [
+        "customer-handoff",
+        "production-execution",
+        "claim-generated-evidence-converged"
+      ],
+      "rollback_summary_code": "revert-or-complete-evidence-refresh",
+      "check": {
+        "check_id": "generated-evidence-topology-check",
+        "argv": [
+          "{python}",
+          "scripts/generated_evidence_topology.py",
+          "--check",
+          "--timeout-seconds",
+          "60"
+        ],
+        "timeout_seconds": 90,
+        "expected_exit_code": 1,
+        "expected_output_markers": [],
+        "expected_failed_node_ids": [
+          "adopter_evidence_archive",
+          "external_security_audit_pack",
+          "platform_adoption_pack",
+          "platform_plugin_packs",
+          "published_image_evidence",
+          "release_asset_adoption"
+        ]
+      },
+      "expected_machine_status": "blocked",
+      "pass_summary_code": "generated-evidence-topology-converged",
+      "failure_summary_code": "six-downstream-evidence-nodes-stale",
+      "historical_evidence": [
+        "commit:f65542b3-refresh-python-supply-chain-receipt",
+        "follow-up:7e126bb7-refresh-downstream-generated-packs"
+      ]
+    },
+    {
+      "schema_version": "real-project-scenario-v1",
+      "case_id": "rp-03-partial-topology-refresh",
+      "source_commit_sha": "7e126bb75df03f63a137c630ef155fb9fd9b9a13",
+      "scenario_type": "partial-evidence-topology-refresh",
+      "task_summary_code": "downstream-pack-refresh-change",
+      "declared_risk_level": "medium",
+      "target_scope": "personal_local",
+      "intended_recipient_role": "local-project-owner",
+      "risk_owner_role": "local-project-owner",
+      "prohibited_use_codes": [
+        "customer-handoff",
+        "production-execution",
+        "claim-release-evidence-complete"
+      ],
+      "rollback_summary_code": "revert-or-converge-full-topology",
+      "check": {
+        "check_id": "generated-evidence-topology-check",
+        "argv": [
+          "{python}",
+          "scripts/generated_evidence_topology.py",
+          "--check",
+          "--timeout-seconds",
+          "60"
+        ],
+        "timeout_seconds": 90,
+        "expected_exit_code": 1,
+        "expected_output_markers": [],
+        "expected_failed_node_ids": [
+          "adopter_evidence_archive",
+          "platform_bundle_manifest",
+          "platform_plugin_packs",
+          "published_image_evidence",
+          "release_asset_adoption"
+        ]
+      },
+      "expected_machine_status": "blocked",
+      "pass_summary_code": "generated-evidence-topology-converged",
+      "failure_summary_code": "five-evidence-topology-nodes-stale",
+      "historical_evidence": [
+        "commit:7e126bb7-refresh-downstream-generated-packs",
+        "follow-up:432c282a-converge-generated-evidence-topology"
+      ]
+    },
+    {
+      "schema_version": "real-project-scenario-v1",
+      "case_id": "rp-04-converged-delivery-state",
+      "source_commit_sha": "432c282a91f020e86183f306672eafeea2a6990f",
+      "scenario_type": "converged-release-evidence",
+      "task_summary_code": "human-review-cockpit-delivery-candidate",
+      "declared_risk_level": "medium",
+      "target_scope": "personal_local",
+      "intended_recipient_role": "local-project-owner",
+      "risk_owner_role": "local-project-owner",
+      "prohibited_use_codes": [
+        "customer-handoff",
+        "production-execution",
+        "independent-review-claim"
+      ],
+      "rollback_summary_code": "revert-or-follow-up-commit-available",
+      "check": {
+        "check_id": "generated-evidence-topology-check",
+        "argv": [
+          "{python}",
+          "scripts/generated_evidence_topology.py",
+          "--check",
+          "--timeout-seconds",
+          "60"
+        ],
+        "timeout_seconds": 90,
+        "expected_exit_code": 0,
+        "expected_output_markers": [
+          "\"converged\": true",
+          "\"passed\": 59"
+        ],
+        "expected_failed_node_ids": []
+      },
+      "expected_machine_status": "ready_for_human_review",
+      "pass_summary_code": "all-59-generated-evidence-nodes-passed",
+      "failure_summary_code": "generated-evidence-topology-not-converged",
+      "historical_evidence": [
+        "commit:432c282a-converge-generated-evidence-topology",
+        "github-pr-439-seven-checks-green"
+      ]
+    }
+  ],
+  "claim_boundary": "This four-state replay proves only that the declared repository checks distinguish three historical incomplete delivery states from one machine-ready state on this project and environment. A machine-ready state still requires human boundary reconstruction and responsibility acceptance. It does not prove general Delivery Clearance effectiveness, production safety, customer readiness, or independent review."
+}

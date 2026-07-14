@@ -150,8 +150,10 @@ def load_canonical_mode_configs(
     configs: dict[ReviewMode, ModeConfig] = {}
     for mode in MODE_LABELS:
         mode_payload = protocol.get(mode)
+        if mode_payload is None:
+            continue
         if not isinstance(mode_payload, dict):
-            raise ReviewCockpitError(f"canonical human protocol has no mode: {mode}")
+            raise ReviewCockpitError(f"canonical human protocol mode is invalid: {mode}")
         cap = mode_payload.get("max_items_per_batch")
         if not isinstance(cap, int) or cap < 1:
             raise ReviewCockpitError(f"canonical batch cap is invalid for {mode}")
@@ -172,6 +174,8 @@ def load_canonical_mode_configs(
             order_seed=order_seed,
             max_items=max_items,
         )
+    if not configs:
+        raise ReviewCockpitError("canonical human protocol enables no review modes")
     return configs
 
 
@@ -264,8 +268,11 @@ class ReviewQueue:
                     raise ReviewCockpitError("human review packet is not label-free")
                 boundary_questions(payload)
             case_id = payload.get("case_id")
+            suite_id = payload.get("suite_id")
             if not isinstance(case_id, str) or not case_id:
                 raise ReviewCockpitError("human review packet is missing its case ID")
+            if not isinstance(suite_id, str) or not suite_id:
+                raise ReviewCockpitError("human review packet is missing its suite ID")
             if case_id in packets:
                 raise ReviewCockpitError("duplicate human review packet case ID")
             packets[case_id] = payload
@@ -418,6 +425,7 @@ class ReviewQueue:
         review_material_digest = canonical_sha256(packet)
         completed_at = _utc_now()
         session = record_human_review_session(
+            suite_id=packet["suite_id"],
             case_id=active.case_id,
             trial_index=0,
             review_mode=self.config.mode,  # type: ignore[arg-type]
@@ -499,9 +507,13 @@ class ReviewCockpit:
         self.queues = {mode: ReviewQueue(config) for mode, config in configs.items()}
 
     def state(self, mode: ReviewMode) -> dict[str, Any]:
+        if mode not in self.queues:
+            raise ReviewCockpitError(f"review mode is not enabled: {mode}")
         return self.queues[mode].state(review_token=self.review_token)
 
     def submit(self, submission: ReviewSubmission) -> dict[str, Any]:
+        if submission.mode not in self.queues:
+            raise ReviewCockpitError(f"review mode is not enabled: {submission.mode}")
         return self.queues[submission.mode].submit(
             submission,
             review_token=self.review_token,
@@ -549,11 +561,24 @@ def create_review_cockpit_app(cockpit: ReviewCockpit) -> FastAPI:
 
     @app.get("/", response_class=HTMLResponse)
     def index() -> str:
-        return REVIEW_COCKPIT_HTML
+        mode_buttons = "".join(
+            (
+                f'<button type="button" data-mode="{mode}" '
+                f'aria-selected="{str(index == 0).lower()}">{MODE_LABELS[mode]}</button>'
+            )
+            for index, mode in enumerate(cockpit.queues)
+        )
+        initial_mode = next(iter(cockpit.queues))
+        return REVIEW_COCKPIT_HTML.replace("<!-- REVIEW_MODE_BUTTONS -->", mode_buttons).replace(
+            "__INITIAL_REVIEW_MODE__", json.dumps(initial_mode)
+        )
 
     @app.get("/api/review/{mode}")
     def current(mode: ReviewMode) -> JSONResponse:
-        return JSONResponse(cockpit.state(mode))
+        try:
+            return JSONResponse(cockpit.state(mode))
+        except ReviewCockpitError as exc:
+            raise HTTPException(status_code=404, detail=str(exc)) from exc
 
     @app.post("/api/review/submit")
     def submit(
@@ -808,9 +833,7 @@ REVIEW_COCKPIT_HTML = r"""<!doctype html>
     <div class="scope">personal_local / no independent-review claim</div>
   </header>
   <nav class="modebar" aria-label="Review mode">
-    <button type="button" data-mode="boundary_reconstruction" aria-selected="true">Boundary reconstruction</button>
-    <button type="button" data-mode="full_review_reference" aria-selected="false">Full review reference</button>
-    <button type="button" data-mode="blinded_adjudication" aria-selected="false">Blinded adjudication</button>
+    <!-- REVIEW_MODE_BUTTONS -->
   </nav>
   <div class="progress-wrap">
     <div class="progress-meta"><span id="progress-label">Loading review state</span><span id="active-time">00:00 active</span></div>
@@ -832,7 +855,7 @@ REVIEW_COCKPIT_HTML = r"""<!doctype html>
     const progressFill = document.getElementById('progress-fill');
     const activeTime = document.getElementById('active-time');
     let state = null;
-    let mode = 'boundary_reconstruction';
+    let mode = __INITIAL_REVIEW_MODE__;
     let activeMs = 0;
     let visibleSince = performance.now();
     let timer = null;

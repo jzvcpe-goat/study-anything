@@ -137,9 +137,10 @@ domain evidence according to the plugin's capability class. It never grants more
 
 ## Validation
 - The Personal Clearance MVP has a reproducible 14-case verifier and 12 focused tests covering normal clearance, stale state, config drift, expiry, tamper, missing evidence, replay, failed checks, and explicit human responsibility.
+- A four-state real-project replay blocks three historical incomplete delivery states and moves only the converged 59/59 evidence state to human review; it authorizes no release by itself.
 - Passing evidence is bound only to the exact Git-visible state and `personal_local` scope.
 - Current results validate prototype mechanisms, not user value, AI correctness, customer delivery, production safety, or professional certification.
-- Reproduce with `.venv/bin/python scripts/verify_personal_clearance_mvp.py --check` and the focused unittest command in the validation chapter.
+- Reproduce the real sequence with `.venv/bin/python scripts/delivery_clearance_project_scenarios.py --replace`.
 - See [Validation](docs/VALIDATION.md) for hypotheses, the test matrix, evidence paths, findings, limitations, and the next user study.
 
 ## Evaluate The Protocol, Not The Story
@@ -183,6 +184,10 @@ Human reviewers can complete all three observed tasks in the local browser
 
 The Cockpit binds only to `127.0.0.1`, keeps the three roles separate, hides
 labels and Agent decisions, and stores aggregate receipts instead of raw answers.
+
+For a concrete project workflow rather than public benchmark fixtures, replay the
+[four-state real-project evaluation](docs/evaluation/real-project-validation.md), then
+open its two-mode boundary-vs-full-review protocol in the same Cockpit.
 
 The optional `capture` command runs pinned real Codex reviewer arms in ephemeral
 read-only workspaces. It withholds scorer outcomes and hidden labels, records only
