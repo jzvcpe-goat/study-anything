@@ -1,0 +1,94 @@
+{
+  "candidate": {
+    "added_line_count": 8,
+    "candidate_digest_sha256": "6187f3e6185003d0d2441b80aa9d7df24e4c88fd3cba1bcfb16fb27e79fdebc9",
+    "candidate_id": "candidate:agent-failed-06",
+    "changed_file_count": 2,
+    "context_digest_sha256": "f8421a3befcb9ace0d06e298816280fa900d76a0b664045682c7b66d72c39604",
+    "declared_risk_level": "high",
+    "deleted_line_count": 2,
+    "intended_recipient_role": "local-project-owner",
+    "issue_title": "fix: emoji not getting rendered as avatar",
+    "prohibited_use_codes": [
+      "customer-handoff",
+      "production-execution",
+      "public-release"
+    ],
+    "review_material_digest_sha256": "f8421a3befcb9ace0d06e298816280fa900d76a0b664045682c7b66d72c39604",
+    "risk_owner_role": "local-project-owner",
+    "source_snapshot_digest_sha256": "bac7f2711fb1656c715f2aafa0c3111083dda11ba57c909e736c3d8a06a0d13c",
+    "subject_digest_sha256": "6187f3e6185003d0d2441b80aa9d7df24e4c88fd3cba1bcfb16fb27e79fdebc9",
+    "target_scope": "personal_local",
+    "task_summary_code": "real-github-agent-generated-patch",
+    "tool_permission_ids": [
+      "read-local-review-material"
+    ],
+    "visible_evidence": [
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "eac78b5bd824fae838e799945db0598496c92cb98abef265a072a5ce6b77ddba",
+        "evidence_ref": "real-agent:agent-failed-06:source-provenance",
+        "evidence_type": "source-provenance",
+        "status": "passed",
+        "summary_code": "public-submission-and-task-snapshot-bound"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "a71a0642478e04fc2197ed891b676b297ed6e68c1879e37057d85cc61c3a4e83",
+        "evidence_ref": "real-agent:agent-failed-06:candidate-material",
+        "evidence_type": "candidate-material",
+        "status": "passed",
+        "summary_code": "real-agent-patch-available-for-review"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "fe268e19f2c61caefff9bec82754a12a7673c34376701526306886434d664a03",
+        "evidence_ref": "real-agent:agent-failed-06:scorer-result",
+        "evidence_type": "scorer-result",
+        "status": "missing",
+        "summary_code": "official-result-withheld-for-blinded-review"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "1b9a59b238b46f09a4791ff507b608ccbc87fe098b1007e05373897285630502",
+        "evidence_ref": "real-agent:agent-failed-06:rollback-or-containment",
+        "evidence_type": "rollback-or-containment",
+        "status": "passed",
+        "summary_code": "patch-can-be-reverted-before-release"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "86318bdad60819fd0f6a734185a5c578acac21251edaa3d5a41d575f28cc8f9a",
+        "evidence_ref": "real-agent:agent-failed-06:responsibility-boundary",
+        "evidence_type": "responsibility-boundary",
+        "status": "passed",
+        "summary_code": "local-project-owner-retains-final-responsibility"
+      }
+    ]
+  },
+  "case_id": "agent-failed-06",
+  "delivery_context": {
+    "clearance_state": "pending-human-review-not-cleared",
+    "deliverable_id": "candidate:agent-failed-06",
+    "deliverable_title": "fix: emoji not getting rendered as avatar",
+    "deliverable_type": "candidate-code-patch",
+    "delivering_agent_name": "Sapient Slingshot 2.6.0",
+    "delivering_model_name": "GPT-5.5",
+    "delivering_party_type": "ai-agent",
+    "intended_purpose_code": "personal-local-code-review-and-validation",
+    "intended_recipient_role": "local-project-owner",
+    "risk_owner_role": "local-project-owner",
+    "source_repository": "RocketChat/Rocket.Chat.ReactNative",
+    "source_task_uri": "https://github.com/RocketChat/Rocket.Chat.ReactNative/pull/6382",
+    "target_scope": "personal_local"
+  },
+  "hidden_tests_included": false,
+  "official_scorer_result_included": false,
+  "raw_candidate_payload_included": false,
+  "raw_issue_body_included": false,
+  "reference_label_included": false,
+  "review_material_available_locally": true,
+  "review_material_digest_sha256": "f8421a3befcb9ace0d06e298816280fa900d76a0b664045682c7b66d72c39604",
+  "schema_version": "reviewer-case-packet-v1",
+  "suite_id": "real-agent-delivery-v0.1"
+}

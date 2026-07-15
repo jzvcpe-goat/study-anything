@@ -1,0 +1,247 @@
+{
+  "$defs": {
+    "PrivacyBoundaryV1": {
+      "additionalProperties": false,
+      "properties": {
+        "attention_stream_included": {
+          "const": false,
+          "title": "Attention Stream Included",
+          "type": "boolean"
+        },
+        "automatic_customer_send_performed": {
+          "const": false,
+          "title": "Automatic Customer Send Performed",
+          "type": "boolean"
+        },
+        "cookies_or_bearer_tokens_included": {
+          "const": false,
+          "title": "Cookies Or Bearer Tokens Included",
+          "type": "boolean"
+        },
+        "metadata_only": {
+          "const": true,
+          "title": "Metadata Only",
+          "type": "boolean"
+        },
+        "model_credentials_included": {
+          "const": false,
+          "title": "Model Credentials Included",
+          "type": "boolean"
+        },
+        "model_prompts_included": {
+          "const": false,
+          "title": "Model Prompts Included",
+          "type": "boolean"
+        },
+        "production_mutation_performed": {
+          "const": false,
+          "title": "Production Mutation Performed",
+          "type": "boolean"
+        },
+        "raw_customer_payload_included": {
+          "const": false,
+          "title": "Raw Customer Payload Included",
+          "type": "boolean"
+        },
+        "raw_report_text_included": {
+          "const": false,
+          "title": "Raw Report Text Included",
+          "type": "boolean"
+        },
+        "raw_source_text_included": {
+          "const": false,
+          "title": "Raw Source Text Included",
+          "type": "boolean"
+        },
+        "signed_urls_included": {
+          "const": false,
+          "title": "Signed Urls Included",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "metadata_only",
+        "raw_source_text_included",
+        "raw_report_text_included",
+        "raw_customer_payload_included",
+        "attention_stream_included",
+        "model_prompts_included",
+        "model_credentials_included",
+        "cookies_or_bearer_tokens_included",
+        "signed_urls_included",
+        "production_mutation_performed",
+        "automatic_customer_send_performed"
+      ],
+      "title": "PrivacyBoundaryV1",
+      "type": "object"
+    },
+    "SelectionReplacementV1": {
+      "additionalProperties": false,
+      "properties": {
+        "case_class": {
+          "const": "safe",
+          "title": "Case Class",
+          "type": "string"
+        },
+        "case_id": {
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+          "title": "Case Id",
+          "type": "string"
+        },
+        "failure_evidence_digest_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Failure Evidence Digest Sha256",
+          "type": "string"
+        },
+        "label_or_stratum_changed": {
+          "const": false,
+          "default": false,
+          "title": "Label Or Stratum Changed",
+          "type": "boolean"
+        },
+        "original_failure_class": {
+          "enum": [
+            "upstream_source_defect",
+            "platform_execution_incompatibility"
+          ],
+          "title": "Original Failure Class",
+          "type": "string"
+        },
+        "original_upstream_task_id": {
+          "maxLength": 240,
+          "minLength": 1,
+          "title": "Original Upstream Task Id",
+          "type": "string"
+        },
+        "replacement_official_scorer_executed_at_selection": {
+          "const": false,
+          "default": false,
+          "title": "Replacement Official Scorer Executed At Selection",
+          "type": "boolean"
+        },
+        "replacement_upstream_task_id": {
+          "maxLength": 240,
+          "minLength": 1,
+          "title": "Replacement Upstream Task Id",
+          "type": "string"
+        },
+        "reviewer_arm_execution_count_before_selection": {
+          "const": 0,
+          "default": 0,
+          "title": "Reviewer Arm Execution Count Before Selection",
+          "type": "integer"
+        },
+        "selection_basis": {
+          "const": "ordered-public-source-feasibility-pool",
+          "title": "Selection Basis",
+          "type": "string"
+        }
+      },
+      "required": [
+        "case_id",
+        "original_upstream_task_id",
+        "replacement_upstream_task_id",
+        "original_failure_class",
+        "failure_evidence_digest_sha256",
+        "case_class",
+        "selection_basis"
+      ],
+      "title": "SelectionReplacementV1",
+      "type": "object"
+    }
+  },
+  "$id": "",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "amended_at": {
+      "maxLength": 64,
+      "minLength": 1,
+      "title": "Amended At",
+      "type": "string"
+    },
+    "amendment_id": {
+      "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+      "title": "Amendment Id",
+      "type": "string"
+    },
+    "hidden_reference_labels_changed": {
+      "const": false,
+      "default": false,
+      "title": "Hidden Reference Labels Changed",
+      "type": "boolean"
+    },
+    "model_arm_outcomes_used": {
+      "const": false,
+      "default": false,
+      "title": "Model Arm Outcomes Used",
+      "type": "boolean"
+    },
+    "parent_selection_protocol_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Parent Selection Protocol Digest Sha256",
+      "type": "string"
+    },
+    "pool_ordering": {
+      "const": "ascending-upstream-task-id",
+      "title": "Pool Ordering",
+      "type": "string"
+    },
+    "privacy": {
+      "$ref": "#/$defs/PrivacyBoundaryV1"
+    },
+    "reason_code": {
+      "const": "public-source-feasibility-before-reviewer-capture",
+      "title": "Reason Code",
+      "type": "string"
+    },
+    "replacement_pool_task_ids": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 20,
+      "minItems": 1,
+      "title": "Replacement Pool Task Ids",
+      "type": "array"
+    },
+    "replacements": {
+      "items": {
+        "$ref": "#/$defs/SelectionReplacementV1"
+      },
+      "maxItems": 10,
+      "minItems": 1,
+      "title": "Replacements",
+      "type": "array"
+    },
+    "safe_dangerous_balance_changed": {
+      "const": false,
+      "default": false,
+      "title": "Safe Dangerous Balance Changed",
+      "type": "boolean"
+    },
+    "schema_version": {
+      "const": "benchmark-selection-amendment-v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "suite_id": {
+      "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+      "title": "Suite Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "amendment_id",
+    "suite_id",
+    "parent_selection_protocol_digest_sha256",
+    "amended_at",
+    "reason_code",
+    "replacement_pool_task_ids",
+    "pool_ordering",
+    "replacements",
+    "privacy"
+  ],
+  "title": "BenchmarkSelectionAmendmentV1",
+  "type": "object"
+}

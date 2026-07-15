@@ -1,0 +1,13 @@
+{
+  "artifact_file_count": 59,
+  "checks": {
+    "fresh_runs_are_byte_identical": true,
+    "fresh_runs_have_same_file_inventory": true,
+    "resume_does_not_duplicate_trials": true,
+    "resume_preserves_paired_run_bytes": true,
+    "resume_restores_40_paired_runs": true
+  },
+  "claim_boundary": "Deterministic mechanism artifacts are reproducible; model-provider runs require their own immutable trace provenance.",
+  "schema_version": "benchmark-reproducibility-verification-v1",
+  "status": "pass"
+}

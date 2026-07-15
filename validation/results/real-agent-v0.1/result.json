@@ -1,0 +1,18 @@
+{
+  "case_count": 12,
+  "case_set_digest_sha256": "f5d7500a71ff44aa434c5d33e43b243993fb4833d1507fc217147264052c25a0",
+  "claim_boundary": "This case set contains real public GitHub tasks and real Agent-generated patches with published SWE-bench-Live functional outcomes. It establishes a reproducible personal-local evaluation input, not Delivery Clearance effectiveness, customer readiness, production safety, legal or security certification. Functional pass does not equal delivery clearance. A comparative claim requires local scorer replay, paired reviewer arms, blinded human adjudication, and review-cost measurement on these same candidates.",
+  "distinct_repository_count": 12,
+  "effectiveness_claim_allowed": false,
+  "human_adjudication_completed": false,
+  "local_official_scorer_reexecuted": false,
+  "maximum_scope": "personal_local_benchmark_rehearsal",
+  "paired_agent_review_completed": false,
+  "published_failed_count": 6,
+  "published_passed_count": 6,
+  "release_authorized": false,
+  "schema_version": "real-agent-case-set-result-v1",
+  "source_material_verified_at_generation": true,
+  "status": "pass",
+  "suite_id": "real-agent-delivery-v0.1"
+}

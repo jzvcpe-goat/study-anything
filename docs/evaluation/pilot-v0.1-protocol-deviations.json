@@ -1,0 +1,30 @@
+{
+  "schema_version": "benchmark-protocol-deviation-log-v1",
+  "study_id": "native-agent-vs-delivery-clearance-pilot-v0.1",
+  "deviations": [
+    {
+      "deviation_id": "boundary-answer-example-leak-2026-07-13",
+      "phase": "pre_human_data_collection",
+      "affected_layer": "boundary_reconstruction",
+      "description": "A response-format example displayed outside the CLI happened to match the first selected packet's correct option sequence.",
+      "observed_human_records_written": 0,
+      "aborted_cli_exit_code": 130,
+      "retired_order_seed": "pilot-v0.1-boundary-frozen",
+      "replacement_order_seed": "pilot-v0.1-boundary-frozen-v2",
+      "corrective_actions": [
+        "retire-the-exposed-order-before-collection",
+        "collect-live-items-inside-the-interactive-cli",
+        "do-not-display-answer-format-examples-alongside-live-items",
+        "preserve-the-deviation-in-the-public-study-record"
+      ],
+      "effect_on_current_results": "No human result or treatment-effect estimate existed when the deviation was recorded."
+    }
+  ],
+  "claim_boundary": {
+    "maximum_scope": "personal_local",
+    "human_evidence_complete": false,
+    "delivery_clearance_effectiveness_claimed": false,
+    "customer_delivery_validation_claimed": false,
+    "production_approval_claimed": false
+  }
+}

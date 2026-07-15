@@ -177,6 +177,53 @@ class PersonalClearanceTests(unittest.TestCase):
         with self.assertRaisesRegex(PersonalClearanceError, "receipt_not_expired"):
             verify_project_clearance(self.root, verified_at="2026-07-13T12:00:00Z")
 
+    def test_config_change_invalidates_receipt(self) -> None:
+        self._complete_config()
+        self._allowed_audit()
+        config_path = self.root / CONFIG_RELATIVE_PATH
+        payload = json.loads(config_path.read_text(encoding="utf-8"))
+        payload["purpose"] = "Audit a different local development candidate."
+        config_path.write_text(
+            json.dumps(payload, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+
+        with self.assertRaisesRegex(PersonalClearanceError, "config_current"):
+            verify_project_clearance(self.root, verified_at=VERIFIED_AT)
+
+    def test_missing_critical_artifact_blocks_verification(self) -> None:
+        self._complete_config()
+        self._allowed_audit()
+        evidence_path = (
+            self.root / ARTIFACT_RELATIVE_DIR / ARTIFACT_FILENAMES["evidence"]
+        )
+        evidence_path.unlink()
+
+        with self.assertRaisesRegex(
+            PersonalClearanceError,
+            "required artifact is missing: evidence-bundle.json",
+        ):
+            verify_project_clearance(self.root, verified_at=VERIFIED_AT)
+
+    def test_old_receipt_replay_after_new_audit_is_rejected(self) -> None:
+        self._complete_config()
+        self._allowed_audit()
+        receipt_path = self.root / ARTIFACT_RELATIVE_DIR / ARTIFACT_FILENAMES["receipt"]
+        old_receipt = receipt_path.read_text(encoding="utf-8")
+
+        (self.root / "new-state.txt").write_text("new state\n", encoding="utf-8")
+        _, updated = audit_project(
+            self.root,
+            execute_checks=True,
+            accept_responsibility=True,
+            evaluated_at="2026-07-11T12:10:00Z",
+        )
+        write_audit_artifacts(self.root, updated)
+        receipt_path.write_text(old_receipt, encoding="utf-8")
+
+        with self.assertRaisesRegex(PersonalClearanceError, "receipt_bound_to_subject"):
+            verify_project_clearance(self.root, verified_at="2026-07-11T12:15:00Z")
+
     def test_tamper_and_scope_expansion_are_rejected(self) -> None:
         self._complete_config()
         self._allowed_audit()

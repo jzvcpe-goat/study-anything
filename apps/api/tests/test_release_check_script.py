@@ -21,6 +21,7 @@ class ReleaseCheckScriptTests(unittest.TestCase):
             "dependency install",
             "existing release gates",
             "Dual-Loop verifier gates",
+            "Native Agent vs Delivery Clearance benchmark verifier gates",
             "release receipt summary",
         ):
             self.assertIn(phase, script)
@@ -48,6 +49,15 @@ class ReleaseCheckScriptTests(unittest.TestCase):
         self.assertIn("verify_cbb_external_audit_intake.py --check", script)
         self.assertIn("verify_personal_clearance_mvp.py --check", script)
         self.assertIn("verify_plugin_evidence_adapter.py --check", script)
+        self.assertIn("verify_benchmark_contracts.py --check", script)
+        self.assertIn("verify_benchmark_fairness.py --check", script)
+        self.assertIn("verify_benchmark_isolation.py --check", script)
+        self.assertIn("verify_benchmark_metrics.py --check", script)
+        self.assertIn("verify_benchmark_reproducibility.py --check", script)
+        self.assertIn("verify_benchmark_claim_boundary.py --check", script)
+        self.assertIn("verify_benchmark_source_preflight.py --check", script)
+        self.assertIn("verify_real_project_scenario_evidence.py --check", script)
+        self.assertIn("verify_real_agent_case_set.py --check", script)
         self.assertIn('release_python_prefix="$("$python_bin" -c', script)
         self.assertIn('--venv "$release_python_prefix"', script)
 
@@ -65,6 +75,10 @@ class ReleaseCheckScriptTests(unittest.TestCase):
         self.assertIn("NOT full release validation", completed.stdout)
         self.assertIn("== Phase: repository sanity ==", completed.stdout)
         self.assertIn("== Phase: Dual-Loop verifier gates ==", completed.stdout)
+        self.assertIn(
+            "== Phase: Native Agent vs Delivery Clearance benchmark verifier gates ==",
+            completed.stdout,
+        )
         self.assertIn("== Phase: release receipt summary ==", completed.stdout)
 
         receipt = json.loads(RECEIPT.read_text(encoding="utf-8"))
@@ -94,16 +108,14 @@ class ReleaseCheckScriptTests(unittest.TestCase):
         self.assertFalse(receipt["cbb_v1_conformance_verifiers_passed_individually"])
         self.assertTrue(receipt["cbb_v1_adoption_audit_verifiers_integrated"])
         self.assertFalse(receipt["cbb_v1_adoption_audit_verifiers_passed_individually"])
-        self.assertTrue(
-            receipt["cbb_v1_external_adoption_attestation_verifier_integrated"]
-        )
-        self.assertFalse(
-            receipt["cbb_v1_external_adoption_attestation_verifier_passed"]
-        )
+        self.assertTrue(receipt["cbb_v1_external_adoption_attestation_verifier_integrated"])
+        self.assertFalse(receipt["cbb_v1_external_adoption_attestation_verifier_passed"])
         self.assertTrue(receipt["personal_clearance_verifier_integrated"])
         self.assertFalse(receipt["personal_clearance_verifier_passed"])
         self.assertTrue(receipt["plugin_evidence_verifier_integrated"])
         self.assertFalse(receipt["plugin_evidence_verifier_passed"])
+        self.assertTrue(receipt["benchmark_verifiers_integrated"])
+        self.assertTrue(receipt["benchmark_verifiers_passed_individually"])
         self.assertTrue(receipt["partial_modes"]["dual_loop_only"])
         self.assertTrue(receipt["partial_modes"]["skip_clean_clone"])
         self.assertIn("do not claim full", receipt["claim_boundary"])

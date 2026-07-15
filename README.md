@@ -135,9 +135,102 @@ deterministic pre-check for Personal Clearance. It requires runtime, input, effe
 domain evidence according to the plugin's capability class. It never grants more than
 `personal_local`; external writes, credential use, and observed external mutation hard-block.
 
+## Validation
+- The Personal Clearance MVP has a reproducible 14-case verifier and 12 focused tests covering normal clearance, stale state, config drift, expiry, tamper, missing evidence, replay, failed checks, and explicit human responsibility.
+- A four-state real-project replay blocks three historical incomplete delivery states and moves only the converged 59/59 evidence state to human review; it authorizes no release by itself.
+- A frozen 12-case real-Agent set now binds public GitHub tasks, non-empty Agent-generated patches, and published SWE-bench-Live outcomes across 12 repositories; it is an evaluation input, not an effectiveness result.
+- The bound Sapient Slingshot 2.6.0 / GPT-5.5 submission solved 46 of 111 published TypeScript tasks: qualified as a non-trivial human-pilot candidate source, not as an autonomous delivery or review Agent.
+- Its local human protocol now separates metadata-only boundary reconstruction from digest-bound full issue/patch review; no real human sessions or comparative effect result have been recorded yet.
+- Passing evidence is bound only to the exact Git-visible state and `personal_local` scope.
+- Current results validate prototype mechanisms, not user value, AI correctness, customer delivery, production safety, or professional certification.
+- Reproduce the real sequence with `.venv/bin/python scripts/delivery_clearance_project_scenarios.py --replace`.
+- See [Validation](docs/VALIDATION.md), [Agent qualification (中文)](docs/evaluation/agent-capability-qualification.zh-CN.md), and the [real-Agent benchmark (中文)](docs/evaluation/real-agent-delivery-benchmark.zh-CN.md) for evidence, limitations, and the paired study still required.
+
+## Evaluate The Protocol, Not The Story
+
+The repository includes the public, paired **Native Agent vs Delivery Clearance
+Benchmark v0.1 harness** and a frozen 40-case mechanism rehearsal. The observed
+pilot is still in progress. The harness compares the same candidate, model/version,
+context, tools, permissions, and budget across four arms: native Agent, strengthened
+native Agent, an internal Delivery Clearance checklist, and an independent
+non-waivable clearance gate.
+
+```bash
+.venv/bin/python scripts/delivery_clearance_benchmark.py run \
+  --suite pilot-v0.1 \
+  --arms native,strengthened,internal-checklist,external-clearance \
+  --out .delivery-clearance/benchmarks/pilot-v0.1
+```
+
+The bundled 40-case run is a deterministic **mechanism rehearsal**, not evidence
+that Delivery Clearance is effective. Its public task identities come from
+SWE-bench-Live, TUA-Bench, tau-bench, and AgentDojo, but its balanced pass/fail
+variants are synthetic and explicitly record that official scorers were not run.
+An observed pilot requires scored candidates, blinded adjudication, per-decision
+tool traces, real human-review sessions, and six observed ablations before it may
+emit `pilot_complete`.
+
+To move beyond gold/empty/nop controls, the repository also freezes a
+[12-case real-Agent delivery set](docs/evaluation/real-agent-delivery-benchmark.zh-CN.md)
+from an accepted SWE-bench-Live submission. It uses real public tasks and real
+Agent patches, balanced across six published functional passes and six failures.
+The raw review material stays local; committed assets contain only source
+identity, digests, statistics, blinded packets, and an isolated functional
+oracle. Paired Agent review, local scorer replay, human adjudication, and cost
+measurement are still incomplete, so no effectiveness claim is allowed.
+
+The benchmark now embeds a preregistered incremental review-economic plan and a
+real-human evidence workflow. It compares each Agent baseline with independent
+clearance and separately compares boundary reconstruction with blinded full
+review. Missing reviewer-time or delay valuations remain unpriced resource use;
+the system does not invent a cost-effectiveness result. Use
+`human-evidence-status` to see which boundary, full-review, or adjudication
+receipts are still missing.
+
+Human reviewers can complete all three observed tasks in the local browser
+[Human Review Cockpit](docs/evaluation/human-review-cockpit.md):
+
+```bash
+.venv/bin/delivery-clearance-review --max-items 5
+```
+
+The Cockpit binds only to `127.0.0.1`, keeps the three roles separate, hides
+labels and Agent decisions, and stores aggregate receipts instead of raw answers.
+
+For a concrete project workflow rather than public benchmark fixtures, replay the
+[four-state real-project evaluation](docs/evaluation/real-project-validation.md)
+([中文](docs/evaluation/real-project-validation.zh-CN.md)), then open its two-mode
+boundary-vs-full-review protocol in the same Cockpit.
+
+The optional `capture` command runs pinned real Codex reviewer arms in ephemeral
+read-only workspaces. It withholds scorer outcomes and hidden labels, records only
+metadata digests and usage, and remains incomplete until independent scorer,
+adjudication, and human-reconstruction evidence is supplied.
+
+The optional `preflight` command verifies pinned public source/scorer revisions,
+selected task identities, license constraints, and local runtime prerequisites.
+It emits a blocked prerequisite receipt when Docker, task data, asset review, or
+an observed adapter is missing; it never treats source availability as scorer
+execution or effectiveness evidence.
+
+An AgentDojo fixed-candidate scorer bridge is included for bounded smoke tests.
+It records utility/security receipts and hashed trajectory-boundary evidence,
+but it remains separate from the 40-case observed pilot and cannot establish an
+effectiveness claim by itself.
+
+A tau-bench bridge also runs the pinned official deterministic environment
+evaluator over preregistered fixed trajectories. It records five passing controls
+and five policy-violation variants without exposing task payloads. This bridge uses
+`EvaluationType.ENV`; it excludes natural-language judging and is not a full
+tau-bench Agent-performance result.
+
+See [Native Agent vs Delivery Clearance Benchmark v0.1](docs/evaluation/native-agent-vs-delivery-clearance.md)
+for source revisions, license boundaries, methodology, statistics, artifacts,
+and prohibited claims.
+
 ## Current Reference Implementation
 
-The current `main` line includes deterministic, metadata-only implementations for:
+The current reference implementation includes deterministic, metadata-only components for:
 
 - a one-command personal-local clearance workflow for arbitrary local Git projects,
   with state-bound receipts, explicit per-run responsibility, configured check evidence,
@@ -145,6 +238,12 @@ The current `main` line includes deterministic, metadata-only implementations fo
 - a Plugin Evidence Adapter that keeps install metadata separate from runtime evidence and
   fails closed on external writes, credential use, unbound inputs, missing native checks, and
   missing professional-domain reconstruction;
+- a four-arm paired benchmark harness with public-source task identities, frozen
+  label isolation, metadata-only tool traces, human review-load measurement,
+  exact paired statistics, incremental review-economic evaluation, six ablations,
+  and claim-bounded mechanism/observed states;
+  the observed 40-case pilot is not complete until the required real human sessions
+  and blinded adjudications have been recorded;
 - controlled failure contracts and sandbox receipts;
 - attention reconstruction traces and summaries;
 - Dual-Loop gate receipts;

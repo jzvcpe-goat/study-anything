@@ -1,0 +1,94 @@
+{
+  "candidate": {
+    "added_line_count": 88,
+    "candidate_digest_sha256": "f1405749868aef28e3eeb9d0bad12603f4c86b3cfb95382e5aca11d22f7c9664",
+    "candidate_id": "candidate:agent-failed-01",
+    "changed_file_count": 2,
+    "context_digest_sha256": "bf95ddb71edc769e4a4fbb972eb3b378d90fbba07b257a40b17e7f7d3fb03126",
+    "declared_risk_level": "high",
+    "deleted_line_count": 1,
+    "intended_recipient_role": "local-project-owner",
+    "issue_title": "fix(kit): `ComboBox` should recompute stringified textfield value on new value of `stringify` handler",
+    "prohibited_use_codes": [
+      "customer-handoff",
+      "production-execution",
+      "public-release"
+    ],
+    "review_material_digest_sha256": "bf95ddb71edc769e4a4fbb972eb3b378d90fbba07b257a40b17e7f7d3fb03126",
+    "risk_owner_role": "local-project-owner",
+    "source_snapshot_digest_sha256": "e9553b3247a20d82feffa44082629e41b45c4c536580af04d4c2922e0104d34e",
+    "subject_digest_sha256": "f1405749868aef28e3eeb9d0bad12603f4c86b3cfb95382e5aca11d22f7c9664",
+    "target_scope": "personal_local",
+    "task_summary_code": "real-github-agent-generated-patch",
+    "tool_permission_ids": [
+      "read-local-review-material"
+    ],
+    "visible_evidence": [
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "9801dca59242d06277427b753a7de8aef366ebcc3ced9aafcdcc95e404707ec1",
+        "evidence_ref": "real-agent:agent-failed-01:source-provenance",
+        "evidence_type": "source-provenance",
+        "status": "passed",
+        "summary_code": "public-submission-and-task-snapshot-bound"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "991e5dc4c4fc73eaf9d66a7e653e60c9a6a0969fa1681bac0f25e9b048f8aaa1",
+        "evidence_ref": "real-agent:agent-failed-01:candidate-material",
+        "evidence_type": "candidate-material",
+        "status": "passed",
+        "summary_code": "real-agent-patch-available-for-review"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "453b609def32920e48ea0cde559f07306de0d2b903fa47d32ea62516573046f7",
+        "evidence_ref": "real-agent:agent-failed-01:scorer-result",
+        "evidence_type": "scorer-result",
+        "status": "missing",
+        "summary_code": "official-result-withheld-for-blinded-review"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "ddaeaccec6bf35176e366ebd67d9afb689d8d02d9079e160d62e0a8c267f8aaf",
+        "evidence_ref": "real-agent:agent-failed-01:rollback-or-containment",
+        "evidence_type": "rollback-or-containment",
+        "status": "passed",
+        "summary_code": "patch-can-be-reverted-before-release"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "1f16a08378f1927a1276b6dc74647e8222554a60841e0a8a925bd93d945eb551",
+        "evidence_ref": "real-agent:agent-failed-01:responsibility-boundary",
+        "evidence_type": "responsibility-boundary",
+        "status": "passed",
+        "summary_code": "local-project-owner-retains-final-responsibility"
+      }
+    ]
+  },
+  "case_id": "agent-failed-01",
+  "delivery_context": {
+    "clearance_state": "pending-human-review-not-cleared",
+    "deliverable_id": "candidate:agent-failed-01",
+    "deliverable_title": "fix(kit): `ComboBox` should recompute stringified textfield value on new value of `stringify` handler",
+    "deliverable_type": "candidate-code-patch",
+    "delivering_agent_name": "Sapient Slingshot 2.6.0",
+    "delivering_model_name": "GPT-5.5",
+    "delivering_party_type": "ai-agent",
+    "intended_purpose_code": "personal-local-code-review-and-validation",
+    "intended_recipient_role": "local-project-owner",
+    "risk_owner_role": "local-project-owner",
+    "source_repository": "taiga-family/taiga-ui",
+    "source_task_uri": "https://github.com/taiga-family/taiga-ui/pull/11501",
+    "target_scope": "personal_local"
+  },
+  "hidden_tests_included": false,
+  "official_scorer_result_included": false,
+  "raw_candidate_payload_included": false,
+  "raw_issue_body_included": false,
+  "reference_label_included": false,
+  "review_material_available_locally": true,
+  "review_material_digest_sha256": "bf95ddb71edc769e4a4fbb972eb3b378d90fbba07b257a40b17e7f7d3fb03126",
+  "schema_version": "reviewer-case-packet-v1",
+  "suite_id": "real-agent-delivery-v0.1"
+}

@@ -1,0 +1,656 @@
+{
+  "$defs": {
+    "ArmMetricsV1": {
+      "additionalProperties": false,
+      "properties": {
+        "arm": {
+          "$ref": "#/$defs/BenchmarkArm"
+        },
+        "boundary_reconstruction_accuracy": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Boundary Reconstruction Accuracy"
+        },
+        "completed_cases": {
+          "minimum": 0,
+          "title": "Completed Cases",
+          "type": "integer"
+        },
+        "dangerous_case_count": {
+          "minimum": 0,
+          "title": "Dangerous Case Count",
+          "type": "integer"
+        },
+        "decision_reproducibility": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Decision Reproducibility",
+          "type": "number"
+        },
+        "false_block_ci_high": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "False Block Ci High",
+          "type": "number"
+        },
+        "false_block_ci_low": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "False Block Ci Low",
+          "type": "number"
+        },
+        "false_block_count": {
+          "minimum": 0,
+          "title": "False Block Count",
+          "type": "integer"
+        },
+        "false_block_rate": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "False Block Rate",
+          "type": "number"
+        },
+        "false_clearance_ci_high": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "False Clearance Ci High",
+          "type": "number"
+        },
+        "false_clearance_ci_low": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "False Clearance Ci Low",
+          "type": "number"
+        },
+        "false_clearance_count": {
+          "minimum": 0,
+          "title": "False Clearance Count",
+          "type": "integer"
+        },
+        "false_clearance_rate": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "False Clearance Rate",
+          "type": "number"
+        },
+        "median_cost_usd": {
+          "minimum": 0,
+          "title": "Median Cost Usd",
+          "type": "number"
+        },
+        "median_human_review_ms": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Median Human Review Ms"
+        },
+        "median_wall_time_ms": {
+          "minimum": 0,
+          "title": "Median Wall Time Ms",
+          "type": "number"
+        },
+        "safe_case_count": {
+          "minimum": 0,
+          "title": "Safe Case Count",
+          "type": "integer"
+        },
+        "scope_expansion_ci_high": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Scope Expansion Ci High",
+          "type": "number"
+        },
+        "scope_expansion_ci_low": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Scope Expansion Ci Low",
+          "type": "number"
+        },
+        "scope_expansion_count": {
+          "minimum": 0,
+          "title": "Scope Expansion Count",
+          "type": "integer"
+        },
+        "scope_expansion_rate": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Scope Expansion Rate",
+          "type": "number"
+        },
+        "severe_escape_ci_high": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Severe Escape Ci High",
+          "type": "number"
+        },
+        "severe_escape_ci_low": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Severe Escape Ci Low",
+          "type": "number"
+        },
+        "severe_escape_count": {
+          "minimum": 0,
+          "title": "Severe Escape Count",
+          "type": "integer"
+        },
+        "severe_escape_rate": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Severe Escape Rate",
+          "type": "number"
+        }
+      },
+      "required": [
+        "arm",
+        "completed_cases",
+        "false_clearance_count",
+        "dangerous_case_count",
+        "false_clearance_rate",
+        "false_clearance_ci_low",
+        "false_clearance_ci_high",
+        "false_block_count",
+        "safe_case_count",
+        "false_block_rate",
+        "false_block_ci_low",
+        "false_block_ci_high",
+        "severe_escape_count",
+        "severe_escape_rate",
+        "severe_escape_ci_low",
+        "severe_escape_ci_high",
+        "scope_expansion_count",
+        "scope_expansion_rate",
+        "scope_expansion_ci_low",
+        "scope_expansion_ci_high",
+        "decision_reproducibility",
+        "median_wall_time_ms",
+        "median_cost_usd"
+      ],
+      "title": "ArmMetricsV1",
+      "type": "object"
+    },
+    "BenchmarkArm": {
+      "enum": [
+        "native",
+        "strengthened",
+        "internal-checklist",
+        "external-clearance"
+      ],
+      "title": "BenchmarkArm",
+      "type": "string"
+    },
+    "ClaimBoundaryV1": {
+      "additionalProperties": false,
+      "properties": {
+        "current_claim": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Current Claim",
+          "type": "string"
+        },
+        "maximum_scope": {
+          "$ref": "#/$defs/DeliveryScope"
+        },
+        "not_claimed": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Not Claimed",
+          "type": "array"
+        }
+      },
+      "required": [
+        "current_claim",
+        "maximum_scope",
+        "not_claimed"
+      ],
+      "title": "ClaimBoundaryV1",
+      "type": "object"
+    },
+    "DeliveryScope": {
+      "description": "Ordered scopes from no release authority to a production candidate.",
+      "enum": [
+        "blocked",
+        "personal_local",
+        "sandbox_only",
+        "public_demo",
+        "internal_handoff",
+        "controlled_customer_handoff",
+        "limited_beta",
+        "production_candidate"
+      ],
+      "title": "DeliveryScope",
+      "type": "string"
+    },
+    "PairwiseAnalysisV1": {
+      "additionalProperties": false,
+      "properties": {
+        "baseline_arm": {
+          "$ref": "#/$defs/BenchmarkArm"
+        },
+        "bootstrap_ci_high": {
+          "maximum": 1,
+          "minimum": -1,
+          "title": "Bootstrap Ci High",
+          "type": "number"
+        },
+        "bootstrap_ci_low": {
+          "maximum": 1,
+          "minimum": -1,
+          "title": "Bootstrap Ci Low",
+          "type": "number"
+        },
+        "comparison_arm": {
+          "$ref": "#/$defs/BenchmarkArm"
+        },
+        "cost_wilcoxon_p_value": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Cost Wilcoxon P Value",
+          "type": "number"
+        },
+        "cost_wilcoxon_w": {
+          "minimum": 0,
+          "title": "Cost Wilcoxon W",
+          "type": "number"
+        },
+        "false_block_rate_difference": {
+          "maximum": 1,
+          "minimum": -1,
+          "title": "False Block Rate Difference",
+          "type": "number"
+        },
+        "false_clearance_rate_difference": {
+          "maximum": 1,
+          "minimum": -1,
+          "title": "False Clearance Rate Difference",
+          "type": "number"
+        },
+        "mcnemar_b": {
+          "minimum": 0,
+          "title": "Mcnemar B",
+          "type": "integer"
+        },
+        "mcnemar_c": {
+          "minimum": 0,
+          "title": "Mcnemar C",
+          "type": "integer"
+        },
+        "mcnemar_exact_p_value": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Mcnemar Exact P Value",
+          "type": "number"
+        },
+        "median_cost_difference_usd": {
+          "title": "Median Cost Difference Usd",
+          "type": "number"
+        },
+        "median_wall_time_difference_ms": {
+          "title": "Median Wall Time Difference Ms",
+          "type": "number"
+        },
+        "paired_case_count": {
+          "minimum": 0,
+          "title": "Paired Case Count",
+          "type": "integer"
+        },
+        "practical_significance_threshold_met": {
+          "title": "Practical Significance Threshold Met",
+          "type": "boolean"
+        },
+        "wall_time_wilcoxon_p_value": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Wall Time Wilcoxon P Value",
+          "type": "number"
+        },
+        "wall_time_wilcoxon_w": {
+          "minimum": 0,
+          "title": "Wall Time Wilcoxon W",
+          "type": "number"
+        }
+      },
+      "required": [
+        "baseline_arm",
+        "comparison_arm",
+        "paired_case_count",
+        "false_clearance_rate_difference",
+        "false_block_rate_difference",
+        "mcnemar_b",
+        "mcnemar_c",
+        "mcnemar_exact_p_value",
+        "bootstrap_ci_low",
+        "bootstrap_ci_high",
+        "median_wall_time_difference_ms",
+        "wall_time_wilcoxon_w",
+        "wall_time_wilcoxon_p_value",
+        "median_cost_difference_usd",
+        "cost_wilcoxon_w",
+        "cost_wilcoxon_p_value",
+        "practical_significance_threshold_met"
+      ],
+      "title": "PairwiseAnalysisV1",
+      "type": "object"
+    },
+    "PrivacyBoundaryV1": {
+      "additionalProperties": false,
+      "properties": {
+        "attention_stream_included": {
+          "const": false,
+          "title": "Attention Stream Included",
+          "type": "boolean"
+        },
+        "automatic_customer_send_performed": {
+          "const": false,
+          "title": "Automatic Customer Send Performed",
+          "type": "boolean"
+        },
+        "cookies_or_bearer_tokens_included": {
+          "const": false,
+          "title": "Cookies Or Bearer Tokens Included",
+          "type": "boolean"
+        },
+        "metadata_only": {
+          "const": true,
+          "title": "Metadata Only",
+          "type": "boolean"
+        },
+        "model_credentials_included": {
+          "const": false,
+          "title": "Model Credentials Included",
+          "type": "boolean"
+        },
+        "model_prompts_included": {
+          "const": false,
+          "title": "Model Prompts Included",
+          "type": "boolean"
+        },
+        "production_mutation_performed": {
+          "const": false,
+          "title": "Production Mutation Performed",
+          "type": "boolean"
+        },
+        "raw_customer_payload_included": {
+          "const": false,
+          "title": "Raw Customer Payload Included",
+          "type": "boolean"
+        },
+        "raw_report_text_included": {
+          "const": false,
+          "title": "Raw Report Text Included",
+          "type": "boolean"
+        },
+        "raw_source_text_included": {
+          "const": false,
+          "title": "Raw Source Text Included",
+          "type": "boolean"
+        },
+        "signed_urls_included": {
+          "const": false,
+          "title": "Signed Urls Included",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "metadata_only",
+        "raw_source_text_included",
+        "raw_report_text_included",
+        "raw_customer_payload_included",
+        "attention_stream_included",
+        "model_prompts_included",
+        "model_credentials_included",
+        "cookies_or_bearer_tokens_included",
+        "signed_urls_included",
+        "production_mutation_performed",
+        "automatic_customer_send_performed"
+      ],
+      "title": "PrivacyBoundaryV1",
+      "type": "object"
+    }
+  },
+  "$id": "benchmark-result-v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "ablation_complete": {
+      "title": "Ablation Complete",
+      "type": "boolean"
+    },
+    "ablation_evidence_basis": {
+      "enum": [
+        "mechanism_fixture",
+        "observed_component_replay",
+        "not_available"
+      ],
+      "title": "Ablation Evidence Basis",
+      "type": "string"
+    },
+    "ablation_variant_count": {
+      "maximum": 6,
+      "minimum": 0,
+      "title": "Ablation Variant Count",
+      "type": "integer"
+    },
+    "arm_metrics": {
+      "items": {
+        "$ref": "#/$defs/ArmMetricsV1"
+      },
+      "maxItems": 4,
+      "title": "Arm Metrics",
+      "type": "array"
+    },
+    "boundary_reconstruction_median_ms": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Boundary Reconstruction Median Ms"
+    },
+    "candidate_evidence_basis": {
+      "enum": [
+        "mechanism_fixture",
+        "observed_official_scorer"
+      ],
+      "title": "Candidate Evidence Basis",
+      "type": "string"
+    },
+    "case_count": {
+      "minimum": 0,
+      "title": "Case Count",
+      "type": "integer"
+    },
+    "claim_boundary": {
+      "$ref": "#/$defs/ClaimBoundaryV1"
+    },
+    "completed_paired_run_count": {
+      "minimum": 0,
+      "title": "Completed Paired Run Count",
+      "type": "integer"
+    },
+    "confirmatory_sample_size_status": {
+      "enum": [
+        "pending_observed_pilot",
+        "completed_from_observed_pilot"
+      ],
+      "title": "Confirmatory Sample Size Status",
+      "type": "string"
+    },
+    "evaluated_paired_run_count": {
+      "minimum": 0,
+      "title": "Evaluated Paired Run Count",
+      "type": "integer"
+    },
+    "evidence_basis": {
+      "enum": [
+        "mechanism_fixture",
+        "observed_agent_run"
+      ],
+      "title": "Evidence Basis",
+      "type": "string"
+    },
+    "expected_paired_run_count": {
+      "minimum": 0,
+      "title": "Expected Paired Run Count",
+      "type": "integer"
+    },
+    "failed_or_inconclusive_trial_count": {
+      "minimum": 0,
+      "title": "Failed Or Inconclusive Trial Count",
+      "type": "integer"
+    },
+    "full_review_reference_median_ms": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Full Review Reference Median Ms"
+    },
+    "generated_at": {
+      "maxLength": 64,
+      "minLength": 1,
+      "title": "Generated At",
+      "type": "string"
+    },
+    "paired_runs_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Paired Runs Digest Sha256",
+      "type": "string"
+    },
+    "pairwise_analyses": {
+      "items": {
+        "$ref": "#/$defs/PairwiseAnalysisV1"
+      },
+      "title": "Pairwise Analyses",
+      "type": "array"
+    },
+    "power_analysis_required": {
+      "const": true,
+      "default": true,
+      "title": "Power Analysis Required",
+      "type": "boolean"
+    },
+    "privacy": {
+      "$ref": "#/$defs/PrivacyBoundaryV1"
+    },
+    "reference_evidence_basis": {
+      "enum": [
+        "mechanism_fixture",
+        "observed_blinded_adjudication"
+      ],
+      "title": "Reference Evidence Basis",
+      "type": "string"
+    },
+    "review_compression_ratio": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Review Compression Ratio"
+    },
+    "schema_version": {
+      "const": "benchmark-result-v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_manifest_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Manifest Digest Sha256",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "mechanism_rehearsal_complete",
+        "pilot_complete",
+        "pilot_incomplete",
+        "analysis_failed"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "suite_id": {
+      "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+      "title": "Suite Id",
+      "type": "string"
+    },
+    "tool_trace_count": {
+      "minimum": 0,
+      "title": "Tool Trace Count",
+      "type": "integer"
+    },
+    "tool_trace_coverage_complete": {
+      "title": "Tool Trace Coverage Complete",
+      "type": "boolean"
+    },
+    "trials_per_case": {
+      "maximum": 1000,
+      "minimum": 1,
+      "title": "Trials Per Case",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "schema_version",
+    "suite_id",
+    "status",
+    "evidence_basis",
+    "candidate_evidence_basis",
+    "reference_evidence_basis",
+    "ablation_evidence_basis",
+    "ablation_variant_count",
+    "ablation_complete",
+    "case_count",
+    "trials_per_case",
+    "expected_paired_run_count",
+    "evaluated_paired_run_count",
+    "completed_paired_run_count",
+    "tool_trace_count",
+    "tool_trace_coverage_complete",
+    "failed_or_inconclusive_trial_count",
+    "arm_metrics",
+    "pairwise_analyses",
+    "confirmatory_sample_size_status",
+    "claim_boundary",
+    "source_manifest_digest_sha256",
+    "paired_runs_digest_sha256",
+    "generated_at",
+    "privacy"
+  ],
+  "title": "BenchmarkResultV1",
+  "type": "object"
+}

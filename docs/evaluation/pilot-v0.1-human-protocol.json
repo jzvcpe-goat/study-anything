@@ -1,0 +1,42 @@
+{
+  "schema_version": "benchmark-human-protocol-v1",
+  "study_id": "native-agent-vs-delivery-clearance-pilot-v0.1",
+  "assembly": ".delivery-clearance/benchmarks/pilot-v0.1-observed-assembly-v2",
+  "boundary_reconstruction": {
+    "packet_dir": ".delivery-clearance/benchmarks/pilot-v0.1-observed-assembly-v2/reviewer-packets",
+    "output": ".delivery-clearance/benchmarks/pilot-v0.1-observed-human-sessions.jsonl",
+    "reviewer_role": "local-project-owner",
+    "order_seed": "pilot-v0.1-boundary-frozen-v2",
+    "max_items_per_batch": 10
+  },
+  "full_review_reference": {
+    "packet_dir": ".delivery-clearance/benchmarks/pilot-v0.1-observed-assembly-v2/reviewer-packets",
+    "output": ".delivery-clearance/benchmarks/pilot-v0.1-observed-human-sessions.jsonl",
+    "reviewer_role": "local-project-owner",
+    "order_seed": "pilot-v0.1-full-review-frozen",
+    "max_items_per_batch": 10
+  },
+  "blinded_adjudication": {
+    "packet_dir": ".delivery-clearance/benchmarks/pilot-v0.1-observed-assembly-v2/adjudication-packets",
+    "output": ".delivery-clearance/benchmarks/pilot-v0.1-observed-adjudications.jsonl",
+    "adjudicator_role": "local-project-owner-adjudicator",
+    "order_seed": "pilot-v0.1-adjudication-frozen",
+    "max_items_per_batch": 10
+  },
+  "privacy": {
+    "raw_answers_included": false,
+    "reviewer_identity_required": false,
+    "attention_stream_included": false,
+    "screenshots_included": false,
+    "keystrokes_included": false,
+    "biometrics_included": false
+  },
+  "claim_boundary": {
+    "maximum_scope": "personal_local",
+    "one_person_multiple_roles_must_be_disclosed": true,
+    "independent_reviewer_claimed": false,
+    "delivery_clearance_effectiveness_claimed": false,
+    "customer_delivery_validation_claimed": false,
+    "production_approval_claimed": false
+  }
+}

@@ -1,0 +1,746 @@
+{
+  "$defs": {
+    "BenchmarkArm": {
+      "enum": [
+        "native",
+        "strengthened",
+        "internal-checklist",
+        "external-clearance"
+      ],
+      "title": "BenchmarkArm",
+      "type": "string"
+    },
+    "ClearanceDisposition": {
+      "enum": [
+        "cleared",
+        "restricted",
+        "held",
+        "denied"
+      ],
+      "title": "ClearanceDisposition",
+      "type": "string"
+    },
+    "DeliveryScope": {
+      "description": "Ordered scopes from no release authority to a production candidate.",
+      "enum": [
+        "blocked",
+        "personal_local",
+        "sandbox_only",
+        "public_demo",
+        "internal_handoff",
+        "controlled_customer_handoff",
+        "limited_beta",
+        "production_candidate"
+      ],
+      "title": "DeliveryScope",
+      "type": "string"
+    },
+    "EvaluationStatus": {
+      "enum": [
+        "completed",
+        "failed",
+        "inconclusive"
+      ],
+      "title": "EvaluationStatus",
+      "type": "string"
+    },
+    "FairnessEnvelopeV1": {
+      "additionalProperties": false,
+      "properties": {
+        "cost_normalized_comparison": {
+          "title": "Cost Normalized Comparison",
+          "type": "boolean"
+        },
+        "fixed_seed_where_supported": {
+          "const": true,
+          "title": "Fixed Seed Where Supported",
+          "type": "boolean"
+        },
+        "hidden_labels_withheld": {
+          "const": true,
+          "title": "Hidden Labels Withheld",
+          "type": "boolean"
+        },
+        "hidden_tests_withheld": {
+          "const": true,
+          "title": "Hidden Tests Withheld",
+          "type": "boolean"
+        },
+        "isolated_memories": {
+          "const": true,
+          "title": "Isolated Memories",
+          "type": "boolean"
+        },
+        "isolated_workspaces": {
+          "const": true,
+          "title": "Isolated Workspaces",
+          "type": "boolean"
+        },
+        "native_control_not_weakened": {
+          "const": true,
+          "title": "Native Control Not Weakened",
+          "type": "boolean"
+        },
+        "same_budget": {
+          "title": "Same Budget",
+          "type": "boolean"
+        },
+        "same_candidate": {
+          "const": true,
+          "title": "Same Candidate",
+          "type": "boolean"
+        },
+        "same_context": {
+          "const": true,
+          "title": "Same Context",
+          "type": "boolean"
+        },
+        "same_model_and_version": {
+          "const": true,
+          "title": "Same Model And Version",
+          "type": "boolean"
+        },
+        "same_tool_permissions": {
+          "const": true,
+          "title": "Same Tool Permissions",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "same_candidate",
+        "same_model_and_version",
+        "same_context",
+        "same_tool_permissions",
+        "same_budget",
+        "cost_normalized_comparison",
+        "isolated_workspaces",
+        "isolated_memories",
+        "hidden_labels_withheld",
+        "hidden_tests_withheld",
+        "fixed_seed_where_supported",
+        "native_control_not_weakened"
+      ],
+      "title": "FairnessEnvelopeV1",
+      "type": "object"
+    },
+    "HumanReconstructionMeasurementV1": {
+      "additionalProperties": false,
+      "properties": {
+        "active_review_ms": {
+          "maximum": 86400000,
+          "minimum": 0,
+          "title": "Active Review Ms",
+          "type": "integer"
+        },
+        "boundary_questions_correct": {
+          "maximum": 5,
+          "minimum": 0,
+          "title": "Boundary Questions Correct",
+          "type": "integer"
+        },
+        "boundary_questions_total": {
+          "const": 5,
+          "title": "Boundary Questions Total",
+          "type": "integer"
+        },
+        "nasa_tlx_score": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Nasa Tlx Score"
+        },
+        "passive_attention_only": {
+          "const": false,
+          "default": false,
+          "title": "Passive Attention Only",
+          "type": "boolean"
+        },
+        "presentation_profile": {
+          "default": "technical_codes",
+          "enum": [
+            "plain_language",
+            "product_owner",
+            "software_engineer",
+            "security_audit",
+            "technical_codes"
+          ],
+          "title": "Presentation Profile",
+          "type": "string"
+        },
+        "professional_qualification_claimed": {
+          "const": false,
+          "default": false,
+          "title": "Professional Qualification Claimed",
+          "type": "boolean"
+        },
+        "qualification_scope": {
+          "const": "personal_local",
+          "title": "Qualification Scope",
+          "type": "string"
+        },
+        "raw_answers_included": {
+          "const": false,
+          "default": false,
+          "title": "Raw Answers Included",
+          "type": "boolean"
+        },
+        "raw_preflight_answers_included": {
+          "const": false,
+          "default": false,
+          "title": "Raw Preflight Answers Included",
+          "type": "boolean"
+        },
+        "review_entry_route": {
+          "default": "legacy_unspecified",
+          "enum": [
+            "legacy_unspecified",
+            "boundary_review_supported",
+            "full_review_supported",
+            "qualified_reviewer_required",
+            "scope_escalation_required",
+            "observer_boundary_only"
+          ],
+          "title": "Review Entry Route",
+          "type": "string"
+        },
+        "review_preflight_method": {
+          "default": "legacy_unspecified",
+          "enum": [
+            "legacy_unspecified",
+            "questionnaire_v1"
+          ],
+          "title": "Review Preflight Method",
+          "type": "string"
+        },
+        "review_preflight_policy_digest_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Review Preflight Policy Digest Sha256"
+        },
+        "reviewer_role": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Reviewer Role",
+          "type": "string"
+        },
+        "unresolved_question_count": {
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Unresolved Question Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "reviewer_role",
+        "qualification_scope",
+        "active_review_ms",
+        "boundary_questions_total",
+        "boundary_questions_correct",
+        "unresolved_question_count"
+      ],
+      "title": "HumanReconstructionMeasurementV1",
+      "type": "object"
+    },
+    "PrivacyBoundaryV1": {
+      "additionalProperties": false,
+      "properties": {
+        "attention_stream_included": {
+          "const": false,
+          "title": "Attention Stream Included",
+          "type": "boolean"
+        },
+        "automatic_customer_send_performed": {
+          "const": false,
+          "title": "Automatic Customer Send Performed",
+          "type": "boolean"
+        },
+        "cookies_or_bearer_tokens_included": {
+          "const": false,
+          "title": "Cookies Or Bearer Tokens Included",
+          "type": "boolean"
+        },
+        "metadata_only": {
+          "const": true,
+          "title": "Metadata Only",
+          "type": "boolean"
+        },
+        "model_credentials_included": {
+          "const": false,
+          "title": "Model Credentials Included",
+          "type": "boolean"
+        },
+        "model_prompts_included": {
+          "const": false,
+          "title": "Model Prompts Included",
+          "type": "boolean"
+        },
+        "production_mutation_performed": {
+          "const": false,
+          "title": "Production Mutation Performed",
+          "type": "boolean"
+        },
+        "raw_customer_payload_included": {
+          "const": false,
+          "title": "Raw Customer Payload Included",
+          "type": "boolean"
+        },
+        "raw_report_text_included": {
+          "const": false,
+          "title": "Raw Report Text Included",
+          "type": "boolean"
+        },
+        "raw_source_text_included": {
+          "const": false,
+          "title": "Raw Source Text Included",
+          "type": "boolean"
+        },
+        "signed_urls_included": {
+          "const": false,
+          "title": "Signed Urls Included",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "metadata_only",
+        "raw_source_text_included",
+        "raw_report_text_included",
+        "raw_customer_payload_included",
+        "attention_stream_included",
+        "model_prompts_included",
+        "model_credentials_included",
+        "cookies_or_bearer_tokens_included",
+        "signed_urls_included",
+        "production_mutation_performed",
+        "automatic_customer_send_performed"
+      ],
+      "title": "PrivacyBoundaryV1",
+      "type": "object"
+    },
+    "ResourceBudgetV1": {
+      "additionalProperties": false,
+      "properties": {
+        "max_cost_usd": {
+          "maximum": 100000,
+          "minimum": 0,
+          "title": "Max Cost Usd",
+          "type": "number"
+        },
+        "max_input_tokens": {
+          "maximum": 10000000,
+          "minimum": 1,
+          "title": "Max Input Tokens",
+          "type": "integer"
+        },
+        "max_output_tokens": {
+          "maximum": 10000000,
+          "minimum": 1,
+          "title": "Max Output Tokens",
+          "type": "integer"
+        },
+        "max_tool_calls": {
+          "maximum": 10000,
+          "minimum": 0,
+          "title": "Max Tool Calls",
+          "type": "integer"
+        },
+        "max_wall_time_ms": {
+          "maximum": 86400000,
+          "minimum": 1,
+          "title": "Max Wall Time Ms",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "max_input_tokens",
+        "max_output_tokens",
+        "max_tool_calls",
+        "max_wall_time_ms",
+        "max_cost_usd"
+      ],
+      "title": "ResourceBudgetV1",
+      "type": "object"
+    },
+    "ResourceUsageV1": {
+      "additionalProperties": false,
+      "properties": {
+        "cost_usd": {
+          "minimum": 0,
+          "title": "Cost Usd",
+          "type": "number"
+        },
+        "input_tokens": {
+          "minimum": 0,
+          "title": "Input Tokens",
+          "type": "integer"
+        },
+        "output_tokens": {
+          "minimum": 0,
+          "title": "Output Tokens",
+          "type": "integer"
+        },
+        "tool_calls": {
+          "minimum": 0,
+          "title": "Tool Calls",
+          "type": "integer"
+        },
+        "wall_time_ms": {
+          "minimum": 0,
+          "title": "Wall Time Ms",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "input_tokens",
+        "output_tokens",
+        "tool_calls",
+        "wall_time_ms",
+        "cost_usd"
+      ],
+      "title": "ResourceUsageV1",
+      "type": "object"
+    },
+    "ReviewerDecisionV1": {
+      "$id": "reviewer-decision-v1",
+      "additionalProperties": false,
+      "properties": {
+        "approved_scope": {
+          "$ref": "#/$defs/DeliveryScope"
+        },
+        "arm": {
+          "$ref": "#/$defs/BenchmarkArm"
+        },
+        "budget": {
+          "$ref": "#/$defs/ResourceBudgetV1"
+        },
+        "candidate_digest_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Candidate Digest Sha256",
+          "type": "string"
+        },
+        "case_id": {
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+          "title": "Case Id",
+          "type": "string"
+        },
+        "completed_at": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Completed At",
+          "type": "string"
+        },
+        "context_digest_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Context Digest Sha256",
+          "type": "string"
+        },
+        "decision_id": {
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+          "title": "Decision Id",
+          "type": "string"
+        },
+        "disposition": {
+          "$ref": "#/$defs/ClearanceDisposition"
+        },
+        "evidence_origin": {
+          "enum": [
+            "mechanism_fixture",
+            "observed_agent_run"
+          ],
+          "title": "Evidence Origin",
+          "type": "string"
+        },
+        "execution_trace_digest_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Execution Trace Digest Sha256"
+        },
+        "harness_ref": {
+          "maxLength": 240,
+          "minLength": 1,
+          "title": "Harness Ref",
+          "type": "string"
+        },
+        "hidden_labels_accessible": {
+          "const": false,
+          "default": false,
+          "title": "Hidden Labels Accessible",
+          "type": "boolean"
+        },
+        "hidden_tests_accessible": {
+          "const": false,
+          "default": false,
+          "title": "Hidden Tests Accessible",
+          "type": "boolean"
+        },
+        "human_reconstruction": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/HumanReconstructionMeasurementV1"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "model_ref": {
+          "maxLength": 240,
+          "minLength": 1,
+          "title": "Model Ref",
+          "type": "string"
+        },
+        "model_version": {
+          "maxLength": 240,
+          "minLength": 1,
+          "title": "Model Version",
+          "type": "string"
+        },
+        "privacy": {
+          "$ref": "#/$defs/PrivacyBoundaryV1"
+        },
+        "producing_agent_can_approve_own_output": {
+          "title": "Producing Agent Can Approve Own Output",
+          "type": "boolean"
+        },
+        "producing_agent_can_modify_final_gate": {
+          "title": "Producing Agent Can Modify Final Gate",
+          "type": "boolean"
+        },
+        "random_seed": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Random Seed"
+        },
+        "reason_codes": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 40,
+          "minItems": 1,
+          "title": "Reason Codes",
+          "type": "array"
+        },
+        "release_authorized": {
+          "title": "Release Authorized",
+          "type": "boolean"
+        },
+        "requested_evidence": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 40,
+          "title": "Requested Evidence",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "reviewer-decision-v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/EvaluationStatus"
+        },
+        "suite_id": {
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+          "title": "Suite Id",
+          "type": "string"
+        },
+        "tool_permission_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 40,
+          "minItems": 1,
+          "title": "Tool Permission Ids",
+          "type": "array"
+        },
+        "tool_trace_digest_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Tool Trace Digest Sha256",
+          "type": "string"
+        },
+        "trial_index": {
+          "maximum": 1000,
+          "minimum": 0,
+          "title": "Trial Index",
+          "type": "integer"
+        },
+        "usage": {
+          "$ref": "#/$defs/ResourceUsageV1"
+        }
+      },
+      "required": [
+        "schema_version",
+        "decision_id",
+        "suite_id",
+        "case_id",
+        "candidate_digest_sha256",
+        "arm",
+        "trial_index",
+        "evidence_origin",
+        "tool_trace_digest_sha256",
+        "status",
+        "disposition",
+        "release_authorized",
+        "approved_scope",
+        "reason_codes",
+        "requested_evidence",
+        "model_ref",
+        "model_version",
+        "harness_ref",
+        "tool_permission_ids",
+        "context_digest_sha256",
+        "budget",
+        "usage",
+        "producing_agent_can_modify_final_gate",
+        "producing_agent_can_approve_own_output",
+        "completed_at",
+        "privacy"
+      ],
+      "title": "ReviewerDecisionV1",
+      "type": "object"
+    }
+  },
+  "$id": "paired-run-v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "candidate_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Candidate Digest Sha256",
+      "type": "string"
+    },
+    "case_id": {
+      "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+      "title": "Case Id",
+      "type": "string"
+    },
+    "completed_at": {
+      "anyOf": [
+        {
+          "maxLength": 64,
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Completed At"
+    },
+    "decisions": {
+      "items": {
+        "$ref": "#/$defs/ReviewerDecisionV1"
+      },
+      "maxItems": 4,
+      "minItems": 1,
+      "title": "Decisions",
+      "type": "array"
+    },
+    "evidence_origin": {
+      "enum": [
+        "mechanism_fixture",
+        "observed_agent_run"
+      ],
+      "title": "Evidence Origin",
+      "type": "string"
+    },
+    "fairness": {
+      "$ref": "#/$defs/FairnessEnvelopeV1"
+    },
+    "privacy": {
+      "$ref": "#/$defs/PrivacyBoundaryV1"
+    },
+    "resume_key": {
+      "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+      "title": "Resume Key",
+      "type": "string"
+    },
+    "run_id": {
+      "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+      "title": "Run Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "paired-run-v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "started_at": {
+      "maxLength": 64,
+      "minLength": 1,
+      "title": "Started At",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "completed",
+        "incomplete",
+        "failed"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "suite_id": {
+      "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+      "title": "Suite Id",
+      "type": "string"
+    },
+    "trial_index": {
+      "maximum": 1000,
+      "minimum": 0,
+      "title": "Trial Index",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "schema_version",
+    "run_id",
+    "suite_id",
+    "case_id",
+    "candidate_digest_sha256",
+    "trial_index",
+    "evidence_origin",
+    "status",
+    "decisions",
+    "fairness",
+    "started_at",
+    "resume_key",
+    "privacy"
+  ],
+  "title": "PairedRunV1",
+  "type": "object"
+}

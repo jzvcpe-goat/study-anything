@@ -1,0 +1,23 @@
+{
+  "agent_name": "Sapient Slingshot 2.6.0",
+  "claim_boundary": "This case set contains real public GitHub tasks and real Agent-generated patches with published SWE-bench-Live functional outcomes. It establishes a reproducible personal-local evaluation input, not Delivery Clearance effectiveness, customer readiness, production safety, legal or security certification. Functional pass does not equal delivery clearance. A comparative claim requires local scorer replay, paired reviewer arms, blinded human adjudication, and review-cost measurement on these same candidates.",
+  "failed_case_count": 6,
+  "language": "typescript",
+  "local_official_scorer_reexecuted": false,
+  "max_cases_per_repository_per_stratum": 1,
+  "model_name": "GPT-5.5",
+  "passed_case_count": 6,
+  "predictions_digest_sha256": "e43077e9ba968774ec1095d0896510ad520671e4427bc4e0f4795d4cf2204b8e",
+  "raw_candidate_payload_vendored": false,
+  "raw_issue_body_vendored": false,
+  "results_digest_sha256": "3798d3306956dcd57a37aec90de1fdaa3997afa4e38eb0f58cc49f2b76b69bc0",
+  "schema_version": "real-agent-selection-protocol-v1",
+  "selection_order": "sha256-seed-outcome-task-id",
+  "selection_seed": "real-agent-delivery-v0.1",
+  "source_repository": "https://github.com/SWE-bench-Live/submission",
+  "source_revision": "894eaa94d702e39cda24beaf464df687e50736ad",
+  "submission_path": "submissions/multilang/js_ts/20260629-sapient-slingshot-gpt-5.5/ts",
+  "suite_id": "real-agent-delivery-v0.1",
+  "target_scope": "personal_local",
+  "task_context_source": "public-github-issue-or-pull-request"
+}

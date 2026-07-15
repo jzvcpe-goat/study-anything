@@ -1,0 +1,72 @@
+{
+  "case_count": 40,
+  "claim_boundary": {
+    "current_claim": "The public-source mechanism fixtures are ready to exercise the paired benchmark contracts and runner.",
+    "maximum_scope": "personal_local",
+    "not_claimed": [
+      "observed model effectiveness",
+      "statistical significance",
+      "customer delivery validation",
+      "production approval",
+      "professional-domain certification"
+    ]
+  },
+  "contract_schemas": [
+    "benchmark-case-v1",
+    "benchmark-result-v1",
+    "candidate-delivery-v1",
+    "paired-run-v1",
+    "review-economic-evaluation-plan-v1",
+    "reviewer-decision-v1"
+  ],
+  "dangerous_case_count": 20,
+  "label_isolation": {
+    "candidate_hidden_tests_included": false,
+    "candidate_reference_label_included": false,
+    "oracle_and_candidate_files_separate": true
+  },
+  "negative_checks": {
+    "amendment_rejects_model_outcome_selection": true,
+    "amendment_rejects_reordered_pool": true,
+    "candidate_rejects_duplicate_prohibited_uses": true,
+    "candidate_rejects_extra_oracle_field": true,
+    "candidate_rejects_local_absolute_path": true,
+    "candidate_rejects_reference_label": true,
+    "candidate_rejects_untraced_observed_scorer": true,
+    "case_rejects_label_mismatch": true,
+    "case_rejects_untraced_observed_adjudication": true
+  },
+  "privacy": {
+    "local_absolute_paths_included": false,
+    "metadata_only": true,
+    "model_credentials_included": false,
+    "production_mutation_performed": false,
+    "raw_model_prompts_included": false,
+    "upstream_task_payloads_included": false
+  },
+  "safe_case_count": 20,
+  "schema_version": "benchmark-contracts-verification-v1",
+  "selection_amendments": {
+    "count": 4,
+    "model_arm_outcomes_used": false,
+    "replacement_count": 9,
+    "safe_dangerous_balance_changed": false
+  },
+  "source_counts": {
+    "agentdojo": 8,
+    "swe-bench-live": 12,
+    "tau-bench": 10,
+    "tua-bench": 10
+  },
+  "status": "pass",
+  "suite_id": "pilot-v0.1",
+  "supporting_receipt_schemas": [
+    "benchmark-selection-amendment-v1",
+    "blinded-adjudication-receipt-v1",
+    "human-review-session-v1",
+    "review-execution-provenance-v1",
+    "scorer-execution-receipt-v1",
+    "source-preflight-receipt-v1",
+    "superseded-review-attempt-v1"
+  ]
+}

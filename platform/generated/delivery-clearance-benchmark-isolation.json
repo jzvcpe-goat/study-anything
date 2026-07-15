@@ -1,0 +1,25 @@
+{
+  "checks": {
+    "artifacts_pass_metadata_safety_scan": true,
+    "every_tool_call_has_metadata_trace": true,
+    "external_gate_forbids_self_approval": true,
+    "external_gate_not_producer_modifiable": true,
+    "isolated_workspaces_and_memories": true,
+    "labels_and_hidden_tests_withheld": true,
+    "oracle_directory_not_copied_to_run_output": true,
+    "reviewer_packets_exclude_hidden_tests": true,
+    "reviewer_packets_exclude_official_scorer_result": true,
+    "reviewer_packets_exclude_reference_decision": true,
+    "reviewer_packets_include_responsibility_boundaries": true,
+    "tool_trace_digests_verify": true,
+    "tool_traces_exclude_raw_arguments_and_outputs": true
+  },
+  "claim_boundary": "Isolation prevents producer self-clearance in the reference harness; it is not a production sandbox certification.",
+  "negative_checks": {
+    "external_self_approval_rejected": true,
+    "fixture_harness_cannot_claim_observed_execution": true
+  },
+  "reviewer_packet_count": 40,
+  "schema_version": "benchmark-isolation-verification-v1",
+  "status": "pass"
+}

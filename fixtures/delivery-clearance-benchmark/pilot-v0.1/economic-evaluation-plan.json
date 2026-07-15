@@ -1,0 +1,29 @@
+{
+  "claim_boundary": "This plan compares incremental resource use and observed review outcomes for the frozen personal-local pilot. Monetary or general cost-effectiveness conclusions remain blocked until local opportunity costs are explicitly supplied and observed human evidence is complete.",
+  "comparator_arms": [
+    "native",
+    "strengthened",
+    "internal-checklist"
+  ],
+  "currency": "USD",
+  "delivery_delay_value_usd_per_hour": null,
+  "discounting": "not_applicable",
+  "evaluation_perspective": "local_project_owner",
+  "general_cost_effectiveness_claim_allowed": false,
+  "guardrail_outcome": "false_blocks_added",
+  "human_review_comparator": "full_review_reference",
+  "human_review_intervention": "boundary_reconstruction",
+  "intervention_arm": "external-clearance",
+  "max_acceptable_false_block_rate_increase": 0.05,
+  "maximum_scope": "personal_local",
+  "minimum_acceptable_boundary_accuracy_difference": -0.05,
+  "plan_id": "economic-plan:pilot-v0.1:personal-local",
+  "price_date": null,
+  "primary_outcome": "false_clearances_avoided",
+  "raw_human_answers_included": false,
+  "reviewer_time_value_usd_per_hour": null,
+  "schema_version": "review-economic-evaluation-plan-v1",
+  "suite_id": "pilot-v0.1",
+  "time_horizon": "single_delivery_review",
+  "willingness_to_pay_per_false_clearance_avoided_usd": null
+}

@@ -1,0 +1,197 @@
+{
+  "$defs": {
+    "BenchmarkArm": {
+      "enum": [
+        "native",
+        "strengthened",
+        "internal-checklist",
+        "external-clearance"
+      ],
+      "title": "BenchmarkArm",
+      "type": "string"
+    }
+  },
+  "$id": "review-economic-evaluation-plan-v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Precommitted assumptions for incremental review evaluation.\n\nNullable monetary inputs are intentional. A missing local opportunity-cost\nvalue keeps the analysis in resource-use mode instead of inventing a price.",
+  "properties": {
+    "claim_boundary": {
+      "maxLength": 1000,
+      "minLength": 1,
+      "title": "Claim Boundary",
+      "type": "string"
+    },
+    "comparator_arms": {
+      "items": {
+        "$ref": "#/$defs/BenchmarkArm"
+      },
+      "maxItems": 3,
+      "minItems": 3,
+      "title": "Comparator Arms",
+      "type": "array"
+    },
+    "currency": {
+      "const": "USD",
+      "title": "Currency",
+      "type": "string"
+    },
+    "delivery_delay_value_usd_per_hour": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Delivery Delay Value Usd Per Hour"
+    },
+    "discounting": {
+      "const": "not_applicable",
+      "title": "Discounting",
+      "type": "string"
+    },
+    "evaluation_perspective": {
+      "const": "local_project_owner",
+      "title": "Evaluation Perspective",
+      "type": "string"
+    },
+    "general_cost_effectiveness_claim_allowed": {
+      "const": false,
+      "default": false,
+      "title": "General Cost Effectiveness Claim Allowed",
+      "type": "boolean"
+    },
+    "guardrail_outcome": {
+      "const": "false_blocks_added",
+      "title": "Guardrail Outcome",
+      "type": "string"
+    },
+    "human_review_comparator": {
+      "const": "full_review_reference",
+      "title": "Human Review Comparator",
+      "type": "string"
+    },
+    "human_review_intervention": {
+      "const": "boundary_reconstruction",
+      "title": "Human Review Intervention",
+      "type": "string"
+    },
+    "intervention_arm": {
+      "const": "external-clearance",
+      "title": "Intervention Arm",
+      "type": "string"
+    },
+    "max_acceptable_false_block_rate_increase": {
+      "default": 0.05,
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Max Acceptable False Block Rate Increase",
+      "type": "number"
+    },
+    "maximum_scope": {
+      "const": "personal_local",
+      "title": "Maximum Scope",
+      "type": "string"
+    },
+    "minimum_acceptable_boundary_accuracy_difference": {
+      "default": -0.05,
+      "maximum": 1,
+      "minimum": -1,
+      "title": "Minimum Acceptable Boundary Accuracy Difference",
+      "type": "number"
+    },
+    "plan_id": {
+      "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+      "title": "Plan Id",
+      "type": "string"
+    },
+    "price_date": {
+      "anyOf": [
+        {
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Price Date"
+    },
+    "primary_outcome": {
+      "const": "false_clearances_avoided",
+      "title": "Primary Outcome",
+      "type": "string"
+    },
+    "raw_human_answers_included": {
+      "const": false,
+      "default": false,
+      "title": "Raw Human Answers Included",
+      "type": "boolean"
+    },
+    "reviewer_time_value_usd_per_hour": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Reviewer Time Value Usd Per Hour"
+    },
+    "schema_version": {
+      "const": "review-economic-evaluation-plan-v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "suite_id": {
+      "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+      "title": "Suite Id",
+      "type": "string"
+    },
+    "time_horizon": {
+      "const": "single_delivery_review",
+      "title": "Time Horizon",
+      "type": "string"
+    },
+    "willingness_to_pay_per_false_clearance_avoided_usd": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Willingness To Pay Per False Clearance Avoided Usd"
+    }
+  },
+  "required": [
+    "schema_version",
+    "plan_id",
+    "suite_id",
+    "evaluation_perspective",
+    "intervention_arm",
+    "comparator_arms",
+    "human_review_intervention",
+    "human_review_comparator",
+    "primary_outcome",
+    "guardrail_outcome",
+    "time_horizon",
+    "discounting",
+    "currency",
+    "maximum_scope",
+    "claim_boundary"
+  ],
+  "title": "ReviewEconomicEvaluationPlanV1",
+  "type": "object"
+}

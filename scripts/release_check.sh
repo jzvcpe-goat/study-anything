@@ -48,6 +48,8 @@ personal_clearance_verifier_integrated="true"
 personal_clearance_verifier_passed="false"
 plugin_evidence_verifier_integrated="true"
 plugin_evidence_verifier_passed="false"
+benchmark_verifiers_integrated="true"
+benchmark_verifiers_passed_individually="false"
 known_issue="none"
 claim_boundary="Full release validation has not completed yet."
 PIP_INSTALL_TIMEOUT_SECONDS="${PIP_INSTALL_TIMEOUT_SECONDS:-900}"
@@ -220,6 +222,8 @@ payload = {
     "personal_clearance_verifier_passed": $(json_bool "$personal_clearance_verifier_passed"),
     "plugin_evidence_verifier_integrated": $(json_bool "$plugin_evidence_verifier_integrated"),
     "plugin_evidence_verifier_passed": $(json_bool "$plugin_evidence_verifier_passed"),
+    "benchmark_verifiers_integrated": $(json_bool "$benchmark_verifiers_integrated"),
+    "benchmark_verifiers_passed_individually": $(json_bool "$benchmark_verifiers_passed_individually"),
     "partial_modes": {
         "dual_loop_only": $(json_bool "$dual_loop_only_enabled"),
         "cbb_protocol_only": $(json_bool "$cbb_protocol_only_enabled"),
@@ -415,6 +419,20 @@ run_real_agent_eval_verifier_gates() {
   real_agent_eval_verifiers_passed_individually="true"
 }
 
+run_benchmark_verifier_gates() {
+  phase "Native Agent vs Delivery Clearance benchmark verifier gates"
+  "$python_bin" scripts/verify_benchmark_contracts.py --check
+  "$python_bin" scripts/verify_benchmark_fairness.py --check
+  "$python_bin" scripts/verify_benchmark_isolation.py --check
+  "$python_bin" scripts/verify_benchmark_metrics.py --check
+  "$python_bin" scripts/verify_benchmark_reproducibility.py --check
+  "$python_bin" scripts/verify_benchmark_claim_boundary.py --check
+  "$python_bin" scripts/verify_benchmark_source_preflight.py --check
+  "$python_bin" scripts/verify_real_project_scenario_evidence.py --check
+  "$python_bin" scripts/verify_real_agent_case_set.py --check
+  benchmark_verifiers_passed_individually="true"
+}
+
 printf "Delivery Clearance protocol release check\n"
 printf "============================\n"
 if [ "$dual_loop_only_enabled" = "true" ]; then
@@ -446,6 +464,7 @@ if [ "$dual_loop_only_enabled" = "true" ]; then
   printf "partial  skipping FastAPI/full dependency sanity; running Dual-Loop and CBB protocol gates only.\n"
   run_dual_loop_verifier_gates
   run_cbb_protocol_verifier_gates skip-dependency-backed-contracts
+  run_benchmark_verifier_gates
   phase "release receipt summary"
   write_release_receipt 0
   printf "release receipt: %s\n" "$receipt_path"
@@ -457,6 +476,7 @@ fi
 if [ "$cbb_protocol_only_enabled" = "true" ]; then
   printf "partial  skipping FastAPI/full dependency sanity; running CBB protocol gates only.\n"
   run_cbb_protocol_verifier_gates
+  run_benchmark_verifier_gates
   phase "release receipt summary"
   write_release_receipt 0
   printf "release receipt: %s\n" "$receipt_path"
@@ -770,6 +790,7 @@ printf "hint  after launching Docker Compose, run: API_BASE=http://127.0.0.1:800
 
 run_dual_loop_verifier_gates
 run_cbb_protocol_verifier_gates
+run_benchmark_verifier_gates
 run_llm_depth_verifier_gates
 run_real_agent_eval_verifier_gates
 

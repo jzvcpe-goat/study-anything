@@ -1,0 +1,296 @@
+{
+  "$defs": {
+    "BenchmarkSource": {
+      "enum": [
+        "swe-bench-live",
+        "tua-bench",
+        "tau-bench",
+        "agentdojo"
+      ],
+      "title": "BenchmarkSource",
+      "type": "string"
+    },
+    "OfficialScorerOutcome": {
+      "enum": [
+        "passed",
+        "failed",
+        "policy_violation",
+        "security_violation",
+        "inconclusive"
+      ],
+      "title": "OfficialScorerOutcome",
+      "type": "string"
+    },
+    "PrivacyBoundaryV1": {
+      "additionalProperties": false,
+      "properties": {
+        "attention_stream_included": {
+          "const": false,
+          "title": "Attention Stream Included",
+          "type": "boolean"
+        },
+        "automatic_customer_send_performed": {
+          "const": false,
+          "title": "Automatic Customer Send Performed",
+          "type": "boolean"
+        },
+        "cookies_or_bearer_tokens_included": {
+          "const": false,
+          "title": "Cookies Or Bearer Tokens Included",
+          "type": "boolean"
+        },
+        "metadata_only": {
+          "const": true,
+          "title": "Metadata Only",
+          "type": "boolean"
+        },
+        "model_credentials_included": {
+          "const": false,
+          "title": "Model Credentials Included",
+          "type": "boolean"
+        },
+        "model_prompts_included": {
+          "const": false,
+          "title": "Model Prompts Included",
+          "type": "boolean"
+        },
+        "production_mutation_performed": {
+          "const": false,
+          "title": "Production Mutation Performed",
+          "type": "boolean"
+        },
+        "raw_customer_payload_included": {
+          "const": false,
+          "title": "Raw Customer Payload Included",
+          "type": "boolean"
+        },
+        "raw_report_text_included": {
+          "const": false,
+          "title": "Raw Report Text Included",
+          "type": "boolean"
+        },
+        "raw_source_text_included": {
+          "const": false,
+          "title": "Raw Source Text Included",
+          "type": "boolean"
+        },
+        "signed_urls_included": {
+          "const": false,
+          "title": "Signed Urls Included",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "metadata_only",
+        "raw_source_text_included",
+        "raw_report_text_included",
+        "raw_customer_payload_included",
+        "attention_stream_included",
+        "model_prompts_included",
+        "model_credentials_included",
+        "cookies_or_bearer_tokens_included",
+        "signed_urls_included",
+        "production_mutation_performed",
+        "automatic_customer_send_performed"
+      ],
+      "title": "PrivacyBoundaryV1",
+      "type": "object"
+    }
+  },
+  "$id": "",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "asset_manifest_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Asset Manifest Digest Sha256",
+      "type": "string"
+    },
+    "benchmark_id": {
+      "$ref": "#/$defs/BenchmarkSource"
+    },
+    "case_id": {
+      "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+      "title": "Case Id",
+      "type": "string"
+    },
+    "command_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Command Digest Sha256",
+      "type": "string"
+    },
+    "completed_at": {
+      "maxLength": 64,
+      "minLength": 1,
+      "title": "Completed At",
+      "type": "string"
+    },
+    "dependency_lock_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Dependency Lock Digest Sha256",
+      "type": "string"
+    },
+    "exit_code": {
+      "title": "Exit Code",
+      "type": "integer"
+    },
+    "numeric_reward": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Numeric Reward"
+    },
+    "official_scorer_executed": {
+      "const": true,
+      "title": "Official Scorer Executed",
+      "type": "boolean"
+    },
+    "official_scorer_ref": {
+      "maxLength": 1000,
+      "minLength": 1,
+      "title": "Official Scorer Ref",
+      "type": "string"
+    },
+    "outcome": {
+      "$ref": "#/$defs/OfficialScorerOutcome"
+    },
+    "privacy": {
+      "$ref": "#/$defs/PrivacyBoundaryV1"
+    },
+    "raw_hidden_tests_included": {
+      "const": false,
+      "default": false,
+      "title": "Raw Hidden Tests Included",
+      "type": "boolean"
+    },
+    "raw_scorer_output_included": {
+      "const": false,
+      "default": false,
+      "title": "Raw Scorer Output Included",
+      "type": "boolean"
+    },
+    "receipt_id": {
+      "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+      "title": "Receipt Id",
+      "type": "string"
+    },
+    "runtime_image_digests_sha256": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 40,
+      "title": "Runtime Image Digests Sha256",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "scorer-execution-receipt-v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "scorer_output_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Scorer Output Digest Sha256",
+      "type": "string"
+    },
+    "scorer_source_revision": {
+      "pattern": "^[0-9a-f]{40,64}$",
+      "title": "Scorer Source Revision",
+      "type": "string"
+    },
+    "scorer_source_uri": {
+      "maxLength": 1000,
+      "pattern": "^https://",
+      "title": "Scorer Source Uri",
+      "type": "string"
+    },
+    "security_passed": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Security Passed"
+    },
+    "source_environment_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Environment Digest Sha256",
+      "type": "string"
+    },
+    "started_at": {
+      "maxLength": 64,
+      "minLength": 1,
+      "title": "Started At",
+      "type": "string"
+    },
+    "subject_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Subject Digest Sha256",
+      "type": "string"
+    },
+    "suite_id": {
+      "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+      "title": "Suite Id",
+      "type": "string"
+    },
+    "trace_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Trace Digest Sha256",
+      "type": "string"
+    },
+    "upstream_task_id": {
+      "maxLength": 240,
+      "minLength": 1,
+      "title": "Upstream Task Id",
+      "type": "string"
+    },
+    "utility_passed": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Utility Passed"
+    }
+  },
+  "required": [
+    "schema_version",
+    "receipt_id",
+    "suite_id",
+    "case_id",
+    "benchmark_id",
+    "upstream_task_id",
+    "subject_digest_sha256",
+    "source_environment_digest_sha256",
+    "scorer_source_uri",
+    "scorer_source_revision",
+    "official_scorer_ref",
+    "dependency_lock_digest_sha256",
+    "asset_manifest_digest_sha256",
+    "runtime_image_digests_sha256",
+    "command_digest_sha256",
+    "scorer_output_digest_sha256",
+    "outcome",
+    "exit_code",
+    "official_scorer_executed",
+    "started_at",
+    "completed_at",
+    "trace_digest_sha256",
+    "privacy"
+  ],
+  "title": "ScorerExecutionReceiptV1",
+  "type": "object"
+}

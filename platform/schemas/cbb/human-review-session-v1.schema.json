@@ -1,0 +1,349 @@
+{
+  "$defs": {
+    "HumanReconstructionMeasurementV1": {
+      "additionalProperties": false,
+      "properties": {
+        "active_review_ms": {
+          "maximum": 86400000,
+          "minimum": 0,
+          "title": "Active Review Ms",
+          "type": "integer"
+        },
+        "boundary_questions_correct": {
+          "maximum": 5,
+          "minimum": 0,
+          "title": "Boundary Questions Correct",
+          "type": "integer"
+        },
+        "boundary_questions_total": {
+          "const": 5,
+          "title": "Boundary Questions Total",
+          "type": "integer"
+        },
+        "nasa_tlx_score": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Nasa Tlx Score"
+        },
+        "passive_attention_only": {
+          "const": false,
+          "default": false,
+          "title": "Passive Attention Only",
+          "type": "boolean"
+        },
+        "presentation_profile": {
+          "default": "technical_codes",
+          "enum": [
+            "plain_language",
+            "product_owner",
+            "software_engineer",
+            "security_audit",
+            "technical_codes"
+          ],
+          "title": "Presentation Profile",
+          "type": "string"
+        },
+        "professional_qualification_claimed": {
+          "const": false,
+          "default": false,
+          "title": "Professional Qualification Claimed",
+          "type": "boolean"
+        },
+        "qualification_scope": {
+          "const": "personal_local",
+          "title": "Qualification Scope",
+          "type": "string"
+        },
+        "raw_answers_included": {
+          "const": false,
+          "default": false,
+          "title": "Raw Answers Included",
+          "type": "boolean"
+        },
+        "raw_preflight_answers_included": {
+          "const": false,
+          "default": false,
+          "title": "Raw Preflight Answers Included",
+          "type": "boolean"
+        },
+        "review_entry_route": {
+          "default": "legacy_unspecified",
+          "enum": [
+            "legacy_unspecified",
+            "boundary_review_supported",
+            "full_review_supported",
+            "qualified_reviewer_required",
+            "scope_escalation_required",
+            "observer_boundary_only"
+          ],
+          "title": "Review Entry Route",
+          "type": "string"
+        },
+        "review_preflight_method": {
+          "default": "legacy_unspecified",
+          "enum": [
+            "legacy_unspecified",
+            "questionnaire_v1"
+          ],
+          "title": "Review Preflight Method",
+          "type": "string"
+        },
+        "review_preflight_policy_digest_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Review Preflight Policy Digest Sha256"
+        },
+        "reviewer_role": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Reviewer Role",
+          "type": "string"
+        },
+        "unresolved_question_count": {
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Unresolved Question Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "reviewer_role",
+        "qualification_scope",
+        "active_review_ms",
+        "boundary_questions_total",
+        "boundary_questions_correct",
+        "unresolved_question_count"
+      ],
+      "title": "HumanReconstructionMeasurementV1",
+      "type": "object"
+    },
+    "PrivacyBoundaryV1": {
+      "additionalProperties": false,
+      "properties": {
+        "attention_stream_included": {
+          "const": false,
+          "title": "Attention Stream Included",
+          "type": "boolean"
+        },
+        "automatic_customer_send_performed": {
+          "const": false,
+          "title": "Automatic Customer Send Performed",
+          "type": "boolean"
+        },
+        "cookies_or_bearer_tokens_included": {
+          "const": false,
+          "title": "Cookies Or Bearer Tokens Included",
+          "type": "boolean"
+        },
+        "metadata_only": {
+          "const": true,
+          "title": "Metadata Only",
+          "type": "boolean"
+        },
+        "model_credentials_included": {
+          "const": false,
+          "title": "Model Credentials Included",
+          "type": "boolean"
+        },
+        "model_prompts_included": {
+          "const": false,
+          "title": "Model Prompts Included",
+          "type": "boolean"
+        },
+        "production_mutation_performed": {
+          "const": false,
+          "title": "Production Mutation Performed",
+          "type": "boolean"
+        },
+        "raw_customer_payload_included": {
+          "const": false,
+          "title": "Raw Customer Payload Included",
+          "type": "boolean"
+        },
+        "raw_report_text_included": {
+          "const": false,
+          "title": "Raw Report Text Included",
+          "type": "boolean"
+        },
+        "raw_source_text_included": {
+          "const": false,
+          "title": "Raw Source Text Included",
+          "type": "boolean"
+        },
+        "signed_urls_included": {
+          "const": false,
+          "title": "Signed Urls Included",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "metadata_only",
+        "raw_source_text_included",
+        "raw_report_text_included",
+        "raw_customer_payload_included",
+        "attention_stream_included",
+        "model_prompts_included",
+        "model_credentials_included",
+        "cookies_or_bearer_tokens_included",
+        "signed_urls_included",
+        "production_mutation_performed",
+        "automatic_customer_send_performed"
+      ],
+      "title": "PrivacyBoundaryV1",
+      "type": "object"
+    }
+  },
+  "$id": "",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "candidate_digest_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Candidate Digest Sha256"
+    },
+    "case_id": {
+      "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+      "title": "Case Id",
+      "type": "string"
+    },
+    "collection_method": {
+      "enum": [
+        "mechanism_fixture",
+        "interactive_scored_boundary",
+        "interactive_full_review",
+        "external_observed_measurement"
+      ],
+      "title": "Collection Method",
+      "type": "string"
+    },
+    "completed_at": {
+      "maxLength": 64,
+      "minLength": 1,
+      "title": "Completed At",
+      "type": "string"
+    },
+    "evidence_origin": {
+      "enum": [
+        "mechanism_fixture",
+        "observed_human_session"
+      ],
+      "title": "Evidence Origin",
+      "type": "string"
+    },
+    "measurement": {
+      "$ref": "#/$defs/HumanReconstructionMeasurementV1"
+    },
+    "measurement_trace_digest_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Measurement Trace Digest Sha256"
+    },
+    "privacy": {
+      "$ref": "#/$defs/PrivacyBoundaryV1"
+    },
+    "question_set_digest_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Question Set Digest Sha256"
+    },
+    "review_material_digest_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Review Material Digest Sha256"
+    },
+    "review_mode": {
+      "enum": [
+        "full_review_reference",
+        "boundary_reconstruction"
+      ],
+      "title": "Review Mode",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "human-review-session-v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "session_id": {
+      "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+      "title": "Session Id",
+      "type": "string"
+    },
+    "suite_id": {
+      "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+      "title": "Suite Id",
+      "type": "string"
+    },
+    "trial_index": {
+      "maximum": 1000,
+      "minimum": 0,
+      "title": "Trial Index",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "schema_version",
+    "session_id",
+    "suite_id",
+    "case_id",
+    "trial_index",
+    "review_mode",
+    "evidence_origin",
+    "collection_method",
+    "measurement",
+    "completed_at",
+    "privacy"
+  ],
+  "title": "HumanReviewSessionV1",
+  "type": "object"
+}

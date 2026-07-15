@@ -1,0 +1,94 @@
+{
+  "candidate": {
+    "added_line_count": 236,
+    "candidate_digest_sha256": "a8847fb9c18bd1b27222adf60fe68c576cf97dc6736f6ab353490d499e10b429",
+    "candidate_id": "candidate:agent-failed-04",
+    "changed_file_count": 5,
+    "context_digest_sha256": "4f580e446ac550bed8e14f3dd019e4f99a65dba2a02cbc159af6059762dfe2cf",
+    "declared_risk_level": "high",
+    "deleted_line_count": 35,
+    "intended_recipient_role": "local-project-owner",
+    "issue_title": "[navigation menu] Support inlined nesting",
+    "prohibited_use_codes": [
+      "customer-handoff",
+      "production-execution",
+      "public-release"
+    ],
+    "review_material_digest_sha256": "4f580e446ac550bed8e14f3dd019e4f99a65dba2a02cbc159af6059762dfe2cf",
+    "risk_owner_role": "local-project-owner",
+    "source_snapshot_digest_sha256": "dc39ffa6f8d4469835d9d1086235cf66773dc2e0b4ecd1a41be277e8f68ad4cf",
+    "subject_digest_sha256": "a8847fb9c18bd1b27222adf60fe68c576cf97dc6736f6ab353490d499e10b429",
+    "target_scope": "personal_local",
+    "task_summary_code": "real-github-agent-generated-patch",
+    "tool_permission_ids": [
+      "read-local-review-material"
+    ],
+    "visible_evidence": [
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "9b415e989ba0b46b9982e8b51565b7bd4fe22660df5a48cd27a5e686552db06e",
+        "evidence_ref": "real-agent:agent-failed-04:source-provenance",
+        "evidence_type": "source-provenance",
+        "status": "passed",
+        "summary_code": "public-submission-and-task-snapshot-bound"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "361765b4a6cf955c3fe6df915f1d45cb622702a80d090a8cacba5f321bfef902",
+        "evidence_ref": "real-agent:agent-failed-04:candidate-material",
+        "evidence_type": "candidate-material",
+        "status": "passed",
+        "summary_code": "real-agent-patch-available-for-review"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "f4e062c88670ff8aab400e4f03b18588bb4de496ea22dbd00d8188d1e57b58a7",
+        "evidence_ref": "real-agent:agent-failed-04:scorer-result",
+        "evidence_type": "scorer-result",
+        "status": "missing",
+        "summary_code": "official-result-withheld-for-blinded-review"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "6ae701bcedd9e0d134f00ac9b514c78b9a1a6c3cd596b78a6110e8f23cc5da43",
+        "evidence_ref": "real-agent:agent-failed-04:rollback-or-containment",
+        "evidence_type": "rollback-or-containment",
+        "status": "passed",
+        "summary_code": "patch-can-be-reverted-before-release"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "8417fc00578987444444ebbada5dd91fd45ce5ff2c04ec6c8d5a24292c3e1739",
+        "evidence_ref": "real-agent:agent-failed-04:responsibility-boundary",
+        "evidence_type": "responsibility-boundary",
+        "status": "passed",
+        "summary_code": "local-project-owner-retains-final-responsibility"
+      }
+    ]
+  },
+  "case_id": "agent-failed-04",
+  "delivery_context": {
+    "clearance_state": "pending-human-review-not-cleared",
+    "deliverable_id": "candidate:agent-failed-04",
+    "deliverable_title": "[navigation menu] Support inlined nesting",
+    "deliverable_type": "candidate-code-patch",
+    "delivering_agent_name": "Sapient Slingshot 2.6.0",
+    "delivering_model_name": "GPT-5.5",
+    "delivering_party_type": "ai-agent",
+    "intended_purpose_code": "personal-local-code-review-and-validation",
+    "intended_recipient_role": "local-project-owner",
+    "risk_owner_role": "local-project-owner",
+    "source_repository": "mui/base-ui",
+    "source_task_uri": "https://github.com/mui/base-ui/pull/2269",
+    "target_scope": "personal_local"
+  },
+  "hidden_tests_included": false,
+  "official_scorer_result_included": false,
+  "raw_candidate_payload_included": false,
+  "raw_issue_body_included": false,
+  "reference_label_included": false,
+  "review_material_available_locally": true,
+  "review_material_digest_sha256": "4f580e446ac550bed8e14f3dd019e4f99a65dba2a02cbc159af6059762dfe2cf",
+  "schema_version": "reviewer-case-packet-v1",
+  "suite_id": "real-agent-delivery-v0.1"
+}

@@ -1,0 +1,94 @@
+{
+  "candidate": {
+    "added_line_count": 74,
+    "candidate_digest_sha256": "24e9a9ca57b419b212e6895edcc3dd4fb817ec3da9f5b10039477c77e9efdeac",
+    "candidate_id": "candidate:agent-passed-04",
+    "changed_file_count": 5,
+    "context_digest_sha256": "b1348ba37f19f2ba3ad9391af381cb4830c2c298a9bbf9cc5e8427b969561a57",
+    "declared_risk_level": "high",
+    "deleted_line_count": 2,
+    "intended_recipient_role": "local-project-owner",
+    "issue_title": "fix(#2364): Add support for passing parameters to @ApiOperation",
+    "prohibited_use_codes": [
+      "customer-handoff",
+      "production-execution",
+      "public-release"
+    ],
+    "review_material_digest_sha256": "b1348ba37f19f2ba3ad9391af381cb4830c2c298a9bbf9cc5e8427b969561a57",
+    "risk_owner_role": "local-project-owner",
+    "source_snapshot_digest_sha256": "6bbf3b9d731a64eae40fbba0c0ffc3cbe92110b69cd25aa0984408506f3b28f0",
+    "subject_digest_sha256": "24e9a9ca57b419b212e6895edcc3dd4fb817ec3da9f5b10039477c77e9efdeac",
+    "target_scope": "personal_local",
+    "task_summary_code": "real-github-agent-generated-patch",
+    "tool_permission_ids": [
+      "read-local-review-material"
+    ],
+    "visible_evidence": [
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "98d7ad839913833a52860cc1b5ffa6b2f0e96d08ff0a58e1baf5829d673d99b3",
+        "evidence_ref": "real-agent:agent-passed-04:source-provenance",
+        "evidence_type": "source-provenance",
+        "status": "passed",
+        "summary_code": "public-submission-and-task-snapshot-bound"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "012a055c5ec338462abd9b6a940b91f12fc32e9825dc34c0c29acbadbf865177",
+        "evidence_ref": "real-agent:agent-passed-04:candidate-material",
+        "evidence_type": "candidate-material",
+        "status": "passed",
+        "summary_code": "real-agent-patch-available-for-review"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "0eda0c909539eb0e44ceca164175db5f26990bd5eed725dc18628e38f2f0a6a6",
+        "evidence_ref": "real-agent:agent-passed-04:scorer-result",
+        "evidence_type": "scorer-result",
+        "status": "missing",
+        "summary_code": "official-result-withheld-for-blinded-review"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "b082d22b192e8e66c02890b06adc99144206653d8900dd4b47ce01a88c1dc901",
+        "evidence_ref": "real-agent:agent-passed-04:rollback-or-containment",
+        "evidence_type": "rollback-or-containment",
+        "status": "passed",
+        "summary_code": "patch-can-be-reverted-before-release"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "68de19178074a2b5318e0f0b56802297baa6be710685856ddec1a5eaa5012d77",
+        "evidence_ref": "real-agent:agent-passed-04:responsibility-boundary",
+        "evidence_type": "responsibility-boundary",
+        "status": "passed",
+        "summary_code": "local-project-owner-retains-final-responsibility"
+      }
+    ]
+  },
+  "case_id": "agent-passed-04",
+  "delivery_context": {
+    "clearance_state": "pending-human-review-not-cleared",
+    "deliverable_id": "candidate:agent-passed-04",
+    "deliverable_title": "fix(#2364): Add support for passing parameters to @ApiOperation",
+    "deliverable_type": "candidate-code-patch",
+    "delivering_agent_name": "Sapient Slingshot 2.6.0",
+    "delivering_model_name": "GPT-5.5",
+    "delivering_party_type": "ai-agent",
+    "intended_purpose_code": "personal-local-code-review-and-validation",
+    "intended_recipient_role": "local-project-owner",
+    "risk_owner_role": "local-project-owner",
+    "source_repository": "openapi-ts/openapi-typescript",
+    "source_task_uri": "https://github.com/openapi-ts/openapi-typescript/pull/2365",
+    "target_scope": "personal_local"
+  },
+  "hidden_tests_included": false,
+  "official_scorer_result_included": false,
+  "raw_candidate_payload_included": false,
+  "raw_issue_body_included": false,
+  "reference_label_included": false,
+  "review_material_available_locally": true,
+  "review_material_digest_sha256": "b1348ba37f19f2ba3ad9391af381cb4830c2c298a9bbf9cc5e8427b969561a57",
+  "schema_version": "reviewer-case-packet-v1",
+  "suite_id": "real-agent-delivery-v0.1"
+}

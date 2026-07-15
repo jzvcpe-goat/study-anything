@@ -1,0 +1,469 @@
+{
+  "$defs": {
+    "BenchmarkArm": {
+      "enum": [
+        "native",
+        "strengthened",
+        "internal-checklist",
+        "external-clearance"
+      ],
+      "title": "BenchmarkArm",
+      "type": "string"
+    },
+    "ClearanceDisposition": {
+      "enum": [
+        "cleared",
+        "restricted",
+        "held",
+        "denied"
+      ],
+      "title": "ClearanceDisposition",
+      "type": "string"
+    },
+    "DeliveryScope": {
+      "description": "Ordered scopes from no release authority to a production candidate.",
+      "enum": [
+        "blocked",
+        "personal_local",
+        "sandbox_only",
+        "public_demo",
+        "internal_handoff",
+        "controlled_customer_handoff",
+        "limited_beta",
+        "production_candidate"
+      ],
+      "title": "DeliveryScope",
+      "type": "string"
+    },
+    "EvaluationStatus": {
+      "enum": [
+        "completed",
+        "failed",
+        "inconclusive"
+      ],
+      "title": "EvaluationStatus",
+      "type": "string"
+    },
+    "PrivacyBoundaryV1": {
+      "additionalProperties": false,
+      "properties": {
+        "attention_stream_included": {
+          "const": false,
+          "title": "Attention Stream Included",
+          "type": "boolean"
+        },
+        "automatic_customer_send_performed": {
+          "const": false,
+          "title": "Automatic Customer Send Performed",
+          "type": "boolean"
+        },
+        "cookies_or_bearer_tokens_included": {
+          "const": false,
+          "title": "Cookies Or Bearer Tokens Included",
+          "type": "boolean"
+        },
+        "metadata_only": {
+          "const": true,
+          "title": "Metadata Only",
+          "type": "boolean"
+        },
+        "model_credentials_included": {
+          "const": false,
+          "title": "Model Credentials Included",
+          "type": "boolean"
+        },
+        "model_prompts_included": {
+          "const": false,
+          "title": "Model Prompts Included",
+          "type": "boolean"
+        },
+        "production_mutation_performed": {
+          "const": false,
+          "title": "Production Mutation Performed",
+          "type": "boolean"
+        },
+        "raw_customer_payload_included": {
+          "const": false,
+          "title": "Raw Customer Payload Included",
+          "type": "boolean"
+        },
+        "raw_report_text_included": {
+          "const": false,
+          "title": "Raw Report Text Included",
+          "type": "boolean"
+        },
+        "raw_source_text_included": {
+          "const": false,
+          "title": "Raw Source Text Included",
+          "type": "boolean"
+        },
+        "signed_urls_included": {
+          "const": false,
+          "title": "Signed Urls Included",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "metadata_only",
+        "raw_source_text_included",
+        "raw_report_text_included",
+        "raw_customer_payload_included",
+        "attention_stream_included",
+        "model_prompts_included",
+        "model_credentials_included",
+        "cookies_or_bearer_tokens_included",
+        "signed_urls_included",
+        "production_mutation_performed",
+        "automatic_customer_send_performed"
+      ],
+      "title": "PrivacyBoundaryV1",
+      "type": "object"
+    },
+    "ResourceBudgetV1": {
+      "additionalProperties": false,
+      "properties": {
+        "max_cost_usd": {
+          "maximum": 100000,
+          "minimum": 0,
+          "title": "Max Cost Usd",
+          "type": "number"
+        },
+        "max_input_tokens": {
+          "maximum": 10000000,
+          "minimum": 1,
+          "title": "Max Input Tokens",
+          "type": "integer"
+        },
+        "max_output_tokens": {
+          "maximum": 10000000,
+          "minimum": 1,
+          "title": "Max Output Tokens",
+          "type": "integer"
+        },
+        "max_tool_calls": {
+          "maximum": 10000,
+          "minimum": 0,
+          "title": "Max Tool Calls",
+          "type": "integer"
+        },
+        "max_wall_time_ms": {
+          "maximum": 86400000,
+          "minimum": 1,
+          "title": "Max Wall Time Ms",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "max_input_tokens",
+        "max_output_tokens",
+        "max_tool_calls",
+        "max_wall_time_ms",
+        "max_cost_usd"
+      ],
+      "title": "ResourceBudgetV1",
+      "type": "object"
+    },
+    "ResourceUsageV1": {
+      "additionalProperties": false,
+      "properties": {
+        "cost_usd": {
+          "minimum": 0,
+          "title": "Cost Usd",
+          "type": "number"
+        },
+        "input_tokens": {
+          "minimum": 0,
+          "title": "Input Tokens",
+          "type": "integer"
+        },
+        "output_tokens": {
+          "minimum": 0,
+          "title": "Output Tokens",
+          "type": "integer"
+        },
+        "tool_calls": {
+          "minimum": 0,
+          "title": "Tool Calls",
+          "type": "integer"
+        },
+        "wall_time_ms": {
+          "minimum": 0,
+          "title": "Wall Time Ms",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "input_tokens",
+        "output_tokens",
+        "tool_calls",
+        "wall_time_ms",
+        "cost_usd"
+      ],
+      "title": "ResourceUsageV1",
+      "type": "object"
+    }
+  },
+  "$id": "",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Append-only metadata for a reviewer execution replaced by resume.",
+  "properties": {
+    "approved_scope": {
+      "$ref": "#/$defs/DeliveryScope"
+    },
+    "arm": {
+      "$ref": "#/$defs/BenchmarkArm"
+    },
+    "attempt_id": {
+      "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+      "title": "Attempt Id",
+      "type": "string"
+    },
+    "attempt_sequence": {
+      "maximum": 1000,
+      "minimum": 0,
+      "title": "Attempt Sequence",
+      "type": "integer"
+    },
+    "budget": {
+      "$ref": "#/$defs/ResourceBudgetV1"
+    },
+    "cached_input_tokens": {
+      "minimum": 0,
+      "title": "Cached Input Tokens",
+      "type": "integer"
+    },
+    "candidate_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Candidate Digest Sha256",
+      "type": "string"
+    },
+    "case_id": {
+      "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+      "title": "Case Id",
+      "type": "string"
+    },
+    "context_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Context Digest Sha256",
+      "type": "string"
+    },
+    "cost_basis": {
+      "enum": [
+        "metered",
+        "estimated",
+        "subscription_unmetered"
+      ],
+      "title": "Cost Basis",
+      "type": "string"
+    },
+    "decision_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Decision Digest Sha256",
+      "type": "string"
+    },
+    "decision_id": {
+      "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+      "title": "Decision Id",
+      "type": "string"
+    },
+    "disposition": {
+      "$ref": "#/$defs/ClearanceDisposition"
+    },
+    "event_stream_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Event Stream Digest Sha256",
+      "type": "string"
+    },
+    "execution_trace_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Execution Trace Digest Sha256",
+      "type": "string"
+    },
+    "harness_ref": {
+      "maxLength": 240,
+      "minLength": 1,
+      "title": "Harness Ref",
+      "type": "string"
+    },
+    "model_ref": {
+      "maxLength": 240,
+      "minLength": 1,
+      "title": "Model Ref",
+      "type": "string"
+    },
+    "model_version": {
+      "maxLength": 240,
+      "minLength": 1,
+      "title": "Model Version",
+      "type": "string"
+    },
+    "original_completed_at": {
+      "maxLength": 64,
+      "minLength": 1,
+      "title": "Original Completed At",
+      "type": "string"
+    },
+    "privacy": {
+      "$ref": "#/$defs/PrivacyBoundaryV1"
+    },
+    "prompt_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Prompt Digest Sha256",
+      "type": "string"
+    },
+    "provider_thread_id_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Provider Thread Id Digest Sha256",
+      "type": "string"
+    },
+    "raw_event_stream_included": {
+      "const": false,
+      "default": false,
+      "title": "Raw Event Stream Included",
+      "type": "boolean"
+    },
+    "raw_model_output_included": {
+      "const": false,
+      "default": false,
+      "title": "Raw Model Output Included",
+      "type": "boolean"
+    },
+    "raw_stderr_included": {
+      "const": false,
+      "default": false,
+      "title": "Raw Stderr Included",
+      "type": "boolean"
+    },
+    "reason_codes": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 40,
+      "minItems": 1,
+      "title": "Reason Codes",
+      "type": "array"
+    },
+    "reasoning_output_tokens": {
+      "minimum": 0,
+      "title": "Reasoning Output Tokens",
+      "type": "integer"
+    },
+    "release_authorized": {
+      "title": "Release Authorized",
+      "type": "boolean"
+    },
+    "requested_evidence": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 40,
+      "title": "Requested Evidence",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "superseded-review-attempt-v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "$ref": "#/$defs/EvaluationStatus"
+    },
+    "stderr_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Stderr Digest Sha256",
+      "type": "string"
+    },
+    "structured_response_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Structured Response Digest Sha256",
+      "type": "string"
+    },
+    "suite_id": {
+      "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+      "title": "Suite Id",
+      "type": "string"
+    },
+    "superseded_at": {
+      "maxLength": 64,
+      "minLength": 1,
+      "title": "Superseded At",
+      "type": "string"
+    },
+    "superseded_reason": {
+      "enum": [
+        "retry-failed-execution",
+        "retry-inconclusive-execution",
+        "complete-external-with-human-reconstruction"
+      ],
+      "title": "Superseded Reason",
+      "type": "string"
+    },
+    "tool_trace_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Tool Trace Digest Sha256",
+      "type": "string"
+    },
+    "trace_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Trace Digest Sha256",
+      "type": "string"
+    },
+    "trial_index": {
+      "maximum": 1000,
+      "minimum": 0,
+      "title": "Trial Index",
+      "type": "integer"
+    },
+    "usage": {
+      "$ref": "#/$defs/ResourceUsageV1"
+    },
+    "workspace_identity_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Workspace Identity Digest Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "attempt_id",
+    "decision_id",
+    "attempt_sequence",
+    "suite_id",
+    "case_id",
+    "trial_index",
+    "arm",
+    "candidate_digest_sha256",
+    "context_digest_sha256",
+    "model_ref",
+    "model_version",
+    "harness_ref",
+    "status",
+    "disposition",
+    "release_authorized",
+    "approved_scope",
+    "reason_codes",
+    "requested_evidence",
+    "decision_digest_sha256",
+    "tool_trace_digest_sha256",
+    "execution_trace_digest_sha256",
+    "prompt_digest_sha256",
+    "structured_response_digest_sha256",
+    "workspace_identity_digest_sha256",
+    "provider_thread_id_digest_sha256",
+    "event_stream_digest_sha256",
+    "stderr_digest_sha256",
+    "budget",
+    "usage",
+    "cached_input_tokens",
+    "reasoning_output_tokens",
+    "cost_basis",
+    "superseded_reason",
+    "original_completed_at",
+    "superseded_at",
+    "trace_digest_sha256",
+    "privacy"
+  ],
+  "title": "SupersededReviewAttemptV1",
+  "type": "object"
+}

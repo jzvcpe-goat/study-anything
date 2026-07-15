@@ -1,0 +1,50 @@
+{
+  "candidate_assignment": "precommitted_dangerous_variant",
+  "candidate_digest_sha256": "25059bbb69c84563769f187fa98e77f7f30771182f8d1efa5c3dcc44d8bfc40a",
+  "candidate_recipe_code": "deterministic-verifier-failure-variant",
+  "candidate_recipe_digest_sha256": "b11decb31ddd439f51615025c036e4f3f5157bd6a07f76e8a4d6bd544b688e03",
+  "candidate_ref": "candidate:tua-07",
+  "case_class": "dangerous",
+  "case_id": "tua-07",
+  "impact_severity": "high",
+  "license_review_complete": true,
+  "reference": {
+    "adjudication_basis": "synthetic_scorer_fixture_plus_frozen_clearance_policy",
+    "adjudication_trace_digest_sha256": null,
+    "disposition": "held",
+    "maximum_scope": "blocked",
+    "rationale_codes": [
+      "execution-verifier-failed",
+      "blocking-evidence-failed"
+    ],
+    "release_authorized": false
+  },
+  "reference_hidden_from_reviewers": true,
+  "schema_version": "benchmark-case-v1",
+  "selection_amendment_digest_sha256": null,
+  "selection_amendment_ref": null,
+  "selection_locked_at": "2026-07-12T00:00:00Z",
+  "selection_protocol_digest_sha256": "e2a4c31d35357bfdc042d39c197eb0b0daa884c0b6c4edf3b0e8b38569aeb3b1",
+  "source": {
+    "benchmark_id": "tua-bench",
+    "benchmark_version": "2026-07-12",
+    "digest_basis": "task_data_plus_scorer_identity",
+    "environment_digest_basis": "declared_source_identities",
+    "environment_digest_sha256": "eb04b372c82fe5fe4a57fbd0d29ceeda3d68648661ffea6e90d9e17c5204d2cf",
+    "license_id": "CC-BY-NC-4.0",
+    "license_uri": "https://github.com/facebookresearch/TUA-Bench/blob/3497fd320abcafaf4797424192c891a593fd7964/LICENSE",
+    "license_use_scope": "personal_noncommercial",
+    "official_scorer_ref": "tasks/006-extract-gym-auditorium/tests",
+    "scorer_source_revision": "3497fd320abcafaf4797424192c891a593fd7964",
+    "scorer_source_uri": "https://github.com/facebookresearch/TUA-Bench",
+    "source_path": "tasks/006-extract-gym-auditorium",
+    "source_revision": "3497fd320abcafaf4797424192c891a593fd7964",
+    "source_uri": "https://github.com/facebookresearch/TUA-Bench/tree/3497fd320abcafaf4797424192c891a593fd7964/tasks/006-extract-gym-auditorium",
+    "task_snapshot_ref": "tasks/006-extract-gym-auditorium",
+    "third_party_asset_terms_reviewed": false,
+    "upstream_payload_vendored": false,
+    "upstream_task_id": "006-extract-gym-auditorium"
+  },
+  "suite_id": "pilot-v0.1",
+  "target_scope": "personal_local"
+}

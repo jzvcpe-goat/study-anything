@@ -1,0 +1,233 @@
+{
+  "$defs": {
+    "ClearanceDisposition": {
+      "enum": [
+        "cleared",
+        "restricted",
+        "held",
+        "denied"
+      ],
+      "title": "ClearanceDisposition",
+      "type": "string"
+    },
+    "DeliveryScope": {
+      "description": "Ordered scopes from no release authority to a production candidate.",
+      "enum": [
+        "blocked",
+        "personal_local",
+        "sandbox_only",
+        "public_demo",
+        "internal_handoff",
+        "controlled_customer_handoff",
+        "limited_beta",
+        "production_candidate"
+      ],
+      "title": "DeliveryScope",
+      "type": "string"
+    },
+    "PrivacyBoundaryV1": {
+      "additionalProperties": false,
+      "properties": {
+        "attention_stream_included": {
+          "const": false,
+          "title": "Attention Stream Included",
+          "type": "boolean"
+        },
+        "automatic_customer_send_performed": {
+          "const": false,
+          "title": "Automatic Customer Send Performed",
+          "type": "boolean"
+        },
+        "cookies_or_bearer_tokens_included": {
+          "const": false,
+          "title": "Cookies Or Bearer Tokens Included",
+          "type": "boolean"
+        },
+        "metadata_only": {
+          "const": true,
+          "title": "Metadata Only",
+          "type": "boolean"
+        },
+        "model_credentials_included": {
+          "const": false,
+          "title": "Model Credentials Included",
+          "type": "boolean"
+        },
+        "model_prompts_included": {
+          "const": false,
+          "title": "Model Prompts Included",
+          "type": "boolean"
+        },
+        "production_mutation_performed": {
+          "const": false,
+          "title": "Production Mutation Performed",
+          "type": "boolean"
+        },
+        "raw_customer_payload_included": {
+          "const": false,
+          "title": "Raw Customer Payload Included",
+          "type": "boolean"
+        },
+        "raw_report_text_included": {
+          "const": false,
+          "title": "Raw Report Text Included",
+          "type": "boolean"
+        },
+        "raw_source_text_included": {
+          "const": false,
+          "title": "Raw Source Text Included",
+          "type": "boolean"
+        },
+        "signed_urls_included": {
+          "const": false,
+          "title": "Signed Urls Included",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "metadata_only",
+        "raw_source_text_included",
+        "raw_report_text_included",
+        "raw_customer_payload_included",
+        "attention_stream_included",
+        "model_prompts_included",
+        "model_credentials_included",
+        "cookies_or_bearer_tokens_included",
+        "signed_urls_included",
+        "production_mutation_performed",
+        "automatic_customer_send_performed"
+      ],
+      "title": "PrivacyBoundaryV1",
+      "type": "object"
+    }
+  },
+  "$id": "",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "adjudication_protocol_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Adjudication Protocol Digest Sha256",
+      "type": "string"
+    },
+    "adjudicator_role": {
+      "maxLength": 120,
+      "minLength": 1,
+      "title": "Adjudicator Role",
+      "type": "string"
+    },
+    "arm_decisions_accessible": {
+      "const": false,
+      "default": false,
+      "title": "Arm Decisions Accessible",
+      "type": "boolean"
+    },
+    "arm_identities_accessible": {
+      "const": false,
+      "default": false,
+      "title": "Arm Identities Accessible",
+      "type": "boolean"
+    },
+    "candidate_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Candidate Digest Sha256",
+      "type": "string"
+    },
+    "case_id": {
+      "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+      "title": "Case Id",
+      "type": "string"
+    },
+    "completed_at": {
+      "maxLength": 64,
+      "minLength": 1,
+      "title": "Completed At",
+      "type": "string"
+    },
+    "disposition": {
+      "$ref": "#/$defs/ClearanceDisposition"
+    },
+    "maximum_scope": {
+      "$ref": "#/$defs/DeliveryScope"
+    },
+    "privacy": {
+      "$ref": "#/$defs/PrivacyBoundaryV1"
+    },
+    "qualification_scope": {
+      "const": "personal_local",
+      "title": "Qualification Scope",
+      "type": "string"
+    },
+    "rationale_codes": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 20,
+      "minItems": 1,
+      "title": "Rationale Codes",
+      "type": "array"
+    },
+    "raw_adjudication_notes_included": {
+      "const": false,
+      "default": false,
+      "title": "Raw Adjudication Notes Included",
+      "type": "boolean"
+    },
+    "receipt_id": {
+      "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+      "title": "Receipt Id",
+      "type": "string"
+    },
+    "release_authorized": {
+      "title": "Release Authorized",
+      "type": "boolean"
+    },
+    "schema_version": {
+      "const": "blinded-adjudication-receipt-v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "scorer_receipt_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Scorer Receipt Digest Sha256",
+      "type": "string"
+    },
+    "started_at": {
+      "maxLength": 64,
+      "minLength": 1,
+      "title": "Started At",
+      "type": "string"
+    },
+    "suite_id": {
+      "pattern": "^[a-z0-9][a-z0-9._:-]{0,159}$",
+      "title": "Suite Id",
+      "type": "string"
+    },
+    "trace_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Trace Digest Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "receipt_id",
+    "suite_id",
+    "case_id",
+    "candidate_digest_sha256",
+    "scorer_receipt_digest_sha256",
+    "adjudication_protocol_digest_sha256",
+    "disposition",
+    "release_authorized",
+    "maximum_scope",
+    "rationale_codes",
+    "adjudicator_role",
+    "qualification_scope",
+    "started_at",
+    "completed_at",
+    "trace_digest_sha256",
+    "privacy"
+  ],
+  "title": "BlindedAdjudicationReceiptV1",
+  "type": "object"
+}

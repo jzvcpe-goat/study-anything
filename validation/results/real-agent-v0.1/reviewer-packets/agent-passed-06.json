@@ -1,0 +1,94 @@
+{
+  "candidate": {
+    "added_line_count": 61,
+    "candidate_digest_sha256": "35fc6a2ccf7b7d75ff4aa8a37f289f4c275c6d23e521f018e32c510af31e6f92",
+    "candidate_id": "candidate:agent-passed-06",
+    "changed_file_count": 3,
+    "context_digest_sha256": "1bcdb4bb1e35f0f7674dcbb3264ff032bf6debc6ae3c727a98f33b3a1f42ff50",
+    "declared_risk_level": "high",
+    "deleted_line_count": 1,
+    "intended_recipient_role": "local-project-owner",
+    "issue_title": "fix: 🐛 html in blockquote error",
+    "prohibited_use_codes": [
+      "customer-handoff",
+      "production-execution",
+      "public-release"
+    ],
+    "review_material_digest_sha256": "1bcdb4bb1e35f0f7674dcbb3264ff032bf6debc6ae3c727a98f33b3a1f42ff50",
+    "risk_owner_role": "local-project-owner",
+    "source_snapshot_digest_sha256": "748d4adc577dc3610b7b0aacd276e50b4c9a23fded0394b0311b0bd48464b044",
+    "subject_digest_sha256": "35fc6a2ccf7b7d75ff4aa8a37f289f4c275c6d23e521f018e32c510af31e6f92",
+    "target_scope": "personal_local",
+    "task_summary_code": "real-github-agent-generated-patch",
+    "tool_permission_ids": [
+      "read-local-review-material"
+    ],
+    "visible_evidence": [
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "434793b44c51d3adf6386318f63cba296b536ff5709e264a1827f4fec5de6f09",
+        "evidence_ref": "real-agent:agent-passed-06:source-provenance",
+        "evidence_type": "source-provenance",
+        "status": "passed",
+        "summary_code": "public-submission-and-task-snapshot-bound"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "600a8200053010a1a8199cb9b84cd8e7d449df7963a6162d7789db480f670139",
+        "evidence_ref": "real-agent:agent-passed-06:candidate-material",
+        "evidence_type": "candidate-material",
+        "status": "passed",
+        "summary_code": "real-agent-patch-available-for-review"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "87b97125539476530dad17d61c96bcbe0e5c7edb9bd68d0890ce412b7e2bf44f",
+        "evidence_ref": "real-agent:agent-passed-06:scorer-result",
+        "evidence_type": "scorer-result",
+        "status": "missing",
+        "summary_code": "official-result-withheld-for-blinded-review"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "d171606743b57a6318cee7ee587c5d1ae551eca8ece48f9e82025b82685ffe35",
+        "evidence_ref": "real-agent:agent-passed-06:rollback-or-containment",
+        "evidence_type": "rollback-or-containment",
+        "status": "passed",
+        "summary_code": "patch-can-be-reverted-before-release"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "c1a7192577f0e7854fefa3bcb5983a421c6cbdc559ed39e401dd96aee0aa31dd",
+        "evidence_ref": "real-agent:agent-passed-06:responsibility-boundary",
+        "evidence_type": "responsibility-boundary",
+        "status": "passed",
+        "summary_code": "local-project-owner-retains-final-responsibility"
+      }
+    ]
+  },
+  "case_id": "agent-passed-06",
+  "delivery_context": {
+    "clearance_state": "pending-human-review-not-cleared",
+    "deliverable_id": "candidate:agent-passed-06",
+    "deliverable_title": "fix: 🐛 html in blockquote error",
+    "deliverable_type": "candidate-code-patch",
+    "delivering_agent_name": "Sapient Slingshot 2.6.0",
+    "delivering_model_name": "GPT-5.5",
+    "delivering_party_type": "ai-agent",
+    "intended_purpose_code": "personal-local-code-review-and-validation",
+    "intended_recipient_role": "local-project-owner",
+    "risk_owner_role": "local-project-owner",
+    "source_repository": "Milkdown/milkdown",
+    "source_task_uri": "https://github.com/Milkdown/milkdown/pull/2041",
+    "target_scope": "personal_local"
+  },
+  "hidden_tests_included": false,
+  "official_scorer_result_included": false,
+  "raw_candidate_payload_included": false,
+  "raw_issue_body_included": false,
+  "reference_label_included": false,
+  "review_material_available_locally": true,
+  "review_material_digest_sha256": "1bcdb4bb1e35f0f7674dcbb3264ff032bf6debc6ae3c727a98f33b3a1f42ff50",
+  "schema_version": "reviewer-case-packet-v1",
+  "suite_id": "real-agent-delivery-v0.1"
+}

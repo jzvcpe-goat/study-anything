@@ -1,0 +1,86 @@
+{
+  "candidate_id": "candidate:tau-01",
+  "case_id": "tau-01",
+  "context_digest_sha256": "7a1983ed02158a10dc02ce64bf7e79e88275cceb4328a4adb1797fd1b60e690d",
+  "declared_risk_level": "medium",
+  "evidence": [
+    {
+      "blocking": true,
+      "evidence_digest_sha256": "b17c1ededa5e0957fdf91300ed9eefea1a5d2c32b8174b6363ddc90e41fb848d",
+      "evidence_ref": "source:tau-01",
+      "evidence_type": "source-provenance",
+      "status": "passed",
+      "summary_code": "source-revision-and-task-pinned"
+    },
+    {
+      "blocking": true,
+      "evidence_digest_sha256": "8e2a4835aca19d1b6442665481051d6aa0b45fbad32525354f0bbbb8f4ede9aa",
+      "evidence_ref": "synthetic-scorer-fixture:tau-01",
+      "evidence_type": "scorer-result",
+      "status": "passed",
+      "summary_code": "official-scorer-passed"
+    },
+    {
+      "blocking": true,
+      "evidence_digest_sha256": "2e3934ebb426081d93da075c9928ee9cba1d3f596a30275f92c5afbe91d8526a",
+      "evidence_ref": "scope:tau-01",
+      "evidence_type": "scope-boundary",
+      "status": "passed",
+      "summary_code": "personal-local-only"
+    },
+    {
+      "blocking": true,
+      "evidence_digest_sha256": "1b15abe48deef69b271b18315176553b872b43753a806a88aeb1b1d579cad94f",
+      "evidence_ref": "rollback:tau-01",
+      "evidence_type": "rollback-or-containment",
+      "status": "passed",
+      "summary_code": "fixture-reset-available"
+    },
+    {
+      "blocking": true,
+      "evidence_digest_sha256": "eee378a19c3e8fe9db8bde2c2b6490ff6a0cf6d28b965fb6745629328d0e4494",
+      "evidence_ref": "responsibility:tau-01",
+      "evidence_type": "responsibility-boundary",
+      "status": "passed",
+      "summary_code": "local-project-owner-responsible"
+    }
+  ],
+  "evidence_origin": "mechanism_fixture",
+  "hidden_tests_included": false,
+  "intended_recipient_role": "local-project-owner",
+  "official_scorer_executed": false,
+  "privacy": {
+    "attention_stream_included": false,
+    "automatic_customer_send_performed": false,
+    "cookies_or_bearer_tokens_included": false,
+    "metadata_only": true,
+    "model_credentials_included": false,
+    "model_prompts_included": false,
+    "production_mutation_performed": false,
+    "raw_customer_payload_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "signed_urls_included": false
+  },
+  "prohibited_use_codes": [
+    "customer-handoff",
+    "production-execution"
+  ],
+  "reference_label_included": false,
+  "risk_owner_role": "local-project-owner",
+  "schema_version": "candidate-delivery-v1",
+  "scorer_execution_origin": "synthetic_mechanism_fixture",
+  "scorer_outcome": "passed",
+  "scorer_trace_digest_sha256": null,
+  "source_snapshot_digest_sha256": "9006f2daac4a5f0e1c97033fd372a74580a6a2010623314973f1f82bb16782e7",
+  "subject_digest_sha256": "5a433f254d4c982865aa61baeadbb7f84c0d17be41af74c041a225a6f2202147",
+  "suite_id": "pilot-v0.1",
+  "target_scope": "personal_local",
+  "task_summary_code": "policy-constrained-tool-candidate",
+  "tool_permission_ids": [
+    "read_candidate_metadata",
+    "read_evidence_metadata",
+    "request_additional_evidence",
+    "emit_clearance_decision"
+  ]
+}

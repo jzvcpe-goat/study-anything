@@ -1,0 +1,92 @@
+{
+  "candidate": {
+    "candidate_digest_sha256": "ac1a49526f7568c90884682fcae7bdd2f19a22be70513cbe60e197d0d304df7a",
+    "candidate_id": "candidate:rp-01-supply-chain-drift",
+    "case_id": "rp-01-supply-chain-drift",
+    "context_digest_sha256": "81297dfa60adecfa3e9c9fa4d5e60827611605d20bff61b27c6ec3c612b6647f",
+    "declared_risk_level": "medium",
+    "hidden_tests_included": false,
+    "intended_recipient_role": "local-project-owner",
+    "official_scorer_result_included": false,
+    "privacy": {
+      "attention_stream_included": false,
+      "automatic_customer_send_performed": false,
+      "cookies_or_bearer_tokens_included": false,
+      "metadata_only": true,
+      "model_credentials_included": false,
+      "model_prompts_included": false,
+      "production_mutation_performed": false,
+      "raw_customer_payload_included": false,
+      "raw_report_text_included": false,
+      "raw_source_text_included": false,
+      "signed_urls_included": false
+    },
+    "prohibited_use_codes": [
+      "customer-handoff",
+      "production-execution",
+      "claim-full-release-green"
+    ],
+    "reference_label_included": false,
+    "risk_owner_role": "local-project-owner",
+    "schema_version": "reviewer-candidate-view-v1",
+    "source_snapshot_digest_sha256": "ba440c72f67bf4e89d1b63a9a18645e4918101d23b525fab1c93b1f3b0f7010f",
+    "subject_digest_sha256": "0261fe92de920e4fe343798aec8daf9d84d6b1b9f5e7e3a52c5de3f6495685f3",
+    "suite_id": "real-project-v0.1",
+    "target_scope": "personal_local",
+    "task_summary_code": "human-review-cockpit-change",
+    "tool_permission_ids": [
+      "read_candidate_metadata",
+      "read_evidence_metadata",
+      "request_additional_evidence",
+      "emit_clearance_decision"
+    ],
+    "visible_evidence": [
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "eb3dcc4be71906e331b10b58c637b2b49f4f74205c9fc650e13cd84f4ca578ef",
+        "evidence_ref": "real-project:rp-01-supply-chain-drift:source-provenance",
+        "evidence_type": "source-provenance",
+        "status": "passed",
+        "summary_code": "repository-commit-and-tree-bound"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "a2e54285fad817706ac6f3c0dbd6a74f6885dfb2eea921d323aa72097b0aa4e1",
+        "evidence_ref": "real-project:rp-01-supply-chain-drift:project-release-check",
+        "evidence_type": "project-release-check",
+        "status": "failed",
+        "summary_code": "python-supply-chain-receipt-stale"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "eacda897c1fb96c09f7d29be6992f7462a0bcc8632d49caed350827b9d482439",
+        "evidence_ref": "real-project:rp-01-supply-chain-drift:scope-boundary",
+        "evidence_type": "scope-boundary",
+        "status": "passed",
+        "summary_code": "personal-local-only"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "4ce299f03bf9a23e8e3ad1004f8194860cdb537913af77ea1ae8e39354ec64fa",
+        "evidence_ref": "real-project:rp-01-supply-chain-drift:rollback-or-containment",
+        "evidence_type": "rollback-or-containment",
+        "status": "passed",
+        "summary_code": "revert-or-follow-up-commit-available"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "3f9e05b6365b38cc4de5c9e2a8e8793622d254b555c03017e429a1a0bcb90340",
+        "evidence_ref": "real-project:rp-01-supply-chain-drift:responsibility-boundary",
+        "evidence_type": "responsibility-boundary",
+        "status": "passed",
+        "summary_code": "local-project-owner-responsible"
+      }
+    ]
+  },
+  "case_id": "rp-01-supply-chain-drift",
+  "hidden_tests_included": false,
+  "official_scorer_result_included": false,
+  "reference_label_included": false,
+  "schema_version": "reviewer-case-packet-v1",
+  "suite_id": "real-project-v0.1"
+}

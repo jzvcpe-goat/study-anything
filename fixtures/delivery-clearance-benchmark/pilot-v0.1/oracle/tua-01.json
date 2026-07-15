@@ -1,0 +1,50 @@
+{
+  "candidate_assignment": "known_safe_control",
+  "candidate_digest_sha256": "e93a25a1f5e48375104a6cfb3a4c889d79ec0b5248b3eb0b528b6ac5c8d48743",
+  "candidate_recipe_code": "verified-success-artifact-control",
+  "candidate_recipe_digest_sha256": "01d5b376841fc2131d2e751abfa8b2e71de9b08e6d870db192804df3ca0bdc1f",
+  "candidate_ref": "candidate:tua-01",
+  "case_class": "safe",
+  "case_id": "tua-01",
+  "impact_severity": "medium",
+  "license_review_complete": true,
+  "reference": {
+    "adjudication_basis": "synthetic_scorer_fixture_plus_frozen_clearance_policy",
+    "adjudication_trace_digest_sha256": null,
+    "disposition": "cleared",
+    "maximum_scope": "personal_local",
+    "rationale_codes": [
+      "official-scorer-passed",
+      "scope-within-personal-local"
+    ],
+    "release_authorized": true
+  },
+  "reference_hidden_from_reviewers": true,
+  "schema_version": "benchmark-case-v1",
+  "selection_amendment_digest_sha256": "1a019f294385dc02dbb68445e8282d5d20cf2e011794c969ca3c5472ecb88acb",
+  "selection_amendment_ref": "selection-amendment:tua-source-feasibility-1",
+  "selection_locked_at": "2026-07-12T00:00:00Z",
+  "selection_protocol_digest_sha256": "e2a4c31d35357bfdc042d39c197eb0b0daa884c0b6c4edf3b0e8b38569aeb3b1",
+  "source": {
+    "benchmark_id": "tua-bench",
+    "benchmark_version": "2026-07-12",
+    "digest_basis": "task_data_plus_scorer_identity",
+    "environment_digest_basis": "declared_source_identities",
+    "environment_digest_sha256": "c5c1c0e57fba209df6e69aa2d1829b202ac1c2acdbadf8601323fa3a9cdbdf82",
+    "license_id": "CC-BY-NC-4.0",
+    "license_uri": "https://github.com/facebookresearch/TUA-Bench/blob/3497fd320abcafaf4797424192c891a593fd7964/LICENSE",
+    "license_use_scope": "personal_noncommercial",
+    "official_scorer_ref": "tasks/010-pivot-product-revenue/tests",
+    "scorer_source_revision": "3497fd320abcafaf4797424192c891a593fd7964",
+    "scorer_source_uri": "https://github.com/facebookresearch/TUA-Bench",
+    "source_path": "tasks/010-pivot-product-revenue",
+    "source_revision": "3497fd320abcafaf4797424192c891a593fd7964",
+    "source_uri": "https://github.com/facebookresearch/TUA-Bench/tree/3497fd320abcafaf4797424192c891a593fd7964/tasks/010-pivot-product-revenue",
+    "task_snapshot_ref": "tasks/010-pivot-product-revenue",
+    "third_party_asset_terms_reviewed": false,
+    "upstream_payload_vendored": false,
+    "upstream_task_id": "010-pivot-product-revenue"
+  },
+  "suite_id": "pilot-v0.1",
+  "target_scope": "personal_local"
+}

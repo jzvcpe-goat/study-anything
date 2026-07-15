@@ -5,7 +5,7 @@
 - Version: `v0.3.31-alpha`
 - Scope areas: `7`
 - Source/evidence files: `167`
-- Archive SHA-256: `9e02577c38649f8dbeb40c517708e802f09552f2f02da00455410502e2eb0a0d`
+- Archive SHA-256: `93094f171bd381206dd315b6091d4fcb25654bad7eb2deee0a632362754250c0`
 
 This pack is ready for an external human-led security audit at a pinned commit.
 It does not claim that an audit, penetration test, or production certification

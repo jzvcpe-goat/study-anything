@@ -1,0 +1,94 @@
+{
+  "candidate": {
+    "added_line_count": 94,
+    "candidate_digest_sha256": "f1880318266a7a2d8e6eeb9703e523fbd7e97bd6aed387319176b6991bd7066e",
+    "candidate_id": "candidate:agent-passed-01",
+    "changed_file_count": 2,
+    "context_digest_sha256": "0265ecbdcc16fe9742f0b69727225975e441dbbabdc4a3f728ae520ad9833bed",
+    "declared_risk_level": "high",
+    "deleted_line_count": 14,
+    "intended_recipient_role": "local-project-owner",
+    "issue_title": "fix(core): fix wrong column name for nested inline embeddables when parent is null",
+    "prohibited_use_codes": [
+      "customer-handoff",
+      "production-execution",
+      "public-release"
+    ],
+    "review_material_digest_sha256": "0265ecbdcc16fe9742f0b69727225975e441dbbabdc4a3f728ae520ad9833bed",
+    "risk_owner_role": "local-project-owner",
+    "source_snapshot_digest_sha256": "1f065615dac1e83594b326284c50a7a50ee5253e68e8e1a8f8e26eb8ddeef6e6",
+    "subject_digest_sha256": "f1880318266a7a2d8e6eeb9703e523fbd7e97bd6aed387319176b6991bd7066e",
+    "target_scope": "personal_local",
+    "task_summary_code": "real-github-agent-generated-patch",
+    "tool_permission_ids": [
+      "read-local-review-material"
+    ],
+    "visible_evidence": [
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "0957d18ed278157caecd1ab383c9e382f3369d7e3596749902869a7d14f4d5dc",
+        "evidence_ref": "real-agent:agent-passed-01:source-provenance",
+        "evidence_type": "source-provenance",
+        "status": "passed",
+        "summary_code": "public-submission-and-task-snapshot-bound"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "00b96098ad477f578f10740f35864df0ce3509f6f446a804c8a52ea72a9d12f0",
+        "evidence_ref": "real-agent:agent-passed-01:candidate-material",
+        "evidence_type": "candidate-material",
+        "status": "passed",
+        "summary_code": "real-agent-patch-available-for-review"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "df1407706b7132d881c4acf98ef7ec24c8f9ee9d59ba8835daaaebeeb7e17b2a",
+        "evidence_ref": "real-agent:agent-passed-01:scorer-result",
+        "evidence_type": "scorer-result",
+        "status": "missing",
+        "summary_code": "official-result-withheld-for-blinded-review"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "96b37fc8b11aa0623bf96949e8f2dfe864ea52a9a58a6c6eac04ec905771105d",
+        "evidence_ref": "real-agent:agent-passed-01:rollback-or-containment",
+        "evidence_type": "rollback-or-containment",
+        "status": "passed",
+        "summary_code": "patch-can-be-reverted-before-release"
+      },
+      {
+        "blocking": true,
+        "evidence_digest_sha256": "972c0835d12ef52d2e29a0ebc001c0b3ba202b02d860ff91b231448f825cb795",
+        "evidence_ref": "real-agent:agent-passed-01:responsibility-boundary",
+        "evidence_type": "responsibility-boundary",
+        "status": "passed",
+        "summary_code": "local-project-owner-retains-final-responsibility"
+      }
+    ]
+  },
+  "case_id": "agent-passed-01",
+  "delivery_context": {
+    "clearance_state": "pending-human-review-not-cleared",
+    "deliverable_id": "candidate:agent-passed-01",
+    "deliverable_title": "fix(core): fix wrong column name for nested inline embeddables when parent is null",
+    "deliverable_type": "candidate-code-patch",
+    "delivering_agent_name": "Sapient Slingshot 2.6.0",
+    "delivering_model_name": "GPT-5.5",
+    "delivering_party_type": "ai-agent",
+    "intended_purpose_code": "personal-local-code-review-and-validation",
+    "intended_recipient_role": "local-project-owner",
+    "risk_owner_role": "local-project-owner",
+    "source_repository": "mikro-orm/mikro-orm",
+    "source_task_uri": "https://github.com/mikro-orm/mikro-orm/pull/7464",
+    "target_scope": "personal_local"
+  },
+  "hidden_tests_included": false,
+  "official_scorer_result_included": false,
+  "raw_candidate_payload_included": false,
+  "raw_issue_body_included": false,
+  "reference_label_included": false,
+  "review_material_available_locally": true,
+  "review_material_digest_sha256": "0265ecbdcc16fe9742f0b69727225975e441dbbabdc4a3f728ae520ad9833bed",
+  "schema_version": "reviewer-case-packet-v1",
+  "suite_id": "real-agent-delivery-v0.1"
+}

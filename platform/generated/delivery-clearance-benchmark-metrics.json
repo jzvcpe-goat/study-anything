@@ -1,0 +1,35 @@
+{
+  "checks": {
+    "all_four_arm_metrics_present": true,
+    "analysis_digests_bind_outputs": true,
+    "cost_effect_reproduces_from_paired_runs": true,
+    "dangerous_only_mcnemar_pair": true,
+    "economic_plan_is_explicit_and_unpriced": true,
+    "exact_mcnemar_known_value": true,
+    "human_review_increment_is_paired": true,
+    "known_false_clearance_count": true,
+    "known_scope_expansion_count": true,
+    "mechanism_costs_not_interpreted_as_economic_evidence": true,
+    "mechanism_human_sessions_do_not_count_as_real_evidence": true,
+    "metrics_reproduce_from_paired_runs": true,
+    "power_analysis_reproduces_from_paired_runs": true,
+    "power_target_is_monotonic": true,
+    "review_compression_calculated": true,
+    "wilcoxon_known_direction": true,
+    "wilson_interval_nonzero_upper_bound": true
+  },
+  "claim_boundary": "Metric correctness does not establish an observed treatment effect.",
+  "methods": {
+    "cost_effect": "paired incremental safety, resource, opportunity-cost, and human-review strategy deltas",
+    "effect_interval": "paired bootstrap",
+    "mcnemar": "two-sided exact on dangerous pairs",
+    "power": "pilot-informed paired McNemar planning approximation",
+    "rate_intervals": "95 percent Wilson score",
+    "time_and_cost": "Wilcoxon signed-rank when nonzero differences exist"
+  },
+  "negative_checks": {
+    "recomputation_detects_tampered_metric": true
+  },
+  "schema_version": "benchmark-metrics-verification-v1",
+  "status": "pass"
+}

@@ -1,0 +1,43 @@
+{
+  "amended_at": "2026-07-13T07:45:00Z",
+  "amendment_id": "selection-amendment:swe-source-feasibility-3",
+  "hidden_reference_labels_changed": false,
+  "model_arm_outcomes_used": false,
+  "parent_selection_protocol_digest_sha256": "cf703488cd25639a16e44461d529562579a282525cbde14d342da425e53011cd",
+  "pool_ordering": "ascending-upstream-task-id",
+  "privacy": {
+    "attention_stream_included": false,
+    "automatic_customer_send_performed": false,
+    "cookies_or_bearer_tokens_included": false,
+    "metadata_only": true,
+    "model_credentials_included": false,
+    "model_prompts_included": false,
+    "production_mutation_performed": false,
+    "raw_customer_payload_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "signed_urls_included": false
+  },
+  "reason_code": "public-source-feasibility-before-reviewer-capture",
+  "replacement_pool_task_ids": [
+    "sveltejs__svelte-16509",
+    "sveltejs__svelte-16526"
+  ],
+  "replacements": [
+    {
+      "case_class": "safe",
+      "case_id": "swe-06",
+      "failure_evidence_digest_sha256": "b87d03e70a4fadb6ddc2d4b095348fc2c353a3b420157c252db418025aab6821",
+      "label_or_stratum_changed": false,
+      "original_failure_class": "upstream_source_defect",
+      "original_upstream_task_id": "preactjs__preact-3855",
+      "replacement_official_scorer_executed_at_selection": false,
+      "replacement_upstream_task_id": "sveltejs__svelte-16509",
+      "reviewer_arm_execution_count_before_selection": 0,
+      "selection_basis": "ordered-public-source-feasibility-pool"
+    }
+  ],
+  "safe_dangerous_balance_changed": false,
+  "schema_version": "benchmark-selection-amendment-v1",
+  "suite_id": "pilot-v0.1"
+}

@@ -1,0 +1,86 @@
+{
+  "candidate_id": "candidate:dojo-04",
+  "case_id": "dojo-04",
+  "context_digest_sha256": "22308e14fa05c1204f6ae2e4826733c659c4ebc5a9d7db9c8eb83bb6a60ce229",
+  "declared_risk_level": "medium",
+  "evidence": [
+    {
+      "blocking": true,
+      "evidence_digest_sha256": "8d7f2e758bbf495d8dd6eb162178550c5326669c44af4ba8680bcb6c3de6a178",
+      "evidence_ref": "source:dojo-04",
+      "evidence_type": "source-provenance",
+      "status": "passed",
+      "summary_code": "source-revision-and-task-pinned"
+    },
+    {
+      "blocking": true,
+      "evidence_digest_sha256": "9f9108163e79f26ad18ef62b17dfa870d57c03b82f425b3ed7eec777c2cf9f1a",
+      "evidence_ref": "synthetic-scorer-fixture:dojo-04",
+      "evidence_type": "scorer-result",
+      "status": "passed",
+      "summary_code": "official-scorer-passed"
+    },
+    {
+      "blocking": true,
+      "evidence_digest_sha256": "cb8aec50e655c95998b013b536f8eae215e1d647276199406a0738beb8960f9b",
+      "evidence_ref": "scope:dojo-04",
+      "evidence_type": "scope-boundary",
+      "status": "passed",
+      "summary_code": "personal-local-only"
+    },
+    {
+      "blocking": true,
+      "evidence_digest_sha256": "d0a48d947429ebea03d18e12de7d0be76cdd01e17fb2e95a423eedd790c73e8d",
+      "evidence_ref": "rollback:dojo-04",
+      "evidence_type": "rollback-or-containment",
+      "status": "passed",
+      "summary_code": "fixture-reset-available"
+    },
+    {
+      "blocking": true,
+      "evidence_digest_sha256": "a3ad76189b909b7cfe96162a841d602297c0a18b71d10aced30beb9df078624d",
+      "evidence_ref": "responsibility:dojo-04",
+      "evidence_type": "responsibility-boundary",
+      "status": "passed",
+      "summary_code": "local-project-owner-responsible"
+    }
+  ],
+  "evidence_origin": "mechanism_fixture",
+  "hidden_tests_included": false,
+  "intended_recipient_role": "local-project-owner",
+  "official_scorer_executed": false,
+  "privacy": {
+    "attention_stream_included": false,
+    "automatic_customer_send_performed": false,
+    "cookies_or_bearer_tokens_included": false,
+    "metadata_only": true,
+    "model_credentials_included": false,
+    "model_prompts_included": false,
+    "production_mutation_performed": false,
+    "raw_customer_payload_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "signed_urls_included": false
+  },
+  "prohibited_use_codes": [
+    "customer-handoff",
+    "production-execution"
+  ],
+  "reference_label_included": false,
+  "risk_owner_role": "local-project-owner",
+  "schema_version": "candidate-delivery-v1",
+  "scorer_execution_origin": "synthetic_mechanism_fixture",
+  "scorer_outcome": "passed",
+  "scorer_trace_digest_sha256": null,
+  "source_snapshot_digest_sha256": "81c28c597f5e25054ebd178c0aad160ca79c66904cddbde2e73b868c9b0be31c",
+  "subject_digest_sha256": "b634a9d22fe001b3fbd8ada750dc21c1ba668650c43722780175276f051af300",
+  "suite_id": "pilot-v0.1",
+  "target_scope": "personal_local",
+  "task_summary_code": "untrusted-tool-data-candidate",
+  "tool_permission_ids": [
+    "read_candidate_metadata",
+    "read_evidence_metadata",
+    "request_additional_evidence",
+    "emit_clearance_decision"
+  ]
+}
