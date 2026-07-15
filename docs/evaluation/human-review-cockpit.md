@@ -64,6 +64,45 @@ The real-Agent queue fails closed when that context is missing or disagrees with
 candidate packet. A reviewer should never be asked to reconstruct boundaries for an
 anonymous or undefined delivery.
 
+## Adaptive Semantic Views
+
+The Cockpit does not ask the reviewer to choose a job-title label first. Before candidate
+evidence or raw material is displayed, a server-enforced questionnaire asks:
+
+1. what decision the reviewer is responsible for in this delivery;
+2. which material types the reviewer can interpret independently;
+3. where the reviewer intends to move the delivery next.
+
+The deterministic route then either opens a recommended plain-language, product-owner,
+software-engineer, security/audit, or protocol-code view, or stops and names the reviewer or
+scope escalation required. In particular, full review cannot expose the raw patch until the
+reviewer declares code-and-test review capability, and any target beyond `personal_local`
+is blocked before evidence review. The preparation token is also required by the submission
+endpoint, so the questionnaire cannot be bypassed by posting directly to the local API.
+
+Every resulting view first states:
+
+- the single candidate being reviewed;
+- what decision the reviewer is being asked to make;
+- what that reviewer is not being asked to prove;
+- when the item must be left unresolved and routed to a qualified reviewer.
+
+The profile is a recommended presentation, not a qualification credential. The reviewer may
+change the explanation view after routing, but that cannot change the packet, option order,
+expected answer code, question-set digest, evidence, role, scope, or authority. The receipt
+stores only the derived route, selected presentation profile, and preflight policy digest so
+later evaluation can compare comprehension and workload fairly. Raw questionnaire choices
+are not persisted, and `professional_qualification_claimed` remains `false`.
+
+Machine codes such as `personal_local`, `customer-handoff`, and
+`official-result-withheld-for-blinded-review` receive deterministic Chinese explanations.
+The original machine value remains available in the protocol view and as UI provenance.
+Free-form issue text and code are not automatically translated: the Cockpit has no evidence
+that a generic translation preserves domain meaning. In full review, a reviewer who cannot
+interpret the original task or patch must select the unresolved/escalation option instead of
+guessing. An optional future model-generated explanation, if added, would be
+`explanation_only` and could not count as clearance evidence.
+
 ## Three Physically Separate Review Tasks
 
 The top segmented control switches between three local queues. Switching the
@@ -111,6 +150,7 @@ The local service:
   digest-mismatched material;
 - sends no CORS permission and disables caching and framing;
 - tracks only aggregate active-visible milliseconds in the browser;
+- records the selected presentation profile without treating it as professional qualification;
 - stores no raw answer sequence, attention stream, screenshot, keystroke,
   biometric data, free-form review notes, model prompt, or reviewer identity;
 - never raises authority above `personal_local`.

@@ -33,6 +33,22 @@ SHA256_PATTERN = r"^[0-9a-f]{64}$"
 REVISION_PATTERN = r"^[0-9a-f]{40,64}$"
 IDENTIFIER_PATTERN = r"^[a-z0-9][a-z0-9._:-]{0,159}$"
 
+ReviewPresentationProfile = Literal[
+    "plain_language",
+    "product_owner",
+    "software_engineer",
+    "security_audit",
+    "technical_codes",
+]
+ReviewEntryRoute = Literal[
+    "legacy_unspecified",
+    "boundary_review_supported",
+    "full_review_supported",
+    "qualified_reviewer_required",
+    "scope_escalation_required",
+    "observer_boundary_only",
+]
+
 
 class BenchmarkSource(StrEnum):
     SWE_BENCH_LIVE = "swe-bench-live"
@@ -673,6 +689,16 @@ class ReviewEconomicEvaluationPlanV1(StrictProtocolModel):
 class HumanReconstructionMeasurementV1(StrictProtocolModel):
     reviewer_role: str = Field(min_length=1, max_length=120)
     qualification_scope: Literal[DeliveryScope.PERSONAL_LOCAL]
+    presentation_profile: ReviewPresentationProfile = "technical_codes"
+    professional_qualification_claimed: Literal[False] = False
+    review_entry_route: ReviewEntryRoute = "legacy_unspecified"
+    review_preflight_method: Literal["legacy_unspecified", "questionnaire_v1"] = (
+        "legacy_unspecified"
+    )
+    review_preflight_policy_digest_sha256: str | None = Field(
+        default=None, pattern=SHA256_PATTERN
+    )
+    raw_preflight_answers_included: Literal[False] = False
     active_review_ms: int = Field(ge=0, le=86_400_000)
     boundary_questions_total: Literal[5]
     boundary_questions_correct: int = Field(ge=0, le=5)

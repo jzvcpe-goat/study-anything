@@ -37,6 +37,8 @@ from study_anything.cbb.benchmark.models import (
     BlindedAdjudicationReceiptV1,
     ClearanceDisposition,
     HumanReviewSessionV1,
+    ReviewEntryRoute,
+    ReviewPresentationProfile,
     ScorerExecutionReceiptV1,
 )
 from study_anything.cbb.benchmark.runner import record_human_review_session
@@ -47,6 +49,26 @@ ReviewMode = Literal[
     "boundary_reconstruction",
     "full_review_reference",
     "blinded_adjudication",
+]
+ReviewResponsibility = Literal[
+    "local_delivery_owner",
+    "product_intent_owner",
+    "software_quality_reviewer",
+    "security_risk_reviewer",
+    "observer_without_clearance_authority",
+]
+ReviewableMaterial = Literal[
+    "scope_and_responsibility",
+    "requirements_and_user_impact",
+    "code_patch_and_tests",
+    "permissions_data_and_security",
+    "none_or_unsure",
+]
+IntendedNextStep = Literal[
+    "personal_local_validation",
+    "internal_handoff",
+    "customer_handoff",
+    "production_or_public_release",
 ]
 
 MODE_LABELS: dict[ReviewMode, str] = {
@@ -60,42 +82,505 @@ DEFAULT_PORT = 8765
 MAX_LOCAL_ISSUE_BYTES = 1_000_000
 MAX_LOCAL_PATCH_BYTES = 5_000_000
 
-QUESTION_PROMPTS_ZH = {
-    "delivery-scope": "该审核包最多支持到哪一级交付范围？",
-    "recipient-and-responsibility": "谁接收这份结果，谁承担剩余风险？",
-    "visible-failure-boundary": "当前最重要的可见失败边界是什么？",
-    "recovery-boundary": "当前声明了哪项恢复或遏制证据？",
-    "prohibited-use-boundary": "即使该候选物获得放行，哪些用途仍然被禁止？",
+DEFAULT_PRESENTATION_PROFILE: ReviewPresentationProfile = "plain_language"
+PRESENTATION_PROFILE_IDS: tuple[ReviewPresentationProfile, ...] = (
+    "plain_language",
+    "product_owner",
+    "software_engineer",
+    "security_audit",
+    "technical_codes",
+)
+
+PRESENTATION_PROFILES: tuple[dict[str, str], ...] = (
+    {
+        "profile_id": "plain_language",
+        "label": "通俗模式",
+        "audience": "不以代码审查为日常工作的人",
+        "focus": "只判断能否继续、交给谁、限制是什么，以及何时转交专业人员。",
+        "not_responsible_for": "不要求判断代码实现是否正确。",
+    },
+    {
+        "profile_id": "product_owner",
+        "label": "产品负责人",
+        "audience": "负责目标、用户影响和交付范围的人",
+        "focus": "判断任务意图、用户影响、接收对象、限制和责任是否清楚。",
+        "not_responsible_for": "不替代工程正确性或安全审计。",
+    },
+    {
+        "profile_id": "software_engineer",
+        "label": "软件工程师",
+        "audience": "能够阅读任务、补丁、测试和回滚证据的人",
+        "focus": "判断补丁行为、变更范围、测试缺口和发布前撤销路径。",
+        "not_responsible_for": "不自动获得客户、生产或公开发布权限。",
+    },
+    {
+        "profile_id": "security_audit",
+        "label": "安全与审计",
+        "audience": "负责权限、数据、外部影响和证据完整性的人",
+        "focus": "判断权限、数据暴露、传播范围、证据缺口和遏制边界。",
+        "not_responsible_for": "不把安全边界判断等同于功能正确性。",
+    },
+    {
+        "profile_id": "technical_codes",
+        "label": "协议原文",
+        "audience": "维护协议、评测集和机器收据的人",
+        "focus": "查看冻结的原始协议术语和机器值。",
+        "not_responsible_for": "该视图不比其他视图拥有更高放行权限。",
+    },
+)
+
+REVIEW_PREFLIGHT_POLICY: dict[str, Any] = {
+    "schema_version": "delivery-clearance.review-preflight-policy.v1",
+    "method": "questionnaire_v1",
+    "required_before_evidence_display": True,
+    "raw_answers_persisted": False,
+    "professional_qualification_inferred": False,
+    "questions": [
+        {
+            "question_id": "responsibility",
+            "prompt": "这次交付中，你实际负责哪一类决定？",
+            "help": "请选择你此刻承担的责任，而不是职位名称。",
+            "input_type": "select",
+            "options": [
+                {
+                    "value": "local_delivery_owner",
+                    "label": "决定是否继续在我的本地项目中使用",
+                },
+                {
+                    "value": "product_intent_owner",
+                    "label": "确认目标、需求和用户影响",
+                },
+                {
+                    "value": "software_quality_reviewer",
+                    "label": "审查代码、测试和撤销方式",
+                },
+                {
+                    "value": "security_risk_reviewer",
+                    "label": "审查权限、数据和外部影响",
+                },
+                {
+                    "value": "observer_without_clearance_authority",
+                    "label": "我只想理解，不承担放行责任",
+                },
+            ],
+        },
+        {
+            "question_id": "reviewable_materials",
+            "prompt": "哪些材料是你能够独立判断的？",
+            "help": "可以多选；不确定就选“目前都无法独立判断”。",
+            "input_type": "checkbox",
+            "options": [
+                {
+                    "value": "scope_and_responsibility",
+                    "label": "交付对象、用途、限制和责任",
+                },
+                {
+                    "value": "requirements_and_user_impact",
+                    "label": "需求、任务目标和用户影响",
+                },
+                {
+                    "value": "code_patch_and_tests",
+                    "label": "代码补丁、测试结果和回滚",
+                },
+                {
+                    "value": "permissions_data_and_security",
+                    "label": "权限、数据流和安全控制",
+                },
+                {
+                    "value": "none_or_unsure",
+                    "label": "目前都无法独立判断 / 不确定",
+                },
+            ],
+        },
+        {
+            "question_id": "intended_next_step",
+            "prompt": "你准备把这份交付推进到哪里？",
+            "help": "目标范围超过当前协议时，系统必须先阻断并升级。",
+            "input_type": "select",
+            "options": [
+                {
+                    "value": "personal_local_validation",
+                    "label": "只留在我的电脑上继续审核和验证",
+                },
+                {"value": "internal_handoff", "label": "交给团队内部其他人"},
+                {"value": "customer_handoff", "label": "交给客户"},
+                {
+                    "value": "production_or_public_release",
+                    "label": "部署到生产环境或公开发布",
+                },
+            ],
+        },
+    ],
+    "routing_rules": [
+        "target_beyond_personal_local_requires_scope_escalation",
+        "full_review_requires_code_patch_and_tests_capability",
+        "blinded_adjudication_requires_clearance_responsibility",
+        "observer_may_only_complete_boundary_reconstruction",
+        "presentation_profile_never_changes_authority",
+    ],
 }
-OPTION_LABELS_ZH = {
-    "customer-scope": "客户交接",
-    "production-scope": "生产执行",
-    "model-responsibility": "由生成模型承担责任",
-    "no-responsibility": "未声明任何责任主体",
-    "hidden-scorer": "假设被隐藏的 scorer 已经通过",
-    "global-correctness": "该交付物在所有场景中都正确",
-    "automatic-production-rollback": "生产环境自动回滚",
-    "no-recovery-needed": "不需要任何恢复措施",
-    "unrestricted-use": "不再有任何禁止用途",
-    "global-release": "不生成新收据就全局发布",
-    "no-visible-blocker": "可见证据中没有出现阻断性失败",
+REVIEW_PREFLIGHT_POLICY_DIGEST = canonical_sha256(REVIEW_PREFLIGHT_POLICY)
+
+MACHINE_LABELS_ZH: dict[str, str] = {
+    "ai-agent": "AI Agent",
+    "candidate-code-patch": "一份尚未合并的候选代码修改",
+    "personal-local-code-review-and-validation": "只在个人本机继续审核和验证",
+    "local-project-owner": "本地项目负责人（当前审核者）",
+    "personal_local": "仅限当前个人电脑上的本地项目",
+    "pending-human-review-not-cleared": "待人工复核，尚未放行",
+    "high": "高风险",
+    "customer-handoff": "交给客户",
+    "production-execution": "部署或执行到生产环境",
+    "public-release": "公开发布",
+    "customer handoff": "直接交给客户",
+    "production execution": "直接部署或执行到生产环境",
+    "source-provenance": "来源与版本绑定",
+    "candidate-material": "候选修改材料",
+    "scorer-result": "独立功能测试结果",
+    "rollback-or-containment": "撤销或控制影响",
+    "responsibility-boundary": "责任边界",
+    "passed": "已有支持证据",
+    "failed": "检查失败",
+    "missing": "关键证据缺失",
+    "not_run": "尚未执行",
+    "error": "检查出错",
+    "timeout": "检查超时",
+    "public-submission-and-task-snapshot-bound": "公开任务、Agent 提交与固定版本已经绑定",
+    "real-agent-patch-available-for-review": "真实 Agent 补丁可供人工复核",
+    "official-result-withheld-for-blinded-review": "官方功能测试结果在本轮被隐藏，不能据此判断通过",
+    "patch-can-be-reverted-before-release": "这份代码修改可在发布前撤销",
+    "local-project-owner-retains-final-responsibility": "本地项目负责人保留最终责任",
+    "no blocking failure appears in visible evidence": "当前可见证据中没有阻断性失败",
+    "automatic production rollback": "生产环境会自动回滚",
+    "no recovery is needed": "不需要任何恢复措施",
 }
+
+QUESTION_PROMPTS: dict[ReviewPresentationProfile, dict[str, str]] = {
+    "plain_language": {
+        "delivery-scope": "这份候选修改现在最多可以走到哪一步？",
+        "recipient-and-responsibility": "谁会接手它，出了剩余问题由谁负责？",
+        "visible-failure-boundary": "当前最需要停下来确认的问题是什么？",
+        "recovery-boundary": "如果这份修改不合适，现在能怎样停止或撤销？",
+        "prohibited-use-boundary": "即使本轮通过，哪些事情仍然不能做？",
+    },
+    "product_owner": {
+        "delivery-scope": "当前证据支持到哪一级产品交付范围？",
+        "recipient-and-responsibility": "谁接收结果，谁负责剩余产品与交付风险？",
+        "visible-failure-boundary": "哪个未闭合问题最可能影响目标或用户？",
+        "recovery-boundary": "当前有哪些发布前撤销或影响控制手段？",
+        "prohibited-use-boundary": "本轮结论仍明确禁止哪些下游用途？",
+    },
+    "software_engineer": {
+        "delivery-scope": "当前补丁证据最多支持到哪一级工程交付范围？",
+        "recipient-and-responsibility": "谁接收补丁，谁承担未覆盖的工程风险？",
+        "visible-failure-boundary": "当前可见证据中最重要的工程缺口是什么？",
+        "recovery-boundary": "当前声明了哪项回滚或遏制证据？",
+        "prohibited-use-boundary": "即使本轮通过，补丁仍不能进入哪些环境？",
+    },
+    "security_audit": {
+        "delivery-scope": "现有证据把传播和执行权限限制在哪个范围？",
+        "recipient-and-responsibility": "谁获得该候选物，谁承担残余安全风险？",
+        "visible-failure-boundary": "当前最重要的可见控制缺口是什么？",
+        "recovery-boundary": "当前声明了哪项撤销、隔离或遏制能力？",
+        "prohibited-use-boundary": "哪些外部传播或执行动作仍被明确禁止？",
+    },
+    "technical_codes": {},
+}
+
+QUESTION_HELP: dict[ReviewPresentationProfile, dict[str, str]] = {
+    "plain_language": {
+        "delivery-scope": "这里只判断传播范围，不判断代码是否修复正确。",
+        "recipient-and-responsibility": "AI 不能替人承担最终责任。",
+        "visible-failure-boundary": "看不到的测试结果不能被当作已经通过。",
+        "recovery-boundary": "发布前撤销补丁，不等于生产环境会自动回滚。",
+        "prohibited-use-boundary": "本地可继续审核，不代表可以交客户、上线或公开。",
+    },
+    "product_owner": {
+        "delivery-scope": "确认目标范围是否被扩大到客户或生产。",
+        "recipient-and-responsibility": "确认责任没有被推给模型或未声明主体。",
+        "visible-failure-boundary": "优先识别会改变产品判断的未知与缺口。",
+        "recovery-boundary": "区分候选撤销能力与真实生产恢复能力。",
+        "prohibited-use-boundary": "一次内部审核不会自动授予外部发布权。",
+    },
+    "software_engineer": {
+        "delivery-scope": "范围必须与已执行测试、环境和可逆性相匹配。",
+        "recipient-and-responsibility": "技术判断和最终交付责任必须有明确承接者。",
+        "visible-failure-boundary": "不要用隐藏 scorer 或模型自评填补证据缺口。",
+        "recovery-boundary": "检查当前证据到底支持 revert、rollback 还是仅能停止传播。",
+        "prohibited-use-boundary": "个人本地验证不等于合并、部署或客户交付。",
+    },
+    "security_audit": {
+        "delivery-scope": "确认权限和影响半径没有超过当前收据。",
+        "recipient-and-responsibility": "责任主体应能执行停止、撤销和升级处理。",
+        "visible-failure-boundary": "缺失或隐藏的关键证据应保持为阻断项。",
+        "recovery-boundary": "恢复声明必须与真实可用的控制手段一致。",
+        "prohibited-use-boundary": "禁止用途不能因界面选择或内部通过而被覆盖。",
+    },
+    "technical_codes": {},
+}
+
+
+def _humanize_machine_value(value: str) -> str:
+    stripped = value.strip()
+    if stripped in MACHINE_LABELS_ZH:
+        return MACHINE_LABELS_ZH[stripped]
+    if "," in stripped:
+        return "；".join(_humanize_machine_value(item) for item in stripped.split(","))
+    return stripped
+
+
+def _localized_option_label(question_id: str, option: Any) -> str:
+    if option.code == "declared-responsibility":
+        label = str(option.label).replace("recipient=", "接收者=").replace(
+            "; risk owner=", "；剩余风险责任人="
+        )
+        for raw, translated in MACHINE_LABELS_ZH.items():
+            label = label.replace(raw, translated)
+        return label
+    fixed = {
+        "customer-scope": "可以直接交给客户",
+        "production-scope": "可以直接部署或执行到生产环境",
+        "model-responsibility": "由生成模型承担最终责任",
+        "no-responsibility": "没有声明任何责任主体",
+        "hidden-scorer": "看不到测试结果，但仍假设测试已经通过",
+        "global-correctness": "认为这份交付物在所有场景中都正确",
+        "automatic-production-rollback": "生产环境会自动回滚",
+        "no-recovery-needed": "不需要任何恢复措施",
+        "unrestricted-use": "不再有任何禁止用途",
+        "global-release": "不生成新收据就直接全局发布",
+        "no-visible-blocker": "当前可见证据中没有阻断性失败",
+    }
+    if option.code in fixed:
+        return fixed[option.code]
+    label = _humanize_machine_value(str(option.label))
+    if option.code == "declared-scope" and label == MACHINE_LABELS_ZH["personal_local"]:
+        return "只能留在当前个人电脑上的本地项目中继续审核和验证"
+    if question_id == "visible-failure-boundary" and option.code == "visible-blocking-failure":
+        return f"关键证据缺口：{label}"
+    if option.code == "declared-recovery":
+        return f"当前可用措施：{label}"
+    if option.code == "declared-prohibited-uses":
+        return f"仍然禁止：{label}"
+    return label
 
 
 def _localized_question_view(question: Any) -> dict[str, Any]:
-    option_labels: list[str] = []
-    for option in question.options:
-        label = OPTION_LABELS_ZH.get(option.code, option.label)
-        if option.code == "declared-responsibility":
-            label = label.replace("recipient=", "接收者=").replace(
-                "; risk owner=", "；剩余风险责任人="
-            )
-        option_labels.append(label)
+    views: dict[str, Any] = {}
+    localized_options = [
+        _localized_option_label(question.question_id, option) for option in question.options
+    ]
+    for profile in PRESENTATION_PROFILE_IDS:
+        if profile == "technical_codes":
+            views[profile] = {
+                "prompt": question.prompt,
+                "help": "原始协议视图；它不改变题目、答案顺序或放行权限。",
+                "options": [option.label for option in question.options],
+                "unresolved_label": "unresolved / require qualified reviewer",
+            }
+            continue
+        views[profile] = {
+            "prompt": QUESTION_PROMPTS[profile].get(
+                question.question_id, question.prompt
+            ),
+            "help": QUESTION_HELP[profile].get(
+                question.question_id, "无法理解时不要猜测，应转交对应专业人员。"
+            ),
+            "options": localized_options,
+            "unresolved_label": "我无法根据当前信息判断，需要转交对应专业人员",
+        }
+    default_view = views[DEFAULT_PRESENTATION_PROFILE]
     return {
         "question_id": question.question_id,
-        "prompt": QUESTION_PROMPTS_ZH.get(question.question_id, question.prompt),
-        "options": option_labels,
+        "prompt": default_view["prompt"],
+        "help": default_view["help"],
+        "options": default_view["options"],
+        "unresolved_label": default_view["unresolved_label"],
+        "views": views,
     }
+
+
+def _review_assignment(
+    mode: ReviewMode,
+    candidate_summary: dict[str, Any],
+) -> dict[str, Any]:
+    delivery = candidate_summary.get("delivery_context")
+    if not isinstance(delivery, dict):
+        delivery = {}
+    agent = str(delivery.get("delivering_agent_name", "未声明的 AI Agent"))
+    model = str(delivery.get("delivering_model_name", "未声明模型"))
+    repository = str(delivery.get("source_repository", "未声明来源项目"))
+    original_title = str(delivery.get("deliverable_title", "未声明原始任务标题"))
+    subject = (
+        f"{agent} 使用 {model}，针对 {repository} 的一个任务生成了一份候选代码修改。"
+        "本轮只审核这一份候选修改，不审核整个仓库，也不评价该模型的总体能力。"
+    )
+    original_language_boundary = (
+        f"原始任务标题为“{original_title}”。它保持来源原文；系统没有证据证明自动翻译"
+        "能够保留全部技术含义。"
+    )
+    if mode == "boundary_reconstruction":
+        common_decision = (
+            "确认它目前能否只留在个人本机继续验证，并重构接收者、责任、证据缺口、"
+            "撤销方式和禁止用途。"
+        )
+        common_not_required = "不要求阅读代码或判断修复是否正确。"
+    elif mode == "full_review_reference":
+        common_decision = (
+            "对照原始任务与真实 Agent 补丁，判断代码行为、证据缺口和本地交付边界。"
+        )
+        common_not_required = (
+            "该模式需要相应代码审查能力；不具备时不应猜测或代替工程人员作结论。"
+        )
+    else:
+        common_decision = (
+            "结合候选证据与独立测试结果，决定放行、限定范围、暂停或拒绝。"
+        )
+        common_not_required = "独立测试结果只是支持证据，不能单独替代边界和责任判断。"
+
+    views = {
+        "plain_language": {
+            "heading": "你正在判断：这份 AI 候选修改现在能不能继续向前",
+            "what_is_being_reviewed": subject,
+            "decision_required": common_decision,
+            "not_your_task": common_not_required,
+            "language_boundary": original_language_boundary,
+            "escalate_when": (
+                "任何任务、证据或选项无法理解时，请选择“需要转交对应专业人员”，不要猜。"
+            ),
+        },
+        "product_owner": {
+            "heading": "你正在判断：目标、用户影响与交付边界是否一致",
+            "what_is_being_reviewed": subject,
+            "decision_required": (
+                f"{common_decision} 重点确认是否扩大了原任务、受众或现实影响。"
+            ),
+            "not_your_task": (
+                "你不需要替代工程正确性或安全审计；未闭合的技术问题应明确转交。"
+            ),
+            "language_boundary": original_language_boundary,
+            "escalate_when": "任务意图、用户影响或交付对象不清楚时，应暂停并要求补充上下文。",
+        },
+        "software_engineer": {
+            "heading": "你正在判断：这份补丁的工程证据是否支持当前范围",
+            "what_is_being_reviewed": subject,
+            "decision_required": common_decision,
+            "not_your_task": (
+                "即使代码看起来正确，也不能据此扩大到客户、生产或公开发布。"
+            ),
+            "language_boundary": original_language_boundary,
+            "escalate_when": "任务语义、依赖、测试覆盖或回滚边界无法确认时，应保留未解决项。",
+        },
+        "security_audit": {
+            "heading": "你正在判断：权限、数据和传播边界是否被控制",
+            "what_is_being_reviewed": subject,
+            "decision_required": (
+                f"{common_decision} 重点检查权限、外部影响、证据完整性和遏制能力。"
+            ),
+            "not_your_task": "安全边界通过不等于功能正确，也不等于生产批准。",
+            "language_boundary": original_language_boundary,
+            "escalate_when": "发现未知权限、数据流、外部副作用或证据缺失时，应暂停并升级处理。",
+        },
+        "technical_codes": {
+            "heading": "Review assignment / protocol view",
+            "what_is_being_reviewed": subject,
+            "decision_required": common_decision,
+            "not_your_task": common_not_required,
+            "language_boundary": original_language_boundary,
+            "escalate_when": "Use unresolved when the packet cannot support a bounded decision.",
+        },
+    }
+    return {
+        "default_profile": DEFAULT_PRESENTATION_PROFILE,
+        "profile_is_self_declared": True,
+        "professional_qualification_claimed": False,
+        "views": views,
+    }
+
+
+def _recommended_presentation_profile(
+    responsibility: ReviewResponsibility,
+    materials: set[ReviewableMaterial],
+) -> ReviewPresentationProfile:
+    if responsibility == "security_risk_reviewer":
+        return "security_audit"
+    if responsibility == "software_quality_reviewer":
+        return "software_engineer"
+    if responsibility == "product_intent_owner":
+        return "product_owner"
+    if "permissions_data_and_security" in materials:
+        return "security_audit"
+    if "code_patch_and_tests" in materials:
+        return "software_engineer"
+    if "requirements_and_user_impact" in materials:
+        return "product_owner"
+    return "plain_language"
+
+
+def _derive_review_entry_route(
+    mode: ReviewMode,
+    *,
+    responsibility: ReviewResponsibility,
+    materials: set[ReviewableMaterial],
+    intended_next_step: IntendedNextStep,
+) -> tuple[ReviewEntryRoute, bool, str | None, str]:
+    if intended_next_step != "personal_local_validation":
+        return (
+            "scope_escalation_required",
+            False,
+            "目标范围对应的放行负责人",
+            "你准备推进的范围超过当前 personal_local 协议；本轮不能继续形成更高范围结论。",
+        )
+    if responsibility == "observer_without_clearance_authority":
+        if mode == "boundary_reconstruction":
+            return (
+                "observer_boundary_only",
+                True,
+                None,
+                "你可以完成边界理解记录，但该记录不代表你拥有放行权限。",
+            )
+        return (
+            "qualified_reviewer_required",
+            False,
+            "承担本次放行责任的本地项目负责人",
+            "你声明自己只负责理解，因此不能进入需要作出专业或放行判断的模式。",
+        )
+    if mode == "full_review_reference" and "code_patch_and_tests" not in materials:
+        return (
+            "qualified_reviewer_required",
+            False,
+            "能够独立审查代码补丁与测试的软件工程师",
+            "全文参考复核需要代码审查能力；当前回答不足以支持展示原始补丁并作判断。",
+        )
+    if mode == "blinded_adjudication" and responsibility != "local_delivery_owner":
+        return (
+            "qualified_reviewer_required",
+            False,
+            "承担本次放行责任的本地项目负责人",
+            "盲法裁决要求明确的放行责任；产品、工程或安全意见可作为输入，但不能替代责任人。",
+        )
+    if mode == "full_review_reference":
+        return (
+            "full_review_supported",
+            True,
+            None,
+            "当前回答支持进入全文参考复核；这仍不证明专业资格或授予更高放行权限。",
+        )
+    return (
+        "boundary_review_supported",
+        True,
+        None,
+        "当前回答支持进入边界重构；你只需判断范围、责任、缺口和禁止用途。",
+    )
+
+
+class ReviewPreparationSubmission(BaseModel):
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+
+    mode: ReviewMode
+    item_token: str = Field(min_length=20, max_length=200)
+    responsibility: ReviewResponsibility
+    reviewable_materials: list[ReviewableMaterial] = Field(min_length=1, max_length=5)
+    intended_next_step: IntendedNextStep
 
 
 class ReviewCockpitError(RuntimeError):
@@ -107,6 +592,8 @@ class ReviewSubmission(BaseModel):
 
     mode: ReviewMode
     item_token: str = Field(min_length=20, max_length=200)
+    preparation_token: str | None = Field(default=None, min_length=20, max_length=200)
+    presentation_profile: ReviewPresentationProfile = DEFAULT_PRESENTATION_PROFILE
     answers: list[Literal["1", "2", "3", "u"]] | None = None
     active_review_ms: int | None = Field(default=None, ge=0, le=86_400_000)
     nasa_tlx_score: float | None = Field(default=None, ge=0, le=100)
@@ -125,12 +612,24 @@ class ModeConfig:
     local_material_dir: Path | None = None
 
 
+@dataclass(frozen=True)
+class PreparedReview:
+    token: str
+    recommended_profile: ReviewPresentationProfile
+    route: ReviewEntryRoute
+    can_begin_review: bool
+    required_reviewer: str | None
+    summary: str
+    policy_digest_sha256: str
+
+
 @dataclass
 class ActiveItem:
     case_id: str
     token: str
     started_at: str
     started_monotonic: float
+    preparation: PreparedReview | None = None
 
 
 def _utc_now() -> str:
@@ -410,7 +909,8 @@ class ReviewQueue:
                 or delivery_context["clearance_state"] != "pending-human-review-not-cleared"
             ):
                 raise ReviewCockpitError("real-Agent delivery context exceeds the review protocol")
-        evidence = candidate.get("visible_evidence", candidate.get("evidence", []))
+        evidence_value = candidate.get("visible_evidence", candidate.get("evidence", []))
+        evidence = evidence_value if isinstance(evidence_value, list) else []
         return {
             "delivery_context": {
                 field: delivery_context.get(field, "not-declared") for field in context_fields
@@ -516,6 +1016,14 @@ class ReviewQueue:
                 raise ReviewCockpitError("this review batch is already complete")
             if not secrets.compare_digest(item_token, active.token):
                 raise ReviewCockpitError("review item token is stale")
+            if (
+                active.preparation is None
+                or not active.preparation.can_begin_review
+                or active.preparation.route != "full_review_supported"
+            ):
+                raise ReviewCockpitError(
+                    "full review material requires a completed capability preflight"
+                )
             return self._read_local_material(
                 case_id=active.case_id,
                 packet=self.packets[active.case_id],
@@ -536,19 +1044,49 @@ class ReviewQueue:
                 "maximum_scope": "personal_local",
                 "independent_reviewer_claimed": False,
                 "raw_answers_included": False,
+                "default_presentation_profile": DEFAULT_PRESENTATION_PROFILE,
+                "presentation_profiles": PRESENTATION_PROFILES,
+                "presentation_profile_changes_authority": False,
+                "professional_qualification_claimed": False,
+                "semantic_glossary": MACHINE_LABELS_ZH,
+                "review_preflight": REVIEW_PREFLIGHT_POLICY
+                | {"policy_digest_sha256": REVIEW_PREFLIGHT_POLICY_DIGEST},
                 "review_token": review_token,
             }
             if active is None:
                 return base
             packet = self.packets[active.case_id]
+            base.update(
+                {
+                    "display_label": (
+                        f"盲化项 {self.completed_this_run + 1} / {self.batch_total}"
+                    ),
+                    "item_token": active.token,
+                    "preparation_status": (
+                        "required"
+                        if active.preparation is None
+                        else (
+                            "ready"
+                            if active.preparation.can_begin_review
+                            else "routing_required"
+                        )
+                    ),
+                }
+            )
+            if active.preparation is None or not active.preparation.can_begin_review:
+                assert_safe_metadata(base, label="review cockpit preflight state")
+                return base
             candidate = packet.get("candidate")
             if not isinstance(candidate, dict):
                 raise ReviewCockpitError("active packet is missing its candidate")
+            candidate_summary = self._candidate_summary(packet)
             base.update(
                 {
-                    "display_label": (f"盲化项 {self.completed_this_run + 1} / {self.batch_total}"),
-                    "item_token": active.token,
-                    "candidate": self._candidate_summary(packet),
+                    "candidate": candidate_summary,
+                    "review_assignment": _review_assignment(
+                        self.config.mode,
+                        candidate_summary,
+                    ),
                 }
             )
             if self.config.mode in {
@@ -580,6 +1118,67 @@ class ReviewQueue:
                 ]
             assert_safe_metadata(base, label="review cockpit state")
             return base
+
+    def prepare(
+        self,
+        submission: ReviewPreparationSubmission,
+        *,
+        review_token: str,
+    ) -> dict[str, Any]:
+        with self.lock:
+            active = self._ensure_active()
+            if active is None:
+                raise ReviewCockpitError("this review batch is already complete")
+            if submission.mode != self.config.mode:
+                raise ReviewCockpitError("review mode changed during preparation")
+            if not secrets.compare_digest(submission.item_token, active.token):
+                raise ReviewCockpitError("review item token is stale")
+            materials = set(submission.reviewable_materials)
+            if len(materials) != len(submission.reviewable_materials):
+                raise ReviewCockpitError("reviewable materials must not be duplicated")
+            if "none_or_unsure" in materials and len(materials) > 1:
+                raise ReviewCockpitError(
+                    "none_or_unsure cannot be combined with reviewable materials"
+                )
+            profile = _recommended_presentation_profile(
+                submission.responsibility,
+                materials,
+            )
+            route, can_begin, required_reviewer, summary = _derive_review_entry_route(
+                self.config.mode,
+                responsibility=submission.responsibility,
+                materials=materials,
+                intended_next_step=submission.intended_next_step,
+            )
+            prepared = PreparedReview(
+                token=secrets.token_urlsafe(32),
+                recommended_profile=profile,
+                route=route,
+                can_begin_review=can_begin,
+                required_reviewer=required_reviewer,
+                summary=summary,
+                policy_digest_sha256=REVIEW_PREFLIGHT_POLICY_DIGEST,
+            )
+            active.preparation = prepared
+            response = {
+                "schema_version": "delivery-clearance.review-preparation.v1",
+                "mode": self.config.mode,
+                "item_token": active.token,
+                "preparation_token": prepared.token,
+                "recommended_presentation_profile": prepared.recommended_profile,
+                "review_entry_route": prepared.route,
+                "can_begin_review": prepared.can_begin_review,
+                "required_reviewer": prepared.required_reviewer,
+                "summary": prepared.summary,
+                "maximum_scope": "personal_local",
+                "professional_qualification_claimed": False,
+                "presentation_profile_changes_authority": False,
+                "raw_preflight_answers_persisted": False,
+                "policy_digest_sha256": prepared.policy_digest_sha256,
+                "review_token": review_token,
+            }
+            assert_safe_metadata(response, label="review cockpit preparation")
+            return response
 
     def _validate_active_time(self, submitted_ms: int | None, active: ActiveItem) -> int:
         if submitted_ms is None:
@@ -620,6 +1219,17 @@ class ReviewQueue:
             trial_index=0,
             review_mode=self.config.mode,  # type: ignore[arg-type]
             reviewer_role=self.config.role,
+            presentation_profile=submission.presentation_profile,
+            review_entry_route=(
+                active.preparation.route
+                if active.preparation is not None
+                else "legacy_unspecified"
+            ),
+            review_preflight_policy_digest_sha256=(
+                active.preparation.policy_digest_sha256
+                if active.preparation is not None
+                else None
+            ),
             active_review_ms=active_review_ms,
             correct_answers=correct,
             unresolved_questions=unresolved,
@@ -680,6 +1290,13 @@ class ReviewQueue:
                 raise ReviewCockpitError("review mode changed during submission")
             if not secrets.compare_digest(submission.item_token, active.token):
                 raise ReviewCockpitError("review item token is stale")
+            prepared = active.preparation
+            if prepared is None or submission.preparation_token is None:
+                raise ReviewCockpitError("review preparation questionnaire is required")
+            if not secrets.compare_digest(submission.preparation_token, prepared.token):
+                raise ReviewCockpitError("review preparation token is stale")
+            if not prepared.can_begin_review:
+                raise ReviewCockpitError("review preparation requires routing before review")
             packet = self.packets[active.case_id]
             if self.config.mode == "blinded_adjudication":
                 self._submit_adjudication(submission, packet, active)
@@ -705,6 +1322,14 @@ class ReviewCockpit:
         if submission.mode not in self.queues:
             raise ReviewCockpitError(f"review mode is not enabled: {submission.mode}")
         return self.queues[submission.mode].submit(
+            submission,
+            review_token=self.review_token,
+        )
+
+    def prepare(self, submission: ReviewPreparationSubmission) -> dict[str, Any]:
+        if submission.mode not in self.queues:
+            raise ReviewCockpitError(f"review mode is not enabled: {submission.mode}")
+        return self.queues[submission.mode].prepare(
             submission,
             review_token=self.review_token,
         )
@@ -812,6 +1437,24 @@ def create_review_cockpit_app(cockpit: ReviewCockpit) -> FastAPI:
         except ReviewCockpitError as exc:
             raise HTTPException(status_code=409, detail=str(exc)) from exc
 
+    @app.post("/api/review/prepare")
+    def prepare(
+        submission: ReviewPreparationSubmission,
+        request: Request,
+        x_review_token: str | None = Header(default=None),
+    ) -> JSONResponse:
+        if not _allowed_origin(request):
+            raise HTTPException(status_code=403, detail="cross-origin review preparation denied")
+        if x_review_token is None or not secrets.compare_digest(
+            x_review_token,
+            cockpit.review_token,
+        ):
+            raise HTTPException(status_code=403, detail="review token is missing or invalid")
+        try:
+            return JSONResponse(cockpit.prepare(submission))
+        except ReviewCockpitError as exc:
+            raise HTTPException(status_code=409, detail=str(exc)) from exc
+
     return app
 
 
@@ -911,7 +1554,7 @@ REVIEW_COCKPIT_HTML = r"""<!doctype html>
     * { box-sizing: border-box; }
     html, body { width: 100%; margin: 0; min-height: 100%; overflow-x: hidden; }
     body { background: #f5f7f5; }
-    button, input { font: inherit; }
+    button, input, select { font: inherit; }
     button { cursor: pointer; }
     .topbar {
       min-height: 68px;
@@ -948,6 +1591,17 @@ REVIEW_COCKPIT_HTML = r"""<!doctype html>
     .modebar button:first-child { border-radius: 5px 0 0 5px; }
     .modebar button:last-child { border-right: 1px solid var(--line); border-radius: 0 5px 5px 0; }
     .modebar button[aria-selected="true"] { color: #ffffff; background: var(--green); border-color: var(--green); }
+    .profilebar {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 14px 24px 0;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .profilebar label { display: flex; align-items: center; gap: 9px; font-size: 13px; font-weight: 650; white-space: nowrap; }
+    .profilebar select { min-height: 38px; padding: 0 34px 0 10px; border: 1px solid #9ca9a0; border-radius: 4px; color: var(--ink); background: var(--surface); }
+    .profile-note { color: var(--muted); font-size: 12px; line-height: 1.45; }
     .progress-wrap { max-width: 1440px; margin: 0 auto; padding: 14px 24px 0; }
     .progress-meta { display: flex; justify-content: space-between; gap: 16px; color: var(--muted); font-size: 13px; }
     .progress-track { height: 4px; margin-top: 8px; background: #dce3de; overflow: hidden; }
@@ -980,6 +1634,7 @@ REVIEW_COCKPIT_HTML = r"""<!doctype html>
     .question { padding: 18px 0; border-bottom: 1px solid var(--line); }
     .question:first-of-type { border-top: 1px solid var(--line); }
     .question-title { margin: 0 0 10px; font-weight: 650; line-height: 1.45; }
+    .question-help { margin: -4px 0 8px; color: var(--muted); font-size: 12px; line-height: 1.5; }
     .option { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 8px; align-items: start; padding: 8px 0; color: #26342b; }
     .option input { margin: 3px 0 0; accent-color: var(--green); }
     .full-material { margin: 0 0 22px; padding: 0; border-top: 1px solid var(--line); }
@@ -1000,6 +1655,16 @@ REVIEW_COCKPIT_HTML = r"""<!doctype html>
     .field { margin-top: 20px; }
     .field label { display: block; margin-bottom: 7px; font-size: 13px; font-weight: 650; }
     .field input[type="text"] { width: 100%; min-height: 42px; padding: 9px 10px; border: 1px solid #9ca9a0; border-radius: 4px; background: var(--surface); }
+    .preflight { max-width: 760px; }
+    .preflight-intro { color: var(--muted); margin: 0 0 22px; line-height: 1.6; }
+    .preflight .field { margin-top: 22px; }
+    .preflight select { width: 100%; min-height: 44px; padding: 8px 38px 8px 10px; border: 1px solid #9ca9a0; border-radius: 4px; color: var(--ink); background: var(--surface); }
+    .field-help { margin: 0 0 9px; color: var(--muted); font-size: 12px; line-height: 1.5; }
+    .check-list { display: grid; gap: 0; border-top: 1px solid var(--line); }
+    .check-list label { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 9px; align-items: start; margin: 0; padding: 10px 0; border-bottom: 1px solid var(--line); font-weight: 400; }
+    .check-list input { margin: 3px 0 0; accent-color: var(--green); }
+    .route-result { max-width: 760px; padding: 24px 0; border-top: 1px solid var(--line); }
+    .route-result p { line-height: 1.65; }
     .range-row { display: grid; grid-template-columns: minmax(0, 1fr) 64px; gap: 12px; align-items: center; }
     .range-row input[type="range"] { width: 100%; accent-color: var(--green); }
     .range-value { text-align: right; font: 13px ui-monospace, SFMono-Regular, Menlo, monospace; }
@@ -1009,6 +1674,12 @@ REVIEW_COCKPIT_HTML = r"""<!doctype html>
     .primary:hover { background: #185535; }
     .primary:disabled { cursor: not-allowed; opacity: 0.55; }
     .notice { margin: 0 0 18px; padding: 10px 12px; border-left: 3px solid var(--amber); background: var(--amber-soft); color: #62430f; font-size: 13px; }
+    .assignment { margin: 0 0 24px; padding: 16px 18px; border-left: 3px solid var(--blue); background: #edf4f8; }
+    .assignment h1 { margin-bottom: 14px; }
+    .assignment-grid { display: grid; grid-template-columns: 104px minmax(0, 1fr); gap: 8px 14px; font-size: 13px; line-height: 1.55; }
+    .assignment-grid dt { color: #4c6578; font-weight: 650; }
+    .assignment-grid dd { margin: 0; }
+    .language-boundary { margin: 12px 0 0; padding-top: 10px; border-top: 1px solid #c8d8e2; color: #4c6578; font-size: 12px; line-height: 1.5; }
     .error { display: none; margin: 0 0 18px; padding: 10px 12px; border-left: 3px solid var(--red); background: var(--red-soft); color: #72271d; font-size: 13px; }
     .complete { padding: 38px 0; border-top: 1px solid var(--line); }
     .complete p { color: var(--muted); max-width: 620px; }
@@ -1025,6 +1696,7 @@ REVIEW_COCKPIT_HTML = r"""<!doctype html>
       }
       .modebar button { min-width: 0; height: auto; padding: 8px 6px; line-height: 1.25; white-space: normal; }
       .progress-wrap { padding-left: 16px; padding-right: 16px; }
+      .profilebar { align-items: flex-start; padding-left: 16px; padding-right: 16px; flex-direction: column; gap: 7px; }
       .layout { grid-template-columns: minmax(0, 1fr); padding: 20px 16px 40px; }
       .context { border-right: 0; border-bottom: 1px solid var(--line); padding: 0 0 20px; }
       .decision-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -1043,6 +1715,8 @@ REVIEW_COCKPIT_HTML = r"""<!doctype html>
       .evidence-table td:nth-child(3) { grid-column: 1 / -1; color: var(--muted); }
       .material-row { grid-template-columns: minmax(0, 1fr); gap: 3px; }
       .boundary-grid { grid-template-columns: 96px minmax(0, 1fr); }
+      .assignment-grid { grid-template-columns: minmax(0, 1fr); gap: 3px; }
+      .assignment-grid dd { margin-bottom: 8px; }
     }
   </style>
 </head>
@@ -1054,6 +1728,12 @@ REVIEW_COCKPIT_HTML = r"""<!doctype html>
   <nav class="modebar" aria-label="审核模式">
     <!-- REVIEW_MODE_BUTTONS -->
   </nav>
+  <div class="profilebar">
+    <label for="presentation-profile">我的审核背景
+      <select id="presentation-profile" aria-describedby="profile-note"></select>
+    </label>
+    <span class="profile-note" id="profile-note">展示方式只帮助理解，不代表专业资格，也不改变放行权限。</span>
+  </div>
   <div class="progress-wrap">
     <div class="progress-meta"><span id="progress-label">正在载入审核状态</span><span id="active-time">00:00 主动复核</span></div>
     <div class="progress-track" aria-hidden="true"><div class="progress-fill" id="progress-fill" style="width:0"></div></div>
@@ -1073,12 +1753,18 @@ REVIEW_COCKPIT_HTML = r"""<!doctype html>
     const progressLabel = document.getElementById('progress-label');
     const progressFill = document.getElementById('progress-fill');
     const activeTime = document.getElementById('active-time');
+    const profileSelect = document.getElementById('presentation-profile');
+    const profileNote = document.getElementById('profile-note');
     let state = null;
     let mode = __INITIAL_REVIEW_MODE__;
+    let presentationProfile = 'plain_language';
+    let preparation = null;
     let activeMs = 0;
     let visibleSince = performance.now();
     let timer = null;
     const timingByToken = new Map();
+    const draftByToken = new Map();
+    const preparationByToken = new Map();
 
     function esc(value) {
       return String(value ?? '').replace(/[&<>'"]/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[char]));
@@ -1120,42 +1806,64 @@ REVIEW_COCKPIT_HTML = r"""<!doctype html>
       errorBox.textContent = '';
       errorBox.style.display = 'none';
     }
+    function configureProfiles() {
+      const profiles = state?.presentation_profiles || [];
+      const available = new Set(profiles.map(item => item.profile_id));
+      if (!available.has(presentationProfile)) {
+        presentationProfile = state?.default_presentation_profile || 'plain_language';
+      }
+      profileSelect.innerHTML = profiles.map(item => `<option value="${esc(item.profile_id)}">${esc(item.label)}</option>`).join('');
+      profileSelect.value = presentationProfile;
+      profileSelect.disabled = !preparation?.can_begin_review;
+      const selected = profiles.find(item => item.profile_id === presentationProfile);
+      profileNote.textContent = selected
+        ? `${selected.focus} ${selected.not_responsible_for} 展示模式不代表专业资格，也不改变放行权限。`
+        : '展示方式只帮助理解，不代表专业资格，也不改变放行权限。';
+    }
     function chips(values) {
-      return `<div class="chip-list">${(values || []).map(value => `<span class="chip">${esc(value)}</span>`).join('')}</div>`;
+      return `<div class="chip-list">${(values || []).map(value => `<span class="chip" title="${esc(value)}">${esc(codeLabel(value))}</span>`).join('')}</div>`;
     }
     function codeLabel(value) {
-      const labels = {
-        'ai-agent': 'AI Agent',
-        'candidate-code-patch': '候选代码补丁',
-        'personal-local-code-review-and-validation': '个人本地代码审核与验证',
-        'local-project-owner': '本地项目负责人（当前审核者）',
-        'personal_local': '仅限个人本地项目',
-        'pending-human-review-not-cleared': '待人工复核，尚未放行',
-        'high': '高'
-      };
-      return labels[value] || value || '未声明';
+      return state?.semantic_glossary?.[value] || value || '未声明';
     }
     function evidenceTable(items) {
-      return `<table class="evidence-table"><thead><tr><th>证据</th><th>状态</th><th>摘要</th></tr></thead><tbody>${(items || []).map(item => `<tr><td>${esc(item.evidence_type)}</td><td class="status-${esc(item.status)}">${esc(item.status)}</td><td>${esc(item.summary_code)}</td></tr>`).join('')}</tbody></table>`;
+      return `<table class="evidence-table"><thead><tr><th>证据</th><th>状态</th><th>它说明什么</th></tr></thead><tbody>${(items || []).map(item => `<tr><td title="${esc(item.evidence_type)}">${esc(codeLabel(item.evidence_type))}</td><td class="status-${esc(item.status)}" title="${esc(item.status)}">${esc(codeLabel(item.status))}</td><td title="${esc(item.summary_code)}">${esc(codeLabel(item.summary_code))}</td></tr>`).join('')}</tbody></table>`;
     }
     function renderContext() {
       const c = state.candidate;
       const d = c.delivery_context || {};
       const contextWarning = d.context_complete ? '' : '<div class="notice">交付上下文不完整；不得据此放行。</div>';
       const changes = `${esc(c.changed_file_count ?? '未声明')} 个文件 / +${esc(c.added_line_count ?? '未声明')} / -${esc(c.deleted_line_count ?? '未声明')}`;
-      context.innerHTML = `<div class="eyebrow">${esc(state.display_label)}</div><h2>交付说明</h2>${contextWarning}<dl class="boundary-grid"><dt>交付主体</dt><dd><strong>${esc(d.delivering_agent_name)}</strong><br>${esc(codeLabel(d.delivering_party_type))} · 模型 ${esc(d.delivering_model_name)}</dd><dt>交付内容</dt><dd>${esc(codeLabel(d.deliverable_type))}<br>${esc(d.deliverable_title)}</dd><dt>候选物 ID</dt><dd>${esc(d.deliverable_id)}</dd><dt>来源项目</dt><dd>${esc(d.source_repository)}</dd><dt>变更规模</dt><dd>${changes}</dd><dt>交付对象</dt><dd>${esc(codeLabel(d.intended_recipient_role))}</dd><dt>使用目的</dt><dd>${esc(codeLabel(d.intended_purpose_code))}</dd><dt>当前状态</dt><dd class="status-missing">${esc(codeLabel(d.clearance_state))}</dd><dt>责任主体</dt><dd>${esc(codeLabel(d.risk_owner_role))}</dd><dt>最大范围</dt><dd>${esc(codeLabel(d.target_scope))}</dd><dt>风险等级</dt><dd>${esc(codeLabel(c.declared_risk_level))}</dd></dl><h3>禁止用途</h3>${chips(c.prohibited_use_codes)}<h3>可见证据</h3>${evidenceTable(c.visible_evidence)}`;
+      const showTechnical = ['software_engineer', 'security_audit', 'technical_codes'].includes(presentationProfile);
+      const technicalRows = showTechnical ? `<dt>候选物 ID</dt><dd>${esc(d.deliverable_id)}</dd><dt>变更规模</dt><dd>${changes}</dd>` : '';
+      context.innerHTML = `<div class="eyebrow">${esc(state.display_label)}</div><h2>交付说明</h2>${contextWarning}<dl class="boundary-grid"><dt>交付主体</dt><dd><strong>${esc(d.delivering_agent_name)}</strong><br>${esc(codeLabel(d.delivering_party_type))} · 模型 ${esc(d.delivering_model_name)}</dd><dt>审核对象</dt><dd>${esc(codeLabel(d.deliverable_type))}</dd><dt>原始任务标题</dt><dd>${esc(d.deliverable_title)}<br><span class="profile-note">保持来源原文，未自动翻译</span></dd><dt>来源项目</dt><dd>${esc(d.source_repository)}</dd>${technicalRows}<dt>交付对象</dt><dd>${esc(codeLabel(d.intended_recipient_role))}</dd><dt>使用目的</dt><dd>${esc(codeLabel(d.intended_purpose_code))}</dd><dt>当前状态</dt><dd class="status-missing">${esc(codeLabel(d.clearance_state))}</dd><dt>责任主体</dt><dd>${esc(codeLabel(d.risk_owner_role))}</dd><dt>最大范围</dt><dd>${esc(codeLabel(d.target_scope))}</dd><dt>风险等级</dt><dd>${esc(codeLabel(c.declared_risk_level))}</dd></dl><h3>即使通过也不能做</h3>${chips(c.prohibited_use_codes)}<h3>机器已经检查到什么</h3>${evidenceTable(c.visible_evidence)}`;
+    }
+    function assignmentMarkup() {
+      const assignment = state.review_assignment?.views?.[presentationProfile] || state.review_assignment?.views?.plain_language;
+      if (!assignment) return '<div class="notice">审核任务说明缺失；不得据此放行。</div>';
+      return `<section class="assignment"><h1>${esc(assignment.heading)}</h1><dl class="assignment-grid"><dt>审核对象</dt><dd>${esc(assignment.what_is_being_reviewed)}</dd><dt>你要判断</dt><dd>${esc(assignment.decision_required)}</dd><dt>不要求你做</dt><dd>${esc(assignment.not_your_task)}</dd><dt>看不懂时</dt><dd>${esc(assignment.escalate_when)}</dd></dl><p class="language-boundary">${esc(assignment.language_boundary)}</p></section>`;
     }
     function questionMarkup(question, index) {
       const name = `q-${index}`;
-      const options = question.options.map((label, optionIndex) => `<label class="option"><input type="radio" name="${name}" value="${optionIndex + 1}"><span>${esc(label)}</span></label>`).join('');
-      return `<div class="question"><p class="question-title">${index + 1}. ${esc(question.prompt)}</p>${options}<label class="option"><input type="radio" name="${name}" value="u"><span>尚未解决 / 需要更多证据</span></label></div>`;
+      const view = question.views?.[presentationProfile] || question;
+      const options = view.options.map((label, optionIndex) => `<label class="option"><input type="radio" name="${name}" value="${optionIndex + 1}"><span>${esc(label)}</span></label>`).join('');
+      return `<div class="question"><p class="question-title">${index + 1}. ${esc(view.prompt)}</p><p class="question-help">${esc(view.help || '')}</p>${options}<label class="option"><input type="radio" name="${name}" value="u"><span>${esc(view.unresolved_label || '我无法判断，需要转交对应专业人员')}</span></label></div>`;
     }
     function materialMarkup(material) {
       const omit = new Set(['visible_evidence', 'schema_version']);
-      return `<div class="full-material">${Object.entries(material).filter(([key]) => !omit.has(key)).map(([key, value]) => `<div class="material-row"><span>${esc(key)}</span><span>${esc(Array.isArray(value) ? value.join(', ') : value)}</span></div>`).join('')}</div>`;
+      const labels = {
+        task_summary_code: '任务类型', declared_risk_level: '风险等级', target_scope: '最大范围',
+        intended_recipient_role: '交付对象', risk_owner_role: '责任主体', prohibited_use_codes: '禁止用途',
+        tool_permission_ids: '允许读取的工具权限', subject_digest_sha256: '候选物摘要',
+        source_snapshot_digest_sha256: '来源快照摘要', context_digest_sha256: '上下文摘要',
+        arm_decisions_accessible: '实验组决定可见', official_scorer_result_accessible: '官方测试结果可见',
+        reference_label_accessible: '参考标签可见'
+      };
+      const format = value => Array.isArray(value) ? value.map(codeLabel).join('；') : (typeof value === 'string' ? codeLabel(value) : String(value));
+      return `<div class="full-material">${Object.entries(material).filter(([key]) => !omit.has(key)).map(([key, value]) => `<div class="material-row"><span>${esc(labels[key] || key)}</span><span>${esc(format(value))}</span></div>`).join('')}</div>`;
     }
     function rawMaterialMarkup(material) {
-      return `<div class="raw-review"><section class="raw-panel"><h3>原始任务 / Issue</h3><pre>${esc(material.issue_markdown)}</pre><div class="raw-meta">${esc(material.issue_bytes)} bytes</div></section><section class="raw-panel"><h3>真实 Agent 补丁</h3><pre>${esc(material.candidate_patch)}</pre><div class="raw-meta">${esc(material.patch_bytes)} bytes / digest ${esc(material.candidate_patch_digest_sha256)}</div></section></div>`;
+      return `<div class="notice">以下是来源原文和代码补丁。系统不会用自动翻译替代专业含义；无法审查时请保留未解决项并转交软件工程师。</div><div class="raw-review"><section class="raw-panel"><h3>原始任务 / Issue（保持来源原文）</h3><pre>${esc(material.issue_markdown)}</pre><div class="raw-meta">${esc(material.issue_bytes)} bytes</div></section><section class="raw-panel"><h3>真实 Agent 补丁（代码原文）</h3><pre>${esc(material.candidate_patch)}</pre><div class="raw-meta">${esc(material.patch_bytes)} bytes / digest ${esc(material.candidate_patch_digest_sha256)}</div></section></div>`;
     }
     async function loadLocalMaterial() {
       const container = document.getElementById('local-material');
@@ -1173,6 +1881,29 @@ REVIEW_COCKPIT_HTML = r"""<!doctype html>
         container.innerHTML = `<div class="notice">${esc(error.message)}</div>`;
       }
     }
+    function captureDraft() {
+      if (!state?.item_token || !state?.questions) return;
+      draftByToken.set(state.item_token, {
+        answers: reviewAnswers(),
+        workload: workloadValue()
+      });
+    }
+    function restoreDraft() {
+      const draft = state?.item_token ? draftByToken.get(state.item_token) : null;
+      if (!draft) return;
+      draft.answers.forEach((answer, index) => {
+        if (!answer) return;
+        const input = document.querySelector(`input[name="q-${index}"][value="${answer}"]`);
+        if (input) input.checked = true;
+      });
+      const workload = document.getElementById('workload');
+      const output = document.getElementById('workload-value');
+      if (workload && output && draft.workload !== null) {
+        workload.value = String(draft.workload);
+        workload.dataset.touched = 'true';
+        output.textContent = String(draft.workload);
+      }
+    }
     function workloadMarkup() {
       return `<div class="field"><label for="workload">主观认知负担（可选）</label><div class="range-row"><input id="workload" type="range" min="0" max="100" step="1" value="50"><span class="range-value" id="workload-value">未设置</span></div></div>`;
     }
@@ -1185,35 +1916,119 @@ REVIEW_COCKPIT_HTML = r"""<!doctype html>
       input.addEventListener('change', () => { touched = true; output.textContent = input.value; input.dataset.touched = 'true'; });
       if (!touched) output.textContent = '未设置';
     }
+    function preflightContext() {
+      context.innerHTML = `<div class="eyebrow">审核前准备</div><h2>${esc(state.mode_label)}</h2><p class="profile-note">系统会先确认你承担的责任、能理解的材料和目标范围，再决定展示什么以及是否需要转交。</p><dl class="boundary-grid"><dt>当前协议上限</dt><dd>${esc(codeLabel(state.maximum_scope))}</dd><dt>专业资格</dt><dd>不会根据自报答案自动认定</dd><dt>原始回答</dt><dd>不写入审核收据</dd></dl>`;
+    }
+    function preflightSelect(question) {
+      const options = question.options.map(item => `<option value="${esc(item.value)}">${esc(item.label)}</option>`).join('');
+      return `<div class="field"><label for="preflight-${esc(question.question_id)}">${esc(question.prompt)}</label><p class="field-help">${esc(question.help)}</p><select id="preflight-${esc(question.question_id)}"><option value="">请选择</option>${options}</select></div>`;
+    }
+    function preflightChecks(question) {
+      const options = question.options.map(item => `<label><input type="checkbox" name="reviewable-material" value="${esc(item.value)}"><span>${esc(item.label)}</span></label>`).join('');
+      return `<div class="field"><label>${esc(question.prompt)}</label><p class="field-help">${esc(question.help)}</p><div class="check-list">${options}</div></div>`;
+    }
+    function renderPreflight() {
+      preflightContext();
+      const questions = state.review_preflight?.questions || [];
+      const responsibility = questions.find(item => item.question_id === 'responsibility');
+      const materials = questions.find(item => item.question_id === 'reviewable_materials');
+      const nextStep = questions.find(item => item.question_id === 'intended_next_step');
+      if (!responsibility || !materials || !nextStep) {
+        workspace.innerHTML = '<div class="notice">审核前提问契约缺失；本轮不能继续。</div>';
+        return;
+      }
+      workspace.innerHTML = `<div class="preflight"><h1>先确定你要承担的审核任务</h1><p class="preflight-intro">不要先给自己选择“产品经理”或“工程师”标签。请回答三个具体问题，系统会推荐解释方式，并在超出能力或协议范围时先转交。</p>${preflightSelect(responsibility)}${preflightChecks(materials)}${preflightSelect(nextStep)}<div class="actionbar"><span class="privacy">原始选择只在当前本地进程中用于路由；收据只记录派生视图、路由和方法版本。</span><button class="primary" id="prepare-review">生成本次审核任务</button></div></div>`;
+      document.getElementById('prepare-review').addEventListener('click', prepareReview);
+    }
+    async function prepareReview() {
+      clearError();
+      const responsibility = document.getElementById('preflight-responsibility')?.value;
+      const intendedNextStep = document.getElementById('preflight-intended_next_step')?.value;
+      const materials = [...document.querySelectorAll('input[name="reviewable-material"]:checked')].map(input => input.value);
+      if (!responsibility || !intendedNextStep || !materials.length) {
+        showError('请回答三个审核前问题，再生成本次审核任务。');
+        return;
+      }
+      if (materials.includes('none_or_unsure') && materials.length > 1) {
+        showError('“目前都无法独立判断”不能与其他材料同时选择。');
+        return;
+      }
+      const button = document.getElementById('prepare-review');
+      button.disabled = true;
+      try {
+        const response = await fetch('/api/review/prepare', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json', 'X-Review-Token': state.review_token},
+          body: JSON.stringify({
+            mode,
+            item_token: state.item_token,
+            responsibility,
+            reviewable_materials: materials,
+            intended_next_step: intendedNextStep
+          })
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.detail || `审核任务生成失败 (${response.status})`);
+        preparation = data;
+        preparationByToken.set(state.item_token, data);
+        presentationProfile = data.recommended_presentation_profile;
+        if (data.can_begin_review) {
+          await load(mode);
+        } else {
+          stopTimer();
+          render();
+        }
+      } catch (error) {
+        showError(error.message);
+        button.disabled = false;
+      }
+    }
+    function renderRouteResult() {
+      preflightContext();
+      const required = preparation.required_reviewer ? `<p><strong>需要转交：</strong>${esc(preparation.required_reviewer)}</p>` : '';
+      const boundaryButton = mode !== 'boundary_reconstruction' ? '<button class="primary" id="switch-boundary">改做边界重构</button>' : '';
+      workspace.innerHTML = `<div class="route-result"><div class="eyebrow">审核路由结果</div><h1>当前不能直接进入这项审核</h1><p>${esc(preparation.summary)}</p>${required}<p class="profile-note">这是能力与范围路由，不是对你的职位或专业资格作评价。</p><div class="actionbar"><button type="button" id="restart-preflight">重新回答</button>${boundaryButton}</div></div>`;
+      document.getElementById('restart-preflight').addEventListener('click', () => {
+        preparationByToken.delete(state.item_token);
+        preparation = null;
+        render();
+      });
+      const switchButton = document.getElementById('switch-boundary');
+      if (switchButton) switchButton.addEventListener('click', () => load('boundary_reconstruction'));
+    }
     function renderReview() {
       const hasLocalMaterial = state.mode === 'full_review_reference' && state.local_material?.available;
       const raw = hasLocalMaterial ? `<h2>本地原始候选</h2><div id="local-material" class="loading">正在校验并载入本地任务与补丁...</div>` : '';
-      const full = state.mode === 'full_review_reference' ? `<div class="notice">实验臂决策、参考标签和隐藏 scorer 保持不可见。原始材料只在本机临时显示，不写入审核 session。</div><h1>全文参考复核</h1>${raw}<h2>交付元数据</h2>${materialMarkup(state.full_review_material)}<h2>边界问题</h2>` : `<h1>重构交付边界</h1>`;
-      workspace.innerHTML = `${full}${state.questions.map(questionMarkup).join('')}${workloadMarkup()}<div class="actionbar"><span class="privacy">仅保存汇总正确性、未解决数、主动复核时间和可选负担评分。</span><button class="primary" id="submit">记录本次复核</button></div>`;
+      const full = state.mode === 'full_review_reference' ? `<div class="notice">实验臂决策、参考标签和隐藏测试结果保持不可见。原始材料只在本机临时显示，不写入审核收据。</div>${raw}<h2>交付元数据</h2>${materialMarkup(state.full_review_material)}<h2>请确认五个交付边界</h2>` : `<h2>请确认五个交付边界</h2>`;
+      workspace.innerHTML = `${assignmentMarkup()}${full}${state.questions.map(questionMarkup).join('')}${workloadMarkup()}<div class="actionbar"><span class="privacy">仅保存展示模式、汇总正确性、未解决数、主动复核时间和可选负担评分；不保存你的原始答案。</span><button class="primary" id="submit">记录本次复核</button></div>`;
       bindWorkload();
+      restoreDraft();
       document.getElementById('submit').addEventListener('click', submitReview);
       if (hasLocalMaterial) loadLocalMaterial();
     }
     function renderAdjudication() {
       const scorer = state.official_scorer;
-      workspace.innerHTML = `<h1>作出盲法放行判断</h1><div class="notice">官方 scorer：${esc(scorer.outcome)}。Scorer 证据只是支持证据，不能单独决定放行。实验臂身份和决定保持隐藏。</div><div class="decision-grid">${state.dispositions.map(item => `<label><input type="radio" name="disposition" value="${esc(item.value)}"><span>${esc(item.label)}</span></label>`).join('')}</div><div class="field"><label for="rationale">理由代码</label><input id="rationale" type="text" autocomplete="off" placeholder="scorer-passed, scope-bounded"></div><div class="actionbar"><span class="privacy">不保留自由文本备注；请使用有限、小写的理由标识。</span><button class="primary" id="submit">记录判断</button></div>`;
+      workspace.innerHTML = `${assignmentMarkup()}<h2>作出盲法放行判断</h2><div class="notice">官方测试结果：${esc(codeLabel(scorer.outcome))}。它只是支持证据，不能单独决定放行；实验组身份和决定保持隐藏。</div><div class="decision-grid">${state.dispositions.map(item => `<label><input type="radio" name="disposition" value="${esc(item.value)}"><span>${esc(item.label)}</span></label>`).join('')}</div><div class="field"><label for="rationale">理由代码</label><input id="rationale" type="text" autocomplete="off" placeholder="scorer-passed, scope-bounded"></div><div class="actionbar"><span class="privacy">不保留自由文本备注；请使用有限、小写的理由标识。</span><button class="primary" id="submit">记录判断</button></div>`;
       document.getElementById('submit').addEventListener('click', submitAdjudication);
     }
     function renderComplete() {
       stopTimer();
-      context.innerHTML = `<div class="eyebrow">本批已完成</div><h2>${esc(state.mode_label)}</h2><dl class="boundary-grid"><dt>本次记录</dt><dd>${state.completed_this_run}</dd><dt>已有记录</dt><dd>${state.completed_before_run}</dd><dt>最大范围</dt><dd>${esc(state.maximum_scope)}</dd></dl>`;
+      context.innerHTML = `<div class="eyebrow">本批已完成</div><h2>${esc(state.mode_label)}</h2><dl class="boundary-grid"><dt>本次记录</dt><dd>${state.completed_this_run}</dd><dt>已有记录</dt><dd>${state.completed_before_run}</dd><dt>最大范围</dt><dd>${esc(codeLabel(state.maximum_scope))}</dd></dl>`;
       workspace.innerHTML = `<div class="complete"><h1>审核批次已完成</h1><p>追加式收据已写入本地。系统未保存原始答案、截图、按键、生物识别数据或模型生成回答。</p></div>`;
     }
     function render() {
       clearError();
+      configureProfiles();
       modes.forEach(button => button.setAttribute('aria-selected', String(button.dataset.mode === mode)));
       const done = state.completed_this_run;
       const total = state.batch_total;
       progressLabel.textContent = `${state.mode_label} / 本次已记录 ${done} / ${total}`;
       progressFill.style.width = `${total ? Math.round((done / total) * 100) : 100}%`;
       if (state.status === 'complete') { renderComplete(); return; }
-      renderContext();
       startTimer();
+      if (!preparation) { renderPreflight(); return; }
+      if (!preparation.can_begin_review) { renderRouteResult(); return; }
+      renderContext();
       if (state.mode === 'blinded_adjudication') renderAdjudication(); else renderReview();
     }
     async function load(nextMode) {
@@ -1225,6 +2040,7 @@ REVIEW_COCKPIT_HTML = r"""<!doctype html>
         const response = await fetch(`/api/review/${mode}`, {cache: 'no-store'});
         if (!response.ok) throw new Error(`审核状态载入失败 (${response.status})`);
         state = await response.json();
+        preparation = state.item_token ? (preparationByToken.get(state.item_token) || null) : null;
         render();
       } catch (error) { showError(error.message); }
     }
@@ -1245,6 +2061,9 @@ REVIEW_COCKPIT_HTML = r"""<!doctype html>
         const data = await response.json();
         if (!response.ok) throw new Error(data.detail || `提交失败 (${response.status})`);
         timingByToken.delete(payload.item_token);
+        draftByToken.delete(payload.item_token);
+        preparationByToken.delete(payload.item_token);
+        preparation = null;
         state = data;
         render();
       } catch (error) {
@@ -1260,15 +2079,22 @@ REVIEW_COCKPIT_HTML = r"""<!doctype html>
     async function submitReview() {
       const answers = reviewAnswers();
       if (answers.some(answer => answer === null)) { showError('请回答每个边界问题，或标记为尚未解决。'); return; }
-      await post({mode, item_token: state.item_token, answers, active_review_ms: currentActiveMs(), nasa_tlx_score: workloadValue()});
+      await post({mode, item_token: state.item_token, preparation_token: preparation.preparation_token, presentation_profile: presentationProfile, answers, active_review_ms: currentActiveMs(), nasa_tlx_score: workloadValue()});
     }
     async function submitAdjudication() {
       const disposition = document.querySelector('input[name="disposition"]:checked')?.value;
       const rationaleCodes = document.getElementById('rationale').value.split(',').map(value => value.trim()).filter(Boolean);
       if (!disposition) { showError('请选择一个放行处置。'); return; }
       if (!rationaleCodes.length) { showError('请至少填写一个有限的理由代码。'); return; }
-      await post({mode, item_token: state.item_token, disposition, rationale_codes: rationaleCodes});
+      await post({mode, item_token: state.item_token, preparation_token: preparation.preparation_token, disposition, rationale_codes: rationaleCodes});
     }
+    profileSelect.addEventListener('change', () => {
+      if (!preparation?.can_begin_review) return;
+      captureDraft();
+      stopTimer();
+      presentationProfile = profileSelect.value;
+      render();
+    });
     modes.forEach(button => button.addEventListener('click', () => load(button.dataset.mode)));
     load(mode);
   </script>

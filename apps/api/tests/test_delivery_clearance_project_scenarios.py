@@ -212,12 +212,25 @@ class RealProjectScenarioTests(unittest.TestCase):
                     )
                 )
             )
+        preparation = client.post(
+            "/api/review/prepare",
+            headers={"X-Review-Token": state["review_token"]},
+            json={
+                "mode": "boundary_reconstruction",
+                "item_token": state["item_token"],
+                "responsibility": "local_delivery_owner",
+                "reviewable_materials": ["scope_and_responsibility"],
+                "intended_next_step": "personal_local_validation",
+            },
+        )
+        self.assertEqual(preparation.status_code, 200, preparation.text)
         response = client.post(
             "/api/review/submit",
             headers={"X-Review-Token": state["review_token"]},
             json={
                 "mode": "boundary_reconstruction",
                 "item_token": state["item_token"],
+                "preparation_token": preparation.json()["preparation_token"],
                 "answers": answers,
                 "active_review_ms": 25,
             },

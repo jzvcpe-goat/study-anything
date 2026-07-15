@@ -45,7 +45,9 @@ from study_anything.cbb.benchmark.models import (
     ResourceBudgetV1,
     ResourceUsageV1,
     ReviewEconomicEvaluationPlanV1,
+    ReviewEntryRoute,
     ReviewExecutionProvenanceV1,
+    ReviewPresentationProfile,
     ReviewerDecisionV1,
     ScorerExecutionReceiptV1,
     ToolCallObservationV1,
@@ -1423,10 +1425,23 @@ def record_human_review_session(
         "external_observed_measurement",
     ] = "external_observed_measurement",
     question_set_digest_sha256: str | None = None,
+    presentation_profile: ReviewPresentationProfile = "technical_codes",
+    review_entry_route: ReviewEntryRoute = "legacy_unspecified",
+    review_preflight_policy_digest_sha256: str | None = None,
 ) -> HumanReviewSessionV1:
     measurement = HumanReconstructionMeasurementV1(
         reviewer_role=reviewer_role,
         qualification_scope=DeliveryScope.PERSONAL_LOCAL,
+        presentation_profile=presentation_profile,
+        professional_qualification_claimed=False,
+        review_entry_route=review_entry_route,
+        review_preflight_method=(
+            "questionnaire_v1"
+            if review_preflight_policy_digest_sha256 is not None
+            else "legacy_unspecified"
+        ),
+        review_preflight_policy_digest_sha256=review_preflight_policy_digest_sha256,
+        raw_preflight_answers_included=False,
         active_review_ms=active_review_ms,
         boundary_questions_total=5,
         boundary_questions_correct=correct_answers,

@@ -287,6 +287,20 @@ class RealAgentCaseSetTests(unittest.TestCase):
         boundary_state = client.get("/api/review/boundary_reconstruction").json()
         self.assertNotIn("local_material", boundary_state)
         self.assertNotIn("diff --git", json.dumps(boundary_state))
+        self.assertNotIn("candidate", boundary_state)
+        prepared_boundary = client.post(
+            "/api/review/prepare",
+            headers={"X-Review-Token": boundary_state["review_token"]},
+            json={
+                "mode": "boundary_reconstruction",
+                "item_token": boundary_state["item_token"],
+                "responsibility": "local_delivery_owner",
+                "reviewable_materials": ["scope_and_responsibility"],
+                "intended_next_step": "personal_local_validation",
+            },
+        )
+        self.assertEqual(prepared_boundary.status_code, 200, prepared_boundary.text)
+        boundary_state = client.get("/api/review/boundary_reconstruction").json()
         delivery_context = boundary_state["candidate"]["delivery_context"]
         self.assertTrue(delivery_context["context_complete"])
         self.assertEqual(delivery_context["delivering_agent_name"], "fixture Agent")
@@ -298,7 +312,19 @@ class RealAgentCaseSetTests(unittest.TestCase):
         )
         self.assertEqual(
             boundary_state["questions"][0]["prompt"],
-            "该审核包最多支持到哪一级交付范围？",
+            "这份候选修改现在最多可以走到哪一步？",
+        )
+        self.assertIn(
+            "不审核整个仓库",
+            boundary_state["review_assignment"]["views"]["plain_language"][
+                "what_is_being_reviewed"
+            ],
+        )
+        self.assertIn(
+            "不要求阅读代码",
+            boundary_state["review_assignment"]["views"]["plain_language"][
+                "not_your_task"
+            ],
         )
         blocked = client.get(
             "/api/review/boundary_reconstruction/material",
@@ -308,7 +334,7 @@ class RealAgentCaseSetTests(unittest.TestCase):
         self.assertEqual(blocked.status_code, 409)
 
         full_state = client.get("/api/review/full_review_reference").json()
-        self.assertTrue(full_state["local_material"]["available"])
+        self.assertNotIn("local_material", full_state)
         unauthorized = client.get(
             "/api/review/full_review_reference/material",
             params={"item_token": full_state["item_token"]},
@@ -329,6 +355,27 @@ class RealAgentCaseSetTests(unittest.TestCase):
             headers={"X-Review-Token": full_state["review_token"]},
         )
         self.assertEqual(rejected.status_code, 409)
+        capability_blocked = client.get(
+            "/api/review/full_review_reference/material",
+            params={"item_token": full_state["item_token"]},
+            headers={"X-Review-Token": full_state["review_token"]},
+        )
+        self.assertEqual(capability_blocked.status_code, 409)
+        self.assertIn("capability preflight", capability_blocked.text)
+        prepared_full = client.post(
+            "/api/review/prepare",
+            headers={"X-Review-Token": full_state["review_token"]},
+            json={
+                "mode": "full_review_reference",
+                "item_token": full_state["item_token"],
+                "responsibility": "software_quality_reviewer",
+                "reviewable_materials": ["code_patch_and_tests"],
+                "intended_next_step": "personal_local_validation",
+            },
+        )
+        self.assertEqual(prepared_full.status_code, 200, prepared_full.text)
+        full_state = client.get("/api/review/full_review_reference").json()
+        self.assertTrue(full_state["local_material"]["available"])
         material_response = client.get(
             "/api/review/full_review_reference/material",
             params={"item_token": full_state["item_token"]},
@@ -386,6 +433,8 @@ class RealAgentCaseSetTests(unittest.TestCase):
             json={
                 "mode": "full_review_reference",
                 "item_token": full_state["item_token"],
+                "preparation_token": prepared_full.json()["preparation_token"],
+                "presentation_profile": "software_engineer",
                 "answers": answers,
                 "active_review_ms": 10,
                 "nasa_tlx_score": 35,

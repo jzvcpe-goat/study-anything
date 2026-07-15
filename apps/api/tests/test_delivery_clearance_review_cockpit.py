@@ -216,6 +216,30 @@ class ReviewCockpitTests(unittest.TestCase):
             )
         return answers
 
+    def _prepare(
+        self,
+        mode: str,
+        state: dict[str, object],
+        *,
+        responsibility: str = "local_delivery_owner",
+        reviewable_materials: list[str] | None = None,
+        intended_next_step: str = "personal_local_validation",
+    ) -> dict[str, object]:
+        materials = reviewable_materials or ["scope_and_responsibility"]
+        response = self.client.post(
+            "/api/review/prepare",
+            headers={"X-Review-Token": str(state["review_token"])},
+            json={
+                "mode": mode,
+                "item_token": state["item_token"],
+                "responsibility": responsibility,
+                "reviewable_materials": materials,
+                "intended_next_step": intended_next_step,
+            },
+        )
+        self.assertEqual(response.status_code, 200, response.text)
+        return response.json()
+
     def test_cockpit_is_blinded_and_sets_local_security_headers(self) -> None:
         page = self.client.get("/")
         self.assertEqual(page.status_code, 200)
@@ -231,16 +255,63 @@ class ReviewCockpitTests(unittest.TestCase):
         self.assertNotIn("expected_code", serialized)
         self.assertEqual(payload["maximum_scope"], "personal_local")
         self.assertFalse(payload["independent_reviewer_claimed"])
+        self.assertEqual(payload["default_presentation_profile"], "plain_language")
+        self.assertFalse(payload["presentation_profile_changes_authority"])
+        self.assertFalse(payload["professional_qualification_claimed"])
+        self.assertTrue(payload["review_preflight"]["required_before_evidence_display"])
+        self.assertFalse(payload["review_preflight"]["raw_answers_persisted"])
+        self.assertEqual(len(payload["review_preflight"]["questions"]), 3)
+        self.assertEqual(payload["preparation_status"], "required")
+        self.assertNotIn("candidate", payload)
+        self.assertNotIn("questions", payload)
+        self.assertEqual(
+            {item["profile_id"] for item in payload["presentation_profiles"]},
+            {
+                "plain_language",
+                "product_owner",
+                "software_engineer",
+                "security_audit",
+                "technical_codes",
+            },
+        )
+        self._prepare("boundary_reconstruction", payload)
+        payload = self.client.get("/api/review/boundary_reconstruction").json()
+        self.assertEqual(payload["preparation_status"], "ready")
+        assignment = payload["review_assignment"]
+        self.assertFalse(assignment["professional_qualification_claimed"])
+        self.assertIn("不要求阅读代码", assignment["views"]["plain_language"]["not_your_task"])
+        for question in payload["questions"]:
+            self.assertEqual(question["prompt"], question["views"]["plain_language"]["prompt"])
+            self.assertEqual(
+                len(question["views"]["plain_language"]["options"]),
+                len(question["views"]["software_engineer"]["options"]),
+            )
+            self.assertEqual(len(question["views"]["technical_codes"]["options"]), 3)
 
     def test_boundary_and_full_review_write_aggregate_only_sessions(self) -> None:
+        profiles = {
+            "boundary_reconstruction": "plain_language",
+            "full_review_reference": "software_engineer",
+        }
         for mode in ("boundary_reconstruction", "full_review_reference"):
             state = self.client.get(f"/api/review/{mode}").json()
+            preparation = self._prepare(
+                mode,
+                state,
+                reviewable_materials=(
+                    ["code_patch_and_tests"]
+                    if mode == "full_review_reference"
+                    else ["scope_and_responsibility"]
+                ),
+            )
             response = self.client.post(
                 "/api/review/submit",
                 headers={"X-Review-Token": state["review_token"]},
                 json={
                     "mode": mode,
                     "item_token": state["item_token"],
+                    "preparation_token": preparation["preparation_token"],
+                    "presentation_profile": profiles[mode],
                     "answers": self._correct_answers(),
                     "active_review_ms": 250,
                     "nasa_tlx_score": 35,
@@ -265,16 +336,113 @@ class ReviewCockpitTests(unittest.TestCase):
         self.assertTrue(
             all(session.measurement.raw_answers_included is False for session in sessions)
         )
+        self.assertEqual(
+            {session.measurement.presentation_profile for session in sessions},
+            {"plain_language", "software_engineer"},
+        )
+        self.assertTrue(
+            all(session.measurement.professional_qualification_claimed is False for session in sessions)
+        )
+        self.assertEqual(
+            {session.measurement.review_entry_route for session in sessions},
+            {"boundary_review_supported", "full_review_supported"},
+        )
+        self.assertTrue(
+            all(session.measurement.review_preflight_method == "questionnaire_v1" for session in sessions)
+        )
+        self.assertTrue(
+            all(
+                session.measurement.review_preflight_policy_digest_sha256 is not None
+                for session in sessions
+            )
+        )
+        self.assertTrue(
+            all(session.measurement.raw_preflight_answers_included is False for session in sessions)
+        )
+        self.assertEqual(
+            len({session.question_set_digest_sha256 for session in sessions}),
+            1,
+        )
         self.assertTrue(all("answers" not in json.loads(line) for line in lines))
+
+    def test_invalid_presentation_profile_is_rejected(self) -> None:
+        state = self.client.get("/api/review/boundary_reconstruction").json()
+        response = self.client.post(
+            "/api/review/submit",
+            headers={"X-Review-Token": state["review_token"]},
+            json={
+                "mode": "boundary_reconstruction",
+                "item_token": state["item_token"],
+                "presentation_profile": "pretend-expert",
+                "answers": self._correct_answers(),
+                "active_review_ms": 100,
+            },
+        )
+        self.assertEqual(response.status_code, 422)
+
+    def test_preflight_routes_scope_and_capability_before_review(self) -> None:
+        boundary = self.client.get("/api/review/boundary_reconstruction").json()
+        observer = self._prepare(
+            "boundary_reconstruction",
+            boundary,
+            responsibility="observer_without_clearance_authority",
+            reviewable_materials=["none_or_unsure"],
+        )
+        self.assertTrue(observer["can_begin_review"])
+        self.assertEqual(observer["review_entry_route"], "observer_boundary_only")
+        self.assertEqual(observer["recommended_presentation_profile"], "plain_language")
+        self.assertNotIn("responsibility", observer)
+        self.assertFalse(observer["raw_preflight_answers_persisted"])
+
+        beyond_scope = self._prepare(
+            "boundary_reconstruction",
+            boundary,
+            intended_next_step="customer_handoff",
+        )
+        self.assertFalse(beyond_scope["can_begin_review"])
+        self.assertEqual(beyond_scope["review_entry_route"], "scope_escalation_required")
+
+        full = self.client.get("/api/review/full_review_reference").json()
+        routed = self._prepare("full_review_reference", full)
+        self.assertFalse(routed["can_begin_review"])
+        self.assertEqual(routed["review_entry_route"], "qualified_reviewer_required")
+        self.assertIn("软件工程师", str(routed["required_reviewer"]))
+
+        supported = self._prepare(
+            "full_review_reference",
+            full,
+            responsibility="software_quality_reviewer",
+            reviewable_materials=["code_patch_and_tests"],
+        )
+        self.assertTrue(supported["can_begin_review"])
+        self.assertEqual(supported["review_entry_route"], "full_review_supported")
+        self.assertEqual(supported["recommended_presentation_profile"], "software_engineer")
+
+    def test_review_submission_requires_completed_preflight(self) -> None:
+        state = self.client.get("/api/review/boundary_reconstruction").json()
+        response = self.client.post(
+            "/api/review/submit",
+            headers={"X-Review-Token": state["review_token"]},
+            json={
+                "mode": "boundary_reconstruction",
+                "item_token": state["item_token"],
+                "answers": self._correct_answers(),
+                "active_review_ms": 100,
+            },
+        )
+        self.assertEqual(response.status_code, 409)
+        self.assertIn("preparation questionnaire is required", response.text)
 
     def test_adjudication_writes_bounded_receipt(self) -> None:
         state = self.client.get("/api/review/blinded_adjudication").json()
+        preparation = self._prepare("blinded_adjudication", state)
         response = self.client.post(
             "/api/review/submit",
             headers={"X-Review-Token": state["review_token"]},
             json={
                 "mode": "blinded_adjudication",
                 "item_token": state["item_token"],
+                "preparation_token": preparation["preparation_token"],
                 "disposition": "restricted",
                 "rationale_codes": ["scope-bounded", "scorer-supporting-only"],
             },

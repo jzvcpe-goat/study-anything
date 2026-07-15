@@ -84,6 +84,24 @@
           "title": "Passive Attention Only",
           "type": "boolean"
         },
+        "presentation_profile": {
+          "default": "technical_codes",
+          "enum": [
+            "plain_language",
+            "product_owner",
+            "software_engineer",
+            "security_audit",
+            "technical_codes"
+          ],
+          "title": "Presentation Profile",
+          "type": "string"
+        },
+        "professional_qualification_claimed": {
+          "const": false,
+          "default": false,
+          "title": "Professional Qualification Claimed",
+          "type": "boolean"
+        },
         "qualification_scope": {
           "const": "personal_local",
           "title": "Qualification Scope",
@@ -94,6 +112,47 @@
           "default": false,
           "title": "Raw Answers Included",
           "type": "boolean"
+        },
+        "raw_preflight_answers_included": {
+          "const": false,
+          "default": false,
+          "title": "Raw Preflight Answers Included",
+          "type": "boolean"
+        },
+        "review_entry_route": {
+          "default": "legacy_unspecified",
+          "enum": [
+            "legacy_unspecified",
+            "boundary_review_supported",
+            "full_review_supported",
+            "qualified_reviewer_required",
+            "scope_escalation_required",
+            "observer_boundary_only"
+          ],
+          "title": "Review Entry Route",
+          "type": "string"
+        },
+        "review_preflight_method": {
+          "default": "legacy_unspecified",
+          "enum": [
+            "legacy_unspecified",
+            "questionnaire_v1"
+          ],
+          "title": "Review Preflight Method",
+          "type": "string"
+        },
+        "review_preflight_policy_digest_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Review Preflight Policy Digest Sha256"
         },
         "reviewer_role": {
           "maxLength": 120,
