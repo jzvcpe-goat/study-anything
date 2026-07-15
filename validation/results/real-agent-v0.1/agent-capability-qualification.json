@@ -1,0 +1,48 @@
+{
+  "agent": {
+    "model_name": "GPT-5.5",
+    "name": "Sapient Slingshot 2.6.0",
+    "rollouts_per_issue": 1,
+    "sampling": "greedy"
+  },
+  "benchmark": {
+    "id": "SWE-bench-Live/MultiLang",
+    "language": "typescript",
+    "predictions_digest_sha256": "e43077e9ba968774ec1095d0896510ad520671e4427bc4e0f4795d4cf2204b8e",
+    "results_digest_sha256": "3798d3306956dcd57a37aec90de1fdaa3997afa4e38eb0f58cc49f2b76b69bc0",
+    "source_repository": "https://github.com/SWE-bench-Live/submission",
+    "source_revision": "894eaa94d702e39cda24beaf464df687e50736ad",
+    "submission_path": "submissions/multilang/js_ts/20260629-sapient-slingshot-gpt-5.5/ts"
+  },
+  "claim_boundary": "This qualification binds a published SWE-bench-Live result to the frozen candidate-generating Agent and establishes fitness as a non-trivial personal-local human-pilot input. It does not qualify autonomous delivery, a strong native review-Agent control, Delivery Clearance effectiveness, customer handoff, production use, or local official-scorer reproduction.",
+  "local_verification": {
+    "effectiveness_claim_allowed": false,
+    "human_adjudication_completed": false,
+    "local_official_scorer_reexecuted": false,
+    "paired_agent_review_completed": false,
+    "selected_case_count": 12,
+    "selected_failed_count": 6,
+    "selected_passed_count": 6,
+    "selected_repository_count": 12,
+    "source_replay_performed": true,
+    "swe_execution_blocker": "selected-runtime-images-unavailable",
+    "swe_execution_readiness": "source_ready_execution_blocked"
+  },
+  "observed_public_result": {
+    "empty_patch": 0,
+    "error": 1,
+    "failure": 64,
+    "incomplete": 0,
+    "non_success_rate_including_errors": 0.5855855856,
+    "submitted": 111,
+    "success": 46,
+    "success_rate_including_errors": 0.4144144144
+  },
+  "qualification": {
+    "autonomous_delivery_agent": "not_qualified",
+    "comparative_delivery_clearance_effectiveness": "not_ready",
+    "personal_local_human_pilot_candidate_source": "passed",
+    "strong_native_review_agent_control": "not_assessed"
+  },
+  "schema_version": "agent-capability-qualification-v0.1"
+}

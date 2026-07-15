@@ -240,6 +240,7 @@ token 保护的 localhost 端点临时显示。审核 session 不保存原始材
 | MVP audit record | S0-S15 产品、安全、CLI、移动报告和 release 边界 | `docs/quality-audits/phase-41-personal-clearance-mvp.md` | 历史验证记录 |
 | Real plugin boundary study | 外部副作用、可变来源、专业语义和运行时边界 | `docs/quality-audits/phase-42-real-plugin-boundary-study.md` | 已执行的本机样本，不可泛化 |
 | Benchmark method | 原生 Agent、强化 Agent、内部 checklist 和独立 Gate 的配对评价方法 | `docs/evaluation/native-agent-vs-delivery-clearance.md` | 机制与流程已实现，真实人类证据未完成 |
+| Agent capability qualification | 将冻结的候选生成 Agent 绑定到公开 SWE-bench-Live/MultiLang TypeScript 成绩，并区分候选来源、自主交付、审核 Agent 与协议效果四类资格 | `docs/evaluation/agent-capability-qualification.zh-CN.md`；`validation/results/real-agent-v0.1/agent-capability-qualification.json` | 候选来源准入通过；自主交付不具备资格；审核 Agent 尚未评估；协议效果尚未就绪 |
 | Real-project scenario set | 四个真实提交、预冻结检查和 oracle | `docs/evaluation/real-project-v0.1-scenarios.json` | 已实现并 4/4 回放匹配 |
 | Real-project replay engine | 隔离 clone、只读检查、mutation 检测和 reviewer packet 生成 | `apps/api/study_anything/cbb/benchmark/project_scenarios.py`；`scripts/delivery_clearance_project_scenarios.py` | 已实现并聚焦测试通过 |
 | Real-project evidence | 4 个 check receipt、4 个 reviewer packet 和聚合结果 | `validation/results/real-project-v0.1/` | 已提交 metadata-only 结果；真人 session 未完成 |
@@ -348,6 +349,9 @@ HTML 报告由机器 artifact 确定性重建，`verify` 会检查
   全文参考复核和盲法裁决尚未完成，因此不能声称 Delivery Clearance 已被证明有效。
 - **真实 Agent 结果复验**：12 例真实 Agent 输入集使用上游已发布功能结果作为隔离 oracle，
   当前尚未在本机逐例重跑 SWE-bench-Live 官方 scorer；公开结果不是本项目独立复验结果。
+- **Agent 能力准入**：冻结 Agent 的公开结果足以证明其能提供真实、非平凡且成败混合的
+  真人实验候选，但不能证明其具备自主交付或审核放行能力；仓库也未预设一个可据此声称
+  “通用 Agent 达标”的单一成功率阈值。
 - **真实 Agent 增量效果**：尚未让原生 Agent、强化 Agent、模型内 checklist 与独立 CBB Gate
   在同一 12 个候选上完成配对判断，也未完成盲法真人参考裁决，因此暂无 CBB 相对优势数据。
 

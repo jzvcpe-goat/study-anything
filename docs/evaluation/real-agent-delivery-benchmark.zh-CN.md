@@ -6,6 +6,11 @@
 构成的 12 例评测输入；它解决了原 40 例机制演练中 gold/empty/nop 等控制样本
 距离真实交付较远的问题，但尚未完成 CBB 与原生 Agent 的配对效果评测。
 
+真人实验前的上游 Agent 能力准入结论见
+[`agent-capability-qualification.zh-CN.md`](agent-capability-qualification.zh-CN.md)：
+该 Agent 可以作为非平凡候选来源，但不具备自主交付资格，也尚未被验证为强原生
+审核 Agent 对照。
+
 ## 为什么必须新增这套评测
 
 此前的 `pilot-v0.1` 主要回答“协议和隔离机制能否按设计工作”：

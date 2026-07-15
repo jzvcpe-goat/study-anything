@@ -139,11 +139,12 @@ domain evidence according to the plugin's capability class. It never grants more
 - The Personal Clearance MVP has a reproducible 14-case verifier and 12 focused tests covering normal clearance, stale state, config drift, expiry, tamper, missing evidence, replay, failed checks, and explicit human responsibility.
 - A four-state real-project replay blocks three historical incomplete delivery states and moves only the converged 59/59 evidence state to human review; it authorizes no release by itself.
 - A frozen 12-case real-Agent set now binds public GitHub tasks, non-empty Agent-generated patches, and published SWE-bench-Live outcomes across 12 repositories; it is an evaluation input, not an effectiveness result.
+- The bound Sapient Slingshot 2.6.0 / GPT-5.5 submission solved 46 of 111 published TypeScript tasks: qualified as a non-trivial human-pilot candidate source, not as an autonomous delivery or review Agent.
 - Its local human protocol now separates metadata-only boundary reconstruction from digest-bound full issue/patch review; no real human sessions or comparative effect result have been recorded yet.
 - Passing evidence is bound only to the exact Git-visible state and `personal_local` scope.
 - Current results validate prototype mechanisms, not user value, AI correctness, customer delivery, production safety, or professional certification.
 - Reproduce the real sequence with `.venv/bin/python scripts/delivery_clearance_project_scenarios.py --replace`.
-- See [Validation](docs/VALIDATION.md) and the [real-Agent benchmark (中文)](docs/evaluation/real-agent-delivery-benchmark.zh-CN.md) for evidence, limitations, and the paired study still required.
+- See [Validation](docs/VALIDATION.md), [Agent qualification (中文)](docs/evaluation/agent-capability-qualification.zh-CN.md), and the [real-Agent benchmark (中文)](docs/evaluation/real-agent-delivery-benchmark.zh-CN.md) for evidence, limitations, and the paired study still required.
 
 ## Evaluate The Protocol, Not The Story
 
