@@ -20,6 +20,7 @@ from study_anything.cbb.benchmark.real_agent_cases import (
 from study_anything.cbb.benchmark.review_cockpit import (
     ReviewCockpit,
     ReviewCockpitError,
+    ReviewQueue,
     create_review_cockpit_app,
     load_canonical_mode_configs,
 )
@@ -145,6 +146,19 @@ class RealAgentCaseSetTests(unittest.TestCase):
             self.assertFalse(packet["official_scorer_result_included"])
             self.assertFalse(packet["reference_label_included"])
             self.assertFalse(packet["raw_candidate_payload_included"])
+            delivery_context = packet["delivery_context"]
+            self.assertEqual(delivery_context["delivering_party_type"], "ai-agent")
+            self.assertEqual(delivery_context["delivering_agent_name"], "fixture Agent")
+            self.assertEqual(delivery_context["delivering_model_name"], "fixture Model")
+            self.assertEqual(delivery_context["deliverable_type"], "candidate-code-patch")
+            self.assertEqual(delivery_context["deliverable_title"], case.issue_title)
+            self.assertEqual(delivery_context["source_repository"], case.repository)
+            self.assertEqual(delivery_context["source_task_uri"], case.issue_uri)
+            self.assertEqual(delivery_context["intended_recipient_role"], "local-project-owner")
+            self.assertEqual(
+                delivery_context["clearance_state"],
+                "pending-human-review-not-cleared",
+            )
             self.assertEqual(len(boundary_questions(packet)), 5)
             scorer = next(
                 item
@@ -156,6 +170,18 @@ class RealAgentCaseSetTests(unittest.TestCase):
             self.assertTrue((materials / case.case_id / "issue.md").is_file())
         self.assertEqual(list(output.rglob("candidate.patch")), [])
         self.assertEqual(list(output.rglob("issue.md")), [])
+
+        incomplete_packet = json.loads(
+            (output / "reviewer-packets" / f"{case_set.cases[0].case_id}.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        incomplete_packet.pop("delivery_context")
+        with self.assertRaisesRegex(
+            ReviewCockpitError,
+            "missing its delivery context",
+        ):
+            ReviewQueue._candidate_summary(incomplete_packet)
 
     def test_rejects_source_digest_drift(self) -> None:
         self.predictions_path.write_text("{}", encoding="utf-8")
@@ -261,6 +287,15 @@ class RealAgentCaseSetTests(unittest.TestCase):
         boundary_state = client.get("/api/review/boundary_reconstruction").json()
         self.assertNotIn("local_material", boundary_state)
         self.assertNotIn("diff --git", json.dumps(boundary_state))
+        delivery_context = boundary_state["candidate"]["delivery_context"]
+        self.assertTrue(delivery_context["context_complete"])
+        self.assertEqual(delivery_context["delivering_agent_name"], "fixture Agent")
+        self.assertEqual(delivery_context["deliverable_type"], "candidate-code-patch")
+        self.assertEqual(delivery_context["intended_recipient_role"], "local-project-owner")
+        self.assertEqual(
+            delivery_context["clearance_state"],
+            "pending-human-review-not-cleared",
+        )
         self.assertEqual(
             boundary_state["questions"][0]["prompt"],
             "该审核包最多支持到哪一级交付范围？",

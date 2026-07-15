@@ -57,6 +57,13 @@ actual issue and Agent patch from the Git-ignored local material directory. The 
 checks both the patch digest and combined review-material digest before showing either
 document. Raw material is never appended to the human-session JSONL.
 
+Every real-Agent review item starts with a delivery-context block that identifies the
+delivering Agent and model, the candidate patch and task, the source repository, the
+intended recipient and purpose, the current non-cleared state, and the human risk owner.
+The real-Agent queue fails closed when that context is missing or disagrees with the
+candidate packet. A reviewer should never be asked to reconstruct boundaries for an
+anonymous or undefined delivery.
+
 ## Three Physically Separate Review Tasks
 
 The top segmented control switches between three local queues. Switching the

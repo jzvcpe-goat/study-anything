@@ -67,6 +67,21 @@
     ]
   },
   "case_id": "agent-passed-01",
+  "delivery_context": {
+    "clearance_state": "pending-human-review-not-cleared",
+    "deliverable_id": "candidate:agent-passed-01",
+    "deliverable_title": "fix(core): fix wrong column name for nested inline embeddables when parent is null",
+    "deliverable_type": "candidate-code-patch",
+    "delivering_agent_name": "Sapient Slingshot 2.6.0",
+    "delivering_model_name": "GPT-5.5",
+    "delivering_party_type": "ai-agent",
+    "intended_purpose_code": "personal-local-code-review-and-validation",
+    "intended_recipient_role": "local-project-owner",
+    "risk_owner_role": "local-project-owner",
+    "source_repository": "mikro-orm/mikro-orm",
+    "source_task_uri": "https://github.com/mikro-orm/mikro-orm/pull/7464",
+    "target_scope": "personal_local"
+  },
   "hidden_tests_included": false,
   "official_scorer_result_included": false,
   "raw_candidate_payload_included": false,

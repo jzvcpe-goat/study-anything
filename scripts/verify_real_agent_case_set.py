@@ -134,8 +134,13 @@ def verify(
         packet = _read_json(RESULT_ROOT / "reviewer-packets" / f"{case.case_id}.json")
         oracle = _read_json(RESULT_ROOT / "oracle" / f"{case.case_id}.json")
         candidate = packet.get("candidate")
+        delivery_context = packet.get("delivery_context")
         if not isinstance(candidate, dict):
             raise RuntimeError(f"real-Agent reviewer packet has no candidate: {case.case_id}")
+        if not isinstance(delivery_context, dict):
+            raise RuntimeError(
+                f"real-Agent reviewer packet has no delivery context: {case.case_id}"
+            )
         if (
             packet.get("suite_id") != case_set.suite_id
             or packet.get("reference_label_included") is not False
@@ -145,6 +150,21 @@ def verify(
             or packet.get("raw_issue_body_included") is not False
             or packet.get("review_material_digest_sha256") != case.review_material_digest_sha256
             or candidate.get("candidate_digest_sha256") != case.candidate_patch_digest_sha256
+            or delivery_context.get("delivering_party_type") != "ai-agent"
+            or delivery_context.get("delivering_agent_name") != protocol.agent_name
+            or delivery_context.get("delivering_model_name") != protocol.model_name
+            or delivery_context.get("deliverable_type") != "candidate-code-patch"
+            or delivery_context.get("deliverable_id") != candidate.get("candidate_id")
+            or delivery_context.get("deliverable_title") != case.issue_title
+            or delivery_context.get("source_repository") != case.repository
+            or delivery_context.get("source_task_uri") != case.issue_uri
+            or delivery_context.get("intended_purpose_code")
+            != "personal-local-code-review-and-validation"
+            or delivery_context.get("intended_recipient_role")
+            != candidate.get("intended_recipient_role")
+            or delivery_context.get("risk_owner_role") != candidate.get("risk_owner_role")
+            or delivery_context.get("target_scope") != candidate.get("target_scope")
+            or delivery_context.get("clearance_state") != "pending-human-review-not-cleared"
             or len(boundary_questions(packet)) != 5
         ):
             raise RuntimeError(f"real-Agent reviewer packet binding failed: {case.case_id}")

@@ -361,9 +361,64 @@ class ReviewQueue:
         return self.active
 
     @staticmethod
-    def _candidate_summary(candidate: dict[str, Any]) -> dict[str, Any]:
+    def _candidate_summary(packet: dict[str, Any]) -> dict[str, Any]:
+        candidate = packet.get("candidate")
+        if not isinstance(candidate, dict):
+            raise ReviewCockpitError("human review packet is missing its candidate")
+        delivery_context = packet.get("delivery_context")
+        if not isinstance(delivery_context, dict):
+            delivery_context = {}
+        context_fields = (
+            "delivering_party_type",
+            "delivering_agent_name",
+            "delivering_model_name",
+            "deliverable_type",
+            "deliverable_id",
+            "deliverable_title",
+            "source_repository",
+            "source_task_uri",
+            "intended_purpose_code",
+            "intended_recipient_role",
+            "risk_owner_role",
+            "target_scope",
+            "clearance_state",
+        )
+        context_complete = all(
+            isinstance(delivery_context.get(field), str) and delivery_context[field]
+            for field in context_fields
+        )
+        if packet.get("suite_id") == "real-agent-delivery-v0.1":
+            if not context_complete:
+                raise ReviewCockpitError("real-Agent packet is missing its delivery context")
+            consistency_pairs = (
+                ("deliverable_id", "candidate_id"),
+                ("deliverable_title", "issue_title"),
+                ("intended_recipient_role", "intended_recipient_role"),
+                ("risk_owner_role", "risk_owner_role"),
+                ("target_scope", "target_scope"),
+            )
+            if any(
+                delivery_context[context_field] != candidate.get(candidate_field)
+                for context_field, candidate_field in consistency_pairs
+            ):
+                raise ReviewCockpitError("real-Agent delivery context disagrees with its candidate")
+            if (
+                delivery_context["delivering_party_type"] != "ai-agent"
+                or delivery_context["deliverable_type"] != "candidate-code-patch"
+                or delivery_context["intended_purpose_code"]
+                != "personal-local-code-review-and-validation"
+                or delivery_context["clearance_state"] != "pending-human-review-not-cleared"
+            ):
+                raise ReviewCockpitError("real-Agent delivery context exceeds the review protocol")
         evidence = candidate.get("visible_evidence", candidate.get("evidence", []))
         return {
+            "delivery_context": {
+                field: delivery_context.get(field, "not-declared") for field in context_fields
+            }
+            | {"context_complete": context_complete},
+            "changed_file_count": candidate.get("changed_file_count"),
+            "added_line_count": candidate.get("added_line_count"),
+            "deleted_line_count": candidate.get("deleted_line_count"),
             "task_summary_code": candidate.get("task_summary_code"),
             "declared_risk_level": candidate.get("declared_risk_level"),
             "target_scope": candidate.get("target_scope"),
@@ -493,7 +548,7 @@ class ReviewQueue:
                 {
                     "display_label": (f"盲化项 {self.completed_this_run + 1} / {self.batch_total}"),
                     "item_token": active.token,
-                    "candidate": self._candidate_summary(candidate),
+                    "candidate": self._candidate_summary(packet),
                 }
             )
             if self.config.mode in {
@@ -1068,12 +1123,27 @@ REVIEW_COCKPIT_HTML = r"""<!doctype html>
     function chips(values) {
       return `<div class="chip-list">${(values || []).map(value => `<span class="chip">${esc(value)}</span>`).join('')}</div>`;
     }
+    function codeLabel(value) {
+      const labels = {
+        'ai-agent': 'AI Agent',
+        'candidate-code-patch': '候选代码补丁',
+        'personal-local-code-review-and-validation': '个人本地代码审核与验证',
+        'local-project-owner': '本地项目负责人（当前审核者）',
+        'personal_local': '仅限个人本地项目',
+        'pending-human-review-not-cleared': '待人工复核，尚未放行',
+        'high': '高'
+      };
+      return labels[value] || value || '未声明';
+    }
     function evidenceTable(items) {
       return `<table class="evidence-table"><thead><tr><th>证据</th><th>状态</th><th>摘要</th></tr></thead><tbody>${(items || []).map(item => `<tr><td>${esc(item.evidence_type)}</td><td class="status-${esc(item.status)}">${esc(item.status)}</td><td>${esc(item.summary_code)}</td></tr>`).join('')}</tbody></table>`;
     }
     function renderContext() {
       const c = state.candidate;
-      context.innerHTML = `<div class="eyebrow">${esc(state.display_label)}</div><h2>交付边界</h2><dl class="boundary-grid"><dt>任务</dt><dd>${esc(c.task_summary_code)}</dd><dt>风险</dt><dd>${esc(c.declared_risk_level)}</dd><dt>范围</dt><dd>${esc(c.target_scope)}</dd><dt>接收者</dt><dd>${esc(c.intended_recipient_role)}</dd><dt>责任人</dt><dd>${esc(c.risk_owner_role)}</dd></dl><h3>禁止用途</h3>${chips(c.prohibited_use_codes)}<h3>可见证据</h3>${evidenceTable(c.visible_evidence)}`;
+      const d = c.delivery_context || {};
+      const contextWarning = d.context_complete ? '' : '<div class="notice">交付上下文不完整；不得据此放行。</div>';
+      const changes = `${esc(c.changed_file_count ?? '未声明')} 个文件 / +${esc(c.added_line_count ?? '未声明')} / -${esc(c.deleted_line_count ?? '未声明')}`;
+      context.innerHTML = `<div class="eyebrow">${esc(state.display_label)}</div><h2>交付说明</h2>${contextWarning}<dl class="boundary-grid"><dt>交付主体</dt><dd><strong>${esc(d.delivering_agent_name)}</strong><br>${esc(codeLabel(d.delivering_party_type))} · 模型 ${esc(d.delivering_model_name)}</dd><dt>交付内容</dt><dd>${esc(codeLabel(d.deliverable_type))}<br>${esc(d.deliverable_title)}</dd><dt>候选物 ID</dt><dd>${esc(d.deliverable_id)}</dd><dt>来源项目</dt><dd>${esc(d.source_repository)}</dd><dt>变更规模</dt><dd>${changes}</dd><dt>交付对象</dt><dd>${esc(codeLabel(d.intended_recipient_role))}</dd><dt>使用目的</dt><dd>${esc(codeLabel(d.intended_purpose_code))}</dd><dt>当前状态</dt><dd class="status-missing">${esc(codeLabel(d.clearance_state))}</dd><dt>责任主体</dt><dd>${esc(codeLabel(d.risk_owner_role))}</dd><dt>最大范围</dt><dd>${esc(codeLabel(d.target_scope))}</dd><dt>风险等级</dt><dd>${esc(codeLabel(c.declared_risk_level))}</dd></dl><h3>禁止用途</h3>${chips(c.prohibited_use_codes)}<h3>可见证据</h3>${evidenceTable(c.visible_evidence)}`;
     }
     function questionMarkup(question, index) {
       const name = `q-${index}`;

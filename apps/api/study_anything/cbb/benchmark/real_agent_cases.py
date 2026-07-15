@@ -276,13 +276,32 @@ def _evidence_item(
     return payload
 
 
-def _reviewer_packet(case: RealAgentDeliveryCaseV1) -> dict[str, Any]:
+def _reviewer_packet(
+    case: RealAgentDeliveryCaseV1,
+    protocol: RealAgentSelectionProtocolV1,
+) -> dict[str, Any]:
+    candidate_id = f"candidate:{case.case_id}"
     packet = {
         "schema_version": "reviewer-case-packet-v1",
         "suite_id": case.suite_id,
         "case_id": case.case_id,
+        "delivery_context": {
+            "delivering_party_type": "ai-agent",
+            "delivering_agent_name": protocol.agent_name,
+            "delivering_model_name": protocol.model_name,
+            "deliverable_type": "candidate-code-patch",
+            "deliverable_id": candidate_id,
+            "deliverable_title": case.issue_title,
+            "source_repository": case.repository,
+            "source_task_uri": case.issue_uri,
+            "intended_purpose_code": "personal-local-code-review-and-validation",
+            "intended_recipient_role": "local-project-owner",
+            "risk_owner_role": "local-project-owner",
+            "target_scope": "personal_local",
+            "clearance_state": "pending-human-review-not-cleared",
+        },
         "candidate": {
-            "candidate_id": f"candidate:{case.case_id}",
+            "candidate_id": candidate_id,
             "candidate_digest_sha256": case.candidate_patch_digest_sha256,
             "subject_digest_sha256": case.candidate_patch_digest_sha256,
             "source_snapshot_digest_sha256": case.issue_snapshot_digest_sha256,
@@ -516,7 +535,7 @@ def build_real_agent_case_set(
             (material_dir / "issue.md").write_text(issue_markdown, encoding="utf-8")
             (material_dir / "candidate.patch").write_text(patch, encoding="utf-8")
             (output_dir / "reviewer-packets" / f"{case_id}.json").write_text(
-                pretty_json(_reviewer_packet(case)),
+                pretty_json(_reviewer_packet(case, protocol)),
                 encoding="utf-8",
             )
             oracle = {
